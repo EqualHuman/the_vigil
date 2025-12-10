@@ -9,351 +9,344 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #0F0F0F;
-      --text: #F7F4F0;
-      --accent: #D7A451;
-      --secondary: #6E7075;
-      --highlight: #FCE6C2;
-    }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* -------------------------------------------------------
+     ROOT & GLOBAL RESET
+  -------------------------------------------------------- */
+  :root {
+    --bg: #0F0F0F;
+    --text: #F7F4F0;
+    --accent: #D7A451;
+    --secondary: #6E7075;
+    --highlight: #FCE6C2;
+  }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top, rgba(215,164,81,0.22), transparent 60%),
-        linear-gradient(145deg, #0F0F0F, #151515 55%, #0F0F0F);
-    }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .shell {
-      max-width: 1100px;
-      width: 100%;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
-        rgba(5,5,5,0.95);
-      border: 1px solid rgba(215,164,81,0.22);
-      padding: 2.5rem clamp(2rem, 4vw, 3rem);
-      box-shadow:
-        0 0 60px rgba(215,164,81,0.08),
-        0 30px 80px rgba(0,0,0,0.7),
-        inset 0 0 0 0.5px rgba(255,255,255,0.04);
-      backdrop-filter: blur(14px);
-      animation: fadeIn 1.2s ease both;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -20%;
-      background: radial-gradient(circle at 80% 0%, rgba(215,164,81,0.25), transparent 55%);
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .shell-inner { position: relative; z-index: 1; }
-
-    .back { margin-bottom: 1rem; font-size: 0.82rem; }
-    .back a { color: var(--secondary); text-decoration: none; }
-    .back a:hover { color: var(--highlight); transition: 0.2s ease; }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 2.4rem;
-    }
-
-    .pill {
-      display: inline-block;
-      text-decoration: none;
-      border-radius: 999px;
-      border: 1px solid rgba(110,112,117,0.5);
-      padding: 0.45rem 1.1rem;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--secondary);
-      background: rgba(15, 15, 15, 0.6);
-      backdrop-filter: blur(4px);
-    }
-
-    .pill:hover {
-      border-color: rgba(215,164,81,0.45);
-      color: var(--highlight);
-      transition: 0.2s ease;
-    }
-
-    h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(2.1rem, 3.5vw, 2.8rem);
-      margin-bottom: 0.3rem;
-      font-weight: 600;
-      animation: fadeIn 1s ease both;
-    }
-
-    .subtext {
-      font-family: "Playfair Display", serif;
-      font-size: 0.96rem;
-      color: var(--secondary);
-      max-width: 42rem;
-      line-height: 1.6;
-      margin-bottom: 1.9rem;
-      animation: fadeIn 1.4s ease both;
-    }
-
-    .subtext em { font-style: italic; color: var(--highlight); }
-
-    /* Header: About + Contact sidebox */
-    .about-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 2.5rem;
-      margin-bottom: 2.8rem;
-    }
-
-    .about-text { max-width: 60%; }
-    .etymology {
-      font-family: "Playfair Display", serif;
-      font-size: 0.9rem;
-      color: var(--secondary);
-      margin-bottom: 1rem;
-    }
-
-    .about-description {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: var(--highlight);
-    }
-
-    .contact-sidebox {
-      border: 1px solid rgba(215,164,81,0.35);
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-                  rgba(10,10,10,0.92);
-      width: 240px;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-    }
-
-    .contact-title {
-      font-family: "Playfair Display", serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 0.4rem;
-      color: var(--highlight);
-    }
-
-    .contact-email { margin-top: 0.4rem; font-weight: 600; color: var(--highlight); }
-
-    /* MAIN DIVIDER — stays */
-    .about-divider {
-      width: 70%;
-      max-width: 720px;
-      height: 1px;
-      margin: 2.5rem auto;
-      background: linear-gradient(
-        90deg,
-        rgba(255,255,255,0.12),
-        rgba(255,255,255,0.05),
-        rgba(255,255,255,0.12)
-      );
-      border-radius: 2px;
-      opacity: 0.9;
-    }
-
-    /* TWO-COLUMN SECTION (updated to remove inner borders) */
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
-      gap: 2.2rem;
-      animation: fadeIn 1.8s ease both;
-    }
-
-    /* Removed LEFT vertical line */
-    .layout > div:first-child {
-      padding-left: 0;
-      border-left: none;
-    }
-
-    /* Removed RIGHT short horizontal line */
-    .layout > div:last-child {
-      padding-top: 0;
-      border-top: none;
-    }
-
-    @media (max-width: 800px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .section-heading {
-      font-family: "Playfair Display", serif;
-      font-size: 1.05rem;
-      margin-bottom: 0.7rem;
-      color: var(--highlight);
-      position: relative;
-      padding-bottom: 0.4rem;
-    }
-
-    .section-heading::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 70px;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(215,164,81,0.7), transparent);
-    }
-
-    .quote-block {
-      margin-top: 0.4rem;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: var(--secondary);
-      font-style: italic;
-      padding-left: 0;  /* removed vertical bar padding */
-      border-left: none; /* removed inner divider */
-    }
-
-    .slow-update-note {
-      font-size: 0.85rem;
-      color: var(--secondary);
-      margin-bottom: 1rem;
-      line-height: 1.6;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .card {
-      border-radius: 18px;
-      border: 1px solid rgba(110,112,117,0.45);
-      padding: 1rem 1.1rem 1.1rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.05), transparent 55%),
-                  rgba(10,10,10,0.9);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-title {
-      font-family: "Playfair Display", serif;
-      font-size: 0.98rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .card-text ul { list-style: none; padding: 0; }
-    .card-text li::before { content: "• "; color: var(--accent); }
-
-    /* DISCLAIMERS */
-    .disclaimers-section {
-  margin-top: 3rem;
-  padding-top: 1rem;
-}
-
-.disclaimer-box {
-  margin-top: 1.5rem;
-  padding: 1.8rem 1.6rem;
-  border-radius: 16px;
-  border: 1px solid rgba(215,164,81,0.25);
-  background: radial-gradient(circle at top left, rgba(252,230,194,0.04), transparent 55%),
-              rgba(10,10,10,0.85);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-}
-
-.disclaimer-box p {
-  margin-bottom: 1.3rem;
-  font-size: 0.92rem;
-  color: var(--secondary);
-  line-height: 1.7;
-}
-
-.disclaimer-box p:last-child {
-  margin-bottom: 0;
-}
-
-.disclaimer-box strong {
-  font-family: "Playfair Display", serif;
-  color: var(--highlight);
-  font-size: 0.95rem;
-}
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at top, rgba(215,164,81,0.22), transparent 60%),
+      linear-gradient(145deg, #0F0F0F, #151515 55%, #0F0F0F);
+  }
 
 
-    .disclaimer-text { font-size: 0.9rem; color: var(--secondary); line-height: 1.7; max-width: 48rem; }
+  /* -------------------------------------------------------
+     OUTER SHELL CONTAINER
+  -------------------------------------------------------- */
+  .shell {
+    max-width: 1100px;
+    width: 100%;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
+      rgba(5,5,5,0.95);
+    border: 1px solid rgba(215,164,81,0.22);
+    padding: 2.5rem clamp(2rem, 4vw, 3rem);
+    box-shadow:
+      0 0 60px rgba(215,164,81,0.08),
+      0 30px 80px rgba(0,0,0,0.7),
+      inset 0 0 0 0.5px rgba(255,255,255,0.04);
+    backdrop-filter: blur(14px);
+    position: relative;
+    animation: fadeIn 1.2s ease both;
+    overflow: hidden;
+  }
 
-    /* FOOTER */
-    .footer-wrapper {
-      margin-top: 2.6rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.1rem;
-    }
+  .shell::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle at 80% 0%, rgba(215,164,81,0.25), transparent 55%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
 
-    .footer-card {
-      border-radius: 18px;
-      border: 1px solid rgba(215,164,81,0.35);
-      padding: 0.9rem 1.4rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-                  rgba(10,10,10,0.92);
-      max-width: 620px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    .footer-line {
-      font-family: "Playfair Display", serif;
-      font-size: 0.95rem;
-      color: var(--highlight);
-      letter-spacing: 0.01em;
-    }
+  .shell-inner { position: relative; z-index: 1; }
 
-    .footer-contact-inline {
-      font-size: 0.85rem;
-      color: var(--secondary);
-      text-align: center;
-      max-width: 520px;
-      line-height: 1.6;
-    }
 
-    .footer-contact-inline .contact-email-inline {
-      color: var(--highlight);
-      font-weight: 600;
-    }
+  /* -------------------------------------------------------
+     TOP NAV / BACK LINK / PILLS
+  -------------------------------------------------------- */
+  .back { margin-bottom: 1rem; font-size: 0.82rem; }
+  .back a { color: var(--secondary); text-decoration: none; }
+  .back a:hover { color: var(--highlight); transition: 0.2s ease; }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .pill {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 999px;
+    border: 1px solid rgba(110,112,117,0.5);
+    padding: 0.45rem 1.1rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--secondary);
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .pill:hover {
+    border-color: rgba(215,164,81,0.45);
+    color: var(--highlight);
+    transition: 0.2s ease;
+  }
+
+
+  /* -------------------------------------------------------
+     PAGE TITLE & INTRO TEXT
+  -------------------------------------------------------- */
+  h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.1rem, 3.5vw, 2.8rem);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  .etymology {
+    font-family: "Playfair Display", serif;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+
+  .about-description {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--highlight);
+  }
+
+
+  /* -------------------------------------------------------
+     HEADER SECTION (About text + Contact box)
+  -------------------------------------------------------- */
+  .about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2.5rem;
+    margin-bottom: 2.8rem;
+  }
+
+  .about-text { max-width: 60%; }
+
+  .contact-sidebox {
+    border: 1px solid rgba(215,164,81,0.35);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    background:
+      radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+      rgba(10,10,10,0.92);
+    width: 240px;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+  }
+
+  .contact-title {
+    font-family: "Playfair Display", serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+    color: var(--highlight);
+  }
+
+  .contact-email { margin-top: 0.4rem; font-weight: 600; color: var(--highlight); }
+
+
+  /* -------------------------------------------------------
+     MAIN DIVIDER
+  -------------------------------------------------------- */
+  .about-divider {
+    width: 70%;
+    max-width: 720px;
+    height: 1px;
+    margin: 2.5rem auto;
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.12),
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.12)
+    );
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+
+  /* -------------------------------------------------------
+     TWO-COLUMN LOWER LAYOUT
+  -------------------------------------------------------- */
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+    gap: 2.2rem;
+  }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .section-heading {
+    font-family: "Playfair Display", serif;
+    font-size: 1.05rem;
+    margin-bottom: 0.7rem;
+    color: var(--highlight);
+    padding-bottom: 0.4rem;
+    position: relative;
+  }
+
+  .section-heading::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(215,164,81,0.7), transparent);
+  }
+
+  .quote-block {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: var(--secondary);
+  }
+
+  .slow-update-note {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    border-radius: 18px;
+    border: 1px solid rgba(110,112,117,0.45);
+    padding: 1rem 1.1rem;
+    background:
+      radial-gradient(circle at top left, rgba(252,230,194,0.05), transparent 55%),
+      rgba(10,10,10,0.9);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+  }
+
+  .card-title {
+    font-family: "Playfair Display", serif;
+    font-size: 0.98rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .card-text ul { list-style: none; padding: 0; }
+  .card-text li::before { content: "• "; color: var(--accent); }
+
+
+  /* -------------------------------------------------------
+     DISCLAIMERS SECTION (Boxed)
+  -------------------------------------------------------- */
+  .disclaimers-section { margin-top: 3rem; padding-top: 1rem; }
+
+  .disclaimer-box {
+    margin-top: 1.5rem;
+    padding: 1.8rem 1.6rem;
+    border-radius: 16px;
+    border: 1px solid rgba(215,164,81,0.25);
+    background:
+      radial-gradient(circle at top left, rgba(252,230,194,0.04), transparent 55%),
+      rgba(10,10,10,0.85);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+
+  .disclaimer-box p {
+    margin-bottom: 1.3rem;
+    font-size: 0.92rem;
+    color: var(--secondary);
+    line-height: 1.7;
+  }
+
+  .disclaimer-box strong {
+    font-family: "Playfair Display", serif;
+    color: var(--highlight);
+    font-size: 0.95rem;
+  }
+
+
+  /* -------------------------------------------------------
+     FOOTER
+  -------------------------------------------------------- */
+  .footer-wrapper {
+    margin-top: 2.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .footer-card {
+    border-radius: 18px;
+    border: 1px solid rgba(215,164,81,0.35);
+    padding: 0.9rem 1.4rem;
+    text-align: center;
+    background:
+      radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+      rgba(10,10,10,0.92);
+    max-width: 620px;
+    width: 100%;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+  }
+
+  .footer-line {
+    font-family: "Playfair Display", serif;
+    font-size: 0.95rem;
+    color: var(--highlight);
+  }
+
+  .footer-contact-inline {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    text-align: center;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .footer-contact-inline .contact-email-inline {
+    color: var(--highlight);
+    font-weight: 600;
+  }
+
   </style>
 </head>
+
+
 
 <body>
   <main class="shell">
     <div class="shell-inner">
 
-      <div class="back">
-        <a href="index.html">← Back to Vigil</a>
-      </div>
+      <!-- BACK LINK & PILLS -->
+      <div class="back"><a href="index.html">← Back to Vigil</a></div>
 
       <div class="pill-row">
         <a class="pill" href="humanity.html">Humanity & Society</a>
@@ -364,9 +357,10 @@
         <a class="pill" href="about.html">About</a>
       </div>
 
-      <!-- Header Section -->
+      <!-- HEADER SECTION -->
       <div class="about-header">
         <div class="about-text">
+
           <h1>About Vigil</h1>
 
           <div class="etymology">
@@ -378,6 +372,7 @@
             It gathers stories, data, and resources that show where harm takes place,
             and where attempts at repair begin.
           </p>
+
         </div>
 
         <div class="contact-sidebox">
@@ -387,13 +382,16 @@
         </div>
       </div>
 
-    </div>
+    </div> <!-- /shell-inner -->
 
-    <!-- Main Divider -->
+
+    <!-- TOP MAIN DIVIDER -->
     <div class="about-divider"></div>
 
-    <!-- LOWER LAYOUT -->
+
+    <!-- TWO-COLUMN CONTENT -->
     <div class="layout">
+
       <!-- LEFT COLUMN -->
       <div>
         <div class="section-heading">Why this space exists</div>
@@ -416,6 +414,7 @@
 
       <!-- RIGHT COLUMN -->
       <div>
+
         <div class="section-heading">How this space works</div>
 
         <p class="slow-update-note">
@@ -424,6 +423,7 @@
         </p>
 
         <div class="card-grid">
+
           <div class="card">
             <div class="card-title">Vigil is…</div>
             <div class="card-text">
@@ -446,59 +446,65 @@
               </ul>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    
- <!-- Main Divider -->
+
+        </div><!-- card-grid -->
+
+      </div><!-- right column -->
+
+    </div><!-- layout -->
+
+
+    <!-- BOTTOM MAIN DIVIDER -->
     <div class="about-divider"></div>
-    
-   <!-- DISCLAIMERS -->
-<div class="disclaimers-section">
-  <div class="section-heading">Disclaimers</div>
 
-  <div class="disclaimer-box">
-    <p>
-      <strong>Purpose & Limitations</strong><br>
-      Vigil shares research-based content to promote awareness and understanding of complex societal issues.
-      All information is intended for educational purposes only and should not be taken as legal, medical,
-      financial, or other professional advice.
-    </p>
 
-    <p>
-      <strong>Accuracy & Reliability</strong><br>
-      Every effort is made to present information responsibly and in good faith.
-      However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content.
-      Readers are encouraged to verify information independently.
-    </p>
+    <!-- DISCLAIMERS -->
+    <div class="disclaimers-section">
+      <div class="section-heading">Disclaimers</div>
 
-    <p>
-      <strong>Sensitive Topics</strong><br>
-      Many subjects explored by Vigil involve difficult or distressing realities.
-      Reader discretion is advised.
-    </p>
+      <div class="disclaimer-box">
 
-    <p>
-      <strong>Reader Responsibility</strong><br>
-      Use of the information provided is at the reader’s own risk. Vigil is not liable for any losses,
-      damages, or consequences from reliance on content presented.
-    </p>
+        <p>
+          <strong>Purpose & Limitations</strong><br>
+          Vigil shares research-based content to promote awareness and understanding of complex societal issues.
+          All information is intended for educational purposes only and should not be taken as legal,
+          medical, financial, or other professional advice.
+        </p>
 
-    <p>
-      <strong>Sources & Third-Party Content</strong><br>
-      Content may include references to external organizations or research. Vigil does not control or
-      endorse third-party content.
-    </p>
+        <p>
+          <strong>Accuracy & Reliability</strong><br>
+          Every effort is made to present information responsibly and in good faith.
+          However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content.
+          Readers are encouraged to verify information independently.
+        </p>
 
-    <p>
-      <strong>Donations</strong><br>
-      Vigil does not collect or manage donations. Links redirect to outside organizations, and Vigil is
-      not responsible for how funds are used.
-    </p>
-  </div>
-</div>
+        <p>
+          <strong>Sensitive Topics</strong><br>
+          Many subjects explored by Vigil involve difficult or distressing realities.
+          Reader discretion is advised.
+        </p>
 
-    </section>
+        <p>
+          <strong>Reader Responsibility</strong><br>
+          Use of the information provided is at the reader’s own risk.
+          Vigil is not liable for any losses, damages, or consequences from reliance on content presented.
+        </p>
+
+        <p>
+          <strong>Sources & Third-Party Content</strong><br>
+          Content may include references to external organizations or research.
+          Vigil does not control or endorse third-party content.
+        </p>
+
+        <p>
+          <strong>Donations</strong><br>
+          Vigil does not collect or manage donations.
+          Links redirect to outside organizations, and Vigil is not responsible for how funds are used.
+        </p>
+
+      </div><!-- disclaimer-box -->
+    </div><!-- disclaimers-section -->
+
 
     <!-- FOOTER -->
     <div class="footer-wrapper">
