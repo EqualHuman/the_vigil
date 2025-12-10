@@ -280,16 +280,39 @@
       margin-bottom: 0.3rem;
     }
 
+    /* Disclaimers section */
+    .disclaimers-section {
+      margin-top: 2.6rem;
+      padding-top: 1.9rem;
+      border-top: 1px solid rgba(110,112,117,0.4);
+    }
+
+    .disclaimer-text {
+      font-size: 0.9rem;
+      color: var(--secondary);
+      line-height: 1.7;
+      max-width: 60rem;
+    }
+
+    .disclaimer-text p {
+      margin-bottom: 0.9rem;
+    }
+
+    .disclaimer-text strong {
+      color: var(--highlight);
+      font-weight: 600;
+    }
+
     /* Footer Wrapper */
     .footer-wrapper {
-      margin-top: 3rem;
+      margin-top: 2.6rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.1rem;
     }
 
-    /* Contact line above the quote */
+    /* Contact line */
     .footer-contact-inline {
       font-size: 0.85rem;
       color: var(--secondary);
@@ -335,6 +358,7 @@
     @media (max-width: 600px) {
       body { padding: 1.25rem; }
       .shell { padding: 1.75rem 1.5rem; }
+      .footer-line { white-space: normal; }
     }
   </style>
 </head>
@@ -375,6 +399,10 @@
             <br /><br />
             Rooted in the idea of vigilia, the discipline of staying awake, Vigil invites slow attention and responsible engagement. Each topic points toward concrete steps and trusted organizations, giving any reader a way to learn, respond, and create change at any scale.
           </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div>
           <div class="section-heading">How this space works</div>
 
           <p class="slow-update-note">
@@ -398,61 +426,63 @@
               <div class="card-title">Vigil is not…</div>
               <div class="card-text">
                 <ul>
+                  <li>a replacement for legal, medical, or financial advice</li>
                   <li>a platform for outrage for its own sake</li>
                   <li>a place where any one person is the hero, expert, or main character</li>
-                  <li>a replacement for legal, medical, or financial advice</li>
-
                 </ul>
               </div>
-         </div>
+            </div>
           </div>
         </div>
-      </div>
+      </div> <!-- end .layout -->
 
+      <!-- DISCLAIMERS SECTION -->
+      <section class="disclaimers-section">
+        <div class="section-heading">Disclaimers</div>
+        <div class="disclaimer-text">
+          <p>
+            <strong>Purpose &amp; Limitations</strong><br />
+            Vigil shares research-based content to promote awareness and understanding of complex societal issues. All information is intended for educational purposes only and should not be taken as legal, medical, financial, or other professional advice.
+          </p>
+
+          <p>
+            <strong>Accuracy &amp; Reliability</strong><br />
+            Every effort is made to present information responsibly and in good faith. However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content. Readers are encouraged to verify information independently and interpret it with personal discretion.
+          </p>
+
+          <p>
+            <strong>Sensitive Topics</strong><br />
+            Many subjects explored by Vigil involve difficult or distressing realities. Reader discretion is advised. Vigil is not responsible for emotional distress, misinterpretation, or any adverse effects that may arise from engaging with this material.
+          </p>
+
+          <p>
+            <strong>Reader Responsibility</strong><br />
+            Use of the information provided is at the reader’s own risk. Vigil is not liable for any losses, damages, or consequences resulting from reliance on the content presented.
+          </p>
+
+          <p>
+            <strong>Sources &amp; Third-Party Content</strong><br />
+            Content may include references to external organizations, research, articles, or resources. Vigil does not control or endorse third-party content and is not responsible for their practices, accuracy, or policies.
+          </p>
+
+          <p>
+            <strong>Donations</strong><br />
+            Vigil does not collect, process, or manage donations. All contribution links redirect to external organizations, and Vigil is not responsible for how those entities handle or utilize funds.
+          </p>
         </div>
+      </section>
 
-        <!-- RIGHT COLUMN -->
-        <div>
-          <div class="section-heading">Disclaimers</div>
-<div class="quote-block">
-  <strong>Purpose &amp; Limitations</strong><br />
-  Vigil shares research-based content to promote awareness and understanding of complex societal issues. All information is intended for educational purposes only and should not be taken as legal, medical, financial, or other professional advice.
-  <br /><br />
-
-  <strong>Accuracy &amp; Reliability</strong><br />
-  Every effort is made to present information responsibly and in good faith. However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content. Readers are encouraged to verify information independently and interpret it with personal discretion.
-  <br /><br />
-
-  <strong>Sensitive Topics</strong><br />
-  Many subjects explored by Vigil involve difficult or distressing realities. Reader discretion is advised. Vigil is not responsible for emotional distress, misinterpretation, or any adverse effects that may arise from engaging with this material.
-  <br /><br />
-
-  <strong>Reader Responsibility</strong><br />
-  Use of the information provided is at the reader’s own risk. Vigil is not liable for any losses, damages, or consequences resulting from reliance on the content presented.
-  <br /><br />
-
-  <strong>Sources &amp; Third-Party Content</strong><br />
-  Content may include references to external organizations, research, articles, or resources. Vigil does not control or endorse third-party content and is not responsible for their practices, accuracy, or policies.
-  <br /><br />
-
-  <strong>Donations</strong><br />
-  Vigil does not collect, process, or manage donations. All contribution links redirect to external organizations, and Vigil is not responsible for how those entities handle or utilize funds.
-</div>
-            
-
-      <!-- FOOTER --> 
-      <div class="footer-card">
-          <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
-        </div>
+      <!-- FOOTER -->
       <div class="footer-wrapper">
-
         <div class="footer-contact-inline">
           For questions, corrections, or topics that feel missing from this space, write to
           <span class="contact-email-inline">InboxVigil@outlook.com</span>.
           Vigil provides educational information only. It is not a substitute for legal, medical, or professional advice.
-
         </div>
 
+        <div class="footer-card">
+          <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
+        </div>
       </div>
 
     </div>
