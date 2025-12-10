@@ -4,19 +4,23 @@
   <meta charset="UTF-8" />
   <title>The Vigil</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #0F0F0F;
-      --text: #F7F4F0;
-      --accent: #D7A451;
-      --secondary: #6E7075;
-      --highlight: #FCE6C2;
+      --bg: #0F0F0F;         /* Charcoal */
+      --text: #F7F4F0;       /* Ivory */
+      --accent: #D7A451;     /* Ember Gold */
+      --secondary: #6E7075;  /* Slate Grey */
+      --highlight: #FCE6C2;  /* Soft Amber */
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
@@ -29,16 +33,17 @@
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top, rgba(215,164,81,0.18), transparent 55%),
-        linear-gradient(145deg, #050505, #161616 55%, #050505);
+        radial-gradient(circle at top, rgba(215,164,81,0.12), transparent 55%),
+        linear-gradient(145deg, #0F0F0F, #151515 55%, #0F0F0F);
     }
 
     .shell {
       max-width: 960px;
       width: 100%;
       border-radius: 24px;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
-                  rgba(10,10,10,0.9);
+      background:
+        radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
+        rgba(5,5,5,0.9);
       border: 1px solid rgba(215,164,81,0.25);
       padding: 2.5rem clamp(2rem, 4vw, 3rem);
       box-shadow:
@@ -62,7 +67,7 @@
       font-weight: 600;
       font-size: clamp(2.4rem, 4vw, 3rem);
       line-height: 1.1;
-      margin: 0 0 1rem;
+      margin: 0 0 1.1rem;
     }
 
     h1 span {
@@ -78,6 +83,7 @@
       line-height: 1.7;
       color: var(--highlight);
       margin-bottom: 1.75rem;
+      white-space: pre-line; /* respects your line breaks */
     }
 
     .pill-row {
@@ -94,7 +100,17 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--secondary);
-      background: rgba(5,5,5,0.75);
+      background: rgba(5,5,5,0.85);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1.25rem;
+      }
+
+      .shell {
+        padding: 1.75rem 1.5rem;
+      }
     }
   </style>
 </head>
@@ -103,22 +119,23 @@
     <div class="tagline">The Vigil • Vigilia</div>
 
     <h1>
-      Holding a quiet <span>light</span><br />
-      to the ways we fail — and can do better.
+      The <span>Vigil</span>
     </h1>
 
     <p>
-      The Vigil is a faceless space for shared watchfulness: a museum of our impact
-      on one another — from human rights and exploitation to the lives of animals
-      and the planet — always paired with ways to act, learn, and repair.
+We have struggled. We have harmed.
+But we have also healed, innovated, and learned.
+
+This Vigil is our shared observation
+of what we have done, and what we may still undo.
     </p>
 
     <div class="pill-row">
-      <div class="pill">Watchfulness</div>
-      <div class="pill">Humanity</div>
-      <div class="pill">Reflection</div>
-      <div class="pill">Awareness</div>
-      <div class="pill">Progress</div>
+      <div class="pill">Humanity &amp; Society</div>
+      <div class="pill">Endangered Life &amp; Ecosystems</div>
+      <div class="pill">Science, Medicine &amp; Innovation</div>
+      <div class="pill">Culture &amp; Memory</div>
+      <div class="pill">Paths Forward</div>
     </div>
   </main>
 </body>
