@@ -151,8 +151,69 @@
   gap: 2rem;
   align-items: start;
   margin-bottom: 2rem;
+    postition: relative;
+}
+    .intro-layout::after {
+  content: "";
+  position: absolute;
+  left: calc(60% - 1rem);
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(215,164,81,0.3), transparent);
+  pointer-events: none;
+}
+.section-heading:hover {
+  color: var(--accent);
+  cursor: default;
+  transition: 0.25s ease;
 }
 
+.pill-row {
+  margin-bottom: 2.4rem;
+}
+.disclaimers-section {
+  border-top: 1px solid rgba(215,164,81,0.25);
+  padding-top: 2.2rem;
+  margin-top: 3rem;
+}
+    .disclaimer-text {
+  max-width: 48rem;
+}
+.contact-card::before {
+  content: "✉";
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  font-size: 0.9rem;
+  color: rgba(215,164,81,0.45);
+}
+h1 { animation: fadeIn 1s ease both; }
+.subtext { animation: fadeIn 1.4s ease both; }
+.intro-layout { animation: fadeIn 1.6s ease both; }
+.layout { animation: fadeIn 1.8s ease both; }
+.disclaimers-section { animation: fadeIn 2s ease both; }
+.footer-card { animation: footerFade 2.2s ease both; }
+.quote-block p::first-letter {
+  margin-left: 0.6rem;
+}
+
+.quote-block {
+  border-left: 2px solid rgba(215,164,81,0.3);
+  padding-left: 1rem;
+}
+
+.shell {
+  box-shadow:
+    0 0 60px rgba(215,164,81,0.08),
+    0 30px 80px rgba(0,0,0,0.7),
+    inset 0 0 0 0.5px rgba(255,255,255,0.04);
+}
+@media (max-width: 700px) {
+  .disclaimer-text p {
+    margin-bottom: 1.2rem;
+  }
+}
 
 .contact-card {
   border-radius: 16px;
@@ -193,6 +254,18 @@
     max-width: 100%;
   }
 }
+    .contact-email-inline {
+  color: var(--highlight);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-email-inline:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  transition: 0.2s ease;
+}
+
 
     .layout {
       display: grid;
