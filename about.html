@@ -380,6 +380,60 @@
     color: var(--highlight);
     font-weight: 600;
   }
+    /* -------------------------------------------------------
+   TYPOGRAPHY HARMONY — HEADINGS & BODY COPY
+-------------------------------------------------------- */
+
+/* All main section-style headings (including Disclaimers) */
+.section-heading,
+.disclaimers-section .section-heading {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--highlight);
+  letter-spacing: 0.01em;
+}
+
+/* Card titles styled like section headings */
+.card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--highlight);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  position: relative;
+}
+
+/* Gold underline for card titles, echoing section headings */
+.card-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0.95;
+}
+
+/* Cohesive body text across the page */
+.about-description,
+.quote-block,
+.slow-update-note,
+.card-text p,
+.disclaimer-box p {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+}
+
+/* Keep the softer, reflective feel for this block */
+.quote-block {
+  font-style: italic;
+}
+
   </style>
 </head>
 
