@@ -213,11 +213,18 @@
   /* -------------------------------------------------------
      TWO COLUMN SECTION
   -------------------------------------------------------- */
-  .layout {
-    display: grid;
-    grid-template-columns: 1.2fr 1.4fr;
-    gap: 2.4rem;
-  }
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center; /* optional: centers content */
+}
+.layout section {
+  max-width: 700px;
+  width: 100%;
+  text-align: left; /* or center if you prefer */
+}
+
 
   @media (max-width: 800px) {
     .layout { grid-template-columns: 1fr; }
@@ -435,11 +442,9 @@
     <div class="about-divider"></div>
 
 
-    <!-- TWO-COLUMN CONTENT -->
     <div class="layout">
 
-      <!-- LEFT COLUMN -->
-      <div>
+      <section>
         <div class="section-heading">Why this space exists</div>
 
         <div class="quote-block">
@@ -456,10 +461,9 @@
           Each topic points toward concrete steps and trusted organizations,
           giving any reader a way to learn, respond, and create change at any scale.
         </div>
-      </div>
+      </section>
 
-      <!-- RIGHT COLUMN -->
-      <div>
+      <section>
 
         <div class="section-heading">How this space works</div>
 
@@ -509,7 +513,7 @@
 
         </div><!-- card-grid -->
 
-      </div><!-- right column -->
+      </section><!-- right column -->
 
     </div><!-- layout -->
 
