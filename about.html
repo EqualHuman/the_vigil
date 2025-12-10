@@ -297,6 +297,22 @@
   width: 100%;
   box-shadow: 0 8px 26px rgba(0,0,0,0.35);
 }
+.footer-card {
+  opacity: 0;
+  animation: footerFade 1.2s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes footerFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+    .footer-contact {
+  opacity: 0;
+  animation: footerFade 1.2s ease forwards;
+  animation-delay: 0.55s;
+}
+
 
 .footer-line {
   font-family: "Playfair Display", serif;
