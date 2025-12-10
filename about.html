@@ -426,6 +426,17 @@
 .quote-block {
   font-style: italic;
 }
+/* FORCE gold underline to appear under section headings */
+.section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 1;
+}
 
   </style>
 </head>
