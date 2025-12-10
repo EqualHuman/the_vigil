@@ -140,13 +140,7 @@
       color: var(--highlight);
     }
 
-    .divider {
-      width: 60%;
-      max-width: 260px;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(215,164,81,0.28), transparent);
-      margin-bottom: 2.1rem;
-    }
+   
 
     /* Intro: About + Contact */
     .intro-layout {
@@ -512,6 +506,21 @@
   font-weight: 600;
   color: var(--highlight);
 }
+    .about-divider {
+  width: 70%;
+  max-width: 720px;
+  height: 1px;
+  margin: 2.5rem auto 2.5rem auto;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.12),
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.12)
+  );
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
 
   </style>
 </head>
@@ -559,7 +568,7 @@
 
       </div>
 
-      <div class="divider"></div>
+      <div class="about-divider"></div>
 
       <div class="layout">
         <!-- LEFT COLUMN -->
