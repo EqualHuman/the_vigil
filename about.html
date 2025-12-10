@@ -9,9 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-
   /* -------------------------------------------------------
-     ROOT — BRAND COLOR SYSTEM (REFINED)
+     ROOT — BRAND COLOR SYSTEM
   -------------------------------------------------------- */
   :root {
     --bg: #0f0f0f;               /* Deep charcoal */
@@ -38,9 +37,8 @@
       linear-gradient(135deg, #0d0d0d, #161616 55%, #0d0d0d);
   }
 
-
   /* -------------------------------------------------------
-     MAIN SHELL — SOFT ARCHIVAL PANEL
+     MAIN SHELL
   -------------------------------------------------------- */
   .shell {
     max-width: 1100px;
@@ -77,9 +75,8 @@
 
   .shell-inner { position: relative; z-index: 1; }
 
-
   /* -------------------------------------------------------
-     TOP NAV ELEMENTS
+     TOP NAV
   -------------------------------------------------------- */
   .back {
     margin-bottom: 1rem;
@@ -92,7 +89,6 @@
   }
   .back a:hover { color: var(--highlight); }
 
-
   .pill-row {
     display: flex;
     flex-wrap: wrap;
@@ -101,7 +97,7 @@
   }
 
   .pill {
-    text-decoration: none; 
+    text-decoration: none;
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,0.15);
     padding: 0.5rem 1.15rem;
@@ -121,9 +117,8 @@
     background: rgba(20,20,20,0.85);
   }
 
-
   /* -------------------------------------------------------
-     PAGE TITLE BLOCK
+     PAGE TITLE
   -------------------------------------------------------- */
   h1 {
     font-family: "Playfair Display", serif;
@@ -151,7 +146,6 @@
     margin-top: 0.3rem;
   }
 
-
   /* -------------------------------------------------------
      HEADER LAYOUT (about + contact)
   -------------------------------------------------------- */
@@ -163,7 +157,6 @@
   }
 
   .about-text { max-width: 60%; }
-
 
   .contact-sidebox {
     border-radius: 18px;
@@ -190,7 +183,6 @@
     color: var(--highlight);
   }
 
-
   /* -------------------------------------------------------
      MAIN DIVIDER
   -------------------------------------------------------- */
@@ -209,119 +201,86 @@
     opacity: 0.9;
   }
 
+  /* -------------------------------------------------------
+     MAIN CONTENT LAYOUT — CARDS LEFT, TEXT RIGHT
+  -------------------------------------------------------- */
+  .layout {
+    display: grid;
+    grid-template-columns: 1.05fr 1.35fr;
+    gap: 2.6rem;
+    align-items: flex-start;
+    grid-template-areas:
+      "cards text";
+  }
+
+  .layout-left  { grid-area: cards; }
+  .layout-right { grid-area: text; }
+
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "text"
+        "cards";
+    }
+  }
+
+  .section-heading {
+    font-family: "Playfair Display", serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--highlight);
+    margin-bottom: 0.9rem;
+    letter-spacing: 0.01em;
+    padding-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .section-heading::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 72px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .quote-block {
+    font-size: 0.94rem;
+    line-height: 1.75;
+    font-style: italic;
+    color: var(--text-soft);
+    max-width: 43rem;
+  }
+
+  .slow-update-note {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    margin-bottom: 1rem;
+    max-width: 43rem;
+  }
 
   /* -------------------------------------------------------
-     TWO COLUMN SECTION
+     CARDS — LEFT COLUMN
   -------------------------------------------------------- */
-/* -------------------------------------------------------
-   MAIN CONTENT LAYOUT — CARDS LEFT, TEXT RIGHT
--------------------------------------------------------- */
-.layout {
-  display: grid;
-  grid-template-columns: 1.05fr 1.35fr;
-  gap: 2.6rem;
-  align-items: flex-start;
-}
-
-/* DOM order = text first, but shown in right column */
-.layout-right {
-  grid-column: 2;
-}
-
-.layout-left {
-  grid-column: 1;
-}
-
-/* Stack on mobile, text first then cards */
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
+  .card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
   }
 
-  .layout-right,
-  .layout-left {
-    grid-column: 1;
+  .card {
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 1.1rem 1.25rem;
+    background:
+      linear-gradient(150deg, rgba(18,18,18,0.94), rgba(10,10,10,0.88));
+    box-shadow:
+      0 7px 22px rgba(0,0,0,0.38),
+      inset 0 0 0 0.5px rgba(255,255,255,0.03);
+    transition: 0.25s ease;
   }
-}
-
-.section-heading {
-  font-family: "Playfair Display", serif;
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--highlight);
-  margin-bottom: 0.9rem;
-  letter-spacing: 0.01em;
-  padding-bottom: 0.5rem;
-  position: relative;
-}
-
-.section-heading::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 72px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-}
-
-/* Keep Disclaimers underline behavior */
-.disclaimers-section .section-heading {
-  padding-bottom: 0.6rem;
-}
-
-/* Text blocks */
-.quote-block {
-  font-size: 0.94rem;
-  line-height: 1.75;
-  font-style: italic;
-  color: var(--text-soft);
-  max-width: 43rem;
-}
-
-.slow-update-note {
-  font-size: 0.88rem;
-  color: var(--text-soft);
-  margin-bottom: 1rem;
-  max-width: 43rem;
-}
-
-/* CARDS — left column */
-.card-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
-.card {
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.14);
-  padding: 1.1rem 1.25rem;
-  background:
-    linear-gradient(150deg, rgba(18,18,18,0.94), rgba(10,10,10,0.88));
-  box-shadow:
-    0 7px 22px rgba(0,0,0,0.38),
-    inset 0 0 0 0.5px rgba(255,255,255,0.03);
-  transition: 0.25s ease;
-}
-
-.card:hover {
-  border-color: rgba(215,164,81,0.4);
-  transform: translateY(-2px);
-}
-
-.card-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1rem;
-  color: var(--text);
-  margin-bottom: 0.45rem;
-}
-
-.card-text p {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: var(--text-soft);
-}
 
   .card:hover {
     border-color: rgba(215,164,81,0.4);
@@ -340,7 +299,6 @@
     line-height: 1.7;
     color: var(--text-soft);
   }
-
 
   /* -------------------------------------------------------
      DISCLAIMERS
@@ -380,7 +338,6 @@
     font-size: 0.95rem;
     color: var(--highlight);
   }
-    
 
   /* -------------------------------------------------------
      FOOTER
@@ -423,7 +380,6 @@
     color: var(--highlight);
     font-weight: 600;
   }
-
   </style>
 </head>
 
@@ -470,94 +426,97 @@
 
     </div> <!-- /shell-inner -->
 
-
     <!-- TOP MAIN DIVIDER -->
     <div class="about-divider"></div>
 
-
+    <!-- MAIN TWO-COLUMN LAYOUT -->
     <div class="layout">
 
-  <!-- RIGHT COLUMN: Why + How -->
-  <div class="layout-right">
-    <section>
-      <div class="section-heading">Why this space exists</div>
+      <!-- LEFT COLUMN: CARDS -->
+      <div class="layout-left">
+        <div class="card-grid">
 
-      <div class="quote-block">
-        Vigil began as an effort to see the world more clearly: the systems that harm,
-        the patterns that repeat, and the lives affected in the quiet margins of society.
-        The project follows research across many issues, including human rights,
-        wildlife preservation, legal cases, and financial pressures,
-        and presents that work in a form that informs rather than overwhelms.
+          <div class="card">
+            <div class="card-title">Vigil is…</div>
+            <div class="card-text">
+              <p>
+                Vigil is an experience built for noticing how human choices influence the world around us.
+                It gathers researched threads into an organized archive so heavy subjects can be approached
+                with steadiness instead of overwhelm. The environment is meant to feel calm and focused,
+                a place where complex issues settle into something more comprehensible. Vigil exists to
+                record what happens, including the extremes of harm and the smaller moments of repair,
+                in a way that encourages honest awareness rather than spectacle.
+              </p>
+            </div>
+          </div>
 
-        <br><br>
+          <div class="card">
+            <div class="card-title">Vigil is not…</div>
+            <div class="card-text">
+              <p>
+                Vigil is not designed for outrage or shock-driven storytelling, and it does not rely on
+                emotional intensity to hold attention. It is not centered on a single authority or
+                personality. Nothing here asks for identity or belonging. The intention is simply to
+                offer information with clarity and to keep attention from drifting away from what matters.
+                Vigil is not meant to replace professional guidance in legal, medical, financial,
+                or personal matters.
+              </p>
+            </div>
+          </div>
 
-        Rooted in the idea of <em>vigilia</em>, the discipline of staying awake,
-        Vigil invites slow attention and responsible engagement.
-        Each topic points toward concrete steps and trusted organizations,
-        giving any reader a way to learn, respond, and create change at any scale.
-      </div>
-    </section>
+          <div class="card">
+            <div class="card-title">Vigil aims…</div>
+            <div class="card-text">
+              <p>
+                Vigil aims to preserve what should not be forgotten. It aims to provide clarity in places
+                where confusion is common and to reconnect scattered pieces of information into something
+                understandable. Its purpose is to create a steady experience where important issues can be
+                seen in full context. Vigil aims to illuminate quietly, allowing readers to understand
+                without pressure, urgency, or expectation.
+              </p>
+            </div>
+          </div>
 
-    <section class="how-section" style="margin-top:2.4rem;">
-      <div class="section-heading">How this space works</div>
-
-      <p class="slow-update-note">
-        Pages in Vigil change slowly. New research and context are added with care instead of urgency so each topic has time to breathe. 
-        The intention is to create a space where depth is possible, where information is shaped gently, and where clarity matters more than immediacy. 
-        Vigil functions as a quiet environment in a noisy landscape, offering room to understand rather than react.
-      </p>
-    </section>
-  </div>
-
-  <!-- LEFT COLUMN: Cards -->
-  <div class="layout-left">
-    <div class="card-grid">
-
-      <div class="card">
-        <div class="card-title">Vigil is…</div>
-        <div class="card-text">
-          <p>
-            Vigil is an experience built for noticing how human choices influence the world around us. 
-            It gathers researched threads into an organized archive so heavy subjects can be approached with steadiness instead of overwhelm. 
-            The environment is meant to feel calm and focused, a place where complex issues settle into something more comprehensible. 
-            Vigil exists to record what happens, including the extremes of harm and the smaller moments of repair, in a way that encourages honest awareness rather than spectacle.
-          </p>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">Vigil is not…</div>
-        <div class="card-text">
-          <p>
-            Vigil is not designed for outrage or shock-driven storytelling, and it does not rely on emotional intensity to hold attention. 
-            It is not centered on a single authority or personality. Nothing here asks for identity or belonging. 
-            The intention is simply to offer information with clarity and to keep attention from drifting away from what matters. 
-            Vigil is not meant to replace professional guidance in legal, medical, financial, or personal matters.
+      <!-- RIGHT COLUMN: WHY + HOW -->
+      <div class="layout-right">
+        <section>
+          <div class="section-heading">Why this space exists</div>
+
+          <div class="quote-block">
+            Vigil began as an effort to see the world more clearly: the systems that harm,
+            the patterns that repeat, and the lives affected in the quiet margins of society.
+            The project follows research across many issues, including human rights,
+            wildlife preservation, legal cases, and financial pressures,
+            and presents that work in a form that informs rather than overwhelms.
+
+            <br><br>
+
+            Rooted in the idea of <em>vigilia</em>, the discipline of staying awake,
+            Vigil invites slow attention and responsible engagement.
+            Each topic points toward concrete steps and trusted organizations,
+            giving any reader a way to learn, respond, and create change at any scale.
+          </div>
+        </section>
+
+        <section class="how-section" style="margin-top: 2.4rem;">
+          <div class="section-heading">How this space works</div>
+
+          <p class="slow-update-note">
+            Pages in Vigil change slowly. New research and context are added with care instead of urgency
+            so each topic has time to breathe. The intention is to create a space where depth is possible,
+            where information is shaped gently, and where clarity matters more than immediacy. Vigil
+            functions as a quiet environment in a noisy landscape, offering room to understand rather than react.
           </p>
-        </div>
+        </section>
       </div>
 
-      <div class="card">
-        <div class="card-title">Vigil aims…</div>
-        <div class="card-text">
-          <p>
-            Vigil aims to preserve what should not be forgotten. 
-            It aims to provide clarity in places where confusion is common and to reconnect scattered pieces of information into something understandable. 
-            Its purpose is to create a steady experience where important issues can be seen in full context. 
-            Vigil aims to illuminate quietly, allowing readers to understand without pressure, urgency, or expectation.
-          </p>
-        </div>
-      </div>
-
-    </div><!-- card-grid -->
-  </div>
-
-</div><!-- layout -->
-
+    </div><!-- /layout -->
 
     <!-- BOTTOM MAIN DIVIDER -->
     <div class="about-divider"></div>
-
 
     <!-- DISCLAIMERS -->
     <div class="disclaimers-section">
@@ -603,9 +562,8 @@
           Links redirect to outside organizations, and Vigil is not responsible for how funds are used.
         </p>
 
-      </div><!-- disclaimer-box -->
-    </div><!-- disclaimers-section -->
-
+      </div>
+    </div>
 
     <!-- FOOTER -->
     <div class="footer-wrapper">
