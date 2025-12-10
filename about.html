@@ -224,6 +224,10 @@
   width: 100%;
   text-align: center; 
 }
+.layout .section-heading {
+  text-align: center;
+}
+
 
 
   @media (max-width: 800px) {
@@ -250,20 +254,31 @@
     height: 1px;
     background: linear-gradient(90deg, var(--accent), transparent);
   }
+    /* Center the underline for headings used in the layout and disclaimers */
+.layout .section-heading::after,
+.disclaimers-section .section-heading::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-  .quote-block {
-    font-size: 0.94rem;
-    line-height: 1.75;
-    font-style: italic;
-    color: var(--text-soft);
-    max-width: 43rem;
-  }
 
-  .slow-update-note {
-    font-size: 0.88rem;
-    color: var(--text-soft);
-    margin-bottom: 1rem;
-  }
+ .quote-block {
+  font-size: 0.94rem;
+  line-height: 1.75;
+  font-style: italic;
+  color: var(--text-soft);
+  max-width: 43rem;
+  margin: 0 auto;   /* add this */
+}
+
+
+ .slow-update-note {
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  margin: 0 auto 1rem;
+  max-width: 43rem;
+}
+
 
 
   /* -------------------------------------------------------
