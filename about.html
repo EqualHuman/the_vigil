@@ -384,39 +384,33 @@
    TYPOGRAPHY HARMONY — HEADINGS & BODY COPY
 -------------------------------------------------------- */
 
-/* All main section-style headings (including Disclaimers) */
+/* HEADINGS — unified style for sections, cards, and Disclaimers */
 .section-heading,
+.card-title,
 .disclaimers-section .section-heading {
   font-family: "Playfair Display", serif;
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--highlight);
   letter-spacing: 0.01em;
-}
-
-/* Card titles styled like section headings */
-.card-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--highlight);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.6rem;
-  padding-bottom: 0.4rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.5rem;
   position: relative;
 }
 
-/* Gold underline for card titles, echoing section headings */
-.card-title::after {
+/* Gold underline for all of them */
+.section-heading::after,
+.card-title::after,
+.disclaimers-section .section-heading::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 60px;
+  width: 72px;
   height: 1px;
   background: linear-gradient(90deg, var(--accent), transparent);
-  opacity: 0.95;
 }
+
 
 .quote-block,
 .slow-update-note,
