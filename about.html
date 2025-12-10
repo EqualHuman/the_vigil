@@ -139,12 +139,12 @@
   }
 
   .about-description {
-    font-size: 1.02rem;
-    line-height: 1.68;
-    color: var(--highlight);
-    max-width: 42rem;
-    margin-top: 0.3rem;
-  }
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: #e5d5b0;    /* softer than the old pale yellow, still warmer than body text */
+  font-weight: 500;  /* a little more presence */
+}
+
 
   /* -------------------------------------------------------
      HEADER LAYOUT (about + contact)
@@ -418,8 +418,6 @@
   opacity: 0.95;
 }
 
-/* Cohesive body text across the page */
-.about-description,
 .quote-block,
 .slow-update-note,
 .card-text p,
@@ -428,6 +426,7 @@
   line-height: 1.75;
   color: var(--text-soft);
 }
+
 
 /* Keep the softer, reflective feel for this block */
 .quote-block {
@@ -569,8 +568,9 @@
 
     </div><!-- /layout -->
 
-    <!-- BOTTOM MAIN DIVIDER -->
-    <div class="about-divider"></div>
+  <!-- TOP MAIN DIVIDER -->
+<div class="about-divider"></div>
+
 
     <!-- DISCLAIMERS -->
     <div class="disclaimers-section">
