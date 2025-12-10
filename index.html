@@ -83,6 +83,15 @@
       margin-bottom: 1.4rem;
       letter-spacing: 0.02em;
     }
+.etymology::after {
+  content: "";
+  display: block;
+  width: 60%;
+  max-width: 260px;
+  height: 1px;
+  margin-top: 1rem;
+  background: linear-gradient(90deg, rgba(215,164,81,0.25), transparent);
+}
 
     h1 {
       font-family: "Playfair Display", "Times New Roman", serif;
@@ -126,6 +135,11 @@
       background: rgba(15, 15, 15, 0.6);
       backdrop-filter: blur(4px);
     }
+.pill:hover {
+  border-color: rgba(215,164,81,0.45);
+  color: var(--highlight);
+  transition: 0.2s ease;
+}
 
     @media (max-width: 600px) {
       body {
