@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Humanity &amp; Society • Vigil</title>
+  <title>About • Vigil</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Fonts -->
@@ -55,7 +55,6 @@
       overflow: hidden;
     }
 
-    /* big soft glow in the corner for depth */
     .shell::before {
       content: "";
       position: absolute;
@@ -72,7 +71,7 @@
 
     .shell-inner {
       position: relative;
-      z-index: 1; /* sit above glow */
+      z-index: 1;
     }
 
     .back {
@@ -94,7 +93,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-bottom: 1.8rem;  /* now under the back link */
+      margin-bottom: 1.8rem;
     }
 
     .pill {
@@ -130,14 +129,13 @@
       font-size: clamp(2.1rem, 3.5vw, 2.8rem);
       margin-bottom: 0.3rem;
       font-weight: 600;
-      color: var(--text);
     }
 
     .subtext {
       font-family: "Playfair Display", serif;
       font-size: 0.96rem;
       color: var(--secondary);
-      max-width: 40rem;
+      max-width: 42rem;
       line-height: 1.6;
       margin-bottom: 1.9rem;
     }
@@ -162,12 +160,41 @@
       }
     }
 
-    .content-lead {
-      max-width: 40rem;
-      font-size: 0.96rem;
+    .section-heading {
+      font-family: "Playfair Display", serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.7rem;
+      color: var(--highlight);
+    }
+
+    .list-block {
+      font-size: 0.95rem;
       line-height: 1.7;
       color: var(--highlight);
-      white-space: pre-line;
+      margin-bottom: 1.6rem;
+    }
+
+    .list-block ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0.4rem;
+    }
+
+    .list-block li::before {
+      content: "• ";
+      color: var(--accent);
+    }
+
+    .list-block li {
+      margin-bottom: 0.3rem;
+    }
+
+    .quote-block {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--secondary);
+      font-style: italic;
     }
 
     .section-label {
@@ -180,8 +207,9 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .card {
@@ -213,13 +241,34 @@
       font-family: "Playfair Display", serif;
       font-size: 0.98rem;
       margin-bottom: 0.4rem;
-      color: var(--text);
     }
 
     .card-text {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       color: var(--secondary);
       line-height: 1.6;
+    }
+
+    .contact-card {
+      margin-top: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(215,164,81,0.4);
+      padding: 1rem 1.2rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
+                  rgba(8,8,8,0.98);
+    }
+
+    .contact-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--highlight);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-email {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--highlight);
     }
 
     @media (max-width: 600px) {
@@ -237,7 +286,6 @@
         <a href="index.html">← Back to Vigil</a>
       </div>
 
-      <!-- Top directory pills: present on every page -->
       <div class="pill-row">
         <a class="pill" href="humanity.html">Humanity &amp; Society</a>
         <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
@@ -248,54 +296,74 @@
         <a class="pill" href="index.html">Vigil</a>
       </div>
 
-      <div class="category-tag">We Reflect</div>
+      <div class="category-tag">We Gather</div>
 
-      <h1>Humanity &amp; Society</h1>
+      <h1>About</h1>
 
       <div class="subtext">
-        We look at the systems, stories, and daily structures that shape how humans live together —
-        and the ways we have failed, harmed, and tried to repair.
+        The Vigil is a quiet watchfulness over how humans treat one another and the living world.  
+        It collects stories, data, and resources that show where we have harmed — and where we try to repair.
       </div>
 
       <div class="divider"></div>
 
       <div class="layout">
-        <!-- left side: longer intro / explanation -->
-        <div class="content-lead">
-Here we gather work about justice, inequality, conflict, care, and the quiet decisions that ripple through human lives.
+        <!-- LEFT COLUMN -->
+        <div>
+          <div class="section-heading">What The Vigil Is</div>
+          <div class="list-block">
+            <ul>
+              <li>a space for observing how our choices shape other lives</li>
+              <li>a collection of researched threads, not breaking news</li>
+              <li>a way to make complex issues quieter, slower, and more understandable</li>
+              <li>a reminder that harm and repair both belong in the story</li>
+            </ul>
+          </div>
 
-Some entries may explore:
-• how laws and systems protect — or fail — communities  
-• stories of harm that went unseen for too long  
-• moments where people chose repair, accountability, or change  
+          <div class="section-heading">What The Vigil Is Not</div>
+          <div class="list-block">
+            <ul>
+              <li>a replacement for legal, medical, or financial advice</li>
+              <li>a platform for outrage for its own sake</li>
+              <li>a place where any one person is the hero, expert, or main character</li>
+            </ul>
 
-Over time, this space will hold data, stories, and resources that help us reflect on what it means to live together as humans.
+            <div class="quote-block">
+              We have struggled. We have harmed.  
+              But we have also healed, innovated, and learned.  
+              This Vigil is our shared observation — of what we have done, and what we may still undo.
+            </div>
+          </div>
         </div>
 
-        <!-- right side: small “topic cards” -->
+        <!-- RIGHT COLUMN -->
         <div>
-          <div class="section-label">Highlighted Stories</div>
+          <div class="section-label">How this space works</div>
           <div class="card-grid">
             <div class="card">
-              <div class="card-title">Invisible Labor</div>
+              <div class="card-title">How We Work</div>
               <div class="card-text">
-                How unpaid or underpaid work — care work, domestic work, emotional labor —
-                holds up entire systems without being fully seen.
+                Topics are chosen for their impact on people and the planet, not for shock value.
+                Wherever possible, sources are linked, nuance is preserved, and uncertainty is acknowledged.
               </div>
             </div>
+
             <div class="card">
-              <div class="card-title">When Systems Fail</div>
+              <div class="card-title">How You Can Use This Space</div>
               <div class="card-text">
-                Case studies where policies or institutions harmed the people
-                they were meant to protect — and how communities responded.
+                Read slowly. Follow the threads. Share what resonates.  
+                Use the categories to explore a topic, and the “Paths Forward” section
+                to find credible organizations, further reading, and practical steps.
               </div>
             </div>
-            <div class="card">
-              <div class="card-title">Small Acts of Repair</div>
-              <div class="card-text">
-                Stories of apology, accountability, and change at the personal or local level:
-                where harm was acknowledged and steps were taken to mend it.
-              </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">
+              For questions, corrections, or topics you feel should be brought into the light:
+            </div>
+            <div class="contact-email">
+              InboxVigil@outlook.com
             </div>
           </div>
         </div>
