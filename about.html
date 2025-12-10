@@ -47,6 +47,7 @@
       border: 1px solid rgba(215,164,81,0.22);
       padding: 2.5rem clamp(2rem, 4vw, 3rem);
       box-shadow:
+        0 0 60px rgba(215,164,81,0.08),
         0 30px 80px rgba(0,0,0,0.7),
         inset 0 0 0 0.5px rgba(255,255,255,0.04);
       backdrop-filter: blur(14px);
@@ -93,7 +94,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-bottom: 1.8rem;
+      margin-bottom: 2.4rem;
     }
 
     .pill {
@@ -121,6 +122,7 @@
       font-size: clamp(2.1rem, 3.5vw, 2.8rem);
       margin-bottom: 0.3rem;
       font-weight: 600;
+      animation: fadeIn 1s ease both;
     }
 
     .subtext {
@@ -130,6 +132,7 @@
       max-width: 42rem;
       line-height: 1.6;
       margin-bottom: 1.9rem;
+      animation: fadeIn 1.4s ease both;
     }
 
     .subtext em {
@@ -145,135 +148,97 @@
       margin-bottom: 2.1rem;
     }
 
-  .intro-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 0.9fr);
-  gap: 2rem;
-  align-items: start;
-  margin-bottom: 2rem;
-    postition: relative;
-}
+    /* Intro: About + Contact */
+    .intro-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 0.9fr);
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 2rem;
+      position: relative;
+      animation: fadeIn 1.6s ease both;
+    }
+
     .intro-layout::after {
-  content: "";
-  position: absolute;
-  left: calc(60% - 1rem);
-  top: 0.5rem;
-  bottom: 0.5rem;
-  width: 1px;
-  background: linear-gradient(to bottom, rgba(215,164,81,0.3), transparent);
-  pointer-events: none;
-}
-.section-heading:hover {
-  color: var(--accent);
-  cursor: default;
-  transition: 0.25s ease;
-}
+      content: "";
+      position: absolute;
+      left: calc(60% - 1rem);
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(215,164,81,0.3), transparent);
+      pointer-events: none;
+    }
 
-.pill-row {
-  margin-bottom: 2.4rem;
-}
-.disclaimers-section {
-  border-top: 1px solid rgba(215,164,81,0.25);
-  padding-top: 2.2rem;
-  margin-top: 3rem;
-}
-    .disclaimer-text {
-  max-width: 48rem;
-}
-.contact-card::before {
-  content: "✉";
-  position: absolute;
-  top: 0.9rem;
-  right: 1rem;
-  font-size: 0.9rem;
-  color: rgba(215,164,81,0.45);
-}
-h1 { animation: fadeIn 1s ease both; }
-.subtext { animation: fadeIn 1.4s ease both; }
-.intro-layout { animation: fadeIn 1.6s ease both; }
-.layout { animation: fadeIn 1.8s ease both; }
-.disclaimers-section { animation: fadeIn 2s ease both; }
-.footer-card { animation: footerFade 2.2s ease both; }
-.quote-block p::first-letter {
-  margin-left: 0.6rem;
-}
+    .contact-card {
+      position: relative;
+      border-radius: 16px;
+      border: 1px solid rgba(215,164,81,0.4);
+      padding: 0.9rem 1.1rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+                  rgba(10,10,10,0.92);
+      font-size: 0.85rem;
+      color: var(--secondary);
+      line-height: 1.6;
+      max-width: 230px;
+    }
 
-.quote-block {
-  border-left: 2px solid rgba(215,164,81,0.3);
-  padding-left: 1rem;
-}
+    .contact-card::before {
+      content: "✉";
+      position: absolute;
+      top: 0.9rem;
+      right: 1rem;
+      font-size: 0.9rem;
+      color: rgba(215,164,81,0.45);
+    }
 
-.shell {
-  box-shadow:
-    0 0 60px rgba(215,164,81,0.08),
-    0 30px 80px rgba(0,0,0,0.7),
-    inset 0 0 0 0.5px rgba(255,255,255,0.04);
-}
-@media (max-width: 700px) {
-  .disclaimer-text p {
-    margin-bottom: 1.2rem;
-  }
-}
+    .contact-label {
+      font-family: "Playfair Display", serif;
+      font-size: 0.9rem;
+      color: var(--highlight);
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
 
-.contact-card {
-  border-radius: 16px;
-  border: 1px solid rgba(215,164,81,0.4);
-  padding: 0.9rem 1.1rem;
-  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-              rgba(10,10,10,0.92);
-  font-size: 0.85rem;
-  color: var(--secondary);
-  line-height: 1.6;
-  max-width: 230px;
-}
+    .contact-text a {
+      text-decoration: none;
+    }
 
-.contact-label {
-  font-family: "Playfair Display", serif;
-  font-size: 0.9rem;
-  color: var(--highlight);
-  margin-bottom: 0.35rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.contact-text a {
-  text-decoration: none;
-}
-
-.contact-text a:hover {
-  text-decoration: underline;
-}
-
-/* Stack on small screens */
-@media (max-width: 700px) {
-  .intro-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-card {
-    max-width: 100%;
-  }
-}
     .contact-email-inline {
-  color: var(--highlight);
-  text-decoration: none;
-  font-weight: 600;
-}
+      color: var(--highlight);
+      text-decoration: none;
+      font-weight: 600;
+    }
 
-.contact-email-inline:hover {
-  color: var(--accent);
-  text-decoration: underline;
-  transition: 0.2s ease;
-}
+    .contact-email-inline:hover {
+      color: var(--accent);
+      text-decoration: underline;
+      transition: 0.2s ease;
+    }
 
+    @media (max-width: 700px) {
+      .intro-layout {
+        grid-template-columns: 1fr;
+      }
 
+      .intro-layout::after {
+        display: none;
+      }
+
+      .contact-card {
+        max-width: 100%;
+      }
+    }
+
+    /* Main two-column layout */
     .layout {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
       gap: 2.2rem;
+      animation: fadeIn 1.8s ease both;
     }
 
-    /* Visual structure for columns on larger screens */
     .layout > div:first-child {
       border-left: 1px solid rgba(215,164,81,0.35);
       padding-left: 1.25rem;
@@ -322,12 +287,20 @@ h1 { animation: fadeIn 1s ease both; }
       background: linear-gradient(90deg, rgba(215,164,81,0.7), transparent);
     }
 
+    .section-heading:hover {
+      color: var(--accent);
+      cursor: default;
+      transition: 0.25s ease;
+    }
+
     .quote-block {
       margin-top: 0.4rem;
       font-size: 0.9rem;
       line-height: 1.7;
       color: var(--secondary);
       font-style: italic;
+      border-left: 2px solid rgba(215,164,81,0.3);
+      padding-left: 1rem;
     }
 
     .slow-update-note {
@@ -404,25 +377,34 @@ h1 { animation: fadeIn 1s ease both; }
 
     /* Disclaimers section */
     .disclaimers-section {
-      margin-top: 2.6rem;
-      padding-top: 1.9rem;
-      border-top: 1px solid rgba(110,112,117,0.4);
+      border-top: 1px solid rgba(215,164,81,0.25);
+      padding-top: 2.2rem;
+      margin-top: 3rem;
+      animation: fadeIn 2s ease both;
     }
 
     .disclaimer-text {
       font-size: 0.9rem;
       color: var(--secondary);
       line-height: 1.7;
-      max-width: 60rem;
+      max-width: 48rem;
     }
 
     .disclaimer-text p {
-      margin-bottom: 0.9rem;
+      margin-bottom: 1.2rem;
     }
 
     .disclaimer-text strong {
       color: var(--highlight);
       font-weight: 600;
+      font-family: "Playfair Display", serif;
+      letter-spacing: 0.01em;
+    }
+
+    @media (max-width: 700px) {
+      .disclaimer-text p {
+        margin-bottom: 1.2rem;
+      }
     }
 
     /* Footer Wrapper */
@@ -434,7 +416,6 @@ h1 { animation: fadeIn 1s ease both; }
       gap: 1.1rem;
     }
 
-    /* Contact line */
     .footer-contact-inline {
       font-size: 0.85rem;
       color: var(--secondary);
@@ -450,20 +431,19 @@ h1 { animation: fadeIn 1s ease both; }
 
     /* Vigil Line Box */
     .footer-card {
-  border-radius: 18px;
-  border: 1px solid rgba(215,164,81,0.35);
-  padding: 0.9rem 1.4rem;
-  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-              rgba(10,10,10,0.92);
-  text-align: center;
-  max-width: 620px;
-  margin: 0 auto;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-  opacity: 0;
-  animation: footerFade 1.2s ease forwards;
-  animation-delay: 0.3s;
-}
-
+      border-radius: 18px;
+      border: 1px solid rgba(215,164,81,0.35);
+      padding: 0.9rem 1.4rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+                  rgba(10,10,10,0.92);
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+      opacity: 0;
+      animation: footerFade 2.2s ease forwards;
+      animation-delay: 0.3s;
+    }
 
     .footer-line {
       font-family: "Playfair Display", serif;
@@ -503,27 +483,25 @@ h1 { animation: fadeIn 1s ease both; }
         <a class="pill" href="about.html">About</a>
       </div>
 
-            <div class="intro-layout">
-  <div>
-    <h1>About Vigil</h1>
+      <div class="intro-layout">
+        <div>
+          <h1>About Vigil</h1>
 
-    <div class="subtext">
-      <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
-      Vigil is a quiet watchfulness over how humans treat one another and the living world.
-      It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
-    </div>
-  </div>
+          <div class="subtext">
+            <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
+            Vigil is a quiet watchfulness over how humans treat one another and the living world.
+            It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
+          </div>
+        </div>
 
-  <div class="contact-card">
-    <div class="contact-label">Contact</div>
-    <div class="contact-text">
-      For questions or corrections, write to<br />
-      <a href="mailto:InboxVigil@outlook.com" class="contact-email-inline">InboxVigil@outlook.com</a>.
-    </div>
-  </div>
-</div>
-
-
+        <div class="contact-card">
+          <div class="contact-label">Contact</div>
+          <div class="contact-text">
+            For questions or corrections, write to<br />
+            <a href="mailto:InboxVigil@outlook.com" class="contact-email-inline">InboxVigil@outlook.com</a>.
+          </div>
+        </div>
+      </div>
 
       <div class="divider"></div>
 
@@ -609,7 +587,7 @@ h1 { animation: fadeIn 1s ease both; }
         </div>
       </section>
 
-           <!-- FOOTER -->
+      <!-- FOOTER -->
       <div class="footer-wrapper">
         <div class="footer-card">
           <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
@@ -621,7 +599,6 @@ h1 { animation: fadeIn 1s ease both; }
           Vigil provides educational information only. It is not a substitute for legal, medical, or professional advice.
         </div>
       </div>
-
 
     </div>
   </main>
