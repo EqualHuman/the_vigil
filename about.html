@@ -165,27 +165,33 @@
       }
     }
 
+    /* Unified section heading style for both sides */
     .section-heading {
       font-family: "Playfair Display", serif;
       font-size: 1.05rem;
       margin-bottom: 0.7rem;
       color: var(--highlight);
+      position: relative;
+      padding-bottom: 0.4rem;
+    }
+
+    /* Small visual accent line under headings */
+    .section-heading::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 70px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(215,164,81,0.7), transparent);
     }
 
     .quote-block {
-      margin-top: 0.6rem;
+      margin-top: 0.4rem;
       font-size: 0.9rem;
       line-height: 1.7;
       color: var(--secondary);
       font-style: italic;
-    }
-
-    .section-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--secondary);
-      margin-bottom: 0.6rem;
     }
 
     .card-grid {
@@ -247,26 +253,11 @@
       margin-bottom: 0.3rem;
     }
 
-    .contact-card {
-      margin-top: 1rem;
-      border-radius: 18px;
-      border: 1px solid rgba(215,164,81,0.4);
-      padding: 1rem 1.2rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
-                  rgba(8,8,8,0.98);
-    }
-
-    .contact-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--highlight);
-      margin-bottom: 0.4rem;
-    }
-
-    .contact-email {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--highlight);
+    .slow-update-note {
+      font-size: 0.85rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      line-height: 1.6;
     }
 
     /* Footer Wrapper */
@@ -275,7 +266,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1.1rem;
+    }
+
+    /* Inline contact line above the quote */
+    .footer-contact-inline {
+      font-size: 0.85rem;
+      color: var(--secondary);
+      text-align: center;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    .footer-contact-inline .contact-email-inline {
+      font-weight: 600;
+      color: var(--highlight);
     }
 
     /* Vigil Line Box */
@@ -301,14 +306,6 @@
       letter-spacing: 0.01em;
     }
 
-    .footer-contact {
-      max-width: 480px;
-      text-align: center;
-      opacity: 0;
-      animation: footerFade 1.2s ease forwards;
-      animation-delay: 0.55s;
-    }
-
     @keyframes footerFade {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -318,14 +315,6 @@
       body { padding: 1.25rem; }
       .shell { padding: 1.75rem 1.5rem; }
     }
-
-  .slow-update-note {
-  font-size: 0.85rem;
-  color: var(--secondary);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
   </style>
 </head>
 
@@ -346,16 +335,13 @@
         <a class="pill" href="about.html">About</a>
       </div>
 
-      <div class="category-tag">We Gather</div>
-
-      <h1>About</h1>
+      <h1>About Vigil</h1>
 
       <div class="subtext">
-  <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
-  Vigil is a quiet watchfulness over how humans treat one another and the living world.
-  It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
-</div>
-
+        <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
+        Vigil is a quiet watchfulness over how humans treat one another and the living world.
+        It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
+      </div>
 
       <div class="divider"></div>
 
@@ -364,18 +350,19 @@
         <div>
           <div class="section-heading">Why this space exists</div>
           <div class="quote-block">
-Vigil began as an effort to see the world more clearly: the systems that harm, the patterns that repeat, and the lives affected in the quiet margins of society. The project follows research across many issues, including human rights, wildlife preservation, legal cases, and financial pressures, and presents that work in a form that informs rather than overwhelms.
-
-Rooted in the idea of vigilia, the discipline of staying awake, Vigil invites slow attention and responsible engagement. Each topic points toward concrete steps and trusted organizations, giving any reader a way to learn, respond, and create change at any scale.          </div>
+            Vigil began as an effort to see the world more clearly: the systems that harm, the patterns that repeat, and the lives affected in the quiet margins of society. The project follows research across many issues, including human rights, wildlife preservation, legal cases, and financial pressures, and presents that work in a form that informs rather than overwhelms.
+            <br /><br />
+            Rooted in the idea of vigilia, the discipline of staying awake, Vigil invites slow attention and responsible engagement. Each topic points toward concrete steps and trusted organizations, giving any reader a way to learn, respond, and create change at any scale.
+          </div>
         </div>
 
         <!-- RIGHT COLUMN -->
         <div>
-          <div class="section-label">How this space works</div>
+          <div class="section-heading">How this space works</div>
 
-<p class="slow-update-note">
-  Topics are updated slowly as new research appears, so pages grow over time instead of chasing headlines.
-</p>
+          <p class="slow-update-note">
+            Topics are updated slowly as new research appears, so pages grow over time instead of chasing headlines.
+          </p>
 
           <div class="card-grid">
             <div class="card">
@@ -406,18 +393,16 @@ Rooted in the idea of vigilia, the discipline of staying awake, Vigil invites sl
 
       <!-- FOOTER -->
       <div class="footer-wrapper">
+
+        <div class="footer-contact-inline">
+          For questions, corrections, or topics that feel missing from this space, write to
+          <span class="contact-email-inline">InboxVigil@outlook.com</span>.
+        </div>
+
         <div class="footer-card">
           <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
         </div>
 
-        <div class="contact-card footer-contact">
-          <div class="contact-title">
-            For questions, corrections, or topics you feel should be brought into the light:
-          </div>
-          <div class="contact-email">
-            InboxVigil@outlook.com
-          </div>
-        </div>
       </div>
 
     </div>
