@@ -10,11 +10,11 @@
 
   <style>
     :root {
-      --bg: #0F0F0F;         /* Charcoal */
-      --text: #F7F4F0;       /* Ivory */
-      --accent: #D7A451;     /* Ember Gold */
-      --secondary: #6E7075;  /* Slate Grey */
-      --highlight: #FCE6C2;  /* Soft Amber */
+      --bg: #0F0F0F;
+      --text: #F7F4F0;
+      --accent: #D7A451;
+      --secondary: #6E7075;
+      --highlight: #FCE6C2;
     }
 
     * {
@@ -30,7 +30,7 @@
       align-items: center;
       justify-content: center;
       padding: 2rem;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Inter", sans-serif;
       color: var(--text);
       background:
         radial-gradient(circle at top, rgba(215,164,81,0.22), transparent 60%),
@@ -50,70 +50,60 @@
         0 30px 80px rgba(0,0,0,0.7),
         inset 0 0 0 0.5px rgba(255,255,255,0.04);
       backdrop-filter: blur(14px);
-      position: relative;
-      overflow: hidden;
       animation: fadeIn 1.2s ease both;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .back {
+      margin-bottom: 1.8rem;
+      font-size: 0.82rem;
+    }
+
+    .back a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    .back a:hover {
+      color: var(--highlight);
+      transition: 0.2s ease;
     }
 
     h1 {
-      font-family: "Playfair Display", "Times New Roman", serif;
-      font-weight: 600;
-      font-size: clamp(2.1rem, 3.5vw, 2.6rem);
-      line-height: 1.1;
-      margin: 0 0 0.6rem;
-    }
-
-    h1 span {
-      background: linear-gradient(120deg, var(--accent), var(--highlight));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .etymology {
       font-family: "Playfair Display", serif;
-      font-size: 0.82rem;
-      color: var(--secondary);
-      opacity: 0.85;
-      margin-bottom: 1.4rem;
-      letter-spacing: 0.02em;
+      font-size: clamp(2.1rem, 3.5vw, 2.8rem);
+      margin-bottom: 0.2rem;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .etymology::after {
-      content: "";
-      display: block;
+    .subtext {
+      font-family: "Playfair Display", serif;
+      font-size: 0.96rem;
+      color: var(--secondary);
+      max-width: 40rem;
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Divider */
+    .divider {
       width: 60%;
       max-width: 260px;
       height: 1px;
-      margin-top: 1rem;
       background: linear-gradient(90deg, rgba(215,164,81,0.25), transparent);
-    }
-
-    .intro {
-      max-width: 40rem;
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: var(--highlight);
-      margin: 1rem 0 2rem;
-      white-space: pre-line;
+      margin-bottom: 2rem;
     }
 
     .pill-row {
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-top: 1rem;
+      margin-bottom: 2.5rem;
     }
 
     .pill {
@@ -136,29 +126,19 @@
       transition: 0.2s ease;
     }
 
-    .back {
-      margin-bottom: 1.5rem;
-      font-size: 0.8rem;
+    .contact-header {
+      font-size: 0.95rem;
+      color: var(--highlight);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
     }
 
-    .back a {
-      color: var(--secondary);
-      text-decoration: none;
-    }
-
-    .back a:hover {
+    .email {
+      font-size: 1rem;
+      font-weight: 600;
       color: var(--highlight);
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 1.25rem;
-      }
-
-      .shell {
-        padding: 1.75rem 1.5rem;
-      }
-    }
   </style>
 </head>
 
@@ -169,13 +149,14 @@
       <a href="index.html">← Back to Vigil</a>
     </div>
 
-    <h1>
-      <span>About</span>
-    </h1>
+    <h1>About</h1>
 
-    <div class="etymology">
-      A quiet watchfulness over the human story
+    <div class="subtext">
+      We call toward awareness, compassion, and verified organizations making real change.  
+      This space gathers issues, stories, and questions that shape our shared human watchfulness.
     </div>
+
+    <div class="divider"></div>
 
     <div class="pill-row">
       <a class="pill" href="humanity.html">Humanity &amp; Society</a>
@@ -183,13 +164,17 @@
       <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
       <a class="pill" href="culture.html">Culture &amp; Memory</a>
       <a class="pill" href="paths.html">Paths Forward</a>
-      <a class="pill" href="about.html">Vigil</a>
+      <a class="pill" href="index.html">Vigil</a>
     </div>
-<div class="intro">
-For questions, feedback, or topics you feel should be brought into the light: InboxVigil@outlook.com
-</div>
 
-    <!-- You can later place cards, articles, links, etc. here -->
+    <div class="contact-header">
+      For questions, feedback, or topics you feel should be brought into the light:
+    </div>
+
+    <div class="email">
+      InboxVigil@outlook.com
+    </div>
+
   </main>
 </body>
 </html>
