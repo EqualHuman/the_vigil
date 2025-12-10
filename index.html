@@ -83,15 +83,16 @@
       margin-bottom: 1.4rem;
       letter-spacing: 0.02em;
     }
-.etymology::after {
-  content: "";
-  display: block;
-  width: 60%;
-  max-width: 260px;
-  height: 1px;
-  margin-top: 1rem;
-  background: linear-gradient(90deg, rgba(215,164,81,0.25), transparent);
-}
+
+    .etymology::after {
+      content: "";
+      display: block;
+      width: 60%;
+      max-width: 260px;
+      height: 1px;
+      margin-top: 1rem;
+      background: linear-gradient(90deg, rgba(215,164,81,0.25), transparent);
+    }
 
     h1 {
       font-family: "Playfair Display", "Times New Roman", serif;
@@ -125,6 +126,8 @@
     }
 
     .pill {
+      display: inline-block;          /* so links behave like your divs */
+      text-decoration: none;          /* remove underline */
       border-radius: 999px;
       border: 1px solid rgba(110,112,117,0.5);
       padding: 0.45rem 1.1rem;
@@ -135,11 +138,12 @@
       background: rgba(15, 15, 15, 0.6);
       backdrop-filter: blur(4px);
     }
-.pill:hover {
-  border-color: rgba(215,164,81,0.45);
-  color: var(--highlight);
-  transition: 0.2s ease;
-}
+
+    .pill:hover {
+      border-color: rgba(215,164,81,0.45);
+      color: var(--highlight);
+      transition: 0.2s ease;
+    }
 
     @media (max-width: 600px) {
       body {
@@ -159,18 +163,18 @@
       <span>Vigil</span>
     </h1>
 
- <!-- 🌿 Etymology Block (Option 1) -->
+    <!-- 🌿 Etymology Block -->
     <div class="etymology">
       <em>vigil • vigilia • vigiliae</em> [f.] — watch; vigil; wakefulness.
     </div>
 
     <div class="pill-row">
-      <div class="pill">Humanity &amp; Society</div>
-      <div class="pill">Endangered Life &amp; Ecosystems</div>
-      <div class="pill">Science, Medicine &amp; Innovation</div>
-      <div class="pill">Culture &amp; Memory</div>
-      <div class="pill">Paths Forward</div>
-      <div class="pill">About Vigil</div>
+      <a class="pill" href="humanity.html">Humanity &amp; Society</a>
+      <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
+      <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
+      <a class="pill" href="culture.html">Culture &amp; Memory</a>
+      <a class="pill" href="paths.html">Paths Forward</a>
+      <a class="pill" href="about.html">About Vigil</a>
     </div>
 
   </main>
