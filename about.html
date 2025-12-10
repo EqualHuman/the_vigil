@@ -140,6 +140,11 @@
       margin-bottom: 1.9rem;
     }
 
+    .subtext em {
+      font-style: italic;
+      color: var(--highlight);
+    }
+
     .divider {
       width: 60%;
       max-width: 260px;
@@ -165,28 +170,6 @@
       font-size: 1.05rem;
       margin-bottom: 0.7rem;
       color: var(--highlight);
-    }
-
-    .list-block {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--highlight);
-      margin-bottom: 1.6rem;
-    }
-
-    .list-block ul {
-      list-style: none;
-      padding-left: 0;
-      margin-top: 0.4rem;
-    }
-
-    .list-block li::before {
-      content: "• ";
-      color: var(--accent);
-    }
-
-    .list-block li {
-      margin-bottom: 0.3rem;
     }
 
     .quote-block {
@@ -249,6 +232,21 @@
       line-height: 1.6;
     }
 
+    .card-text ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .card-text li::before {
+      content: "• ";
+      color: var(--accent);
+    }
+
+    .card-text li {
+      margin-bottom: 0.3rem;
+    }
+
     .contact-card {
       margin-top: 1rem;
       border-radius: 18px;
@@ -271,62 +269,55 @@
       color: var(--highlight);
     }
 
+    /* Footer Wrapper */
+    .footer-wrapper {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    /* Vigil Line Box */
+    .footer-card {
+      border-radius: 18px;
+      border: 1px solid rgba(215,164,81,0.35);
+      padding: 0.9rem 1.4rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+                  rgba(10,10,10,0.92);
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+      opacity: 0;
+      animation: footerFade 1.2s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .footer-line {
+      font-family: "Playfair Display", serif;
+      font-size: 0.95rem;
+      color: var(--highlight);
+      letter-spacing: 0.01em;
+    }
+
+    .footer-contact {
+      max-width: 480px;
+      text-align: center;
+      opacity: 0;
+      animation: footerFade 1.2s ease forwards;
+      animation-delay: 0.55s;
+    }
+
+    @keyframes footerFade {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 600px) {
       body { padding: 1.25rem; }
       .shell { padding: 1.75rem 1.5rem; }
     }
-
-    /* Footer Wrapper */
-.footer-wrapper {
-  margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-}
-
-/* Vigil Line Box */
-.footer-card {
-  border-radius: 18px;
-  border: 1px solid rgba(215,164,81,0.35);
-  padding: 0.9rem 1.4rem;
-  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-              rgba(10,10,10,0.92);
-  text-align: center;
-  max-width: 480px;
-  width: 100%;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-}
-.footer-card {
-  opacity: 0;
-  animation: footerFade 1.2s ease forwards;
-  animation-delay: 0.3s;
-}
-
-@keyframes footerFade {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-    .footer-contact {
-  opacity: 0;
-  animation: footerFade 1.2s ease forwards;
-  animation-delay: 0.55s;
-}
-
-
-.footer-line {
-  font-family: "Playfair Display", serif;
-  font-size: 0.95rem;
-  color: var(--highlight);
-  letter-spacing: 0.01em;
-}
-
-/* Footer Contact card matches your current contact-card but centers it */
-.footer-contact {
-  max-width: 480px;
-  text-align: center;
-}
-
   </style>
 </head>
 
@@ -353,11 +344,7 @@
       <h1>About</h1>
 
       <div class="subtext">
-        vigil • vigilia • vigiliae [f.] — watch; vigil; wakefulness.
-<div>
-  
-</div>
-        
+        <em>vigil • vigilia • vigiliae</em> [f.] — watch; vigil; wakefulness.<br /><br />
         Vigil is a quiet watchfulness over how humans treat one another and the living world.  
         It collects stories, data, and resources that show where we have harmed — and where we try to repair.
       </div>
@@ -367,16 +354,9 @@
       <div class="layout">
         <!-- LEFT COLUMN -->
         <div>
-          <div>
-About jobberish
-            <div>
-         
-
-            <div class="quote-block">
-              We have struggled. We have harmed.  
-              But we have also healed, innovated, and learned.  
-              This Vigil is our shared observation — of what we have done, and what we may still undo.
-            </div>
+          <div class="section-heading">Why this space exists</div>
+          <div class="quote-block">
+           Vigil began as an effort to understand the world more clearly: the systems that harm, the patterns that repeat, and the lives affected in the quiet margins of society. The project collects research across many issues such as human rights, wildlife preservation, legal cases, and financial pressures and presents them in a way that informs rather than overwhelms. Inspired by the idea of vigilia, the discipline of staying awake, Vigil encourages thoughtful awareness and responsible engagement. Every topic includes actionable steps and trusted organizations that offer readers a chance to learn, respond, and create change at any scale.
           </div>
         </div>
 
@@ -385,47 +365,46 @@ About jobberish
           <div class="section-label">How this space works</div>
           <div class="card-grid">
             <div class="card">
-              <div class="card-title">Vigil is...</div>
+              <div class="card-title">Vigil is…</div>
               <div class="card-text">
-<ul>
-              <li>a space for observing how our choices shape other lives</li>
-              <li>a collection of researched threads, not breaking news</li>
-              <li>a way to make complex issues quieter, slower, and more understandable</li>
-              <li>a reminder that harm and repair both belong in the story</li>
-            </ul>
+                <ul>
+                  <li>a space for observing how our choices shape other lives</li>
+                  <li>a collection of researched threads, not breaking news</li>
+                  <li>a way to make complex issues quieter, slower, and more understandable</li>
+                  <li>a reminder that harm and repair both belong in the story</li>
+                </ul>
               </div>
             </div>
 
             <div class="card">
-              <div class="card-title">Vigil is not...</div>
+              <div class="card-title">Vigil is not…</div>
               <div class="card-text">
-<ul>
-              <li>a replacement for legal, medical, or financial advice</li>
-              <li>a platform for outrage for its own sake</li>
-              <li>a place where any one person is the hero, expert, or main character</li>
-            </ul>
+                <ul>
+                  <li>a replacement for legal, medical, or financial advice</li>
+                  <li>a platform for outrage for its own sake</li>
+                  <li>a place where any one person is the hero, expert, or main character</li>
+                </ul>
               </div>
             </div>
-  
+          </div>
         </div>
       </div>
-<!-- FOOTER -->
-<div class="footer-wrapper">
-  
-  <div class="footer-card">
-    <div class="footer-line">This Vigil continues as long as we continue to watch.</div>
-  </div>
 
-  <div class="contact-card footer-contact">
-    <div class="contact-title">
-      For questions, corrections, or topics you feel should be brought into the light:
-    </div>
-    <div class="contact-email">
-      InboxVigil@outlook.com
-    </div>
-  </div>
+      <!-- FOOTER -->
+      <div class="footer-wrapper">
+        <div class="footer-card">
+          <div class="footer-line">This Vigil continues as long as we continue to watch.</div>
+        </div>
 
-</div>
+        <div class="contact-card footer-contact">
+          <div class="contact-title">
+            For questions, corrections, or topics you feel should be brought into the light:
+          </div>
+          <div class="contact-email">
+            InboxVigil@outlook.com
+          </div>
+        </div>
+      </div>
 
     </div>
   </main>
