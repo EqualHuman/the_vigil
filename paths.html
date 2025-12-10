@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>About • Vigil</title>
+  <title>Humanity &amp; Society • Vigil</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Fonts -->
@@ -10,11 +10,11 @@
 
   <style>
     :root {
-      --bg: #0F0F0F;         /* Charcoal */
-      --text: #F7F4F0;       /* Ivory */
-      --accent: #D7A451;     /* Ember Gold */
-      --secondary: #6E7075;  /* Slate Grey */
-      --highlight: #FCE6C2;  /* Soft Amber */
+      --bg: #0F0F0F;
+      --text: #F7F4F0;
+      --accent: #D7A451;
+      --secondary: #6E7075;
+      --highlight: #FCE6C2;
     }
 
     * {
@@ -38,82 +38,63 @@
     }
 
     .shell {
-      max-width: 960px;
+      max-width: 1100px;
       width: 100%;
       border-radius: 24px;
       background:
         radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
-        rgba(5,5,5,0.9);
+        rgba(5,5,5,0.95);
       border: 1px solid rgba(215,164,81,0.22);
       padding: 2.5rem clamp(2rem, 4vw, 3rem);
       box-shadow:
         0 30px 80px rgba(0,0,0,0.7),
         inset 0 0 0 0.5px rgba(255,255,255,0.04);
       backdrop-filter: blur(14px);
+      animation: fadeIn 1.2s ease both;
       position: relative;
       overflow: hidden;
-      animation: fadeIn 1.2s ease both;
+    }
+
+    /* big soft glow in the corner for depth */
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at 80% 0%, rgba(215,164,81,0.25), transparent 55%);
+      opacity: 0.4;
+      pointer-events: none;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    h1 {
-      font-family: "Playfair Display", "Times New Roman", serif;
-      font-weight: 600;
-      font-size: clamp(2.1rem, 3.5vw, 2.6rem);
-      line-height: 1.1;
-      margin: 0 0 0.6rem;
+    .shell-inner {
+      position: relative;
+      z-index: 1; /* sit above glow */
     }
 
-    h1 span {
-      background: linear-gradient(120deg, var(--accent), var(--highlight));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .etymology {
-      font-family: "Playfair Display", serif;
+    .back {
+      margin-bottom: 1rem;
       font-size: 0.82rem;
+    }
+
+    .back a {
       color: var(--secondary);
-      opacity: 0.85;
-      margin-bottom: 1.4rem;
-      letter-spacing: 0.02em;
+      text-decoration: none;
     }
 
-    .etymology::after {
-      content: "";
-      display: block;
-      width: 60%;
-      max-width: 260px;
-      height: 1px;
-      margin-top: 1rem;
-      background: linear-gradient(90deg, rgba(215,164,81,0.25), transparent);
-    }
-
-    .intro {
-      max-width: 40rem;
-      font-size: 0.98rem;
-      line-height: 1.7;
+    .back a:hover {
       color: var(--highlight);
-      margin: 1rem 0 2rem;
-      white-space: pre-line;
+      transition: 0.2s ease;
     }
 
     .pill-row {
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-top: 1rem;
+      margin-bottom: 1.8rem;  /* now under the back link */
     }
 
     .pill {
@@ -136,61 +117,191 @@
       transition: 0.2s ease;
     }
 
-    .back {
-      margin-bottom: 1.5rem;
-      font-size: 0.8rem;
-    }
-
-    .back a {
+    .category-tag {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.76rem;
       color: var(--secondary);
-      text-decoration: none;
+      margin-bottom: 0.4rem;
     }
 
-    .back a:hover {
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.1rem, 3.5vw, 2.8rem);
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .subtext {
+      font-family: "Playfair Display", serif;
+      font-size: 0.96rem;
+      color: var(--secondary);
+      max-width: 40rem;
+      line-height: 1.6;
+      margin-bottom: 1.9rem;
+    }
+
+    .divider {
+      width: 60%;
+      max-width: 260px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(215,164,81,0.28), transparent);
+      margin-bottom: 2.1rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+      gap: 2.2rem;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .content-lead {
+      max-width: 40rem;
+      font-size: 0.96rem;
+      line-height: 1.7;
       color: var(--highlight);
+      white-space: pre-line;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--secondary);
+      margin-bottom: 0.6rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(110,112,117,0.45);
+      padding: 1rem 1.1rem 1.1rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.05), transparent 55%),
+                  rgba(10,10,10,0.9);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(215,164,81,0.16), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-title {
+      font-family: "Playfair Display", serif;
+      font-size: 0.98rem;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .card-text {
+      font-size: 0.86rem;
+      color: var(--secondary);
+      line-height: 1.6;
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 1.25rem;
-      }
-
-      .shell {
-        padding: 1.75rem 1.5rem;
-      }
+      body { padding: 1.25rem; }
+      .shell { padding: 1.75rem 1.5rem; }
     }
   </style>
 </head>
 
 <body>
   <main class="shell">
+    <div class="shell-inner">
 
-    <div class="back">
-      <a href="index.html">← Back to Vigil</a>
+      <div class="back">
+        <a href="index.html">← Back to Vigil</a>
+      </div>
+
+      <!-- Top directory pills: present on every page -->
+      <div class="pill-row">
+        <a class="pill" href="humanity.html">Humanity &amp; Society</a>
+        <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
+        <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
+        <a class="pill" href="culture.html">Culture &amp; Memory</a>
+        <a class="pill" href="paths.html">Paths Forward</a>
+        <a class="pill" href="about.html">About</a>
+        <a class="pill" href="index.html">Vigil</a>
+      </div>
+
+      <div class="category-tag">We Reflect</div>
+
+      <h1>Humanity &amp; Society</h1>
+
+      <div class="subtext">
+        We look at the systems, stories, and daily structures that shape how humans live together —
+        and the ways we have failed, harmed, and tried to repair.
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="layout">
+        <!-- left side: longer intro / explanation -->
+        <div class="content-lead">
+Here we gather work about justice, inequality, conflict, care, and the quiet decisions that ripple through human lives.
+
+Some entries may explore:
+• how laws and systems protect — or fail — communities  
+• stories of harm that went unseen for too long  
+• moments where people chose repair, accountability, or change  
+
+Over time, this space will hold data, stories, and resources that help us reflect on what it means to live together as humans.
+        </div>
+
+        <!-- right side: small “topic cards” -->
+        <div>
+          <div class="section-label">Highlighted Stories</div>
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-title">Invisible Labor</div>
+              <div class="card-text">
+                How unpaid or underpaid work — care work, domestic work, emotional labor —
+                holds up entire systems without being fully seen.
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">When Systems Fail</div>
+              <div class="card-text">
+                Case studies where policies or institutions harmed the people
+                they were meant to protect — and how communities responded.
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Small Acts of Repair</div>
+              <div class="card-text">
+                Stories of apology, accountability, and change at the personal or local level:
+                where harm was acknowledged and steps were taken to mend it.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <h1>
-      <span>About</span>
-    </h1>
-
-    <div class="etymology">
-      We call toward action, compassion, and verified organizations making real change.
-      For questions, feedback, or topics you feel should be brought into the light: InboxVigil@outlook.com
-    </div>
-
-    <div class="pill-row">
-      <a class="pill" href="humanity.html">Humanity &amp; Society</a>
-      <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
-      <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
-      <a class="pill" href="culture.html">Culture &amp; Memory</a>
-      <a class="pill" href="paths.html">Paths Forward</a>
-      <a class="pill" href="about.html">About</a>
-    </div>
-<div class="intro">
-For questions, feedback, or topics you feel should be brought into the light: InboxVigil@outlook.com
-</div>
-
-    <!-- You can later place cards, articles, links, etc. here -->
   </main>
 </body>
 </html>
