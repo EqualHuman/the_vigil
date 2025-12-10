@@ -76,7 +76,7 @@
     }
 
     .back {
-      margin-bottom: 1.8rem;
+      margin-bottom: 1rem;
       font-size: 0.82rem;
     }
 
@@ -86,6 +86,33 @@
     }
 
     .back a:hover {
+      color: var(--highlight);
+      transition: 0.2s ease;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;  /* now under the back link */
+    }
+
+    .pill {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(110,112,117,0.5);
+      padding: 0.45rem 1.1rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--secondary);
+      background: rgba(15, 15, 15, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .pill:hover {
+      border-color: rgba(215,164,81,0.45);
       color: var(--highlight);
       transition: 0.2s ease;
     }
@@ -195,33 +222,6 @@
       line-height: 1.6;
     }
 
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 2.4rem;
-    }
-
-    .pill {
-      display: inline-block;
-      text-decoration: none;
-      border-radius: 999px;
-      border: 1px solid rgba(110,112,117,0.5);
-      padding: 0.45rem 1.1rem;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--secondary);
-      background: rgba(15, 15, 15, 0.6);
-      backdrop-filter: blur(4px);
-    }
-
-    .pill:hover {
-      border-color: rgba(215,164,81,0.45);
-      color: var(--highlight);
-      transition: 0.2s ease;
-    }
-
     @media (max-width: 600px) {
       body { padding: 1.25rem; }
       .shell { padding: 1.75rem 1.5rem; }
@@ -237,6 +237,17 @@
         <a href="index.html">← Back to Vigil</a>
       </div>
 
+      <!-- Top directory pills: present on every page -->
+      <div class="pill-row">
+        <a class="pill" href="humanity.html">Humanity &amp; Society</a>
+        <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
+        <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
+        <a class="pill" href="culture.html">Culture &amp; Memory</a>
+        <a class="pill" href="paths.html">Paths Forward</a>
+        <a class="pill" href="about.html">About</a>
+        <a class="pill" href="index.html">Vigil</a>
+      </div>
+
       <div class="category-tag">We Reflect</div>
 
       <h1>Humanity &amp; Society</h1>
@@ -247,16 +258,6 @@
       </div>
 
       <div class="divider"></div>
-
-      <div class="pill-row">
-        <a class="pill" href="humanity.html">Humanity &amp; Society</a>
-        <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
-        <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
-        <a class="pill" href="culture.html">Culture &amp; Memory</a>
-        <a class="pill" href="paths.html">Paths Forward</a>
-        <a class="pill" href="about.html">About</a>
-        <a class="pill" href="index.html">Vigil</a>
-      </div>
 
       <div class="layout">
         <!-- left side: longer intro / explanation -->
