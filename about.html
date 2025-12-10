@@ -17,11 +17,7 @@
       --highlight: #FCE6C2;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       margin: 0;
@@ -70,25 +66,11 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .shell-inner {
-      position: relative;
-      z-index: 1;
-    }
+    .shell-inner { position: relative; z-index: 1; }
 
-    .back {
-      margin-bottom: 1rem;
-      font-size: 0.82rem;
-    }
-
-    .back a {
-      color: var(--secondary);
-      text-decoration: none;
-    }
-
-    .back a:hover {
-      color: var(--highlight);
-      transition: 0.2s ease;
-    }
+    .back { margin-bottom: 1rem; font-size: 0.82rem; }
+    .back a { color: var(--secondary); text-decoration: none; }
+    .back a:hover { color: var(--highlight); transition: 0.2s ease; }
 
     .pill-row {
       display: flex;
@@ -135,97 +117,69 @@
       animation: fadeIn 1.4s ease both;
     }
 
-    .subtext em {
-      font-style: italic;
-      color: var(--highlight);
+    .subtext em { font-style: italic; color: var(--highlight); }
+
+    /* Header: About + Contact sidebox */
+    .about-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2.5rem;
+      margin-bottom: 2.8rem;
     }
 
-   
-
-    /* Intro: About + Contact */
-    .intro-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 0.9fr);
-      gap: 2rem;
-      align-items: start;
-      margin-bottom: 2rem;
-      position: relative;
-      animation: fadeIn 1.6s ease both;
-    }
-
-    .intro-layout::after {
-      content: "";
-      position: absolute;
-      left: calc(60% - 1rem);
-      top: 0.5rem;
-      bottom: 0.5rem;
-      width: 1px;
-      background: linear-gradient(to bottom, rgba(215,164,81,0.3), transparent);
-      pointer-events: none;
-    }
-
-    .contact-card {
-      position: relative;
-      border-radius: 16px;
-      border: 1px solid rgba(215,164,81,0.4);
-      padding: 0.9rem 1.1rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-                  rgba(10,10,10,0.92);
-      font-size: 0.85rem;
-      color: var(--secondary);
-      line-height: 1.6;
-      max-width: 230px;
-    }
-
-    .contact-card::before {
-      content: "✉";
-      position: absolute;
-      top: 0.9rem;
-      right: 1rem;
-      font-size: 0.9rem;
-      color: rgba(215,164,81,0.45);
-    }
-
-    .contact-label {
+    .about-text { max-width: 60%; }
+    .etymology {
       font-family: "Playfair Display", serif;
       font-size: 0.9rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+
+    .about-description {
+      font-size: 1rem;
+      line-height: 1.65;
       color: var(--highlight);
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.06em;
+    }
+
+    .contact-sidebox {
+      border: 1px solid rgba(215,164,81,0.35);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+                  rgba(10,10,10,0.92);
+      width: 240px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+    }
+
+    .contact-title {
+      font-family: "Playfair Display", serif;
+      font-size: 0.85rem;
       text-transform: uppercase;
-    }
-
-    .contact-text a {
-      text-decoration: none;
-    }
-
-    .contact-email-inline {
+      letter-spacing: 0.12em;
+      margin-bottom: 0.4rem;
       color: var(--highlight);
-      text-decoration: none;
-      font-weight: 600;
     }
 
-    .contact-email-inline:hover {
-      color: var(--accent);
-      text-decoration: underline;
-      transition: 0.2s ease;
+    .contact-email { margin-top: 0.4rem; font-weight: 600; color: var(--highlight); }
+
+    /* MAIN DIVIDER — stays */
+    .about-divider {
+      width: 70%;
+      max-width: 720px;
+      height: 1px;
+      margin: 2.5rem auto;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.12),
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.12)
+      );
+      border-radius: 2px;
+      opacity: 0.9;
     }
 
-    @media (max-width: 700px) {
-      .intro-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .intro-layout::after {
-        display: none;
-      }
-
-      .contact-card {
-        max-width: 100%;
-      }
-    }
-
-    /* Main two-column layout */
+    /* TWO-COLUMN SECTION (updated to remove inner borders) */
     .layout {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
@@ -233,35 +187,24 @@
       animation: fadeIn 1.8s ease both;
     }
 
+    /* Removed LEFT vertical line */
     .layout > div:first-child {
-      border-left: 1px solid rgba(215,164,81,0.35);
-      padding-left: 1.25rem;
+      padding-left: 0;
+      border-left: none;
     }
 
+    /* Removed RIGHT short horizontal line */
     .layout > div:last-child {
-      border-top: 1px solid rgba(110,112,117,0.4);
-      padding-top: 1.1rem;
+      padding-top: 0;
+      border-top: none;
     }
 
     @media (max-width: 800px) {
       .layout {
         grid-template-columns: 1fr;
       }
-
-      .layout > div:first-child {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid rgba(110,112,117,0.4);
-        padding-top: 1rem;
-      }
-
-      .layout > div:last-child {
-        border-top: none;
-        padding-top: 0.25rem;
-      }
     }
 
-    /* Unified section heading style */
     .section-heading {
       font-family: "Playfair Display", serif;
       font-size: 1.05rem;
@@ -281,20 +224,14 @@
       background: linear-gradient(90deg, rgba(215,164,81,0.7), transparent);
     }
 
-    .section-heading:hover {
-      color: var(--accent);
-      cursor: default;
-      transition: 0.25s ease;
-    }
-
     .quote-block {
       margin-top: 0.4rem;
       font-size: 0.9rem;
       line-height: 1.7;
       color: var(--secondary);
       font-style: italic;
-      border-left: 2px solid rgba(215,164,81,0.3);
-      padding-left: 1rem;
+      padding-left: 0;  /* removed vertical bar padding */
+      border-left: none; /* removed inner divider */
     }
 
     .slow-update-note {
@@ -311,12 +248,6 @@
       margin-bottom: 1.5rem;
     }
 
-    @media (max-width: 700px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .card {
       border-radius: 18px;
       border: 1px solid rgba(110,112,117,0.45);
@@ -328,86 +259,46 @@
       overflow: hidden;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0 0, rgba(215,164,81,0.16), transparent 55%);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      pointer-events: none;
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
     .card-title {
       font-family: "Playfair Display", serif;
       font-size: 0.98rem;
       margin-bottom: 0.4rem;
     }
 
-    .card-text {
-      font-size: 0.88rem;
-      color: var(--secondary);
-      line-height: 1.6;
-    }
+    .card-text ul { list-style: none; padding: 0; }
+    .card-text li::before { content: "• "; color: var(--accent); }
 
-    .card-text ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
+    /* DISCLAIMERS */
+    
 
-    .card-text li::before {
-      content: "• ";
-      color: var(--accent);
-    }
+    .disclaimer-text { font-size: 0.9rem; color: var(--secondary); line-height: 1.7; max-width: 48rem; }
 
-    .card-text li {
-      margin-bottom: 0.3rem;
-    }
-
-    /* Disclaimers section */
-    .disclaimers-section {
-      border-top: 1px solid rgba(215,164,81,0.25);
-      padding-top: 2.2rem;
-      margin-top: 3rem;
-      animation: fadeIn 2s ease both;
-    }
-
-    .disclaimer-text {
-      font-size: 0.9rem;
-      color: var(--secondary);
-      line-height: 1.7;
-      max-width: 48rem;
-    }
-
-    .disclaimer-text p {
-      margin-bottom: 1.2rem;
-    }
-
-    .disclaimer-text strong {
-      color: var(--highlight);
-      font-weight: 600;
-      font-family: "Playfair Display", serif;
-      letter-spacing: 0.01em;
-    }
-
-    @media (max-width: 700px) {
-      .disclaimer-text p {
-        margin-bottom: 1.2rem;
-      }
-    }
-
-    /* Footer Wrapper */
+    /* FOOTER */
     .footer-wrapper {
       margin-top: 2.6rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.1rem;
+    }
+
+    .footer-card {
+      border-radius: 18px;
+      border: 1px solid rgba(215,164,81,0.35);
+      padding: 0.9rem 1.4rem;
+      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+                  rgba(10,10,10,0.92);
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+    }
+
+    .footer-line {
+      font-family: "Playfair Display", serif;
+      font-size: 0.95rem;
+      color: var(--highlight);
+      letter-spacing: 0.01em;
     }
 
     .footer-contact-inline {
@@ -419,109 +310,9 @@
     }
 
     .footer-contact-inline .contact-email-inline {
+      color: var(--highlight);
       font-weight: 600;
-      color: var(--highlight);
     }
-
-    /* Vigil Line Box */
-    .footer-card {
-      border-radius: 18px;
-      border: 1px solid rgba(215,164,81,0.35);
-      padding: 0.9rem 1.4rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-                  rgba(10,10,10,0.92);
-      text-align: center;
-      max-width: 620px;
-      margin: 0 auto;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-      opacity: 0;
-      animation: footerFade 2.2s ease forwards;
-      animation-delay: 0.3s;
-    }
-
-    .footer-line {
-      font-family: "Playfair Display", serif;
-      font-size: 0.95rem;
-      color: var(--highlight);
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-    }
-
-    @keyframes footerFade {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 1.25rem; }
-      .shell { padding: 1.75rem 1.5rem; }
-      .footer-line { white-space: normal; }
-    }
-    .about-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2.5rem;
-  margin-bottom: 2.8rem;
-}
-
-.about-text {
-  max-width: 60%;
-}
-
-.etymology {
-  font-family: "Playfair Display", serif;
-  font-size: 0.9rem;
-  color: var(--secondary);
-  margin-bottom: 1rem;
-}
-
-.about-description {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--highlight);
-}
-
-.contact-sidebox {
-  border: 1px solid rgba(215,164,81,0.35);
-  border-radius: 16px;
-  padding: 1rem 1.2rem;
-  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-              rgba(10,10,10,0.92);
-  width: 240px;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-}
-
-.contact-title {
-  font-family: "Playfair Display", serif;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 0.4rem;
-  color: var(--highlight);
-}
-
-.contact-email {
-  margin-top: 0.4rem;
-  font-weight: 600;
-  color: var(--highlight);
-}
-    .about-divider {
-  width: 70%;
-  max-width: 720px;
-  height: 1px;
-  margin: 2.5rem auto 2.5rem auto;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.12),
-    rgba(255,255,255,0.05),
-    rgba(255,255,255,0.12)
-  );
-  border-radius: 2px;
-  opacity: 0.9;
-}
-
-
   </style>
 </head>
 
@@ -534,138 +325,161 @@
       </div>
 
       <div class="pill-row">
-        <a class="pill" href="humanity.html">Humanity &amp; Society</a>
-        <a class="pill" href="endangered.html">Endangered Life &amp; Ecosystems</a>
-        <a class="pill" href="science.html">Science, Medicine &amp; Innovation</a>
-        <a class="pill" href="culture.html">Culture &amp; Memory</a>
+        <a class="pill" href="humanity.html">Humanity & Society</a>
+        <a class="pill" href="endangered.html">Endangered Life & Ecosystems</a>
+        <a class="pill" href="science.html">Science, Medicine & Innovation</a>
+        <a class="pill" href="culture.html">Culture & Memory</a>
         <a class="pill" href="paths.html">Paths Forward</a>
         <a class="pill" href="about.html">About</a>
       </div>
 
-     <div class="about-header">
-  
-  <div class="about-text">
-    <h1>About Vigil</h1>
+      <!-- Header Section -->
+      <div class="about-header">
+        <div class="about-text">
+          <h1>About Vigil</h1>
 
-    <div class="etymology">
-      <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.
-    </div>
-
-    <p class="about-description">
-      Vigil is a quiet watchfulness over how humans treat one another and the living world.  
-      It gathers stories, data, and resources that show where harm takes place,  
-      and where attempts at repair begin.
-    </p>
-  </div>
-
-  <div class="contact-sidebox">
-    <div class="contact-title">CONTACT</div>
-    <p>For questions or corrections, write to</p>
-    <div class="contact-email">InboxVigil@outlook.com</div>
-  </div>
-
-</div>
-
-      </div>
-
-      <div class="about-divider"></div>
-
-      <div class="layout">
-        <!-- LEFT COLUMN -->
-        <div>
-          <div class="section-heading">Why this space exists</div>
-          <div class="quote-block">
-            Vigil began as an effort to see the world more clearly: the systems that harm, the patterns that repeat, and the lives affected in the quiet margins of society. The project follows research across many issues, including human rights, wildlife preservation, legal cases, and financial pressures, and presents that work in a form that informs rather than overwhelms.
-            <br /><br />
-            Rooted in the idea of vigilia, the discipline of staying awake, Vigil invites slow attention and responsible engagement. Each topic points toward concrete steps and trusted organizations, giving any reader a way to learn, respond, and create change at any scale.
+          <div class="etymology">
+            <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.
           </div>
-        </div>
 
-        <!-- RIGHT COLUMN -->
-        <div>
-          <div class="section-heading">How this space works</div>
-
-          <p class="slow-update-note">
-            Topics are updated slowly as new research appears, so pages grow over time instead of chasing headlines.
-          </p>
-
-          <div class="card-grid">
-            <div class="card">
-              <div class="card-title">Vigil is…</div>
-              <div class="card-text">
-                <ul>
-                  <li>a space for noticing how human choices shape other lives</li>
-                  <li>a collection of researched threads, not breaking news</li>
-                  <li>a way to make complex issues quieter, slower, and more understandable</li>
-                  <li>a reminder that harm and repair both belong in the record</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Vigil is not…</div>
-              <div class="card-text">
-                <ul>
-                  <li>a replacement for legal, medical, or financial advice</li>
-                  <li>a platform for outrage for its own sake</li>
-                  <li>a place where any one person is the hero, expert, or main character</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> <!-- end .layout -->
-
-      <!-- DISCLAIMERS SECTION -->
-      <section class="disclaimers-section">
-        <div class="section-heading">Disclaimers</div>
-        <div class="disclaimer-text">
-          <p>
-            <strong>Purpose &amp; Limitations</strong><br />
-            Vigil shares research-based content to promote awareness and understanding of complex societal issues. All information is intended for educational purposes only and should not be taken as legal, medical, financial, or other professional advice.
-          </p>
-
-          <p>
-            <strong>Accuracy &amp; Reliability</strong><br />
-            Every effort is made to present information responsibly and in good faith. However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content. Readers are encouraged to verify information independently and interpret it with personal discretion.
-          </p>
-
-          <p>
-            <strong>Sensitive Topics</strong><br />
-            Many subjects explored by Vigil involve difficult or distressing realities. Reader discretion is advised. Vigil is not responsible for emotional distress, misinterpretation, or any adverse effects that may arise from engaging with this material.
-          </p>
-
-          <p>
-            <strong>Reader Responsibility</strong><br />
-            Use of the information provided is at the reader’s own risk. Vigil is not liable for any losses, damages, or consequences resulting from reliance on the content presented.
-          </p>
-
-          <p>
-            <strong>Sources &amp; Third-Party Content</strong><br />
-            Content may include references to external organizations, research, articles, or resources. Vigil does not control or endorse third-party content and is not responsible for their practices, accuracy, or policies.
-          </p>
-
-          <p>
-            <strong>Donations</strong><br />
-            Vigil does not collect, process, or manage donations. All contribution links redirect to external organizations, and Vigil is not responsible for how those entities handle or utilize funds.
+          <p class="about-description">
+            Vigil is a quiet watchfulness over how humans treat one another and the living world.
+            It gathers stories, data, and resources that show where harm takes place,
+            and where attempts at repair begin.
           </p>
         </div>
-      </section>
 
-      <!-- FOOTER -->
-      <div class="footer-wrapper">
-        <div class="footer-card">
-          <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
-        </div>
-
-        <div class="footer-contact-inline">
-          For questions, corrections, or topics that feel missing from this space, write to
-          <span class="contact-email-inline">InboxVigil@outlook.com</span>.
-          Vigil provides educational information only. It is not a substitute for legal, medical, or professional advice.
+        <div class="contact-sidebox">
+          <div class="contact-title">CONTACT</div>
+          <p>For questions or corrections, write to</p>
+          <div class="contact-email">InboxVigil@outlook.com</div>
         </div>
       </div>
 
     </div>
+
+    <!-- Main Divider -->
+    <div class="about-divider"></div>
+
+    <!-- LOWER LAYOUT -->
+    <div class="layout">
+      <!-- LEFT COLUMN -->
+      <div>
+        <div class="section-heading">Why this space exists</div>
+
+        <div class="quote-block">
+          Vigil began as an effort to see the world more clearly: the systems that harm,
+          the patterns that repeat, and the lives affected in the quiet margins of society.
+          The project follows research across many issues, including human rights,
+          wildlife preservation, legal cases, and financial pressures,
+          and presents that work in a form that informs rather than overwhelms.
+
+          <br><br>
+
+          Rooted in the idea of <em>vigilia</em>, the discipline of staying awake,
+          Vigil invites slow attention and responsible engagement.
+          Each topic points toward concrete steps and trusted organizations,
+          giving any reader a way to learn, respond, and create change at any scale.
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div>
+        <div class="section-heading">How this space works</div>
+
+        <p class="slow-update-note">
+          Topics are updated slowly as new research appears, so pages grow over time
+          instead of chasing headlines.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">Vigil is…</div>
+            <div class="card-text">
+              <ul>
+                <li>a space for noticing how human choices shape other lives</li>
+                <li>a collection of researched threads, not breaking news</li>
+                <li>a way to make complex issues quieter, slower, and more understandable</li>
+                <li>a reminder that harm and repair both belong in the record</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Vigil is not…</div>
+            <div class="card-text">
+              <ul>
+                <li>a replacement for legal, medical, or financial advice</li>
+                <li>a platform for outrage for its own sake</li>
+                <li>a place where any one person is the hero, expert, or main character</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+ <!-- Main Divider -->
+    <div class="about-divider"></div>
+    
+    <!-- DISCLAIMERS -->
+      <div class="section-heading">Disclaimers</div>
+
+      <div class="disclaimer-text">
+        <p>
+          <strong>Purpose & Limitations</strong><br>
+          Vigil shares research-based content to promote awareness and understanding of complex societal issues.
+          All information is intended for educational purposes only and should not be taken as legal,
+          medical, financial, or other professional advice.
+        </p>
+
+        <p>
+          <strong>Accuracy & Reliability</strong><br>
+          Every effort is made to present information responsibly and in good faith.
+          However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content.
+          Readers are encouraged to verify information independently.
+        </p>
+
+        <p>
+          <strong>Sensitive Topics</strong><br>
+          Many subjects explored by Vigil involve difficult or distressing realities.
+          Reader discretion is advised.
+        </p>
+
+        <p>
+          <strong>Reader Responsibility</strong><br>
+          Use of the information provided is at the reader’s own risk.
+          Vigil is not liable for any losses, damages, or consequences from reliance on content presented.
+        </p>
+
+        <p>
+          <strong>Sources & Third-Party Content</strong><br>
+          Content may include references to external organizations or research.
+          Vigil does not control or endorse third-party content.
+        </p>
+
+        <p>
+          <strong>Donations</strong><br>
+          Vigil does not collect or manage donations.
+          Links redirect to outside organizations, and Vigil is not responsible for how funds are used.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer-wrapper">
+      <div class="footer-card">
+        <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
+      </div>
+
+      <div class="footer-contact-inline">
+        For questions, corrections, or topics that feel missing from this space, write to
+        <span class="contact-email-inline">InboxVigil@outlook.com</span>.
+        Vigil provides educational information only. It is not a substitute for legal, medical,
+        or professional advice.
+      </div>
+    </div>
+
   </main>
 </body>
 </html>
