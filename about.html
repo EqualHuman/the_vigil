@@ -139,12 +139,11 @@
   }
 
   .about-description {
-  font-size: 1.02rem;
-  line-height: 1.7;
-  color: #e5d5b0;    /* softer than the old pale yellow, still warmer than body text */
-  font-weight: 500;  /* a little more presence */
-}
-
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: #e5d5b0;    /* slightly warmer + brighter than body copy */
+    font-weight: 500;  /* a little more presence */
+  }
 
   /* -------------------------------------------------------
      HEADER LAYOUT (about + contact)
@@ -209,8 +208,7 @@
     grid-template-columns: 1.05fr 1.35fr;
     gap: 2.6rem;
     align-items: flex-start;
-    grid-template-areas:
-      "cards text";
+    grid-template-areas: "cards text";
   }
 
   .layout-left  { grid-area: cards; }
@@ -225,18 +223,23 @@
     }
   }
 
-  .section-heading {
+  /* -------------------------------------------------------
+     HEADINGS (sections + cards + Disclaimers)
+  -------------------------------------------------------- */
+  .section-heading,
+  .card-title {
     font-family: "Playfair Display", serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: var(--highlight);
-    margin-bottom: 0.9rem;
     letter-spacing: 0.01em;
+    margin-bottom: 0.9rem;
     padding-bottom: 0.5rem;
     position: relative;
   }
 
-  .section-heading::after {
+  .section-heading::after,
+  .card-title::after {
     content: "";
     position: absolute;
     left: 0;
@@ -246,19 +249,26 @@
     background: linear-gradient(90deg, var(--accent), transparent);
   }
 
-  .quote-block {
-    font-size: 0.94rem;
+  /* -------------------------------------------------------
+     BODY TEXT STYLES
+  -------------------------------------------------------- */
+  .quote-block,
+  .slow-update-note,
+  .card-text p,
+  .disclaimer-box p {
+    font-size: 0.95rem;
     line-height: 1.75;
-    font-style: italic;
     color: var(--text-soft);
+  }
+
+  .quote-block {
+    font-style: italic;
     max-width: 43rem;
   }
 
   .slow-update-note {
-    font-size: 0.88rem;
-    color: var(--text-soft);
-    margin-bottom: 1rem;
     max-width: 43rem;
+    margin-bottom: 1rem;
   }
 
   /* -------------------------------------------------------
@@ -287,33 +297,12 @@
     transform: translateY(-2px);
   }
 
-  .card-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1rem;
-    color: var(--text);
-    margin-bottom: 0.45rem;
-  }
-
-  .card-text p {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--text-soft);
-  }
-
   /* -------------------------------------------------------
      DISCLAIMERS
   -------------------------------------------------------- */
   .disclaimers-section {
     margin-top: 3rem;
     padding-top: 1.2rem;
-  }
-
-  .disclaimers-section .section-heading {
-    padding-bottom: 0.6rem;
-  }
-
-  .disclaimers-section .section-heading::after {
-    bottom: 0;
   }
 
   .disclaimer-box {
@@ -324,13 +313,6 @@
     background:
       linear-gradient(145deg, rgba(12,12,12,0.9), rgba(10,10,10,0.88));
     box-shadow: 0 7px 26px rgba(0,0,0,0.34);
-  }
-
-  .disclaimer-box p {
-    margin-bottom: 1.3rem;
-    font-size: 0.92rem;
-    color: var(--text-soft);
-    line-height: 1.72;
   }
 
   .disclaimer-box strong {
@@ -380,64 +362,6 @@
     color: var(--highlight);
     font-weight: 600;
   }
-    /* -------------------------------------------------------
-   TYPOGRAPHY HARMONY — HEADINGS & BODY COPY
--------------------------------------------------------- */
-
-/* HEADINGS — unified style for sections, cards, and Disclaimers */
-.section-heading,
-.card-title,
-.disclaimers-section .section-heading {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--highlight);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.5rem;
-  position: relative;
-}
-
-/* Gold underline for all of them */
-.section-heading::after,
-.card-title::after,
-.disclaimers-section .section-heading::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 72px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-}
-
-
-.quote-block,
-.slow-update-note,
-.card-text p,
-.disclaimer-box p {
-  font-size: 0.95rem;
-  line-height: 1.75;
-  color: var(--text-soft);
-}
-
-
-/* Keep the softer, reflective feel for this block */
-.quote-block {
-  font-style: italic;
-}
-/* FORCE gold underline to appear under section headings */
-.section-heading::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 72px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  opacity: 1;
-}
-
   </style>
 </head>
 
@@ -460,7 +384,6 @@
       <!-- HEADER SECTION -->
       <div class="about-header">
         <div class="about-text">
-
           <h1>About Vigil</h1>
 
           <div class="etymology">
@@ -472,7 +395,6 @@
             It gathers stories, data, and resources that show where harm takes place,
             and where attempts at repair begin.
           </p>
-
         </div>
 
         <div class="contact-sidebox">
@@ -495,7 +417,7 @@
         <div class="card-grid">
 
           <div class="card">
-            <div class="card-title">Vigil Is…</div>
+            <div class="card-title">Vigil is…</div>
             <div class="card-text">
               <p>
                 Vigil is an experience built for noticing how human choices influence the world around us.
@@ -509,7 +431,7 @@
           </div>
 
           <div class="card">
-            <div class="card-title">Vigil Is Not…</div>
+            <div class="card-title">Vigil is not…</div>
             <div class="card-text">
               <p>
                 Vigil is not designed for outrage or shock-driven storytelling, and it does not rely on
@@ -523,7 +445,7 @@
           </div>
 
           <div class="card">
-            <div class="card-title">Vigil Aims…</div>
+            <div class="card-title">Vigil aims…</div>
             <div class="card-text">
               <p>
                 Vigil aims to preserve what should not be forgotten. It aims to provide clarity in places
@@ -541,7 +463,7 @@
       <!-- RIGHT COLUMN: WHY + HOW -->
       <div class="layout-right">
         <section>
-          <div class="section-heading">Why This Space Exists</div>
+          <div class="section-heading">Why this space exists</div>
 
           <div class="quote-block">
             Vigil began as an effort to see the world more clearly: the systems that harm,
@@ -560,7 +482,7 @@
         </section>
 
         <section class="how-section" style="margin-top: 2.4rem;">
-          <div class="section-heading">How This Space Works</div>
+          <div class="section-heading">How this space works</div>
 
           <p class="slow-update-note">
             Pages in Vigil change slowly. New research and context are added with care instead of urgency
@@ -573,9 +495,8 @@
 
     </div><!-- /layout -->
 
-  <!-- TOP MAIN DIVIDER -->
-<div class="about-divider"></div>
-
+    <!-- DIVIDER BEFORE DISCLAIMERS -->
+    <div class="about-divider"></div>
 
     <!-- DISCLAIMERS -->
     <div class="disclaimers-section">
