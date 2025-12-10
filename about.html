@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
+
   /* -------------------------------------------------------
      ROOT — BRAND COLOR SYSTEM (REFINED)
   -------------------------------------------------------- */
@@ -36,6 +37,7 @@
       radial-gradient(circle at top, rgba(215,164,81,0.18), transparent 65%),
       linear-gradient(135deg, #0d0d0d, #161616 55%, #0d0d0d);
   }
+
 
   /* -------------------------------------------------------
      MAIN SHELL — SOFT ARCHIVAL PANEL
@@ -75,6 +77,7 @@
 
   .shell-inner { position: relative; z-index: 1; }
 
+
   /* -------------------------------------------------------
      TOP NAV ELEMENTS
   -------------------------------------------------------- */
@@ -89,6 +92,7 @@
   }
   .back a:hover { color: var(--highlight); }
 
+
   .pill-row {
     display: flex;
     flex-wrap: wrap;
@@ -97,7 +101,7 @@
   }
 
   .pill {
-    text-decoration: none;
+    text-decoration: none; 
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,0.15);
     padding: 0.5rem 1.15rem;
@@ -116,6 +120,7 @@
     color: var(--highlight);
     background: rgba(20,20,20,0.85);
   }
+
 
   /* -------------------------------------------------------
      PAGE TITLE BLOCK
@@ -146,6 +151,7 @@
     margin-top: 0.3rem;
   }
 
+
   /* -------------------------------------------------------
      HEADER LAYOUT (about + contact)
   -------------------------------------------------------- */
@@ -157,6 +163,7 @@
   }
 
   .about-text { max-width: 60%; }
+
 
   .contact-sidebox {
     border-radius: 18px;
@@ -183,6 +190,7 @@
     color: var(--highlight);
   }
 
+
   /* -------------------------------------------------------
      MAIN DIVIDER
   -------------------------------------------------------- */
@@ -200,6 +208,7 @@
     border-radius: 2px;
     opacity: 0.9;
   }
+
 
   /* -------------------------------------------------------
      TWO COLUMN SECTION
@@ -249,13 +258,15 @@
     margin-bottom: 1rem;
   }
 
+
   /* -------------------------------------------------------
-     CARDS (refined aesthetic)
+     CARDS — STACKED & CENTERED, NO BULLETS
   -------------------------------------------------------- */
   .card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    align-items: center;
   }
 
   .card {
@@ -268,6 +279,8 @@
       0 7px 22px rgba(0,0,0,0.38),
       inset 0 0 0 0.5px rgba(255,255,255,0.03);
     transition: 0.25s ease;
+    max-width: 520px;
+    width: 100%;
   }
 
   .card:hover {
@@ -279,30 +292,18 @@
     font-family: "Playfair Display", serif;
     font-size: 1rem;
     color: var(--text);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
   }
 
-  .card-text ul {
-    margin: 0;
-    padding-left: 1.1rem;
-  }
-
-  .card-text li {
-    list-style: none;
-    margin-bottom: 0.35rem;
+  .card-text p {
     font-size: 0.9rem;
+    line-height: 1.7;
     color: var(--text-soft);
   }
 
-  .card-text li::before {
-    content: "• ";
-    color: var(--accent-soft);
-    margin-left: -1.1rem;
-    padding-right: 0.4rem;
-  }
 
   /* -------------------------------------------------------
-     DISCLAIMERS (keep style but harmonize typography)
+     DISCLAIMERS
   -------------------------------------------------------- */
   .disclaimers-section {
     margin-top: 3rem;
@@ -339,6 +340,7 @@
     font-size: 0.95rem;
     color: var(--highlight);
   }
+    
 
   /* -------------------------------------------------------
      FOOTER
@@ -381,6 +383,7 @@
     color: var(--highlight);
     font-weight: 600;
   }
+
   </style>
 </head>
 
@@ -403,6 +406,7 @@
       <!-- HEADER SECTION -->
       <div class="about-header">
         <div class="about-text">
+
           <h1>About Vigil</h1>
 
           <div class="etymology">
@@ -414,6 +418,7 @@
             It gathers stories, data, and resources that show where harm takes place,
             and where attempts at repair begin.
           </p>
+
         </div>
 
         <div class="contact-sidebox">
@@ -425,8 +430,10 @@
 
     </div> <!-- /shell-inner -->
 
+
     <!-- TOP MAIN DIVIDER -->
     <div class="about-divider"></div>
+
 
     <!-- TWO-COLUMN CONTENT -->
     <div class="layout">
@@ -441,7 +448,9 @@
           The project follows research across many issues, including human rights,
           wildlife preservation, legal cases, and financial pressures,
           and presents that work in a form that informs rather than overwhelms.
+
           <br><br>
+
           Rooted in the idea of <em>vigilia</em>, the discipline of staying awake,
           Vigil invites slow attention and responsible engagement.
           Each topic points toward concrete steps and trusted organizations,
@@ -455,9 +464,9 @@
         <div class="section-heading">How this space works</div>
 
         <p class="slow-update-note">
-          Pages in Vigil change slowly. New research and context are added with care instead of urgency,
-          so each topic has time to breathe. The intention is to create a space where depth is possible,
-          where information is shaped gently, and where clarity matters more than immediacy.
+          Pages in Vigil change slowly. New research and context are added with care instead of urgency so each topic has time to breathe. 
+          The intention is to create a space where depth is possible, where information is shaped gently, and where clarity matters more than immediacy. 
+          Vigil functions as a quiet environment in a noisy landscape, offering room to understand rather than react.
         </p>
 
         <div class="card-grid">
@@ -465,36 +474,36 @@
           <div class="card">
             <div class="card-title">Vigil is…</div>
             <div class="card-text">
-              <ul>
-                <li>a quiet archive for how human choices shape other lives</li>
-                <li>a collection of researched threads rather than isolated headlines</li>
-                <li>a setting where difficult subjects can be approached with steadiness, not panic</li>
-                <li>a record of both harm and repair, from large systems to everyday decisions</li>
-              </ul>
+              <p>
+                Vigil is an experience built for noticing how human choices influence the world around us. 
+                It gathers researched threads into an organized archive so heavy subjects can be approached with steadiness instead of overwhelm. 
+                The environment is meant to feel calm and focused, a place where complex issues settle into something more comprehensible. 
+                Vigil exists to record what happens, including the extremes of harm and the smaller moments of repair, in a way that encourages honest awareness rather than spectacle.
+              </p>
             </div>
           </div>
 
           <div class="card">
             <div class="card-title">Vigil is not…</div>
             <div class="card-text">
-              <ul>
-                <li>a platform for outrage, spectacle, or shock-driven storytelling</li>
-                <li>a replacement for legal, medical, financial, or mental health advice</li>
-                <li>centered on a single expert, authority, or identity</li>
-                <li>a place where belonging depends on agreeing with any one narrative</li>
-              </ul>
+              <p>
+                Vigil is not designed for outrage or shock-driven storytelling, and it does not rely on emotional intensity to hold attention. 
+                It is not centered on a single authority or personality. Nothing here asks for identity or belonging. 
+                The intention is simply to offer information with clarity and to keep attention from drifting away from what matters. 
+                Vigil is not meant to replace professional guidance in legal, medical, financial, or personal matters.
+              </p>
             </div>
           </div>
 
           <div class="card">
             <div class="card-title">Vigil aims…</div>
             <div class="card-text">
-              <ul>
-                <li>to preserve what should not be forgotten</li>
-                <li>to bring scattered facts and stories into clearer context</li>
-                <li>to make complex issues more understandable without oversimplifying them</li>
-                <li>to invite reflection, small actions, and steadier forms of care</li>
-              </ul>
+              <p>
+                Vigil aims to preserve what should not be forgotten. 
+                It aims to provide clarity in places where confusion is common and to reconnect scattered pieces of information into something understandable. 
+                Its purpose is to create a steady experience where important issues can be seen in full context. 
+                Vigil aims to illuminate quietly, allowing readers to understand without pressure, urgency, or expectation.
+              </p>
             </div>
           </div>
 
@@ -504,8 +513,10 @@
 
     </div><!-- layout -->
 
+
     <!-- BOTTOM MAIN DIVIDER -->
     <div class="about-divider"></div>
+
 
     <!-- DISCLAIMERS -->
     <div class="disclaimers-section">
@@ -554,6 +565,7 @@
       </div><!-- disclaimer-box -->
     </div><!-- disclaimers-section -->
 
+
     <!-- FOOTER -->
     <div class="footer-wrapper">
       <div class="footer-card">
@@ -571,4 +583,3 @@
   </main>
 </body>
 </html>
-
