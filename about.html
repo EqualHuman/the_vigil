@@ -463,6 +463,56 @@
       .shell { padding: 1.75rem 1.5rem; }
       .footer-line { white-space: normal; }
     }
+    .about-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-bottom: 2.8rem;
+}
+
+.about-text {
+  max-width: 60%;
+}
+
+.etymology {
+  font-family: "Playfair Display", serif;
+  font-size: 0.9rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.about-description {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--highlight);
+}
+
+.contact-sidebox {
+  border: 1px solid rgba(215,164,81,0.35);
+  border-radius: 16px;
+  padding: 1rem 1.2rem;
+  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+              rgba(10,10,10,0.92);
+  width: 240px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+}
+
+.contact-title {
+  font-family: "Playfair Display", serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+  color: var(--highlight);
+}
+
+.contact-email {
+  margin-top: 0.4rem;
+  font-weight: 600;
+  color: var(--highlight);
+}
+
   </style>
 </head>
 
@@ -483,24 +533,30 @@
         <a class="pill" href="about.html">About</a>
       </div>
 
-      <div class="intro-layout">
-        <div>
-          <h1>About Vigil</h1>
+     <div class="about-header">
+  
+  <div class="about-text">
+    <h1>About Vigil</h1>
 
-          <div class="subtext">
-            <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
-            Vigil is a quiet watchfulness over how humans treat one another and the living world.
-            It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
-          </div>
-        </div>
+    <div class="etymology">
+      <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.
+    </div>
 
-        <div class="contact-card">
-          <div class="contact-label">Contact</div>
-          <div class="contact-text">
-            For questions or corrections, write to<br />
-            <a href="mailto:InboxVigil@outlook.com" class="contact-email-inline">InboxVigil@outlook.com</a>.
-          </div>
-        </div>
+    <p class="about-description">
+      Vigil is a quiet watchfulness over how humans treat one another and the living world.  
+      It gathers stories, data, and resources that show where harm takes place,  
+      and where attempts at repair begin.
+    </p>
+  </div>
+
+  <div class="contact-sidebox">
+    <div class="contact-title">CONTACT</div>
+    <p>For questions or corrections, write to</p>
+    <div class="contact-email">InboxVigil@outlook.com</div>
+  </div>
+
+</div>
+
       </div>
 
       <div class="divider"></div>
