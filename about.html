@@ -145,6 +145,54 @@
       margin-bottom: 2.1rem;
     }
 
+    .intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr);
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 1.9rem;
+}
+
+.contact-card {
+  border-radius: 16px;
+  border: 1px solid rgba(215,164,81,0.4);
+  padding: 0.9rem 1.1rem;
+  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+              rgba(10,10,10,0.92);
+  font-size: 0.85rem;
+  color: var(--secondary);
+  line-height: 1.6;
+  max-width: 230px;
+}
+
+.contact-label {
+  font-family: "Playfair Display", serif;
+  font-size: 0.9rem;
+  color: var(--highlight);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.contact-text a {
+  text-decoration: none;
+}
+
+.contact-text a:hover {
+  text-decoration: underline;
+}
+
+/* Stack on small screens */
+@media (max-width: 700px) {
+  .intro-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    max-width: 100%;
+  }
+}
+
     .layout {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
@@ -328,19 +376,20 @@
 
     /* Vigil Line Box */
     .footer-card {
-      border-radius: 18px;
-      border: 1px solid rgba(215,164,81,0.35);
-      padding: 0.9rem 1.4rem;
-      background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
-                  rgba(10,10,10,0.92);
-      text-align: center;
-      max-width: 620px;
-      width: 100%;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-      opacity: 0;
-      animation: footerFade 1.2s ease forwards;
-      animation-delay: 0.3s;
-    }
+  border-radius: 18px;
+  border: 1px solid rgba(215,164,81,0.35);
+  padding: 0.9rem 1.4rem;
+  background: radial-gradient(circle at top left, rgba(252,230,194,0.06), transparent 55%),
+              rgba(10,10,10,0.92);
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+  opacity: 0;
+  animation: footerFade 1.2s ease forwards;
+  animation-delay: 0.3s;
+}
+
 
     .footer-line {
       font-family: "Playfair Display", serif;
@@ -380,13 +429,26 @@
         <a class="pill" href="about.html">About</a>
       </div>
 
-      <h1>About Vigil</h1>
+            <div class="intro-layout">
+        <div class="contact-card">
+          <div class="contact-label">Contact</div>
+          <div class="contact-text">
+            For questions or corrections, write to
+            <a href="mailto:InboxVigil@outlook.com" class="contact-email-inline">InboxVigil@outlook.com</a>.
+          </div>
+        </div>
 
-      <div class="subtext">
-        <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
-        Vigil is a quiet watchfulness over how humans treat one another and the living world.
-        It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
+        <div>
+          <h1>About Vigil</h1>
+
+          <div class="subtext">
+            <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.<br /><br />
+            Vigil is a quiet watchfulness over how humans treat one another and the living world.
+            It gathers stories, data, and resources that show where harm takes place, and where attempts at repair begin.
+          </div>
+        </div>
       </div>
+
 
       <div class="divider"></div>
 
@@ -472,18 +534,19 @@
         </div>
       </section>
 
-      <!-- FOOTER -->
-      <div class="footer-card">
+           <!-- FOOTER -->
+      <div class="footer-wrapper">
+        <div class="footer-card">
           <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
         </div>
-      
-      <div class="footer-wrapper">
+
         <div class="footer-contact-inline">
           For questions, corrections, or topics that feel missing from this space, write to
           <span class="contact-email-inline">InboxVigil@outlook.com</span>.
           Vigil provides educational information only. It is not a substitute for legal, medical, or professional advice.
         </div>
       </div>
+
 
     </div>
   </main>
