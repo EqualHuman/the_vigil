@@ -32,52 +32,10 @@
 
     /*--begin------------------------------ STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
 
-/* -------------------------------------------------------
-   TIP JAR — "KEEP THE WATCH" ORB
--------------------------------------------------------- */
-
-.tipjar-section {
-  margin: 1.8rem 0 2.4rem;
-  display: flex;
-  justify-content: center;
-}
-
-.tipjar-shell {
-  display: flex;
-  gap: 1.4rem;
-  align-items: center;
-  padding: 1rem 1.4rem;
-  border-radius: 20px;
-  border: 1px solid var(--border-soft);
-  background:
-    linear-gradient(135deg, rgba(15,15,15,0.96), rgba(8,8,8,0.94));
-  box-shadow:
-    0 10px 32px rgba(0,0,0,0.5),
-    inset 0 0 0 0.5px rgba(255,255,255,0.03);
-  max-width: 640px;
-  width: 100%;
-}
-
-.tipjar-copy {
-  flex: 1;
-}
-
-.tipjar-copy p {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  color: var(--text-soft);
-}
-
-.tipjar-label {
-  font-family: "Playfair Display", serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-bottom: 0.35rem;
-}
-
-/* The orb button */
+/* TIP JAR ORB — EMBER RING VERSION
+   Replace your existing .tipjar-orb, .tipjar-orb-inner,
+   hover + keyframes with this block.
+*/
 
 .tipjar-orb {
   position: relative;
@@ -85,42 +43,57 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  padding: 0.18rem;
+  padding: 0;                        /* no coin padding */
   border-radius: 999px;
+  background: transparent;
+  overflow: visible;                 /* let embers glow outside */
   isolation: isolate;
-  background: radial-gradient(circle at 30% 0%, rgba(243,226,194,0.24), transparent 70%);
-  overflow: hidden;
 }
 
-/* rotating aura around the orb */
+/* Thin glowing ring */
 .tipjar-orb::before {
   content: "";
   position: absolute;
-  inset: -35%;
-  background:
-    conic-gradient(
-      from 180deg,
-      rgba(215,164,81,0),
-      rgba(215,164,81,0.85),
-      rgba(243,226,194,0),
-      rgba(215,164,81,0.7),
-      rgba(215,164,81,0)
-    );
-  opacity: 0.6;
-  animation: tipjar-aura 8s linear infinite;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(215,164,81,0.55);
+  box-shadow:
+    0 0 14px rgba(215,164,81,0.25),
+    0 0 1px rgba(255,255,255,0.5);
+  opacity: 0.95;
 }
 
+/* Ember arc circling the ring */
+.tipjar-orb::after {
+  content: "";
+  position: absolute;
+  inset: -14px;                      /* slightly larger than the pill */
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(1px);
+  opacity: 0.85;
+
+  /* three small glowing "embers" that orbit when rotated */
+  background:
+    radial-gradient(circle at 82% 8%,  rgba(243,226,194,0.9), transparent 55%),
+    radial-gradient(circle at 18% 4%,  rgba(215,164,81,0.7), transparent 60%),
+    radial-gradient(circle at 4% 78%,  rgba(215,164,81,0.45), transparent 60%);
+  animation: ember-orbit 14s linear infinite;
+}
+
+/* Inner pill stays dark & understated */
 .tipjar-orb-inner {
   position: relative;
   z-index: 1;
   border-radius: 999px;
   padding: 0.7rem 1.35rem;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.12);
   background:
-    linear-gradient(145deg, rgba(12,12,12,0.98), rgba(7,7,7,0.94));
+    linear-gradient(145deg, rgba(10,10,10,0.98), rgba(5,5,5,0.96));
   box-shadow:
-    0 0 12px rgba(215,164,81,0.18),
-    inset 0 0 0 0.5px rgba(255,255,255,0.05);
+    0 10px 26px rgba(0,0,0,0.7),
+    inset 0 0 0 0.5px rgba(255,255,255,0.04);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -141,48 +114,42 @@
   color: var(--text-soft);
 }
 
-/* Hover effects */
+/* Hover state — just a bit more glow, nothing shouty */
+
+.tipjar-orb:hover::before {
+  box-shadow:
+    0 0 18px rgba(215,164,81,0.38),
+    0 0 1px rgba(255,255,255,0.7);
+  border-color: rgba(215,164,81,0.8);
+}
 
 .tipjar-orb:hover .tipjar-orb-inner {
-  border-color: rgba(215,164,81,0.6);
+  border-color: rgba(215,164,81,0.5);
   box-shadow:
-    0 0 18px rgba(215,164,81,0.28),
-    inset 0 0 0 0.5px rgba(215,164,81,0.2);
+    0 12px 32px rgba(0,0,0,0.85),
+    inset 0 0 0 0.5px rgba(215,164,81,0.12);
 }
 
 .tipjar-orb:hover .tipjar-orb-title {
   color: var(--accent);
 }
 
-/* Aura animation */
-@keyframes tipjar-aura {
-  to { transform: rotate(360deg); }
+/* slow orbit for the embers */
+
+@keyframes ember-orbit {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Respect reduced motion preferences */
+/* Respect reduced motion */
+
 @media (prefers-reduced-motion: reduce) {
-  .tipjar-orb::before {
+  .tipjar-orb::after {
     animation: none;
   }
 }
 
-/* Responsive tweak */
-
-@media (max-width: 640px) {
-  .tipjar-shell {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: left;
-  }
-
-  .tipjar-orb {
-    align-self: center;
-  }
-
-  .tipjar-copy p {
-    font-size: 0.86rem;
-  }
-}
 
 
     
