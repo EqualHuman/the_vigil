@@ -70,6 +70,12 @@
       justify-content: center;
       pointer-events: none;
     }
+    /* TEMPORARY: Scale the entire candle for previewing **************************************************************/
+.candle-scale-3x {
+  transform: scale(3);
+  transform-origin: top center;
+}
+
 
     .candle-shadow {
       position: absolute;
@@ -94,23 +100,27 @@
     }
 
     /* Halo behind candle (stronger glow) */
-    .candle::before {
-      content: "";
-      position: absolute;
-      top: -22px;
-      width: 90px;
-      height: 90px;
-      border-radius: 999px;
-      background: radial-gradient(circle,
-        rgba(255, 222, 150, 0.22) 0,
-        rgba(255, 222, 150, 0.12) 35%,
-        transparent 70%);
-      filter: blur(1px);
-      opacity: 0.6;
-      z-index: -1;
-      animation: halo-soft 3.2s ease-in-out infinite;
-    }
-
+   .candle::before {
+  content: "";
+  position: absolute;
+  top: -60px;         /* place higher for a floating aura */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;       /* 🔥 double glow size */
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 224, 160, 0.35) 0%,
+    rgba(255, 205, 130, 0.25) 30%,
+    rgba(215, 164, 81, 0.18) 55%,
+    rgba(150, 110, 40, 0.08) 75%,
+    transparent 100%
+  );
+  filter: blur(12px);   /* much softer bloom */
+  opacity: 0.85;        /* brighter and fuller */
+  z-index: -1;
+  animation: halo-soft 5s ease-in-out infinite;
+}
     /* Flame – Tip Jar shape + warm glow */
     .flame {
      position: absolute;
@@ -135,17 +145,21 @@
 }
 .candle-glow {
   position: absolute;
-  top: -45px;
-  width: 130px;    /* 🔥 larger glow radius */
-  height: 130px;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(255, 220, 150, 0.28) 0%,
-    rgba(255, 210, 130, 0.18) 35%,
-    rgba(215, 164, 81, 0.10) 60%,
-    transparent 90%);
-  filter: blur(4px);
+    rgba(255, 215, 150, 0.28) 0%,
+    rgba(255, 190, 120, 0.18) 40%,
+    rgba(215, 164, 81, 0.10) 70%,
+    transparent 100%
+  );
+  filter: blur(6px);
   pointer-events: none;
+  opacity: 0.75;
 }
 
 /* Flicker stays gentle */
@@ -273,7 +287,7 @@
     <section class="card" aria-label="Work in progress notice">
 
       <div class="candle-wrap">
-        <div class="candle" aria-hidden="true">
+        <div class="candle candle-scale-3x" aria-hidden="true">
           <div class="flame"></div>
           <div class="wick"></div>
           <div class="candle-body"></div>
