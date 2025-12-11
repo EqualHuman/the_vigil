@@ -166,15 +166,35 @@
       linear-gradient(145deg, rgba(12,12,12,0.95), rgba(8,8,8,0.92));
     box-shadow: 0 8px 28px rgba(0,0,0,0.38);
   }
+    .contact-sidebox {
+  margin-left: 2rem;       /* nudges inward */
+  text-align: center;
+}
 
-  .contact-title {
-    font-family: "Playfair Display", serif;
-    color: var(--highlight);
-    font-size: 0.88rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 0.4rem;
-  }
+
+.contact-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--highlight);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.7rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+/* Add the underline, same as card titles/section headings */
+.contact-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);   /* centers underline */
+  bottom: 0;
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
 
   .contact-email {
     margin-top: 0.45rem;
@@ -272,6 +292,10 @@
     max-width: 43rem;
     margin-bottom: 1rem;
   }
+    .section-heading {
+  display: block; /* guarantees correct width + alignment */
+}
+
 
   /* -------------------------------------------------------
      CARDS — LEFT COLUMN
