@@ -135,60 +135,71 @@
       position: relative;
     }
 
-    .candle-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+   .candle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 
-    .candle {
-      position: relative;
-      width: 24px;
-      height: 60px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
+/* CANDLE CONTAINER */
+.candle {
+  position: relative;
+  width: 18px;
+  height: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
 
-    .candle-body {
-      width: 14px;
-      height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(to bottom, #f9ede0, #e1c9aa);
-      box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.4),
-        0 8px 12px rgba(0, 0, 0, 0.6);
-    }
+/* CANDLE BODY */
+.candle-body {
+  width: 10px;
+  height: 24px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, #fbf3e6, #e3c9aa);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 5px 10px rgba(0, 0, 0, 0.7);
+}
 
-    .candle-flame {
-      position: absolute;
-      top: -24px;
-      width: 16px;
-      height: 26px;
-      border-radius: 999px 999px 50% 50%;
-      background: radial-gradient(circle at 30% 20%, #fffef8 0, #ffe7a8 40%, #f6b667 70%, #c77229 100%);
-      box-shadow:
-        0 0 22px rgba(255, 215, 140, 0.9),
-        0 0 40px rgba(255, 191, 102, 0.7);
-      animation: candle-flicker 2.3s ease-in-out infinite;
-    }
+/* FLAME */
+.candle-flame {
+  position: absolute;
+  top: -22px;
+  width: 12px;
+  height: 18px;
+  border-radius: 999px 999px 60% 60%;
+  background: radial-gradient(circle at 30% 20%,
+    #fffdf4 0,
+    #ffe4a3 40%,
+    #f4b55e 70%,
+    #c7742d 100%);
+  box-shadow:
+    0 0 18px rgba(255, 215, 140, 0.9),
+    0 0 32px rgba(255, 191, 102, 0.65);
+  animation: candle-flicker 2.6s ease-in-out infinite;
+}
 
-    .candle-glow {
-      position: absolute;
-      top: -40px;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 222, 150, 0.18) 0, transparent 70%);
-      filter: blur(1px);
-      pointer-events: none;
-    }
+/* GLOW BEHIND FLAME */
+.candle-glow {
+  position: absolute;
+  top: -34px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 222, 150, 0.18) 0,
+    transparent 70%);
+  filter: blur(0.5px);
+  pointer-events: none;
+}
 
-    @keyframes candle-flicker {
-      0%, 100% { transform: translateX(0) scaleY(1); opacity: 1; }
-      40% { transform: translateX(-1px) scaleY(1.02); opacity: 0.96; }
-      70% { transform: translateX(1px) scaleY(0.98); opacity: 0.92; }
-    }
+/* SOFTER FLICKER */
+@keyframes candle-flicker {
+  0%, 100% { transform: translateX(0) scaleY(1); opacity: 1; }
+  35%      { transform: translateX(-0.5px) scaleY(1.02); opacity: 0.96; }
+  70%      { transform: translateX(0.7px) scaleY(0.98); opacity: 0.93; }
+}
 
     .hero-eyebrow {
       text-transform: uppercase;
