@@ -270,6 +270,67 @@ Here’s a cleaned-up version with the **quiet ember-breathe** animation and no 
         animation: none;
       }
     }
+    /* Candle icon wrapper */
+.candle-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.6rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 999px;
+  border: 1px solid var(--secondary);
+}
+
+/* SVG sizing */
+.candle-icon {
+  width: 34px;
+  height: auto;
+}
+
+/* Candle pieces */
+.candle-plate {
+  fill: #141414;
+  stroke: var(--secondary);
+  stroke-width: 1.2;
+}
+
+.candle-body {
+  fill: #151515;
+  stroke: var(--highlight);
+  stroke-width: 1.2;
+}
+
+.candle-drip {
+  fill: #1c1c1c;
+}
+
+.candle-wick {
+  fill: var(--secondary);
+}
+
+/* Flame */
+.candle-flame-outer {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(215, 164, 81, 0.8));
+}
+
+.candle-flame-inner {
+  fill: var(--highlight);
+}
+
+/* Soft flicker animation */
+@keyframes candle-glow {
+  0%   { transform: translateY(0); opacity: 1; }
+  50%  { transform: translateY(-0.6px); opacity: 0.82; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.candle-flame-outer,
+.candle-flame-inner {
+  transform-origin: center;
+  animation: candle-glow 1.8s ease-in-out infinite;
+}
+
 
   </style>
 </head>
@@ -301,7 +362,67 @@ Here’s a cleaned-up version with the **quiet ember-breathe** animation and no 
         <a href="tipjar.html" class="tipjar-orb">
           <span class="tipjar-orb-inner">
             <span class="tipjar-orb-title">Tip Jar</span>
-            <span class="tipjar-orb-sub">Thank you.</span>
+            <span class="tipjar-orb-sub"><div class="candle-icon-wrap" aria-hidden="true">
+  <svg viewBox="0 0 64 128" class="candle-icon">
+    <!-- Base plate -->
+    <ellipse
+      class="candle-plate"
+      cx="32"
+      cy="94"
+      rx="18"
+      ry="4"
+    />
+
+    <!-- Candle body -->
+    <rect
+      class="candle-body"
+      x="26"
+      y="44"
+      width="12"
+      height="40"
+      rx="3"
+    />
+
+    <!-- Little wax drip -->
+    <rect
+      class="candle-drip"
+      x="29"
+      y="54"
+      width="3"
+      height="8"
+      rx="1.5"
+    />
+
+    <!-- Wick -->
+    <rect
+      class="candle-wick"
+      x="31"
+      y="40"
+      width="2"
+      height="5"
+      rx="1"
+    />
+
+    <!-- Flame outer -->
+    <path
+      class="candle-flame-outer"
+      d="M32 16
+         C26 26 26 34 32 42
+         C38 34 38 26 32 16
+         Z"
+    />
+
+    <!-- Flame inner -->
+    <path
+      class="candle-flame-inner"
+      d="M32 20
+         C28.5 27 29 32 32 37
+         C35 32 35.5 27 32 20
+         Z"
+    />
+  </svg>
+</div>
+</span>
           </span>
         </a>
       </div>
