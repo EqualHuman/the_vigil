@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,8 +142,8 @@
   .about-description {
     font-size: 1.02rem;
     line-height: 1.7;
-    color: #e5d5b0;      /* warmer than body text */
-    font-weight: 500;    /* a little more presence */
+    color: #e5d5b0;     /* warmer than body text */
+    font-weight: 500;   /* a little more presence */
   }
 
   /* -------------------------------------------------------
@@ -166,41 +167,37 @@
       linear-gradient(145deg, rgba(12,12,12,0.95), rgba(8,8,8,0.92));
     box-shadow: 0 8px 28px rgba(0,0,0,0.38);
   }
-    .contact-sidebox {
-  margin-left: 2rem;       /* nudges inward */
-  text-align: center;
-}
 
-
-.contact-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--highlight);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.7rem;
-  position: relative;
-  padding-bottom: 0.5rem;
-}
-
-.contact-title::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  width: 140px; /* longer */
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(215,164,81,0.6),
-    rgba(215,164,81,0.25),
-    transparent
-  );
-  opacity: 0.9;
-}
-
-
+  .contact-sidebox {
+    margin-left: 2rem;       /* nudges inward */
+    text-align: center;
+  }
+  .contact-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--highlight);
+    letter-spacing: 0.01em;
+    margin-bottom: 0.7rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  .contact-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 140px; /* longer */
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      rgba(215,164,81,0.6),
+      rgba(215,164,81,0.25),
+      transparent
+    );
+    opacity: 0.9;
+  }
 
   .contact-email {
     margin-top: 0.45rem;
@@ -252,23 +249,20 @@
   /* -------------------------------------------------------
      TYPOGRAPHY — SHARED HEADINGS & BODY
   -------------------------------------------------------- */
- .section-heading,
-.card-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--highlight);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.5rem;
-
-  /* gold underline as a background, not ::after */
-  background-image: linear-gradient(90deg, var(--accent), transparent);
-  background-position: left bottom;
-  background-repeat: no-repeat;
-  background-size: 72px 1px;
-}
-
+  .section-heading, .card-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--highlight);
+    letter-spacing: 0.01em;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.5rem;
+    /* gold underline as a background, not ::after */
+    background-image: linear-gradient(90deg, var(--accent), transparent);
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: 72px 1px;
+  }
 
   .quote-block,
   .slow-update-note,
@@ -279,7 +273,16 @@
     color: var(--text-soft);
   }
 
-  /* make this block regular text instead of fully italic */
+  /* main Vigil pull-quote */
+  .core-quote {
+    font-family: "Playfair Display", serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--highlight);
+    max-width: 40rem;
+    margin: 1.4rem 0 0.2rem;
+  }
+
   .quote-block {
     font-style: normal;
     max-width: 43rem;
@@ -293,10 +296,10 @@
     max-width: 43rem;
     margin-bottom: 1rem;
   }
-    .section-heading {
-  display: block; /* guarantees correct width + alignment */
-}
 
+  .section-heading {
+    display: block; /* guarantees correct width + alignment */
+  }
 
   /* -------------------------------------------------------
      CARDS — LEFT COLUMN
@@ -423,7 +426,6 @@
             It gathers stories, data, and resources that show where harm takes place,
             and where attempts at repair begin.
           </p>
-
         </div>
 
         <div class="contact-sidebox">
@@ -432,7 +434,6 @@
           <div class="contact-email">InboxVigil@outlook.com</div>
         </div>
       </div>
-
     </div> <!-- /shell-inner -->
 
     <!-- TOP MAIN DIVIDER -->
@@ -489,7 +490,7 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: WHY + HOW -->
+      <!-- RIGHT COLUMN: WHY + CORE QUOTE + HOW -->
       <div class="layout-right">
         <section>
           <div class="section-heading">Why This Space Exists</div>
@@ -514,6 +515,11 @@
           </div>
         </section>
 
+        <!-- Core Vigil pull-quote in the empty space -->
+        <p class="core-quote">
+          Clarity grows when the noise quiets. Vigil exists to hold that quiet long enough for meaning to surface.
+        </p>
+
         <section class="how-section" style="margin-top: 2.4rem;">
           <div class="section-heading">How This Space Works</div>
 
@@ -525,7 +531,6 @@
           </p>
         </section>
       </div>
-
     </div><!-- /layout -->
 
     <!-- DIVIDER BEFORE DISCLAIMERS -->
@@ -536,7 +541,6 @@
       <div class="section-heading">Disclaimers</div>
 
       <div class="disclaimer-box">
-
         <p>
           <strong>Purpose &amp; Limitations</strong><br>
           Vigil shares research-based content to promote awareness and understanding of complex societal issues.
@@ -574,7 +578,6 @@
           Vigil does not collect or manage donations.
           Links redirect to outside organizations, and Vigil is not responsible for how funds are used.
         </p>
-
       </div>
     </div>
 
@@ -595,3 +598,4 @@
   </main>
 </body>
 </html>
+```
