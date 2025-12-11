@@ -1,3 +1,6 @@
+Here’s a cleaned-up version with the **quiet ember-breathe** animation and no leftover spark code or duplicates — ready to copy-paste:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,314 +33,248 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
-    }.contact-strip {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
+    }
 
-.contact-strip-inner {
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  padding: 0.8rem 1.4rem;
-  background: linear-gradient(145deg, rgba(15,15,15,0.96), rgba(10,10,10,0.92));
-  font-size: 0.9rem;
-}
+    /* CONTACT STRIP + DIVIDER */
 
-.contact-strip-title {
-  font-family: "Playfair Display", serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-right: 0.5rem;
-}
+    .contact-strip {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
 
-.contact-strip-email {
-  color: var(--highlight);
-  font-weight: 600;
-}
+    .contact-strip-inner {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 0.8rem 1.4rem;
+      background: linear-gradient(145deg, rgba(15,15,15,0.96), rgba(10,10,10,0.92));
+      font-size: 0.9rem;
+    }
 
-.about-divider {
-  height: 1px;
-  margin: 2.5rem auto 0;
-  max-width: 520px;
-  background: linear-gradient(
-    90deg,
-    rgba(243,226,194,0.18),
-    rgba(243,226,194,0.06),
-    rgba(243,226,194,0.18)
-  );
-  opacity: 0.9;
-}
-/* Centered testing shell */
-.testing-shell {
-  max-width: 760px;
-  margin: 3rem auto;
-  padding: 0 1.5rem;
-}
+    .contact-strip-title {
+      font-family: "Playfair Display", serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-right: 0.5rem;
+    }
 
+    .contact-strip-email {
+      color: var(--highlight);
+      font-weight: 600;
+    }
 
-    /*--begin------------------------------ STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
+    .about-divider {
+      height: 1px;
+      margin: 2.5rem auto 0;
+      max-width: 520px;
+      background: linear-gradient(
+        90deg,
+        rgba(243,226,194,0.18),
+        rgba(243,226,194,0.06),
+        rgba(243,226,194,0.18)
+      );
+      opacity: 0.9;
+    }
 
-/* TIP JAR ORB — QUIET SPARKLE RING */
+    /* Centered testing shell */
 
-.tipjar-orb,
-.tipjar-orb:visited,
-.tipjar-orb:active {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  padding: 2px;                      /* space for the ring */
-  border-radius: 999px;
-  color: var(--text-soft);           /* all inner text inherits this */
-  background: transparent;
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.85),    /* deep shadow under the pill */
-    0 0 6px rgba(215,164,81,0.25);   /* very soft glow, not neon */
-}
+    .testing-shell {
+      max-width: 760px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
 
-/* static gold ring */
-.tipjar-orb::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(215,164,81,0.7);
-  box-shadow:
-    0 0 3px rgba(215,164,81,0.45),
-    0 0 1px rgba(255,255,255,0.6);
-}
+    /* TIP JAR SECTION SHELL */
 
-/* single ember that slowly travels around the edge */
-.tipjar-orb::after {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(circle at 0% 50%, rgba(243,226,194,0.95), transparent 55%);
-  background-repeat: no-repeat;
-  background-size: 18px 18px;        /* size of the little spark */
-  animation: tipjar-spark 9s linear infinite;
-}
+    .tipjar-section {
+      margin: 1.8rem 0 2.4rem;
+      display: flex;
+      justify-content: center;
+    }
 
-/* calm inner pill stays same as before */
-.tipjar-orb-inner {
-  border-radius: 999px;
-  padding: 0.7rem 1.35rem;
-  min-width: 150px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background:
-    radial-gradient(circle at 0% 0%, rgba(243,226,194,0.08), transparent 55%),
-    linear-gradient(145deg, rgba(10,10,10,0.98), rgba(5,5,5,0.96));
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255,255,255,0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.08rem;
-}
+    .tipjar-shell {
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+      padding: 1rem 1.4rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-soft);
+      background:
+        linear-gradient(135deg, rgba(15,15,15,0.96), rgba(8,8,8,0.94));
+      box-shadow:
+        0 10px 32px rgba(0,0,0,0.5),
+        inset 0 0 0 0.5px rgba(255,255,255,0.03);
+      max-width: 640px;
+      width: 100%;
+    }
 
-.tipjar-orb-title {
-  font-family: "Playfair Display", serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--highlight);
-}
+    .tipjar-copy {
+      flex: 1;
+    }
 
-/* subtitle stays small + hushed */
-.tipjar-orb-sub {
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  opacity: 0.8;
-}
+    .tipjar-copy p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
 
-/* hover: a bit more presence, still not screaming */
+    .tipjar-label {
+      font-family: "Playfair Display", serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 0.35rem;
+    }
 
-.tipjar-orb:hover::before {
-  border-color: rgba(215,164,81,0.9);
-  box-shadow:
-    0 0 6px rgba(215,164,81,0.55),
-    0 0 1px rgba(255,255,255,0.7);
-}
+    @media (max-width: 640px) {
+      .tipjar-shell {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+      }
 
-.tipjar-orb:hover {
-  box-shadow:
-    0 16px 32px rgba(0,0,0,0.95),
-    0 0 8px rgba(215,164,81,0.35);
-}
+      .tipjar-orb {
+        align-self: center;
+      }
+    }
 
-.tipjar-orb:hover .tipjar-orb-inner {
-  border-color: rgba(215,164,81,0.4);
-}
+    /* TIP JAR ORB — QUIET EMBER BREATH */
 
-.tipjar-orb:hover .tipjar-orb-title {
-  color: var(--accent);
-}
+    .tipjar-orb,
+    .tipjar-orb:visited,
+    .tipjar-orb:active {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      padding: 2px;
+      border-radius: 999px;
+      color: var(--text-soft);
+      background: transparent;
 
-/* single spark does a slow lap, then disappears for a while */
-@keyframes tipjar-spark {
-  0%   { background-position: -10% 50%; opacity: 0; }
-  8%   { opacity: 0.9; }
-  40%  { background-position: 110% 50%; opacity: 0; }
-  100% { opacity: 0; }
-}
+      /* deep but soft shadow under the pill */
+      box-shadow:
+        0 14px 26px rgba(0,0,0,0.85),
+        0 0 3px rgba(215,164,81,0.16);
 
-/* respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .tipjar-orb::after {
-    animation: none;
-    opacity: 0;
-  }
-}
+      /* very slow “breathing” ember */
+      animation: ember-breathe 14s ease-in-out infinite;
+    }
 
+    /* static gold ring */
+    .tipjar-orb::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(215,164,81,0.55);
+      box-shadow:
+        0 0 2px rgba(215,164,81,0.35),
+        0 0 1px rgba(255,255,255,0.55);
+    }
 
-/* ensure inner spans don’t go rogue-blue */
-.tipjar-orb * {
-  text-decoration: none;
-  color: inherit;
-}
+    /* inner pill */
 
-.tipjar-orb-inner {
-  border-radius: 999px;
-  padding: 0.7rem 1.35rem;
-  min-width: 150px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background:
-    radial-gradient(circle at 0% 0%, rgba(243,226,194,0.08), transparent 55%),
-    linear-gradient(145deg, rgba(10,10,10,0.98), rgba(5,5,5,0.96));
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255,255,255,0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.08rem;
-}
+    .tipjar-orb-inner {
+      border-radius: 999px;
+      padding: 0.7rem 1.35rem;
+      min-width: 150px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(243,226,194,0.08), transparent 55%),
+        linear-gradient(145deg, rgba(10,10,10,0.98), rgba(5,5,5,0.96));
+      box-shadow:
+        inset 0 0 0 0.5px rgba(255,255,255,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.08rem;
+    }
 
-.tipjar-orb-title {
-  font-family: "Playfair Display", serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--highlight);
-}
+    /* make sure inner text never turns link-blue */
 
-/* subtitle = soft whisper, no blue ever */
+    .tipjar-orb * {
+      text-decoration: none;
+      color: inherit;
+    }
 
-.tipjar-orb-sub {
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  opacity: 0.8;
-}
+    .tipjar-orb-title {
+      font-family: "Playfair Display", serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--highlight);
+    }
 
-.tipjar-orb:hover {
-  box-shadow:
-    0 0 14px rgba(215,164,81,0.35),
-    0 16px 32px rgba(0,0,0,0.9);
-}
+    .tipjar-orb-sub,
+    .tipjar-orb-sub:visited,
+    .tipjar-orb-sub:active {
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      opacity: 0.8;
+      color: var(--text-soft) !important;
+      text-decoration: none !important;
+    }
 
-.tipjar-orb:hover .tipjar-orb-inner {
-  border-color: rgba(215,164,81,0.4);
-}
+    .tipjar-orb:hover .tipjar-orb-sub {
+      color: var(--highlight) !important;
+    }
 
-.tipjar-orb:hover .tipjar-orb-title {
-  color: var(--accent);
-}
+    /* hover: a little more presence, still quiet */
 
-/* subtle ember movement */
+    .tipjar-orb:hover::before {
+      border-color: rgba(215,164,81,0.85);
+      box-shadow:
+        0 0 4px rgba(215,164,81,0.5),
+        0 0 1px rgba(255,255,255,0.7);
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  .tipjar-orb {
-    animation: none;
-  }
-}
+    .tipjar-orb:hover {
+      box-shadow:
+        0 18px 32px rgba(0,0,0,0.95),
+        0 0 6px rgba(215,164,81,0.28);
+    }
 
+    .tipjar-orb:hover .tipjar-orb-inner {
+      border-color: rgba(215,164,81,0.35);
+    }
 
-/* Force subtitle inside the tip jar orb to match theme and never turn blue */
-.tipjar-orb-sub,
-.tipjar-orb-sub:visited,
-.tipjar-orb-sub:active {
-  color: var(--text-soft) !important;
-  text-decoration: none !important;
-}
+    .tipjar-orb:hover .tipjar-orb-title {
+      color: var(--accent);
+    }
 
-.tipjar-orb:hover .tipjar-orb-sub {
-  color: var(--highlight) !important;
-}
+    /* slow, tiny change in glow intensity */
 
-/* TIP JAR SECTION SHELL */
+    @keyframes ember-breathe {
+      0%, 100% {
+        box-shadow:
+          0 14px 26px rgba(0,0,0,0.85),
+          0 0 3px rgba(215,164,81,0.16);
+      }
+      50% {
+        box-shadow:
+          0 16px 30px rgba(0,0,0,0.95),
+          0 0 7px rgba(215,164,81,0.30);
+      }
+    }
 
-.tipjar-section {
-  margin: 1.8rem 0 2.4rem;
-  display: flex;
-  justify-content: center;
-}
+    /* reduced motion = no breathing */
 
-.tipjar-shell {
-  display: flex;
-  gap: 1.4rem;
-  align-items: center;
-  padding: 1rem 1.4rem;
-  border-radius: 20px;
-  border: 1px solid var(--border-soft);
-  background:
-    linear-gradient(135deg, rgba(15,15,15,0.96), rgba(8,8,8,0.94));
-  box-shadow:
-    0 10px 32px rgba(0,0,0,0.5),
-    inset 0 0 0 0.5px rgba(255,255,255,0.03);
-  max-width: 640px;
-  width: 100%;
-}
-
-.tipjar-copy {
-  flex: 1;
-}
-
-.tipjar-copy p {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  color: var(--text-soft);
-}
-
-.tipjar-label {
-  font-family: "Playfair Display", serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-bottom: 0.35rem;
-}
-
-@media (max-width: 640px) {
-  .tipjar-shell {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: left;
-  }
-
-  .tipjar-orb {
-    align-self: center;
-  }
-}
-
-
-    
-   /*--end----------------------------------- STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
+    @media (prefers-reduced-motion: reduce) {
+      .tipjar-orb {
+        animation: none;
+      }
+    }
 
   </style>
 </head>
 <body>
- <div class="testing-shell">
-  <!--begin--------------------------------- BODY WORKSPACE  Add your HTML elements here  ------------------------------------ -->
+  <div class="testing-shell">
 
     <!-- CONTACT STRIP -->
     <section class="contact-strip">
@@ -373,9 +310,7 @@
     <!-- TOP MAIN DIVIDER -->
     <div class="about-divider"></div>
 
-  
-  <!--end----------------------------------- BODY WORKSPACE  Add your HTML elements here  ------------------------------------ -->
-
-</div>
+  </div>
 </body>
 </html>
+```
