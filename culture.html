@@ -275,6 +275,78 @@
     }
 
     /* Candle icon — small, inline, quiet */
+/* Candle centered below title */
+.floating-candle {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.35rem;
+  animation: candle-float 3.5s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+/* SVG shape */
+.candle-icon {
+  width: 26px;
+  height: auto;
+}
+
+/* Candle colors */
+.candle-plate {
+  fill: #111;
+  stroke: rgba(255,255,255,0.22);
+  stroke-width: 1;
+}
+
+.candle-body {
+  fill: #141414;
+  stroke: rgba(252,230,194,0.6);
+  stroke-width: 1;
+}
+
+.candle-drip {
+  fill: #1c1c1c;
+}
+
+.candle-wick {
+  fill: rgba(207,200,185,0.8);
+}
+
+.candle-flame-outer {
+  fill: rgba(215,164,81,0.92);
+  filter: drop-shadow(0 0 4px rgba(215,164,81,0.9));
+}
+
+.candle-flame-inner {
+  fill: var(--highlight);
+}
+
+/* Vertical floating motion */
+@keyframes candle-float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* Flicker for the flame */
+@keyframes candle-flicker {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.82; }
+}
+
+.candle-flame-outer,
+.candle-flame-inner {
+  animation: candle-flicker 1.7s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .floating-candle,
+  .candle-flame-outer,
+  .candle-flame-inner {
+    animation: none;
+  }
+}
 
     .candle-icon-wrap {
       display: inline-flex;
@@ -364,70 +436,25 @@
             and slow, careful updates.
           </p>
         </div>
+<a href="tipjar.html" class="tipjar-orb">
+  <span class="tipjar-orb-inner">
+    <span class="tipjar-orb-title">TIP JAR</span>
 
-        <a href="tipjar.html" class="tipjar-orb">
-          <span class="tipjar-orb-inner">
-            <span class="tipjar-orb-title">TIP JAR</span>
-            <span class="tipjar-orb-sub">
-              <span class="candle-icon-wrap" aria-hidden="true">
-                <svg viewBox="0 0 64 128" class="candle-icon">
-                  <!-- Base plate -->
-                  <ellipse
-                    class="candle-plate"
-                    cx="32"
-                    cy="94"
-                    rx="15"
-                    ry="4"
-                  />
-                  <!-- Candle body -->
-                  <rect
-                    class="candle-body"
-                    x="27"
-                    y="49"
-                    width="10"
-                    height="30"
-                    rx="3"
-                  />
-                  <!-- Little wax drip -->
-                  <rect
-                    class="candle-drip"
-                    x="30"
-                    y="55"
-                    width="3"
-                    height="7"
-                    rx="1.5"
-                  />
-                  <!-- Wick -->
-                  <rect
-                    class="candle-wick"
-                    x="31"
-                    y="45"
-                    width="2"
-                    height="4"
-                    rx="1"
-                  />
-                  <!-- Flame outer -->
-                  <path
-                    class="candle-flame-outer"
-                    d="M32 24
-                       C28 30 28 35 32 40
-                       C36 35 36 30 32 24
-                       Z"
-                  />
-                  <!-- Flame inner -->
-                  <path
-                    class="candle-flame-inner"
-                    d="M32 26
-                       C29.3 31 29.7 34.5 32 38
-                       C34.2 34.5 34.7 31 32 26
-                       Z"
-                  />
-                </svg>
-              </span>
-              <span class="tipjar-orb-sub-text">thank you.</span>
-            </span>
-          </span>
-        </a>
+    <span class="floating-candle">
+      <svg viewBox="0 0 64 128" class="candle-icon">
+        <ellipse class="candle-plate" cx="32" cy="94" rx="15" ry="4" />
+        <rect class="candle-body" x="27" y="49" width="10" height="30" rx="3" />
+        <rect class="candle-drip" x="30" y="55" width="3" height="7" rx="1.5" />
+        <rect class="candle-wick" x="31" y="45" width="2" height="4" rx="1" />
+        <path class="candle-flame-outer"
+              d="M32 24 C28 30 28 35 32 40 C36 35 36 30 32 24Z" />
+        <path class="candle-flame-inner"
+              d="M32 26 C29.3 31 29.7 34.5 32 38 C34.2 34.5 34.7 31 32 26Z" />
+      </svg>
+    </span>
+  </span>
+</a>
+
       </div>
     </section>
 
