@@ -183,17 +183,23 @@
   padding-bottom: 0.5rem;
 }
 
-/* Add the underline, same as card titles/section headings */
 .contact-title::after {
   content: "";
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);   /* centers underline */
+  transform: translateX(-50%);
   bottom: 0;
-  width: 72px;
+  width: 140px; /* longer */
   height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
+  background: linear-gradient(
+    90deg,
+    rgba(215,164,81,0.6),
+    rgba(215,164,81,0.25),
+    transparent
+  );
+  opacity: 0.9;
 }
+
 
 
   .contact-email {
@@ -246,28 +252,23 @@
   /* -------------------------------------------------------
      TYPOGRAPHY — SHARED HEADINGS & BODY
   -------------------------------------------------------- */
-  .section-heading,
-  .card-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--highlight);
-    letter-spacing: 0.01em;
-    margin-bottom: 0.9rem;
-    padding-bottom: 0.5rem;
-    position: relative;
-  }
+ .section-heading,
+.card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--highlight);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.5rem;
 
-  .section-heading::after,
-  .card-title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 72px;
-    height: 1px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-  }
+  /* gold underline as a background, not ::after */
+  background-image: linear-gradient(90deg, var(--accent), transparent);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 72px 1px;
+}
+
 
   .quote-block,
   .slow-update-note,
