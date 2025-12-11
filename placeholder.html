@@ -64,13 +64,23 @@
     .candle-wrap {
       position: absolute;
       /* pull the candle down so the base overlaps the border */
-      top: -12px;
+      top: -6px;
       left: 0;
       right: 0;
       display: flex;
       justify-content: center;
       pointer-events: none;
     }
+    .candle-shadow {
+  position: absolute;
+  top: 32px;
+  width: 40px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.35), transparent);
+  filter: blur(4px);
+}
+
 
     .candle {
       display: flex;
@@ -118,13 +128,14 @@
   width: 24px;
   height: 36px;
   border-radius: 10px 10px 6px 6px;
-  background: linear-gradient(
-      to bottom,
-      #fff4db 0%,
-      #fce6c2 28%,
-      #e8cda1 60%,
-      #d1b085 100%
-    );
+ background: linear-gradient(
+  to bottom,
+  #fff6e6 0%,
+  #f7dfbe 35%,
+  #e2c29a 70%,
+  #d0ad83 100%
+);
+
   position: relative;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.25),
@@ -242,6 +253,15 @@
         font-size: 0.94rem;
       }
     }
+    @keyframes flicker {
+  0%, 100% { transform: scale(1) translateY(2px); opacity: 1; }
+  50% { transform: scale(1.03, 0.97) translateY(3px); opacity: 0.93; }
+}
+
+.flame {
+  animation: flicker 2.8s ease-in-out infinite;
+}
+
   </style>
 </head>
 
@@ -249,11 +269,14 @@
   <main class="shell">
     <section class="card" aria-label="Work in progress notice">
       <div class="candle-wrap">
-        <div class="candle" aria-hidden="true">
-          <div class="flame"></div>
-          <div class="wick"></div>
-          <div class="candle-body"></div>
-        </div>
+  <div class="candle" aria-hidden="true">
+    <div class="flame"></div>
+    <div class="wick"></div>
+    <div class="candle-body"></div>
+  </div>
+  <div class="candle-shadow"></div>
+</div>
+
       </div>
 
       <p class="tagline">Work in progress</p>
