@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Vigil</title>
+  <title>Vigil • Quiet watchfulness over human choices</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Fonts -->
@@ -10,11 +10,21 @@
 
   <style>
     :root {
-      --bg: #0F0F0F;         /* Charcoal */
-      --text: #F7F4F0;       /* Ivory */
-      --accent: #D7A451;     /* Ember Gold */
-      --secondary: #6E7075;  /* Slate Grey */
-      --highlight: #FCE6C2;  /* Soft Amber */
+      --bg: #050505;
+      --bg-soft: #0F0F10;
+      --bg-softer: #141416;
+      --text: #F7F4F0;
+      --muted-text: #9B9DA2;
+      --accent: #D7A451;
+      --accent-soft: rgba(215, 164, 81, 0.16);
+      --accent-strong: rgba(215, 164, 81, 0.42);
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(215, 164, 81, 0.28);
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --radius-pill: 999px;
+      --transition-fast: 180ms ease-out;
     }
 
     * {
@@ -23,160 +33,1060 @@
       padding: 0;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
-      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #171717 0, #050505 52%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top, rgba(215,164,81,0.22), transparent 60%),
-        linear-gradient(145deg, #0F0F0F, #151515 55%, #0F0F0F);
+      flex-direction: column;
     }
 
     .shell {
-      max-width: 960px;
-      width: 100%;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at top left, rgba(252,230,194,0.08), transparent 55%),
-        rgba(5,5,5,0.9);
-      border: 1px solid rgba(215,164,81,0.22);
-      padding: 2.5rem clamp(2rem, 4vw, 3rem);
-      box-shadow:
-        0 30px 80px rgba(0,0,0,0.7),
-        inset 0 0 0 0.5px rgba(255,255,255,0.04);
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 18px 18px 48px 18px;
+    }
+
+    /* Header */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
       backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0.78), transparent);
+      border-bottom: 1px solid rgba(247, 244, 240, 0.04);
+    }
+
+    .site-header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 18px 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 18%, #FFF6E3 0, #FCE6C2 24%, #D7A451 56%, #5C3314 100%);
+      box-shadow:
+        0 0 26px rgba(252, 230, 194, 0.65),
+        0 0 66px rgba(215, 164, 81, 0.55);
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 18% 26%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 24%, #FFFDF6 0, #FFE9C9 28%, rgba(255, 255, 255, 0) 72%);
+      mix-blend-mode: screen;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36%;
+      height: 30%;
+      border-radius: 999px 999px 40% 40%;
+      background: rgba(0, 0, 0, 0.42);
+      box-shadow:
+        0 0 16px rgba(0, 0, 0, 0.78),
+        0 -2px 6px rgba(255, 255, 255, 0.16);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .brand-name {
+      font-family: "Playfair Display", serif;
+      font-size: 1.14rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      text-transform: lowercase;
+      color: var(--muted-text);
+      letter-spacing: 0.14em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      padding: 5px;
+      border-radius: 999px;
+      background: rgba(10, 10, 10, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-link {
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: var(--muted-text);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--text);
+      border-color: rgba(247, 244, 240, 0.24);
+      background: rgba(27, 27, 30, 0.95);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .nav-link.primary {
+      background: radial-gradient(circle at 0 0, rgba(252, 230, 194, 0.15), rgba(15, 15, 15, 1));
+      border-color: var(--accent-strong);
+      color: var(--text);
+      box-shadow: 0 0 20px rgba(215, 164, 81, 0.45);
+    }
+
+    .nav-link.primary:hover,
+    .nav-link.primary:focus-visible {
+      background: radial-gradient(circle at 0 0, rgba(252, 230, 194, 0.24), rgba(15, 15, 15, 1));
+    }
+
+    .nav-pill {
+      font-size: 0.74rem;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(247, 244, 240, 0.1);
+      background: rgba(8, 8, 8, 0.92);
+      color: var(--muted-text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #FFF6E3 0, #D7A451 42%, #5C3314 100%);
+      box-shadow: 0 0 18px rgba(215, 164, 81, 0.9);
+    }
+
+    .nav-mobile-toggle {
+      display: none;
+      border: 1px solid rgba(247, 244, 240, 0.16);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(10, 10, 10, 0.86);
+      font-size: 0.78rem;
+      color: var(--muted-text);
+    }
+
+    /* Layout */
+
+    main {
+      flex: 1;
+    }
+
+    .layout {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+      gap: 26px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .site-header-inner {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-mobile-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* Hero */
+
+    .hero {
+      background: radial-gradient(circle at top left, rgba(252, 230, 194, 0.16) 0, rgba(10, 10, 10, 0.98) 44%, #050505 100%);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 22px 22px 22px;
       position: relative;
       overflow: hidden;
-      animation: fadeIn 1.2s ease both;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .tagline {
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 0.75rem;
-      color: var(--secondary);
-      margin-bottom: 0.45rem;
-    }
-
-    /* 🔥 Etymology Line — Option 1 */
-    .etymology {
-      font-family: "Playfair Display", serif;
-      font-size: 0.82rem;
-      color: var(--secondary);
-      opacity: 0.85;
-      margin-bottom: 1.4rem;
-      letter-spacing: 0.02em;
-    }
-
-    .etymology::after {
+    .hero::before {
       content: "";
-      display: block;
-      width: 60%;
-      max-width: 260px;
-      height: 1px;
-      margin-top: 1rem;
-      background: linear-gradient(90deg, rgba(215,164,81,0.25), transparent);
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 8% 0, rgba(252, 230, 194, 0.22) 0, transparent 52%),
+        radial-gradient(circle at 92% 92%, rgba(247, 244, 240, 0.03) 0, transparent 64%);
+      opacity: 1;
+      pointer-events: none;
     }
 
-    h1 {
-      font-family: "Playfair Display", "Times New Roman", serif;
-      font-weight: 600;
-      font-size: clamp(2.4rem, 4vw, 3rem);
-      line-height: 1.1;
-      margin: 0 0 1.4rem;
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: flex-start;
     }
 
-    h1 span {
-      background: linear-gradient(120deg, var(--accent), var(--highlight));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    @media (max-width: 780px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
-    p {
-      max-width: 34rem;
-      font-size: 0.98rem;
+    .hero-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.1rem, 3vw, 2.5rem);
+      line-height: 1.18;
+      margin-bottom: 12px;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-definition {
+      font-size: 0.9rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      margin-bottom: 12px;
+    }
+
+    .hero-body {
+      font-size: 0.95rem;
       line-height: 1.7;
-      color: var(--highlight);
-      margin-top: 1rem;
-      margin-bottom: 2rem;
-      white-space: pre-line;
+      color: rgba(247, 244, 240, 0.94);
+      margin-bottom: 16px;
     }
 
-    .pill-row {
+    .hero-body-quiet {
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: rgba(247, 244, 240, 0.75);
+    }
+
+    .hero-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 8px;
+      margin-top: 16px;
     }
 
-    .pill {
-      display: inline-block;          /* so links behave like your divs */
-      text-decoration: none;          /* remove underline */
+    .hero-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(110,112,117,0.5);
-      padding: 0.45rem 1.1rem;
-      font-size: 0.72rem;
+      border: 1px solid rgba(247, 244, 240, 0.16);
+      background: rgba(10, 10, 10, 0.96);
+      color: var(--muted-text);
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel {
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top left, rgba(247, 244, 240, 0.02), rgba(8, 8, 10, 0.98));
+      padding: 14px 14px 14px 14px;
+    }
+
+    .panel-heading {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      margin-bottom: 6px;
+    }
+
+    .panel-title {
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+    }
+
+    .panel-text {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(247, 244, 240, 0.78);
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .panel-chip {
+      border-radius: 14px;
+      border: 1px solid rgba(247, 244, 240, 0.06);
+      padding: 8px 9px;
+      background: rgba(10, 10, 11, 0.96);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: rgba(247, 244, 240, 0.8);
+    }
+
+    .panel-chip-label {
+      font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--secondary);
-      background: rgba(15, 15, 15, 0.6);
-      backdrop-filter: blur(4px);
+      color: var(--muted-text);
+      display: block;
+      margin-bottom: 3px;
     }
 
-    .pill:hover {
-      border-color: rgba(215,164,81,0.45);
-      color: var(--highlight);
-      transition: 0.2s ease;
+    .panel-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted-text);
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 1.25rem;
-      }
+    .panel-dot-row {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
 
-      .shell {
-        padding: 1.75rem 1.5rem;
+    .panel-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(247, 244, 240, 0.6);
+    }
+
+    .panel-dot.highlight {
+      background: radial-gradient(circle at 30% 30%, #FFF6E3 0, #D7A451 40%, #5C3314 100%);
+      box-shadow: 0 0 16px rgba(215, 164, 81, 0.85);
+    }
+
+    .panel-pill-link {
+      font-size: 0.78rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(247, 244, 240, 0.16);
+      background: rgba(14, 14, 16, 0.98);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-pill-link span.icon {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    /* Index grid */
+
+    .index-section {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .index-section {
+        grid-template-columns: minmax(0, 1fr);
       }
+    }
+
+    .index-left-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      background:
+        radial-gradient(circle at top left, rgba(252, 230, 194, 0.08), rgba(8, 8, 10, 0.98)),
+        linear-gradient(to bottom right, rgba(10, 10, 10, 0.98), #050505);
+      padding: 18px 18px 18px 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .index-heading-kicker {
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      margin-bottom: 6px;
+    }
+
+    .index-heading-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .index-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(247, 244, 240, 0.9);
+    }
+
+    .index-text + .index-text {
+      margin-top: 8px;
+    }
+
+    .index-right-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .index-right-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .domain-card {
+      border-radius: 18px;
+      border: 1px solid rgba(247, 244, 240, 0.08);
+      background: rgba(8, 8, 10, 0.98);
+      padding: 10px 11px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .domain-card:hover,
+    .domain-card:focus-visible {
+      outline: none;
+      border-color: var(--accent-strong);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+      background: radial-gradient(circle at top left, rgba(252, 230, 194, 0.04), rgba(8, 8, 10, 0.98));
+    }
+
+    .domain-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted-text);
+    }
+
+    .domain-title {
+      font-size: 0.95rem;
+      color: rgba(247, 244, 240, 0.96);
+    }
+
+    .domain-desc {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: rgba(247, 244, 240, 0.8);
+    }
+
+    .domain-meta {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: rgba(247, 244, 240, 0.65);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .domain-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(247, 244, 240, 0.16);
+      background: rgba(9, 9, 11, 0.9);
+      font-size: 0.72rem;
+      color: rgba(247, 244, 240, 0.85);
+    }
+
+    /* Signal section */
+
+    .signal-section {
+      margin-top: 28px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(247, 244, 240, 0.08);
+      background: linear-gradient(135deg, #050505, #0D0E11);
+      padding: 16px 16px 14px 16px;
+    }
+
+    .signal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .signal-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .signal-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted-text);
+    }
+
+    .signal-title {
+      font-size: 0.98rem;
+    }
+
+    .signal-sub {
+      font-size: 0.8rem;
+      color: rgba(247, 244, 240, 0.8);
+    }
+
+    .signal-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .signal-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .signal-column {
+      border-radius: 14px;
+      border: 1px solid rgba(247, 244, 240, 0.06);
+      background: rgba(10, 10, 12, 0.98);
+      padding: 10px 10px 9px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: rgba(247, 244, 240, 0.86);
+    }
+
+    .signal-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted-text);
+    }
+
+    .signal-item-title {
+      font-size: 0.84rem;
+      color: rgba(247, 244, 240, 0.96);
+    }
+
+    .signal-meta {
+      margin-top: 3px;
+      font-size: 0.75rem;
+      color: rgba(247, 244, 240, 0.7);
+    }
+
+    .signal-footer-note {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: rgba(247, 244, 240, 0.68);
+    }
+
+    /* Newsletter and footer */
+
+    .bottom-row {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 780px) {
+      .bottom-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .mail-card {
+      border-radius: 18px;
+      border: 1px solid rgba(247, 244, 240, 0.09);
+      background: radial-gradient(circle at top left, rgba(252, 230, 194, 0.06), rgba(9, 9, 11, 0.96));
+      padding: 14px 14px 14px 14px;
+    }
+
+    .mail-title {
+      font-size: 0.96rem;
+      margin-bottom: 4px;
+    }
+
+    .mail-text {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: rgba(247, 244, 240, 0.8);
+      margin-bottom: 10px;
+    }
+
+    .mail-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .mail-input {
+      flex: 1;
+      min-width: 0;
+      border-radius: 999px;
+      border: 1px solid rgba(247, 244, 240, 0.16);
+      background: rgba(5, 5, 7, 0.96);
+      padding: 7px 11px;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .mail-input::placeholder {
+      color: rgba(155, 157, 162, 0.9);
+    }
+
+    .mail-button {
+      border-radius: 999px;
+      border: 1px solid var(--accent-strong);
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      background: radial-gradient(circle at 0 0, rgba(252, 230, 194, 0.18), rgba(10, 10, 10, 1));
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 0 22px rgba(215, 164, 81, 0.55);
+    }
+
+    .mail-button:hover,
+    .mail-button:focus-visible {
+      outline: none;
+      background: radial-gradient(circle at 0 0, rgba(252, 230, 194, 0.26), rgba(10, 10, 10, 1));
+    }
+
+    .aside-card {
+      border-radius: 18px;
+      border: 1px solid rgba(247, 244, 240, 0.08);
+      background: rgba(9, 9, 11, 0.98);
+      padding: 12px 12px 11px 12px;
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: rgba(247, 244, 240, 0.8);
+    }
+
+    .aside-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted-text);
+      margin-bottom: 4px;
+    }
+
+    .site-footer {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(247, 244, 240, 0.08);
+      font-size: 0.75rem;
+      color: rgba(247, 244, 240, 0.7);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-link {
+      border-radius: 999px;
+      padding: 4px 9px;
+      border: 1px solid rgba(247, 244, 240, 0.16);
+      background: rgba(8, 8, 10, 0.96);
+      font-size: 0.75rem;
+      color: rgba(247, 244, 240, 0.85);
+    }
+
+    .footer-note {
+      opacity: 0.85;
     }
   </style>
 </head>
 
 <body>
-  <main class="shell">
-    <h1>
-      <span>Vigil</span>
-    </h1>
+  <div class="page">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="brand" aria-label="Vigil home">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-text">
+            <div class="brand-name">Vigil</div>
+            <div class="brand-subtitle">quiet records of cause and effect</div>
+          </div>
+        </a>
 
-    <!-- 🌿 Etymology Block -->
-    <div class="etymology">
-      <em>vigil • vigilia • vigiliae</em> [f.] — watch; vigil; wakefulness.
-    </div>
+        <nav class="nav" aria-label="Primary">
+          <div class="nav-links">
+            <a href="#humanity" class="nav-link">Humanity &amp; Society</a>
+            <a href="#life" class="nav-link">Endangered Life</a>
+            <a href="#science" class="nav-link">Science &amp; Medicine</a>
+            <a href="#culture" class="nav-link">Culture &amp; Memory</a>
+            <a href="#paths" class="nav-link">Paths Forward</a>
+            <a href="about.html" class="nav-link primary">About</a>
+          </div>
 
-    <div class="pill-row">
-      <a class="pill" href="placeholder.html">Humanity &amp; Society</a>
-      <a class="pill" href="placeholder.html">Endangered Life &amp; Ecosystems</a>
-      <a class="pill" href="placeholder.html">Science, Medicine &amp; Innovation</a>
-      <a class="pill" href="placeholder.html">Culture &amp; Memory</a>
-      <a class="pill" href="placeholder.html">Paths Forward</a>
-      <a class="pill" href="about.html">About</a>
-    </div>
+          <button class="nav-mobile-toggle" type="button">
+            <span>Sections</span>
+          </button>
 
-  </main>
+          <div class="nav-pill">
+            <span class="nav-dot"></span>
+            <span>Tip jar and hosting support link inside footer</span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="shell">
+        <section class="layout" aria-labelledby="hero-heading">
+          <article class="hero">
+            <div class="hero-inner">
+              <div>
+                <p class="hero-kicker">Vigilia</p>
+                <h1 class="hero-title" id="hero-heading">
+                  Quiet watchfulness over how choices move through the world <span>.</span>
+                </h1>
+
+                <p class="hero-definition">
+                  vigil • vigilia • vigiliae [f.] : watch; vigil; wakefulness.
+                </p>
+
+                <p class="hero-body">
+                  Vigil gathers stories, timelines, and reference threads that trace harm, neglect, repair, and consequence across systems, lives, and landscapes. The focus rests on evidence and context rather than spectacle.
+                </p>
+
+                <p class="hero-body-quiet">
+                  Material lives here in a slow archive. Topics sit beside one another so patterns can become visible: who is affected, which structures make harm possible, and where attempts at repair begin.
+                </p>
+
+                <div class="hero-tags" aria-label="Example threads">
+                  <div class="hero-tag">labor rights and hidden economies</div>
+                  <div class="hero-tag">trafficking and exploitation networks</div>
+                  <div class="hero-tag">endangered species and collapsing habitats</div>
+                  <div class="hero-tag">legal cases that reshape public memory</div>
+                </div>
+              </div>
+
+              <aside class="hero-right" aria-label="Orientation panels">
+                <section class="panel">
+                  <p class="panel-heading">Orientation</p>
+                  <h2 class="panel-title">What is kept in view here</h2>
+                  <p class="panel-text">
+                    Each section of Vigil holds a set of researched threads. Some follow an industry, some follow a region, some follow a species, and some follow a single case that illuminates a wider pattern.
+                  </p>
+
+                  <div class="panel-grid">
+                    <div class="panel-chip">
+                      <span class="panel-chip-label">Records</span>
+                      Concise timelines and structured notes preserve what happened, who was affected, and which sources trace the story.
+                    </div>
+                    <div class="panel-chip">
+                      <span class="panel-chip-label">Context</span>
+                      Background material links policies, incentives, and histories that keep recurring in different places.
+                    </div>
+                  </div>
+
+                  <div class="panel-footer">
+                    <div class="panel-dot-row" aria-hidden="true">
+                      <span class="panel-dot highlight"></span>
+                      <span class="panel-dot"></span>
+                      <span class="panel-dot"></span>
+                    </div>
+                    <span>Disclaimers and scope appear in the About page</span>
+                  </div>
+                </section>
+
+                <section class="panel">
+                  <p class="panel-heading">Entry points</p>
+                  <p class="panel-text">
+                    Starting points sit below. Each card opens into a set of topics and reference material. Sections grow slowly as research is added.
+                  </p>
+                  <a href="#paths" class="panel-pill-link">
+                    <span class="icon">⟶</span>
+                    <span>Scroll to section index</span>
+                  </a>
+                </section>
+              </aside>
+            </div>
+          </article>
+
+          <aside aria-label="Index of sections" class="index-right-grid" id="paths">
+            <article class="domain-card" id="humanity">
+              <div class="domain-label">Section</div>
+              <h2 class="domain-title">Humanity &amp; Society</h2>
+              <p class="domain-desc">
+                Structures that govern daily life. Labor conditions, housing, migration, policing, digital platforms, and quiet forms of coercion are followed across regions and decades.
+              </p>
+              <div class="domain-meta">
+                <span class="domain-pill">Case files and timelines</span>
+                <span>Index tag: H1</span>
+              </div>
+            </article>
+
+            <article class="domain-card" id="life">
+              <div class="domain-label">Section</div>
+              <h2 class="domain-title">Endangered Life &amp; Ecosystems</h2>
+              <p class="domain-desc">
+                Species on the edge, fractured habitats, and overlapping crises in climate, agriculture, and industry. Material here stays close to field reports and local records.
+              </p>
+              <div class="domain-meta">
+                <span class="domain-pill">Species dossiers</span>
+                <span>Index tag: E2</span>
+              </div>
+            </article>
+
+            <article class="domain-card" id="science">
+              <div class="domain-label">Section</div>
+              <h2 class="domain-title">Science, Medicine &amp; Innovation</h2>
+              <p class="domain-desc">
+                Trials, treatments, technologies, and the gaps between discovery and access. Threads examine incentives, regulation, and the histories that shape present care.
+              </p>
+              <div class="domain-meta">
+                <span class="domain-pill">Research threads</span>
+                <span>Index tag: S3</span>
+              </div>
+            </article>
+
+            <article class="domain-card" id="culture">
+              <div class="domain-label">Section</div>
+              <h2 class="domain-title">Culture &amp; Memory</h2>
+              <p class="domain-desc">
+                Stories, archives, and contested narratives. This area follows how events are remembered, forgotten, or reshaped through media, law, and art.
+              </p>
+              <div class="domain-meta">
+                <span class="domain-pill">Memory studies</span>
+                <span>Index tag: C4</span>
+              </div>
+            </article>
+          </aside>
+        </section>
+
+        <section class="index-section" aria-labelledby="how-heading">
+          <article class="index-left-card">
+            <p class="index-heading-kicker">Method</p>
+            <h2 class="index-heading-title" id="how-heading">How material is shaped inside Vigil</h2>
+
+            <p class="index-text">
+              Entries are assembled from public records, reporting, academic work, and direct documentation where it is available. Each page holds references in clear view so routes back to original sources remain open.
+            </p>
+            <p class="index-text">
+              Topics are arranged so that harm is not isolated from the systems that sustain it. A case might sit beside legislation, trade flows, archived interviews, or ecological data that reveal the same pattern from another angle.
+            </p>
+            <p class="index-text">
+              The pace is deliberate. Sections update in cycles rather than streams. New context is added when it deepens understanding, not simply because it is new.
+            </p>
+          </article>
+
+          <div class="index-right-grid" aria-label="Working shelves">
+            <section class="domain-card">
+              <div class="domain-label">Working shelf</div>
+              <h3 class="domain-title">Source reliability and media networks</h3>
+              <p class="domain-desc">
+                A reference area that maps outlets, ownership, funding, and notable reporting histories to support more grounded reading of daily news.
+              </p>
+              <div class="domain-meta">
+                <span class="domain-pill">In development</span>
+                <span>Signal label: SR</span>
+              </div>
+            </section>
+
+            <section class="domain-card">
+              <div class="domain-label">Working shelf</div>
+              <h3 class="domain-title">Case clusters and recurring patterns</h3>
+              <p class="domain-desc">
+                Collections of events that share a structure. For example, linked industrial accidents, coordinated disinformation campaigns, or repeated failures in oversight.
+              </p>
+              <div class="domain-meta">
+                <span class="domain-pill">Pattern maps</span>
+                <span>Signal label: PC</span>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="signal-section" aria-labelledby="signal-heading">
+          <header class="signal-header">
+            <div class="signal-title-block">
+              <p class="signal-kicker">Signal and noise</p>
+              <h2 class="signal-title" id="signal-heading">
+                A small front window into ongoing research
+              </h2>
+              <p class="signal-sub">
+                This band is designed for a few current threads at a time. It can rotate as new work settles into place.
+              </p>
+            </div>
+          </header>
+
+          <div class="signal-layout">
+            <section class="signal-column">
+              <div class="signal-label">Current reading queue</div>
+              <p class="signal-item-title">
+                Long form investigations and primary documents under review
+              </p>
+              <p>
+                Space reserved for articles, reports, and archives that inform upcoming pages. Each entry will reference outlet, date, and accessible copies where possible.
+              </p>
+              <p class="signal-meta">
+                Planned format: compact cards that link outward, sorted by section label.
+              </p>
+            </section>
+
+            <section class="signal-column">
+              <div class="signal-label">Recent additions</div>
+              <p class="signal-item-title">
+                New or substantially revised pages across the archive
+              </p>
+              <p>
+                A running list of pages that have received new context, updated sources, or reorganized structure so changes remain visible over time.
+              </p>
+              <p class="signal-meta">
+                Planned format: per section, with simple change notes and timestamps.
+              </p>
+            </section>
+
+            <section class="signal-column">
+              <div class="signal-label">Questions under study</div>
+              <p class="signal-item-title">
+                Open questions guiding the next round of research
+              </p>
+              <p>
+                A small index of guiding questions for anyone exploring similar material or tracing the same systems from another vantage point.
+              </p>
+            </section>
+          </div>
+
+          <p class="signal-footer-note">
+            This area is not a live news feed. It is a small dashboard for works in progress and quiet updates, aligned with the slower pace described in the About page.
+          </p>
+        </section>
+
+        <section class="bottom-row" aria-label="Supporting material and notes">
+          <article class="mail-card">
+            <p class="index-heading-kicker">Mailing list</p>
+            <h2 class="mail-title">Slow updates, collected by month</h2>
+            <p class="mail-text">
+              A low traffic mailing list gathers new pages, notable revisions, and a short list of external reading that fits the current research focus. Messages arrive in occasional dispatches rather than in constant circulation.
+            </p>
+
+            <form class="mail-form">
+              <input
+                type="email"
+                class="mail-input"
+                placeholder="address for dispatches"
+                aria-label="Email address"
+              />
+              <button type="submit" class="mail-button">
+                Join list
+              </button>
+            </form>
+          </article>
+
+          <aside class="aside-card">
+            <p class="aside-label">Tip jar and hosting support</p>
+            <p>
+              A separate personal tip jar supports hosting costs, research time, and continued development of Vigil. Contributions are optional and do not influence which topics receive attention.
+            </p>
+            <p>
+              Links to external organizations on topic pages always lead directly to those organizations. Vigil does not collect donations on their behalf.
+            </p>
+          </aside>
+        </section>
+
+        <footer class="site-footer">
+          <div class="footer-note">
+            Vigil shares educational material only. It is not legal, medical, financial, or professional advice.
+          </div>
+          <div class="footer-links">
+            <a href="about.html" class="footer-link">About Vigil</a>
+            <span class="footer-link">Contact: InboxVigil@outlook.com</span>
+            <span class="footer-link">Tip jar link placeholder</span>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
