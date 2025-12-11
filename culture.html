@@ -32,30 +32,158 @@
 
     /*--begin------------------------------ STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
 
-.tipjar-button {
-  display: inline-block;
-  text-decoration: none;
-  padding: 0.55rem 1.4rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  font-family: "Playfair Display", serif;
-  color: var(--highlight);
-  border: 1px solid rgba(215,164,81,0.35);
-  background: rgba(15,15,15,0.92);
-  box-shadow:
-    0 0 12px rgba(215,164,81,0.08),
-    inset 0 0 0 0.5px rgba(255,255,255,0.04);
-  transition: 0.25s ease;
+/* -------------------------------------------------------
+   TIP JAR — "KEEP THE WATCH" ORB
+-------------------------------------------------------- */
+
+.tipjar-section {
+  margin: 1.8rem 0 2.4rem;
+  display: flex;
+  justify-content: center;
 }
 
-.tipjar-button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+.tipjar-shell {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+  padding: 1rem 1.4rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  background:
+    linear-gradient(135deg, rgba(15,15,15,0.96), rgba(8,8,8,0.94));
   box-shadow:
-    0 0 18px rgba(215,164,81,0.18),
-    inset 0 0 0 0.5px rgba(215,164,81,0.15);
+    0 10px 32px rgba(0,0,0,0.5),
+    inset 0 0 0 0.5px rgba(255,255,255,0.03);
+  max-width: 640px;
+  width: 100%;
 }
+
+.tipjar-copy {
+  flex: 1;
+}
+
+.tipjar-copy p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.tipjar-label {
+  font-family: "Playfair Display", serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-bottom: 0.35rem;
+}
+
+/* The orb button */
+
+.tipjar-orb {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0.18rem;
+  border-radius: 999px;
+  isolation: isolate;
+  background: radial-gradient(circle at 30% 0%, rgba(243,226,194,0.24), transparent 70%);
+  overflow: hidden;
+}
+
+/* rotating aura around the orb */
+.tipjar-orb::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background:
+    conic-gradient(
+      from 180deg,
+      rgba(215,164,81,0),
+      rgba(215,164,81,0.85),
+      rgba(243,226,194,0),
+      rgba(215,164,81,0.7),
+      rgba(215,164,81,0)
+    );
+  opacity: 0.6;
+  animation: tipjar-aura 8s linear infinite;
+}
+
+.tipjar-orb-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+  padding: 0.7rem 1.35rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  background:
+    linear-gradient(145deg, rgba(12,12,12,0.98), rgba(7,7,7,0.94));
+  box-shadow:
+    0 0 12px rgba(215,164,81,0.18),
+    inset 0 0 0 0.5px rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.08rem;
+  min-width: 150px;
+}
+
+.tipjar-orb-title {
+  font-family: "Playfair Display", serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--highlight);
+}
+
+.tipjar-orb-sub {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+}
+
+/* Hover effects */
+
+.tipjar-orb:hover .tipjar-orb-inner {
+  border-color: rgba(215,164,81,0.6);
+  box-shadow:
+    0 0 18px rgba(215,164,81,0.28),
+    inset 0 0 0 0.5px rgba(215,164,81,0.2);
+}
+
+.tipjar-orb:hover .tipjar-orb-title {
+  color: var(--accent);
+}
+
+/* Aura animation */
+@keyframes tipjar-aura {
+  to { transform: rotate(360deg); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .tipjar-orb::before {
+    animation: none;
+  }
+}
+
+/* Responsive tweak */
+
+@media (max-width: 640px) {
+  .tipjar-shell {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .tipjar-orb {
+    align-self: center;
+  }
+
+  .tipjar-copy p {
+    font-size: 0.86rem;
+  }
+}
+
 
     
    /*--end----------------------------------- STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
@@ -67,7 +195,39 @@
 
   <!--begin--------------------------------- BODY WORKSPACE  Add your HTML elements here  ------------------------------------ -->
 
-  <a class="tipjar-button" href="tipjar.html">Offer a Light</a>
+    <!-- CONTACT STRIP -->
+    <section class="contact-strip">
+      <div class="contact-strip-inner">
+        <div class="contact-strip-title">Contact</div>
+        <p>
+          Questions, corrections, feedback or topics that feel missing from this space:
+          <span class="contact-strip-email">InboxVigil@outlook.com</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- TIP JAR / SUPPORT -->
+    <section class="tipjar-section">
+      <div class="tipjar-shell">
+        <div class="tipjar-copy">
+          <div class="tipjar-label">Keep the Watch</div>
+          <p>
+            For those who wish to quietly support Vigil’s hosting, research time,
+            and slow, careful updates.
+          </p>
+        </div>
+
+        <a href="tipjar.html" class="tipjar-orb">
+          <span class="tipjar-orb-inner">
+            <span class="tipjar-orb-title">Tip Jar</span>
+            <span class="tipjar-orb-sub">Optional, always.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- TOP MAIN DIVIDER -->
+    <div class="about-divider"></div>
 
   
   <!--end----------------------------------- BODY WORKSPACE  Add your HTML elements here  ------------------------------------ -->
