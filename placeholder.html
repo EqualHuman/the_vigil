@@ -50,7 +50,8 @@
 
     .card {
       position: relative;
-      padding: 3.25rem 2.5rem 2.4rem;
+      /* a bit more top padding so the candle can overlap nicely */
+      padding: 3.75rem 2.5rem 2.4rem;
       background: radial-gradient(circle at top, #181818 0, #0B0B0B 55%);
       border-radius: 20px;
       border: 1px solid var(--card-border);
@@ -62,7 +63,10 @@
     /* Candle */
     .candle-wrap {
       position: absolute;
-      inset: -32px 0 auto 0;
+      /* pull the candle down so the base overlaps the border */
+      top: -12px;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: center;
       pointer-events: none;
@@ -79,7 +83,7 @@
     .candle::before {
       content: "";
       position: absolute;
-      top: 4px;
+      top: 0;
       width: 80px;
       height: 80px;
       border-radius: 999px;
@@ -124,8 +128,18 @@
       text-transform: uppercase;
       letter-spacing: .22em;
       color: var(--secondary);
-      margin-top: 2.4rem;
+      margin-top: 2.2rem;
       margin-bottom: 1.15rem;
+    }
+
+    .tagline::after {
+      content: "";
+      display: block;
+      width: 72px;
+      height: 1px;
+      margin: 0.8rem auto 0;
+      background: linear-gradient(to right, transparent, rgba(215, 164, 81, 0.9), transparent);
+      opacity: 0.85;
     }
 
     .title {
@@ -139,6 +153,10 @@
       line-height: 1.8;
       color: #d3d0ca;
       margin-bottom: 1.15rem;
+    }
+
+    .copy + .copy {
+      margin-top: .3rem;
     }
 
     .divider {
@@ -158,14 +176,32 @@
       text-decoration: none;
       border-bottom: 1px solid rgba(215,164,81,0.4);
     }
+
+    .note a:hover {
+      border-bottom-color: rgba(215,164,81,0.9);
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 3.5rem 1.75rem 2.1rem;
+      }
+
+      .title {
+        font-size: 1.7rem;
+      }
+
+      .copy {
+        font-size: 0.94rem;
+      }
+    }
   </style>
 </head>
 
 <body>
   <main class="shell">
-    <section class="card">
+    <section class="card" aria-label="Work in progress notice">
       <div class="candle-wrap">
-        <div class="candle">
+        <div class="candle" aria-hidden="true">
           <div class="flame"></div>
           <div class="wick"></div>
           <div class="candle-body"></div>
@@ -187,10 +223,9 @@
       <div class="divider"></div>
 
       <p class="note">
-        Another section is currently live. Return to the <a href="/">main page</a>.
+        Another section is currently live. Return to the <a href="/">main page</a> or explore any completed links in the navigation.
       </p>
     </section>
   </main>
 </body>
 </html>
-
