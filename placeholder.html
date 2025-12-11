@@ -50,7 +50,6 @@
 
     .card {
       position: relative;
-      /* a bit more top padding so the candle can overlap nicely */
       padding: 3.75rem 2.5rem 2.4rem;
       background: radial-gradient(circle at top, #181818 0, #0B0B0B 55%);
       border-radius: 20px;
@@ -60,10 +59,9 @@
         0 0 0 1px rgba(255, 255, 255, 0.03);
     }
 
-    /* Candle */
+    /* Candle wrapper */
     .candle-wrap {
       position: absolute;
-      /* pull the candle down so the base overlaps the border */
       top: -4px;
       left: 0;
       right: 0;
@@ -71,19 +69,18 @@
       justify-content: center;
       pointer-events: none;
     }
+
     .candle-shadow {
-  position: absolute;
-  top: 40px;
-  width: 36px;
-  height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), transparent);
-  filter: blur(4px);
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-
+      position: absolute;
+      top: 40px;
+      width: 36px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), transparent);
+      filter: blur(4px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
 
     .candle {
       display: flex;
@@ -93,6 +90,7 @@
       gap: 4px;
     }
 
+    /* Halo behind candle */
     .candle::before {
       content: "";
       position: absolute;
@@ -102,8 +100,9 @@
       border-radius: 999px;
       background: radial-gradient(circle, rgba(252,230,194,0.9), rgba(252,230,194,0));
       filter: blur(6px);
-      opacity: .58;
+      opacity: 0.58;
       z-index: -1;
+      animation: halo-soft 3.5s ease-in-out infinite;
     }
 
     .flame {
@@ -114,76 +113,75 @@
       box-shadow:
         0 0 16px rgba(252,214,146,0.95),
         0 0 32px rgba(252,214,146,0.85);
+      animation: flicker 2.8s ease-in-out infinite;
     }
 
-   .wick {
-  width: 2px;
-  height: 8px;
-  background: #2b2b2b;
-  border-radius: 999px;
-  margin-top: -3px;
-  position: relative;
-  z-index: 3; /* keep wick above melted wax */
-}
+    .wick {
+      width: 2px;
+      height: 8px;
+      background: #2b2b2b;
+      border-radius: 999px;
+      margin-top: -3px;
+      position: relative;
+      z-index: 3; /* above melted wax */
+    }
 
-/* candle body */
-.candle-body {
-  width: 22px;
-  height: 36px;
-  border-radius: 10px 10px 6px 6px;
- background: linear-gradient(
-  to bottom,
-  #fff6e6 0%,
-  #f7dfbe 35%,
-  #e2c29a 70%,
-  #d0ad83 100%
-);
+    /* Candle body */
+    .candle-body {
+      width: 22px;
+      height: 36px;
+      border-radius: 10px 10px 6px 6px;
+      background: linear-gradient(
+        to bottom,
+        #fff6e6 0%,
+        #f7dfbe 35%,
+        #e2c29a 70%,
+        #d0ad83 100%
+      );
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.25),
+        0 8px 14px rgba(0, 0, 0, 0.75),
+        inset 0 0 5px rgba(255, 215, 160, 0.3);
+      overflow: hidden;
+      z-index: 1;
+    }
 
-  position: relative;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.25),
-    0 8px 14px rgba(0, 0, 0, 0.75),
-    inset 0 0 5px rgba(255, 215, 160, 0.3);
-  overflow: hidden;
-  z-index: 1;
-}
+    /* Melted top edge */
+    .candle-body::before {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 30%, #fff7e8, #f6dec0 80%);
+      filter: blur(0.8px);
+      opacity: 0.95;
+      z-index: 0;
+    }
 
-/* melted top edge */
-.candle-body::before {
-  content: "";
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 12px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 30%, #fff7e8, #f6dec0 80%);
-  filter: blur(0.8px);
-  opacity: 0.95;
-  z-index: 0; /* sits behind the wick now */
-}
-
-/* subtle wax drip */
-.candle-body::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 7px;
-  width: 9px;
-  height: 20px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 244, 218, 0.65),
-    rgba(240, 210, 170, 0.08)
-  );
-  border-radius: 6px;
-  opacity: 0.6;
-  pointer-events: none;
-  z-index: 0;
-}
-
+    /* Subtle wax drip */
+    .candle-body::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 7px;
+      width: 9px;
+      height: 20px;
+      transform: translateX(-50%);
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 244, 218, 0.65),
+        rgba(240, 210, 170, 0.08)
+      );
+      border-radius: 6px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
 
     .tagline {
       font-size: .83rem;
@@ -256,23 +254,17 @@
         font-size: 0.94rem;
       }
     }
+
+    /* Animations */
     @keyframes flicker {
-  0%, 100% { transform: scale(1) translateY(2px); opacity: 1; }
-  50% { transform: scale(1.03, 0.97) translateY(3px); opacity: 0.93; }
-}
+      0%, 100% { transform: scale(1) translateY(2px); opacity: 1; }
+      50% { transform: scale(1.03, 0.97) translateY(3px); opacity: 0.93; }
+    }
+
     @keyframes halo-soft {
-  0%, 100% { opacity: 0.58; }
-  50% { opacity: 0.64; }
-}
-
-.candle::before {
-  animation: halo-soft 3.5s ease-in-out infinite;
-}
-
-
-.flame {
-  animation: flicker 2.8s ease-in-out infinite;
-}
+      0%, 100% { opacity: 0.58; }
+      50% { opacity: 0.64; }
+    }
 
   </style>
 </head>
@@ -280,15 +272,14 @@
 <body>
   <main class="shell">
     <section class="card" aria-label="Work in progress notice">
-      <div class="candle-wrap">
-  <div class="candle" aria-hidden="true">
-    <div class="flame"></div>
-    <div class="wick"></div>
-    <div class="candle-body"></div>
-  </div>
-  <div class="candle-shadow"></div>
-</div>
 
+      <div class="candle-wrap">
+        <div class="candle" aria-hidden="true">
+          <div class="flame"></div>
+          <div class="wick"></div>
+          <div class="candle-body"></div>
+        </div>
+        <div class="candle-shadow"></div>
       </div>
 
       <p class="tagline">Work in progress</p>
@@ -300,7 +291,8 @@
       </p>
 
       <p class="copy">
-        Once the material reaches a standard that fits Vigil, the finished piece will appear here in place of this page. Until then, this candle keeps watch.
+        Once the material reaches a standard that fits Vigil, the finished piece will appear here in place of this page.
+        Until then, this candle keeps watch.
       </p>
 
       <div class="divider"></div>
