@@ -32,10 +32,7 @@
 
     /*--begin------------------------------ STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
 
-/* TIP JAR ORB — EMBER RING VERSION
-   Replace your existing .tipjar-orb, .tipjar-orb-inner,
-   hover + keyframes with this block.
-*/
+/* TIP JAR ORB — EMBER SHIMMER VERSION */
 
 .tipjar-orb {
   position: relative;
@@ -43,62 +40,48 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  padding: 0;                        /* no coin padding */
+
+  padding: 2px;                        /* small border space */
   border-radius: 999px;
-  background: transparent;
-  overflow: visible;                 /* let embers glow outside */
-  isolation: isolate;
-}
 
-/* Thin glowing ring */
-.tipjar-orb::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  border: 1px solid rgba(215,164,81,0.55);
-  box-shadow:
-    0 0 14px rgba(215,164,81,0.25),
-    0 0 1px rgba(255,255,255,0.5);
-  opacity: 0.95;
-}
-
-/* Ember arc circling the ring */
-.tipjar-orb::after {
-  content: "";
-  position: absolute;
-  inset: -14px;                      /* slightly larger than the pill */
-  border-radius: inherit;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  filter: blur(1px);
-  opacity: 0.85;
-
-  /* three small glowing "embers" that orbit when rotated */
+  /* animated ember gradient around the pill */
   background:
-    radial-gradient(circle at 82% 8%,  rgba(243,226,194,0.9), transparent 55%),
-    radial-gradient(circle at 18% 4%,  rgba(215,164,81,0.7), transparent 60%),
-    radial-gradient(circle at 4% 78%,  rgba(215,164,81,0.45), transparent 60%);
-  animation: ember-orbit 14s linear infinite;
+    conic-gradient(
+      from 210deg,
+      rgba(215,164,81,0.1),
+      rgba(215,164,81,0.85),
+      rgba(243,226,194,0.9),
+      rgba(215,164,81,0.15),
+      rgba(215,164,81,0.02),
+      rgba(215,164,81,0.5),
+      rgba(215,164,81,0.1)
+    );
+  background-size: 200% 200%;
+  animation: tipjar-shimmer 10s linear infinite;
+
+  box-shadow:
+    0 0 10px rgba(215,164,81,0.25),
+    0 12px 26px rgba(0,0,0,0.75);
 }
 
-/* Inner pill stays dark & understated */
+/* inner pill stays dark and calm */
+
 .tipjar-orb-inner {
-  position: relative;
-  z-index: 1;
   border-radius: 999px;
   padding: 0.7rem 1.35rem;
+  min-width: 150px;
+
   border: 1px solid rgba(255,255,255,0.12);
   background:
+    radial-gradient(circle at 0% 0%, rgba(243,226,194,0.08), transparent 55%),
     linear-gradient(145deg, rgba(10,10,10,0.98), rgba(5,5,5,0.96));
+
   box-shadow:
-    0 10px 26px rgba(0,0,0,0.7),
     inset 0 0 0 0.5px rgba(255,255,255,0.04);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.08rem;
-  min-width: 150px;
 }
 
 .tipjar-orb-title {
@@ -114,40 +97,48 @@
   color: var(--text-soft);
 }
 
-/* Hover state — just a bit more glow, nothing shouty */
+/* hover = slightly brighter flame, nothing dramatic */
 
-.tipjar-orb:hover::before {
+.tipjar-orb:hover {
   box-shadow:
-    0 0 18px rgba(215,164,81,0.38),
-    0 0 1px rgba(255,255,255,0.7);
-  border-color: rgba(215,164,81,0.8);
+    0 0 14px rgba(215,164,81,0.35),
+    0 16px 32px rgba(0,0,0,0.9);
 }
 
 .tipjar-orb:hover .tipjar-orb-inner {
-  border-color: rgba(215,164,81,0.5);
-  box-shadow:
-    0 12px 32px rgba(0,0,0,0.85),
-    inset 0 0 0 0.5px rgba(215,164,81,0.12);
+  border-color: rgba(215,164,81,0.4);
 }
 
 .tipjar-orb:hover .tipjar-orb-title {
   color: var(--accent);
 }
 
-/* slow orbit for the embers */
+/* slow rotation of the ember gradient */
 
-@keyframes ember-orbit {
-  to {
-    transform: rotate(360deg);
+@keyframes tipjar-shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* respect reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .tipjar-orb {
+    animation: none;
   }
 }
 
-/* Respect reduced motion */
+/* Force subtitle inside the tip jar orb to match theme and never turn blue */
+.tipjar-orb-sub,
+.tipjar-orb-sub:visited,
+.tipjar-orb-sub:active {
+  color: var(--text-soft) !important;
+  text-decoration: none !important;
+}
 
-@media (prefers-reduced-motion: reduce) {
-  .tipjar-orb::after {
-    animation: none;
-  }
+.tipjar-orb:hover .tipjar-orb-sub {
+  color: var(--highlight) !important;
 }
 
 
