@@ -175,7 +175,7 @@
   letter-spacing: 0.01em;
   margin-bottom: 0.9rem;
   padding-bottom: 0.75rem;
-  position: center;
+  position: relative;
   text-align: center;
 }
 
@@ -382,6 +382,14 @@
     color: var(--highlight);
     font-weight: 600;
   }
+    .footer-contact-inline {
+  font-size: 0.85rem;   /* was 0.89rem */
+  color: var(--text-soft);
+  text-align: center;
+  max-width: 520px;
+  line-height: 1.6;
+}
+
   </style>
 </head>
 
@@ -571,19 +579,26 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
+       <!-- FOOTER -->
     <div class="footer-wrapper">
       <div class="footer-card">
-        <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
+        <div class="footer-line">
+          Vigil continues wherever attention is paid on purpose.
+        </div>
       </div>
 
       <div class="footer-contact-inline">
-        For feedback, questions, corrections, or topics that feel missing from this space, write to
-        <span class="contact-email-inline">InboxVigil@outlook.com</span>.
-        <p>Vigil provides educational information only. It is not a substitute for legal, medical,
-        or professional advice.</p>
+        <p>
+          Questions, corrections, or topics that feel missing:
+          <span class="contact-email-inline">InboxVigil@outlook.com</span>
+        </p>
+        <p>
+          Vigil shares educational material only. It is not legal, medical,
+          or professional advice.
+        </p>
       </div>
     </div>
+
 
   </main>
 </body>
