@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,8 +179,8 @@
 
     .tipjar-orb-inner {
       border-radius: 999px;
-      padding: 0.7rem 1.35rem;
-      min-width: 150px;
+      padding: 0.7rem 1.6rem;
+      min-width: 190px;
       border: 1px solid rgba(255,255,255,0.12);
       background:
         radial-gradient(circle at 0% 0%, rgba(243,226,194,0.08), transparent 55%),
@@ -189,7 +190,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.08rem;
+      gap: 0.18rem;
     }
 
     /* make sure inner text never turns link-blue */
@@ -202,55 +203,53 @@
     .tipjar-orb-title {
       font-family: "Playfair Display", serif;
       font-size: 0.9rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--highlight);
     }
 
-    .tipjar-orb-sub,
-    .tipjar-orb-sub:visited,
-    .tipjar-orb-sub:active {
-      font-size: 0.75rem;
+    .tipjar-orb-sub {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-size: 0.76rem;
       letter-spacing: 0.04em;
       text-transform: lowercase;
-      opacity: 0.8;
-      color: var(--text-soft) !important;
-      text-decoration: none !important;
+      opacity: 0.9;
+      color: var(--text-soft);
     }
 
-    .tipjar-orb:hover .tipjar-orb-sub {
-      color: var(--highlight) !important;
+    .tipjar-orb-sub-text {
+      white-space: nowrap;
     }
 
     /* hover: a little more presence, still quiet */
 
+    .tipjar-orb:hover {
+      box-shadow:
+        0 16px 28px rgba(0,0,0,0.9),
+        0 0 4px rgba(243,226,194,0.22);
+    }
 
-.tipjar-orb:hover {
-  /* deeper shadow, but softer gold */
-  box-shadow:
-    0 16px 28px rgba(0,0,0,0.9),
-    0 0 4px rgba(243,226,194,0.22); /* faint parchment */
-}
+    .tipjar-orb:hover::before {
+      border-color: rgba(243,226,194,0.55);
+      box-shadow:
+        0 0 4px rgba(243,226,194,0.28),
+        0 0 1px rgba(255,255,255,0.55);
+    }
 
-.tipjar-orb:hover::before {
-  border-color: rgba(243,226,194,0.55); /* parchment, not yellow */
-  box-shadow:
-    0 0 4px rgba(243,226,194,0.28),
-    0 0 1px rgba(255,255,255,0.55);
-}
+    .tipjar-orb:hover .tipjar-orb-inner {
+      border-color: rgba(243,226,194,0.25);
+    }
 
-.tipjar-orb:hover .tipjar-orb-inner {
-  border-color: rgba(243,226,194,0.25);
-}
+    .tipjar-orb:hover .tipjar-orb-title {
+      color: var(--highlight);
+    }
 
-.tipjar-orb:hover .tipjar-orb-title {
-  color: var(--highlight); /* soft ivory-gold */
-}
-
-.tipjar-orb:hover .tipjar-orb-sub {
-  color: var(--highlight) !important;
-}
-
+    .tipjar-orb:hover .tipjar-orb-sub {
+      color: var(--highlight);
+    }
 
     /* slow, tiny change in glow intensity */
 
@@ -274,68 +273,71 @@
         animation: none;
       }
     }
-    /* Candle icon wrapper */
-.candle-icon-wrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem 0.6rem;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 999px;
-  border: 1px solid var(--secondary);
-}
 
-/* SVG sizing */
-.candle-icon {
-  width: 34px;
-  height: auto;
-}
+    /* Candle icon — small, inline, quiet */
 
-/* Candle pieces */
-.candle-plate {
-  fill: #141414;
-  stroke: var(--secondary);
-  stroke-width: 1.2;
-}
+    .candle-icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.15rem 0.4rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0%, rgba(243,226,194,0.15), transparent 60%);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-.candle-body {
-  fill: #151515;
-  stroke: var(--highlight);
-  stroke-width: 1.2;
-}
+    .candle-icon {
+      width: 16px;
+      height: auto;
+    }
 
-.candle-drip {
-  fill: #1c1c1c;
-}
+    .candle-plate {
+      fill: #111111;
+      stroke: rgba(255,255,255,0.28);
+      stroke-width: 1;
+    }
 
-.candle-wick {
-  fill: var(--secondary);
-}
+    .candle-body {
+      fill: #141414;
+      stroke: rgba(252,230,194,0.8);
+      stroke-width: 1;
+    }
 
-/* Flame */
-.candle-flame-outer {
-  fill: var(--accent);
-  filter: drop-shadow(0 0 6px rgba(215, 164, 81, 0.8));
-}
+    .candle-drip {
+      fill: #1c1c1c;
+    }
 
-.candle-flame-inner {
-  fill: var(--highlight);
-}
+    .candle-wick {
+      fill: rgba(207,200,185,0.9);
+    }
 
-/* Soft flicker animation */
-@keyframes candle-glow {
-  0%   { transform: translateY(0); opacity: 1; }
-  50%  { transform: translateY(-0.6px); opacity: 0.82; }
-  100% { transform: translateY(0); opacity: 1; }
-}
+    .candle-flame-outer {
+      fill: rgba(215,164,81,0.95);
+      filter: drop-shadow(0 0 4px rgba(215,164,81,0.8));
+    }
 
-.candle-flame-outer,
-.candle-flame-inner {
-  transform-origin: center;
-  animation: candle-glow 1.8s ease-in-out infinite;
-}
+    .candle-flame-inner {
+      fill: var(--highlight);
+    }
 
+    @keyframes candle-glow {
+      0%   { transform: translateY(0); opacity: 1; }
+      50%  { transform: translateY(-0.4px); opacity: 0.85; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
 
+    .candle-flame-outer,
+    .candle-flame-inner {
+      transform-origin: center;
+      animation: candle-glow 1.9s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .candle-flame-outer,
+      .candle-flame-inner {
+        animation: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -365,68 +367,65 @@
 
         <a href="tipjar.html" class="tipjar-orb">
           <span class="tipjar-orb-inner">
-            <span class="tipjar-orb-title">Tip Jar</span>
-            <span class="tipjar-orb-sub"><div class="candle-icon-wrap" aria-hidden="true">
-  <svg viewBox="0 0 64 128" class="candle-icon">
-    <!-- Base plate -->
-    <ellipse
-      class="candle-plate"
-      cx="32"
-      cy="94"
-      rx="18"
-      ry="4"
-    />
-
-    <!-- Candle body -->
-    <rect
-      class="candle-body"
-      x="26"
-      y="44"
-      width="12"
-      height="40"
-      rx="3"
-    />
-
-    <!-- Little wax drip -->
-    <rect
-      class="candle-drip"
-      x="29"
-      y="54"
-      width="3"
-      height="8"
-      rx="1.5"
-    />
-
-    <!-- Wick -->
-    <rect
-      class="candle-wick"
-      x="31"
-      y="40"
-      width="2"
-      height="5"
-      rx="1"
-    />
-
-    <!-- Flame outer -->
-    <path
-      class="candle-flame-outer"
-      d="M32 16
-         C26 26 26 34 32 42
-         C38 34 38 26 32 16
-         Z"
-    />
-
-    <!-- Flame inner -->
-    <path
-      class="candle-flame-inner"
-      d="M32 20
-         C28.5 27 29 32 32 37
-         C35 32 35.5 27 32 20
-         Z"
-    />
-  </svg>
-</div>
-</span>
+            <span class="tipjar-orb-title">TIP JAR</span>
+            <span class="tipjar-orb-sub">
+              <span class="candle-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 64 128" class="candle-icon">
+                  <!-- Base plate -->
+                  <ellipse
+                    class="candle-plate"
+                    cx="32"
+                    cy="94"
+                    rx="15"
+                    ry="4"
+                  />
+                  <!-- Candle body -->
+                  <rect
+                    class="candle-body"
+                    x="27"
+                    y="49"
+                    width="10"
+                    height="30"
+                    rx="3"
+                  />
+                  <!-- Little wax drip -->
+                  <rect
+                    class="candle-drip"
+                    x="30"
+                    y="55"
+                    width="3"
+                    height="7"
+                    rx="1.5"
+                  />
+                  <!-- Wick -->
+                  <rect
+                    class="candle-wick"
+                    x="31"
+                    y="45"
+                    width="2"
+                    height="4"
+                    rx="1"
+                  />
+                  <!-- Flame outer -->
+                  <path
+                    class="candle-flame-outer"
+                    d="M32 24
+                       C28 30 28 35 32 40
+                       C36 35 36 30 32 24
+                       Z"
+                  />
+                  <!-- Flame inner -->
+                  <path
+                    class="candle-flame-inner"
+                    d="M32 26
+                       C29.3 31 29.7 34.5 32 38
+                       C34.2 34.5 34.7 31 32 26
+                       Z"
+                  />
+                </svg>
+              </span>
+              <span class="tipjar-orb-sub-text">thank you.</span>
+            </span>
           </span>
         </a>
       </div>
