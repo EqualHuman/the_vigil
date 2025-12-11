@@ -224,26 +224,33 @@
 
     /* hover: a little more presence, still quiet */
 
-    .tipjar-orb:hover::before {
-      border-color: rgba(215,164,81,0.85);
-      box-shadow:
-        0 0 4px rgba(215,164,81,0.5),
-        0 0 1px rgba(255,255,255,0.7);
-    }
 
-    .tipjar-orb:hover {
-      box-shadow:
-        0 18px 32px rgba(0,0,0,0.95),
-        0 0 6px rgba(215,164,81,0.28);
-    }
+.tipjar-orb:hover {
+  /* deeper shadow, but softer gold */
+  box-shadow:
+    0 16px 28px rgba(0,0,0,0.9),
+    0 0 4px rgba(243,226,194,0.22); /* faint parchment */
+}
 
-    .tipjar-orb:hover .tipjar-orb-inner {
-      border-color: rgba(215,164,81,0.35);
-    }
+.tipjar-orb:hover::before {
+  border-color: rgba(243,226,194,0.55); /* parchment, not yellow */
+  box-shadow:
+    0 0 4px rgba(243,226,194,0.28),
+    0 0 1px rgba(255,255,255,0.55);
+}
 
-    .tipjar-orb:hover .tipjar-orb-title {
-      color: var(--accent);
-    }
+.tipjar-orb:hover .tipjar-orb-inner {
+  border-color: rgba(243,226,194,0.25);
+}
+
+.tipjar-orb:hover .tipjar-orb-title {
+  color: var(--highlight); /* soft ivory-gold */
+}
+
+.tipjar-orb:hover .tipjar-orb-sub {
+  color: var(--highlight) !important;
+}
+
 
     /* slow, tiny change in glow intensity */
 
