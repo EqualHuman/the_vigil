@@ -157,54 +157,57 @@
 
   .about-text { max-width: 60%; }
 
-  .contact-sidebox {
-    border-radius: 18px;
+  /* -------------------------------------------------------
+     CONTACT STRIP
+  -------------------------------------------------------- */
+  .contact-strip {
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .contact-strip-inner {
+    border-radius: 999px;
     border: 1px solid rgba(215,164,81,0.35);
-    padding: 1.1rem 1.25rem;
-    width: 240px;
+    padding: 0.8rem 1.4rem;
+    max-width: 640px;
+    margin: 0 auto;
     background:
-      linear-gradient(145deg, rgba(12,12,12,0.95), rgba(8,8,8,0.92));
-    box-shadow: 0 8px 28px rgba(0,0,0,0.38);
-    position: center;
+      linear-gradient(145deg, rgba(15,15,15,0.96), rgba(10,10,10,0.92));
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+    justify-content: center;
+    text-align: center;
   }
 
-.contact-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--highlight);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.75rem;
-  position: relative;
-  text-align: center;
-}
-
-/* Symmetrical underline */
-.contact-title::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: 160px;   /* fixed width = perfect symmetry */
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(243,226,194,0),      /* transparent start */
-    rgba(243,226,194,0.5),    /* brightest at center */
-    rgba(243,226,194,0)       /* transparent end */
-  );
-}
-
-
-  .contact-email {
-    margin-top: 0.45rem;
-    font-weight: 600;
+  .contact-strip-title {
+    font-family: "Playfair Display", serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--highlight);
+    opacity: 0.9;
   }
+
+  .contact-strip-inner p {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+  }
+
+  .contact-strip-email {
+    color: var(--highlight);
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .contact-strip-inner {
+      border-radius: 18px;
+      text-align: left;
+      justify-content: flex-start;
+    }
+  }
+
 
   /* -------------------------------------------------------
      MAIN DIVIDER (top + before Disclaimers)
@@ -411,7 +414,7 @@
       </div>
 
       <!-- HEADER SECTION -->
-      <div class="about-header">
+           <div class="about-header">
         <div class="about-text">
 
           <h1>About Vigil</h1>
@@ -427,13 +430,19 @@
           </p>
 
         </div>
-
-        <div class="contact-sidebox">
-          <div class="contact-title">CONTACT</div>
-          <p> For questions, corrections, feedback or topics that feel missing from this space. Please write to:</p>
-          <div class="contact-email">InboxVigil@outlook.com</div>
-        </div>
       </div>
+      
+    <!-- CONTACT STRIP -->
+    <section class="contact-strip">
+      <div class="contact-strip-inner">
+        <div class="contact-strip-title">Contact</div>
+        <p>
+          Questions, corrections, feedback or topics that feel missing from this space:
+          <span class="contact-strip-email">InboxVigil@outlook.com</span>
+        </p>
+      </div>
+    </section>
+
 
     </div> <!-- /shell-inner -->
 
