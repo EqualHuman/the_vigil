@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,592 +9,154 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-  /* -------------------------------------------------------
-     ROOT — BRAND COLOR SYSTEM
-  -------------------------------------------------------- */
-  :root {
-    --bg: #0f0f0f;               /* Deep charcoal */
-    --text: #f4f0e7;             /* Warm ivory */
-    --text-soft: #cfcac4;        /* Gentle warm grey */
-    --accent: #d7a451;           /* Golden ember */
-    --accent-soft: #b58a4a;      /* Faded ember */
-    --highlight: #f3e2c2;        /* Parchment gold */
-    --border-soft: rgba(215,164,81,0.25);
-    --border-faint: rgba(255,255,255,0.1);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-    font-family: "Inter", sans-serif;
-    color: var(--text);
-    background:
-      radial-gradient(circle at top, rgba(215,164,81,0.18), transparent 65%),
-      linear-gradient(135deg, #0d0d0d, #161616 55%, #0d0d0d);
-  }
-
-  /* -------------------------------------------------------
-     MAIN SHELL
-  -------------------------------------------------------- */
-  .shell {
-    max-width: 1100px;
-    width: 100%;
-    border-radius: 24px;
-    background:
-      radial-gradient(circle at top left, rgba(243,226,194,0.06), transparent 55%),
-      rgba(8,8,8,0.96);
-    border: 1px solid var(--border-soft);
-    padding: 2.8rem clamp(2rem, 4vw, 3.2rem);
-    box-shadow:
-      0 0 70px rgba(215,164,81,0.08),
-      0 25px 75px rgba(0,0,0,0.7),
-      inset 0 0 0 0.5px rgba(255,255,255,0.05);
-    backdrop-filter: blur(14px);
-    position: relative;
-    animation: fadeIn 1.1s ease both;
-    overflow: hidden;
-  }
-
-  .shell::before {
-    content: "";
-    position: absolute;
-    inset: -20%;
-    background: radial-gradient(circle at 75% 2%, rgba(215,164,81,0.23), transparent 60%);
-    opacity: 0.4;
-    pointer-events: none;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .shell-inner { position: relative; z-index: 1; }
-
-  /* -------------------------------------------------------
-     TOP NAV
-  -------------------------------------------------------- */
-  .back {
-    margin-bottom: 1rem;
-    font-size: 0.85rem;
-    color: var(--text-soft);
-  }
-  .back a {
-    color: var(--text-soft);
-    text-decoration: none;
-  }
-  .back a:hover { color: var(--highlight); }
-
-  .pill-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-    margin-bottom: 2.4rem;
-  }
-
-  .pill {
-    text-decoration: none;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 0.5rem 1.15rem;
-    font-size: 0.73rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-soft);
-    background:
-      linear-gradient(135deg, rgba(20,20,20,0.7), rgba(15,15,15,0.55));
-    backdrop-filter: blur(4px);
-    transition: 0.2s ease;
-  }
-
-  .pill:hover {
-    border-color: var(--accent-soft);
-    color: var(--highlight);
-    background: rgba(20,20,20,0.85);
-  }
-
-  /* -------------------------------------------------------
-     PAGE TITLE
-  -------------------------------------------------------- */
-  h1 {
-    font-family: "Playfair Display", serif;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    font-size: clamp(2.2rem, 3.7vw, 3rem);
-    margin-bottom: 0.4rem;
-    color: var(--text);
-  }
-
-  .etymology {
-    font-family: "Playfair Display", serif;
-    font-size: 0.92rem;
-    color: var(--text-soft);
-    margin-bottom: 1rem;
-    letter-spacing: 0.01em;
-    opacity: 0.9;
-  }
-
-  .about-description {
-    font-size: 1.02rem;
-    line-height: 1.7;
-    color: #e5d5b0;     /* warmer than body text */
-    font-weight: 500;   /* a little more presence */
-  }
-
-  /* -------------------------------------------------------
-     HEADER LAYOUT (about + contact)
-  -------------------------------------------------------- */
-  .about-header {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 3rem;
-  }
-
-  .about-text { max-width: 60%; }
-
-  .contact-sidebox {
-    border-radius: 18px;
-    border: 1px solid rgba(215,164,81,0.35);
-    padding: 1.1rem 1.25rem;
-    width: 240px;
-    background:
-      linear-gradient(145deg, rgba(12,12,12,0.95), rgba(8,8,8,0.92));
-    box-shadow: 0 8px 28px rgba(0,0,0,0.38);
-  }
-
-  .contact-sidebox {
-    margin-left: 2rem;       /* nudges inward */
-    text-align: center;
-  }
-  .contact-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--highlight);
-    letter-spacing: 0.01em;
-    margin-bottom: 0.7rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-  }
-  .contact-title::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    width: 140px; /* longer */
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      rgba(215,164,81,0.6),
-      rgba(215,164,81,0.25),
-      transparent
-    );
-    opacity: 0.9;
-  }
-
-  .contact-email {
-    margin-top: 0.45rem;
-    font-weight: 600;
-    color: var(--highlight);
-  }
-
-  /* -------------------------------------------------------
-     MAIN DIVIDER (top + before Disclaimers)
-  -------------------------------------------------------- */
-  .about-divider {
-    width: 72%;
-    max-width: 730px;
-    height: 1px;
-    margin: 2.7rem auto;
-    background: linear-gradient(
-      90deg,
-      rgba(243,226,194,0.18),
-      rgba(243,226,194,0.06),
-      rgba(243,226,194,0.18)
-    );
-    border-radius: 2px;
-    opacity: 0.9;
-  }
-
-  /* -------------------------------------------------------
-     MAIN CONTENT LAYOUT — CARDS LEFT, TEXT RIGHT
-  -------------------------------------------------------- */
-  .layout {
-    display: grid;
-    grid-template-columns: 1.05fr 1.35fr;
-    gap: 2.6rem;
-    align-items: flex-start;
-    grid-template-areas: "cards text";
-  }
-
-  .layout-left  { grid-area: cards; }
-  .layout-right { grid-area: text; }
-
-  @media (max-width: 900px) {
-    .layout {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "text"
-        "cards";
+    /* -------------------------------------------------------
+       ROOT — BRAND COLOR SYSTEM
+    -------------------------------------------------------- */
+    :root {
+      --bg: #0f0f0f;
+      --text: #f4f0e7;
+      --text-soft: #cfcac4;
+      --accent: #d7a451;
+      --accent-soft: #b58a4a;
+      --highlight: #f3e2c2;
     }
-  }
 
-  /* -------------------------------------------------------
-     TYPOGRAPHY — SHARED HEADINGS & BODY
-  -------------------------------------------------------- */
-  .section-heading, .card-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--highlight);
-    letter-spacing: 0.01em;
-    margin-bottom: 0.9rem;
-    padding-bottom: 0.5rem;
-    /* gold underline as a background, not ::after */
-    background-image: linear-gradient(90deg, var(--accent), transparent);
-    background-position: left bottom;
-    background-repeat: no-repeat;
-    background-size: 72px 1px;
-  }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+    }
 
-  .quote-block,
-  .slow-update-note,
-  .card-text p,
-  .disclaimer-box p {
-    font-size: 0.95rem;
-    line-height: 1.75;
-    color: var(--text-soft);
-  }
+    .wrapper {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1.5rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
 
-  /* main Vigil pull-quote */
-  .core-quote {
-    font-family: "Playfair Display", serif;
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--highlight);
-    max-width: 40rem;
-    margin: 1.4rem 0 0.2rem;
-  }
+    /* LEFT COLUMN CARDS ----------------------------------- */
+    .info-card {
+      background: rgba(20, 20, 20, 0.6);
+      border: 1px solid rgba(244, 240, 231, 0.1);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
 
-  .quote-block {
-    font-style: normal;
-    max-width: 43rem;
-  }
+    .info-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--highlight);
+    }
 
-  .quote-block p {
-    margin-bottom: 0.95rem;
-  }
+    /* RIGHT COLUMN HEADINGS -------------------------------- */
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.35rem;
+      color: var(--highlight);
+      margin-bottom: 0.75rem;
+    }
 
-  .slow-update-note {
-    max-width: 43rem;
-    margin-bottom: 1rem;
-  }
+    .right-column p {
+      margin-bottom: 1.5rem;
+      color: var(--text-soft);
+    }
 
-  .section-heading {
-    display: block; /* guarantees correct width + alignment */
-  }
+    /* -------------------------------------------------------
+       THE PULL-QUOTE PANEL YOU REQUESTED
+    -------------------------------------------------------- */
+    .about-quote {
+      margin-top: 2rem;
+      padding: 1.75rem 2rem;
+      max-width: 36rem;
 
-  /* -------------------------------------------------------
-     CARDS — LEFT COLUMN
-  -------------------------------------------------------- */
-  .card-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.3rem;
-  }
+      border-radius: 18px;
+      border: 1px solid rgba(244, 240, 231, 0.16);
 
-  .card {
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.14);
-    padding: 1.1rem 1.25rem;
-    background:
-      linear-gradient(150deg, rgba(18,18,18,0.94), rgba(10,10,10,0.88));
-    box-shadow:
-      0 7px 22px rgba(0,0,0,0.38),
-      inset 0 0 0 0.5px rgba(255,255,255,0.03);
-    transition: 0.25s ease;
-  }
+      background:
+        radial-gradient(circle at top left, rgba(215, 164, 81, 0.12), transparent 55%),
+        rgba(10, 10, 10, 0.9);
 
-  .card:hover {
-    border-color: rgba(215,164,81,0.4);
-    transform: translateY(-2px);
-  }
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
 
-  /* -------------------------------------------------------
-     DISCLAIMERS
-  -------------------------------------------------------- */
-  .disclaimers-section {
-    margin-top: 3rem;
-    padding-top: 1.2rem;
-  }
+    .about-quote-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
 
-  .disclaimer-box {
-    margin-top: 1.5rem;
-    padding: 1.9rem 1.7rem;
-    border-radius: 18px;
-    border: 1px solid var(--border-soft);
-    background:
-      linear-gradient(145deg, rgba(12,12,12,0.9), rgba(10,10,10,0.88));
-    box-shadow: 0 7px 26px rgba(0,0,0,0.34);
-  }
+    /* Bottom Divider --------------------------------------- */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(244, 240, 231, 0.2),
+        transparent
+      );
+      margin: 4rem 0 2rem;
+    }
 
-  .disclaimer-box strong {
-    font-family: "Playfair Display", serif;
-    font-size: 0.95rem;
-    color: var(--highlight);
-  }
-
-  /* -------------------------------------------------------
-     FOOTER
-  -------------------------------------------------------- */
-  .footer-wrapper {
-    margin-top: 2.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.15rem;
-  }
-
-  .footer-card {
-    border-radius: 18px;
-    border: 1px solid rgba(215,164,81,0.32);
-    padding: 1rem 1.4rem;
-    max-width: 620px;
-    width: 100%;
-    text-align: center;
-    background:
-      linear-gradient(145deg, rgba(15,15,15,0.95), rgba(10,10,10,0.92));
-    box-shadow: 0 8px 26px rgba(0,0,0,0.35);
-  }
-
-  .footer-line {
-    font-family: "Playfair Display", serif;
-    font-size: 0.97rem;
-    color: var(--highlight);
-  }
-
-  .footer-contact-inline {
-    font-size: 0.89rem;
-    color: var(--text-soft);
-    text-align: center;
-    max-width: 520px;
-    line-height: 1.65;
-  }
-
-  .footer-contact-inline .contact-email-inline {
-    color: var(--highlight);
-    font-weight: 600;
-  }
   </style>
 </head>
 
 <body>
-  <main class="shell">
-    <div class="shell-inner">
 
-      <!-- BACK LINK & PILLS -->
-      <div class="back"><a href="index.html">← Back to Vigil</a></div>
+<div class="wrapper">
 
-      <div class="pill-row">
-        <a class="pill" href="humanity.html">Humanity & Society</a>
-        <a class="pill" href="endangered.html">Endangered Life & Ecosystems</a>
-        <a class="pill" href="science.html">Science, Medicine & Innovation</a>
-        <a class="pill" href="culture.html">Culture & Memory</a>
-        <a class="pill" href="paths.html">Paths Forward</a>
-        <a class="pill" href="about.html">About</a>
-      </div>
+  <!-- LEFT COLUMN ---------------------------------------------------- -->
+  <div class="left-column">
 
-      <!-- HEADER SECTION -->
-      <div class="about-header">
-        <div class="about-text">
-
-          <h1>About Vigil</h1>
-
-          <div class="etymology">
-            <em>vigil • vigilia • vigiliae</em> [f.]: watch; vigil; wakefulness.
-          </div>
-
-          <p class="about-description">
-            Vigil is a quiet watchfulness over how humans treat one another and the living world.
-            It gathers stories, data, and resources that show where harm takes place,
-            and where attempts at repair begin.
-          </p>
-        </div>
-
-        <div class="contact-sidebox">
-          <div class="contact-title">CONTACT</div>
-          <p>For feedback, questions, or corrections: please write to</p>
-          <div class="contact-email">InboxVigil@outlook.com</div>
-        </div>
-      </div>
-    </div> <!-- /shell-inner -->
-
-    <!-- TOP MAIN DIVIDER -->
-    <div class="about-divider"></div>
-
-    <!-- MAIN TWO-COLUMN LAYOUT -->
-    <div class="layout">
-
-      <!-- LEFT COLUMN: CARDS -->
-      <div class="layout-left">
-        <div class="card-grid">
-
-          <div class="card">
-            <div class="card-title">Vigil Is…</div>
-            <div class="card-text">
-              <p>
-                Vigil is an experience built for noticing how human choices influence the world around us.
-                It gathers researched threads into an organized archive so heavy subjects can be approached
-                with steadiness instead of overwhelm. The environment is meant to feel calm and focused,
-                a place where complex issues settle into something more comprehensible. Vigil exists to
-                record what happens, including the extremes of harm and the smaller moments of repair,
-                in a way that encourages honest awareness rather than spectacle.
-              </p>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Vigil Is Not…</div>
-            <div class="card-text">
-              <p>
-                Vigil is not designed for outrage or shock-driven storytelling, and it does not rely on
-                emotional intensity to hold attention. It is not centered on a single authority or
-                personality. Nothing here asks for identity or belonging. The intention is simply to
-                offer information with clarity and to keep attention from drifting away from what matters.
-                Vigil is not meant to replace professional guidance in legal, medical, financial,
-                or personal matters.
-              </p>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Vigil Aims…</div>
-            <div class="card-text">
-              <p>
-                Vigil aims to preserve what should not be forgotten. It aims to provide clarity in places
-                where confusion is common and to reconnect scattered pieces of information into something
-                understandable. Its purpose is to create a steady experience where important issues can be
-                seen in full context. Vigil aims to illuminate quietly, allowing readers to understand
-                without pressure, urgency, or expectation.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: WHY + CORE QUOTE + HOW -->
-      <div class="layout-right">
-        <section>
-          <div class="section-heading">Why This Space Exists</div>
-
-          <div class="quote-block">
-            <p>
-              Vigil began as an effort to see the world more clearly: to notice the systems that harm,
-              the patterns that repeat, and the lives affected in the quiet margins of society.
-              It follows research across many issues, including human rights, wildlife preservation,
-              legal cases, and financial pressures, and gathers that work into one place.
-            </p>
-            <p>
-              At its core is the idea of <em>vigilia</em>, the discipline of staying awake when looking away
-              would be easier. Vigil holds difficult material with care, shaping it so that it can be
-              understood without being sensationalized.
-            </p>
-            <p>
-              Whenever possible, pages point toward concrete steps and trusted organizations.
-              The aim is not to instruct anyone on what to think, but to offer enough clarity that action,
-              reflection, or further study becomes easier.
-            </p>
-          </div>
-        </section>
-
-        <!-- Core Vigil pull-quote in the empty space -->
-        <p class="core-quote">
-          Clarity grows when the noise quiets. Vigil exists to hold that quiet long enough for meaning to surface.
-        </p>
-
-        <section class="how-section" style="margin-top: 2.4rem;">
-          <div class="section-heading">How This Space Works</div>
-
-          <p class="slow-update-note">
-            Pages in Vigil change slowly. New research and context are added with care instead of urgency
-            so each topic has time to breathe. The intention is to create a space where depth is possible,
-            where information is shaped gently, and where clarity matters more than immediacy. Vigil
-            functions as a quiet environment in a noisy landscape, offering room to understand rather than react.
-          </p>
-        </section>
-      </div>
-    </div><!-- /layout -->
-
-    <!-- DIVIDER BEFORE DISCLAIMERS -->
-    <div class="about-divider"></div>
-
-    <!-- DISCLAIMERS -->
-    <div class="disclaimers-section">
-      <div class="section-heading">Disclaimers</div>
-
-      <div class="disclaimer-box">
-        <p>
-          <strong>Purpose &amp; Limitations</strong><br>
-          Vigil shares research-based content to promote awareness and understanding of complex societal issues.
-          All information is intended for educational purposes only and should not be taken as legal,
-          medical, financial, or other professional advice.
-        </p>
-
-        <p>
-          <strong>Accuracy &amp; Reliability</strong><br>
-          Every effort is made to present information responsibly and in good faith.
-          However, Vigil cannot guarantee the accuracy, completeness, or timeliness of any content.
-          Readers are encouraged to verify information independently.
-        </p>
-
-        <p>
-          <strong>Sensitive Topics</strong><br>
-          Many subjects explored by Vigil involve difficult or distressing realities.
-          Reader discretion is advised.
-        </p>
-
-        <p>
-          <strong>Reader Responsibility</strong><br>
-          Use of the information provided is at the reader’s own risk.
-          Vigil is not liable for any losses, damages, or consequences from reliance on content presented.
-        </p>
-
-        <p>
-          <strong>Sources &amp; Third-Party Content</strong><br>
-          Content may include references to external organizations or research.
-          Vigil does not control or endorse third-party content.
-        </p>
-
-        <p>
-          <strong>Donations</strong><br>
-          Vigil does not collect or manage donations.
-          Links redirect to outside organizations, and Vigil is not responsible for how funds are used.
-        </p>
-      </div>
+    <div class="info-card">
+      <h3>Vigil Is...</h3>
+      <p>Vigil is an experience built for noticing how human choices influence the world around us. It gathers researched threads into an organized archive so heavy subjects can be approached with steadiness instead of overwhelm. The environment is meant to feel calm and focused, a place where complex issues settle into something more comprehensible.</p>
     </div>
 
-    <!-- FOOTER -->
-    <div class="footer-wrapper">
-      <div class="footer-card">
-        <div class="footer-line">Vigil carries on in every moment someone chooses to look closer.</div>
-      </div>
-
-      <div class="footer-contact-inline">
-        For feedback, questions, corrections, or topics that feel missing from this space, write to
-        <span class="contact-email-inline">InboxVigil@outlook.com</span>.
-        Vigil provides educational information only. It is not a substitute for legal, medical,
-        or professional advice.
-      </div>
+    <div class="info-card">
+      <h3>Vigil Is Not...</h3>
+      <p>Vigil is not designed for outrage or shock-driven storytelling, and it does not rely on emotional intensity to hold attention. It is not centered on a single authority or personality. Vigil is not meant to replace professional guidance in legal, medical, financial, or personal matters.</p>
     </div>
 
-  </main>
+    <div class="info-card">
+      <h3>Vigil Aims...</h3>
+      <p>Vigil aims to preserve what should not be forgotten and to reconnect scattered pieces of information into something understandable. Its purpose is to create a steady experience where important issues gain clarity without pressure or urgency.</p>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN ---------------------------------------------------- -->
+  <div class="right-column">
+
+    <h3 class="section-title">How This Space Works</h3>
+
+    <p>Pages in Vigil change slowly. New research and context are added with care instead of urgency so each topic has time to breathe. The intention is to create a space where depth is possible, where information is shaped gently, and where clarity matters more than immediacy.</p>
+
+    <p>Vigil functions as a quiet environment in a noisy landscape, offering room to understand rather than react.</p>
+
+    <!-- The new quote block -->
+    <div class="about-quote">
+      <div class="about-quote-label">A Quiet Note</div>
+      <p>Clarity grows when the noise quiets. Vigil exists to hold that quiet long enough for meaning to surface.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
 </body>
 </html>
-```
