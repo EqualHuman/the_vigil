@@ -15,6 +15,8 @@
       --accent: #D7A451;
       --secondary: #6E7075;
       --highlight: #FCE6C2;
+      --text-soft: #CFCAC4;
+      --border-soft: rgba(215, 164, 81, 0.25);
     }
 
     * {
@@ -28,54 +30,101 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
-    }
+    }.contact-strip {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.contact-strip-inner {
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  padding: 0.8rem 1.4rem;
+  background: linear-gradient(145deg, rgba(15,15,15,0.96), rgba(10,10,10,0.92));
+  font-size: 0.9rem;
+}
+
+.contact-strip-title {
+  font-family: "Playfair Display", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-right: 0.5rem;
+}
+
+.contact-strip-email {
+  color: var(--highlight);
+  font-weight: 600;
+}
+
+.about-divider {
+  height: 1px;
+  margin: 2.5rem auto 0;
+  max-width: 520px;
+  background: linear-gradient(
+    90deg,
+    rgba(243,226,194,0.18),
+    rgba(243,226,194,0.06),
+    rgba(243,226,194,0.18)
+  );
+  opacity: 0.9;
+}
+/* Centered testing shell */
+.testing-shell {
+  max-width: 760px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
 
     /*--begin------------------------------ STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
 
-/* TIP JAR ORB — EMBER SHIMMER VERSION */
+/* TIP JAR ORB — EMBER SHIMMER, NO BLUE */
 
-.tipjar-orb {
+.tipjar-orb,
+.tipjar-orb:visited,
+.tipjar-orb:active {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-
-  padding: 2px;                        /* small border space */
+  padding: 2px;
   border-radius: 999px;
-
-  /* animated ember gradient around the pill */
+  color: var(--text-soft);                 /* base text color */
   background:
     conic-gradient(
       from 210deg,
-      rgba(215,164,81,0.1),
+      rgba(215,164,81,0.08),
       rgba(215,164,81,0.85),
       rgba(243,226,194,0.9),
       rgba(215,164,81,0.15),
       rgba(215,164,81,0.02),
-      rgba(215,164,81,0.5),
-      rgba(215,164,81,0.1)
+      rgba(215,164,81,0.45),
+      rgba(215,164,81,0.08)
     );
   background-size: 200% 200%;
   animation: tipjar-shimmer 10s linear infinite;
-
   box-shadow:
     0 0 10px rgba(215,164,81,0.25),
     0 12px 26px rgba(0,0,0,0.75);
 }
 
-/* inner pill stays dark and calm */
+/* ensure inner spans don’t go rogue-blue */
+.tipjar-orb * {
+  text-decoration: none;
+  color: inherit;
+}
 
 .tipjar-orb-inner {
   border-radius: 999px;
   padding: 0.7rem 1.35rem;
   min-width: 150px;
-
   border: 1px solid rgba(255,255,255,0.12);
   background:
     radial-gradient(circle at 0% 0%, rgba(243,226,194,0.08), transparent 55%),
     linear-gradient(145deg, rgba(10,10,10,0.98), rgba(5,5,5,0.96));
-
   box-shadow:
     inset 0 0 0 0.5px rgba(255,255,255,0.04);
   display: flex;
@@ -92,12 +141,14 @@
   color: var(--highlight);
 }
 
-.tipjar-orb-sub {
-  font-size: 0.78rem;
-  color: var(--text-soft);
-}
+/* subtitle = soft whisper, no blue ever */
 
-/* hover = slightly brighter flame, nothing dramatic */
+.tipjar-orb-sub {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  opacity: 0.8;
+}
 
 .tipjar-orb:hover {
   box-shadow:
@@ -113,7 +164,7 @@
   color: var(--accent);
 }
 
-/* slow rotation of the ember gradient */
+/* subtle ember movement */
 
 @keyframes tipjar-shimmer {
   0%   { background-position: 0% 50%; }
@@ -121,13 +172,12 @@
   100% { background-position: 0% 50%; }
 }
 
-/* respect reduced motion */
-
 @media (prefers-reduced-motion: reduce) {
   .tipjar-orb {
     animation: none;
   }
 }
+
 
 /* Force subtitle inside the tip jar orb to match theme and never turn blue */
 .tipjar-orb-sub,
@@ -141,16 +191,69 @@
   color: var(--highlight) !important;
 }
 
+/* TIP JAR SECTION SHELL */
+
+.tipjar-section {
+  margin: 1.8rem 0 2.4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.tipjar-shell {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+  padding: 1rem 1.4rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  background:
+    linear-gradient(135deg, rgba(15,15,15,0.96), rgba(8,8,8,0.94));
+  box-shadow:
+    0 10px 32px rgba(0,0,0,0.5),
+    inset 0 0 0 0.5px rgba(255,255,255,0.03);
+  max-width: 640px;
+  width: 100%;
+}
+
+.tipjar-copy {
+  flex: 1;
+}
+
+.tipjar-copy p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.tipjar-label {
+  font-family: "Playfair Display", serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .tipjar-shell {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .tipjar-orb {
+    align-self: center;
+  }
+}
 
 
     
    /*--end----------------------------------- STYLE WORKSPACE  Add custom classes, layouts, etc. ----------------------------------- */
 
-
   </style>
 </head>
 <body>
-
+ <div class="testing-shell">
   <!--begin--------------------------------- BODY WORKSPACE  Add your HTML elements here  ------------------------------------ -->
 
     <!-- CONTACT STRIP -->
@@ -178,7 +281,7 @@
         <a href="tipjar.html" class="tipjar-orb">
           <span class="tipjar-orb-inner">
             <span class="tipjar-orb-title">Tip Jar</span>
-            <span class="tipjar-orb-sub">Optional, always.</span>
+            <span class="tipjar-orb-sub">Thank you.</span>
           </span>
         </a>
       </div>
@@ -190,6 +293,6 @@
   
   <!--end----------------------------------- BODY WORKSPACE  Add your HTML elements here  ------------------------------------ -->
 
-
+</div>
 </body>
 </html>
