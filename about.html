@@ -135,13 +135,13 @@
       position: relative;
     }
 
-   .candle-wrapper {
+ .candle-wrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-/* CANDLE CONTAINER */
+/* --- CANDLE CONTAINER --- */
 .candle {
   position: relative;
   width: 18px;
@@ -151,7 +151,7 @@
   justify-content: center;
 }
 
-/* CANDLE BODY */
+/* --- CANDLE BODY (Tip Jar style) --- */
 .candle-body {
   width: 10px;
   height: 24px;
@@ -162,7 +162,7 @@
     0 5px 10px rgba(0, 0, 0, 0.7);
 }
 
-/* FLAME */
+/* --- FLAME (Tip Jar shape + original glow blend) --- */
 .candle-flame {
   position: absolute;
   top: -22px;
@@ -170,36 +170,39 @@
   height: 18px;
   border-radius: 999px 999px 60% 60%;
   background: radial-gradient(circle at 30% 20%,
-    #fffdf4 0,
-    #ffe4a3 40%,
-    #f4b55e 70%,
-    #c7742d 100%);
+    #fffdf4 0%,
+    #ffe7a8 40%,
+    #f6b667 70%,
+    #c77229 100%);
   box-shadow:
-    0 0 18px rgba(255, 215, 140, 0.9),
-    0 0 32px rgba(255, 191, 102, 0.65);
+    0 0 22px rgba(255, 215, 140, 0.9),   /* main glow */
+    0 0 40px rgba(255, 191, 102, 0.7),   /* soft bloom */
+    0 0 55px rgba(215,164,81,0.45);      /* warm halo */
   animation: candle-flicker 2.6s ease-in-out infinite;
 }
 
-/* GLOW BEHIND FLAME */
+/* --- GLOW (original candle halo) --- */
 .candle-glow {
   position: absolute;
-  top: -34px;
-  width: 64px;
-  height: 64px;
+  top: -40px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(255, 222, 150, 0.18) 0,
+    rgba(255, 222, 150, 0.22) 0,
+    rgba(255, 222, 150, 0.12) 35%,
     transparent 70%);
-  filter: blur(0.5px);
+  filter: blur(1px);
   pointer-events: none;
 }
 
-/* SOFTER FLICKER */
+/* --- SOFT FLICKER --- */
 @keyframes candle-flicker {
   0%, 100% { transform: translateX(0) scaleY(1); opacity: 1; }
   35%      { transform: translateX(-0.5px) scaleY(1.02); opacity: 0.96; }
   70%      { transform: translateX(0.7px) scaleY(0.98); opacity: 0.93; }
 }
+
 
     .hero-eyebrow {
       text-transform: uppercase;
