@@ -64,7 +64,7 @@
     .candle-wrap {
       position: absolute;
       /* pull the candle down so the base overlaps the border */
-      top: -6px;
+      top: -4px;
       left: 0;
       right: 0;
       display: flex;
@@ -73,13 +73,16 @@
     }
     .candle-shadow {
   position: absolute;
-  top: 32px;
-  width: 40px;
+  top: 40px;
+  width: 36px;
   height: 6px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(0,0,0,0.35), transparent);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), transparent);
   filter: blur(4px);
+  opacity: 0.4;
+  pointer-events: none;
 }
+
 
 
     .candle {
@@ -99,7 +102,7 @@
       border-radius: 999px;
       background: radial-gradient(circle, rgba(252,230,194,0.9), rgba(252,230,194,0));
       filter: blur(6px);
-      opacity: .75;
+      opacity: .58;
       z-index: -1;
     }
 
@@ -125,7 +128,7 @@
 
 /* candle body */
 .candle-body {
-  width: 24px;
+  width: 22px;
   height: 36px;
   border-radius: 10px 10px 6px 6px;
  background: linear-gradient(
@@ -257,6 +260,15 @@
   0%, 100% { transform: scale(1) translateY(2px); opacity: 1; }
   50% { transform: scale(1.03, 0.97) translateY(3px); opacity: 0.93; }
 }
+    @keyframes halo-soft {
+  0%, 100% { opacity: 0.58; }
+  50% { opacity: 0.64; }
+}
+
+.candle::before {
+  animation: halo-soft 3.5s ease-in-out infinite;
+}
+
 
 .flame {
   animation: flicker 2.8s ease-in-out infinite;
