@@ -16,7 +16,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, #1c2140 0, #050814 60%);
+      background: radial-gradient(circle at top, #151931 0, #050814 60%);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow: hidden;
     }
@@ -24,289 +24,380 @@
     .scene {
       position: relative;
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       aspect-ratio: 16 / 9;
-      background: linear-gradient(to top, #1c1428, #1b233c);
-      border-radius: 24px;
+      background: linear-gradient(to top, #222735 0, #2d3a52 45%, #4d5b75 80%);
+      border-radius: 28px;
       overflow: hidden;
       box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.7),
-        0 0 40px rgba(120, 96, 255, 0.25);
-    }
-
-    /* soft mist at bottom */
-    .scene::after {
-      content: "";
-      position: absolute;
-      left: -10%;
-      right: -10%;
-      bottom: -5%;
-      height: 40%;
-      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 60%);
-      pointer-events: none;
+        0 18px 40px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(120, 96, 255, 0.24);
+      isolation: isolate;
     }
 
     .title {
       position: absolute;
-      top: 12px;
+      top: 18px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 14px;
-      letter-spacing: 0.18em;
+      font-size: 15px;
+      letter-spacing: .24em;
       text-transform: uppercase;
-      color: rgba(245, 240, 255, 0.75);
+      color: rgba(247, 243, 255, 0.9);
     }
 
     .subtitle {
       position: absolute;
-      top: 30px;
+      top: 38px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 11px;
-      letter-spacing: 0.12em;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      color: rgba(225, 214, 255, 0.6);
+      color: rgba(231, 222, 255, 0.7);
+    }
+
+    /* distant foggy forest */
+    .back-forest {
+      position: absolute;
+      inset: 18% 0 auto 0;
+      height: 40%;
+      background:
+        radial-gradient(circle at 15% 60%, rgba(255, 192, 203, 0.16), transparent 55%),
+        radial-gradient(circle at 85% 50%, rgba(255, 192, 203, 0.14), transparent 55%),
+        linear-gradient(to top, rgba(46, 55, 77, 0.9), rgba(77, 93, 117, 0.3));
+      opacity: .9;
+    }
+
+    .mist {
+      position: absolute;
+      inset: auto -10% 10% -10%;
+      height: 30%;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 60%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    /* ground */
+    .ground {
+      position: absolute;
+      inset: auto -10% 0 -10%;
+      height: 30%;
+      background:
+        radial-gradient(circle at 30% 0, rgba(119, 137, 111, 0.7), transparent 60%),
+        radial-gradient(circle at 70% 0, rgba(114, 135, 112, 0.6), transparent 60%),
+        linear-gradient(to top, #424a44, #2e3530);
     }
 
     /* trees */
     .tree {
       position: absolute;
-      bottom: 8%;
-      width: 34%;
-      height: 60%;
+      bottom: 13%;
+      width: 32%;
+      height: 64%;
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.75));
       z-index: 1;
-      filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.7));
     }
 
-    .tree.left {
-      left: -6%;
-      transform: scaleX(-1);
-    }
-
-    .tree.right {
-      right: -6%;
-    }
+    .tree.left { left: -4%; transform: scaleX(-1); }
+    .tree.right { right: -4%; }
 
     .tree-trunk {
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 24px;
-      height: 40%;
-      background: linear-gradient(to right, #3c2311, #1f1208);
+      width: 30px;
+      height: 42%;
+      background: linear-gradient(to right, #3b2414, #2a180c, #3b2414);
       border-radius: 999px;
+    }
+
+    .tree-trunk::before {
+      content: "";
+      position: absolute;
+      inset: auto 15% 0 15%;
+      height: 30%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.1), transparent 70%);
     }
 
     .tree-canopy {
       position: absolute;
-      bottom: 30%;
+      bottom: 33%;
       left: 50%;
       transform: translateX(-50%);
-      width: 190px;
-      height: 190px;
+      width: 220px;
+      height: 210px;
       border-radius: 50%;
       background:
         radial-gradient(circle at 20% 20%, #ffe5f0, transparent 55%),
         radial-gradient(circle at 70% 30%, #ffd1e3, transparent 60%),
         radial-gradient(circle at 40% 80%, #f9c5d1, transparent 55%);
       box-shadow:
-        0 0 20px rgba(249, 197, 209, 0.55),
-        0 0 50px rgba(249, 197, 209, 0.35);
-    }
-
-    /* ground */
-    .ground {
-      position: absolute;
-      left: -10%;
-      right: -10%;
-      bottom: 0;
-      height: 25%;
-      background: radial-gradient(circle at top, #40484f, #1b1f24);
+        0 0 24px rgba(249, 197, 209, 0.55),
+        0 0 60px rgba(249, 197, 209, 0.35);
+      opacity: .95;
     }
 
     /* stone path */
     .path {
       position: absolute;
       left: 50%;
-      bottom: 4%;
+      bottom: 11%;
       transform: translateX(-50%);
       width: 40%;
       height: 40%;
-      clip-path: polygon(50% 0, 10% 100%, 90% 100%);
-      background: linear-gradient(to bottom, rgba(120, 130, 150, 0.9), rgba(50, 56, 76, 0.9));
-      opacity: 0.85;
+      pointer-events: none;
     }
 
     .path-stones {
       position: absolute;
-      inset: 8% 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 90%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
     .path-stone {
-      height: 18%;
+      align-self: center;
+      width: 70%;
+      height: 17%;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 25%, #d3d7e3, #737a92);
-      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.65);
+      background:
+        radial-gradient(circle at 30% 25%, #d6dadf, #7b828e);
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.7);
+      opacity: .95;
+      transform: scaleX(.95);
     }
 
-    /* shrine base */
+    .path-stone:nth-child(2) { width: 65%; }
+    .path-stone:nth-child(3) { width: 55%; }
+    .path-stone:nth-child(4) { width: 45%; }
+
+    /* shrine wrapper */
     .shrine-wrap {
       position: absolute;
-      bottom: 15%;
+      bottom: 14%;
       left: 50%;
       transform: translateX(-50%);
-      width: 60%;
+      width: 55%;
       max-width: 520px;
       z-index: 2;
     }
 
-    .platform {
-      width: 100%;
-      height: 60px;
-      background: linear-gradient(to bottom, #a8adbd, #6d7283);
-      border-radius: 14px;
-      box-shadow:
-        0 8px 0 #474c5e,
-        0 14px 24px rgba(0, 0, 0, 0.8);
+    /* stairs */
+    .stairs {
+      width: 80%;
+      margin: 0 auto;
+      height: 56px;
       position: relative;
+    }
+
+    .step {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 22px;
+      border-radius: 6px;
+      background: linear-gradient(to bottom, #c7ccd4, #868d9a);
+      box-shadow: 0 5px 8px rgba(0, 0, 0, 0.75);
+    }
+
+    .step:nth-child(2) {
+      bottom: 18px;
+      width: 86%;
+      background: linear-gradient(to bottom, #d4d8e0, #939aaa);
+    }
+
+    .step:nth-child(1) { bottom: 0; }
+    .step:nth-child(3) {
+      bottom: 36px;
+      width: 72%;
+      background: linear-gradient(to bottom, #dde1ea, #9ca4b5);
+    }
+
+    /* stone base platform */
+    .platform {
+      position: relative;
+      margin: 12px auto 0;
+      width: 86%;
+      height: 64px;
+      background: linear-gradient(to bottom, #b4bac6, #7b828f);
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.9);
     }
 
     .platform::before {
       content: "";
       position: absolute;
-      left: 10%;
-      right: 10%;
+      left: 8%;
+      right: 8%;
       top: -10px;
       height: 12px;
       border-radius: 999px;
-      background: linear-gradient(to bottom, #d6dae9, #9b9fb1);
+      background: linear-gradient(to bottom, #dee2ea, #a3a8b8);
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.55);
     }
 
+    /* shrine body */
     .shrine-body {
       position: absolute;
-      left: 10%;
-      right: 10%;
-      bottom: 12px;
-      height: 90px;
-      display: flex;
+      inset: 8px 10% 10px 10%;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: flex-end;
-      justify-content: space-between;
+      column-gap: 16px;
     }
 
+    /* pillars */
     .pillar {
-      width: 26px;
-      height: 86px;
-      background: linear-gradient(to right, #8e0000, #c62828);
-      border-radius: 999px;
+      width: 32px;
+      height: 94px;
+      border-radius: 8px;
+      background: linear-gradient(to right, #7c1111, #c62828, #7a1111);
       box-shadow:
-        inset 0 0 0 3px rgba(0, 0, 0, 0.3),
-        0 4px 6px rgba(0, 0, 0, 0.7);
+        inset 0 0 0 2px rgba(0, 0, 0, 0.3),
+        0 5px 8px rgba(0, 0, 0, 0.8);
       position: relative;
     }
 
     .pillar::before {
       content: "";
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -8px;
-      width: 80%;
-      height: 12px;
-      border-radius: 999px;
-      background: linear-gradient(to bottom, #f6ede1, #c9b18f);
-      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.5);
+      left: -4px;
+      right: -4px;
+      bottom: -10px;
+      height: 14px;
+      border-radius: 6px;
+      background: linear-gradient(to bottom, #f4ebde, #c7b193);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
     }
 
-    .door {
-      flex: 1;
-      height: 76px;
-      margin: 0 12px;
-      border-radius: 10px;
+    /* wooden wall + doors */
+    .wall {
+      height: 90px;
+      border-radius: 8px;
       background:
-        linear-gradient(to bottom, rgba(15, 11, 20, 0.4), rgba(0, 0, 0, 0.9)),
-        radial-gradient(circle at 50% 0, rgba(255, 221, 170, 0.75), transparent 65%);
+        linear-gradient(to right, #4d2c16, #6f3d1f, #4a2913);
       box-shadow:
-        inset 0 0 26px rgba(0, 0, 0, 0.85),
-        0 0 26px rgba(255, 221, 170, 0.35);
+        inset 0 0 16px rgba(0, 0, 0, 0.9),
+        0 0 22px rgba(0, 0, 0, 0.8);
       position: relative;
       overflow: hidden;
     }
 
-    .door::before {
+    .wall::before {
+      /* frame */
       content: "";
       position: absolute;
       inset: 8px;
-      border-radius: 6px;
-      border: 3px solid rgba(151, 110, 62, 0.9);
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.7);
+      border-radius: 4px;
+      border: 3px solid rgba(135, 92, 49, 0.9);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.7);
     }
 
-    .door::after {
-      content: "";
+    .window-grid {
       position: absolute;
-      inset: 24% 24%;
-      background: radial-gradient(circle at 50% 20%, #ffddaa, transparent 70%);
-      opacity: 0.85;
-      filter: blur(1px);
-      animation: doorGlow 3s ease-in-out infinite alternate;
+      inset: 14px 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 3px;
     }
 
-    @keyframes doorGlow {
-      0% {
-        opacity: 0.6;
-        transform: scale(0.97);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1.03);
-      }
+    .grid-cell {
+      background: radial-gradient(circle at 50% 30%, rgba(255, 230, 184, 0.95), rgba(205, 148, 90, 0.9));
+      box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.45);
+    }
+
+    /* warm interior glow */
+    .interior-glow {
+      position: absolute;
+      inset: 16% 20%;
+      background: radial-gradient(circle at 50% 25%, rgba(255, 221, 170, 0.98), transparent 70%);
+      filter: blur(1px);
+      opacity: .95;
+      animation: interiorPulse 3.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes interiorPulse {
+      0% { opacity: .65; transform: scale(.96); }
+      100% { opacity: 1; transform: scale(1.01); }
     }
 
     /* roof */
     .roof {
       position: absolute;
+      bottom: 64px;
       left: 50%;
-      bottom: 90px;
       transform: translateX(-50%);
-      width: 110%;
-      max-width: 580px;
-      height: 80px;
+      width: 120%;
+      max-width: 620px;
+      height: 86px;
       transform-origin: 50% 100%;
       animation: roofSway 9s ease-in-out infinite;
     }
 
-    .roof-main {
+    .roof-lower {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, #151622, #2b2d3b, #151622);
-      border-radius: 0 0 60px 60px;
-      clip-path: polygon(4% 55%, 50% 0, 96% 55%, 90% 70%, 10% 70%);
+      inset: 26px 0 0 0;
+      background:
+        repeating-linear-gradient(
+          to right,
+          #343849,
+          #343849 6px,
+          #2b2f3f 6px,
+          #2b2f3f 12px
+        );
+      border-radius: 0 0 72px 72px;
+      clip-path: polygon(5% 55%, 50% 0, 95% 55%, 88% 72%, 12% 72%);
       box-shadow:
-        0 12px 18px rgba(0, 0, 0, 0.85),
-        0 0 26px rgba(0, 0, 0, 0.7);
+        0 14px 18px rgba(0, 0, 0, 0.9),
+        0 0 24px rgba(0, 0, 0, 0.8);
     }
 
-    .roof-main::before {
+    .roof-lower::before {
       content: "";
       position: absolute;
       left: 10%;
       right: 10%;
-      top: 36%;
+      top: 34%;
       height: 16px;
       border-radius: 999px;
-      background: linear-gradient(to bottom, #f5e0b5, #d5bf90);
+      background: linear-gradient(to bottom, #f3dfb1, #d3bd8b);
       box-shadow:
-        0 4px 7px rgba(0, 0, 0, 0.6),
-        0 -2px 0 rgba(255, 255, 255, 0.35);
+        0 4px 7px rgba(0, 0, 0, 0.7),
+        0 -2px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .roof-upper {
+      position: absolute;
+      inset: 0 18% auto 18%;
+      height: 36px;
+      background:
+        repeating-linear-gradient(
+          to right,
+          #3a3e51,
+          #3a3e51 6px,
+          #323649 6px,
+          #323649 12px
+        );
+      clip-path: polygon(7% 70%, 50% 0, 93% 70%, 86% 100%, 14% 100%);
+      border-radius: 0 0 40px 40px;
+      box-shadow:
+        0 10px 14px rgba(0, 0, 0, 0.9);
     }
 
     .roof-cap {
       position: absolute;
-      top: -8px;
+      top: -10px;
       left: 50%;
       transform: translateX(-50%);
       width: 26%;
@@ -314,45 +405,35 @@
       border-radius: 999px;
       background: linear-gradient(to bottom, #fff7dd, #d9c08e);
       box-shadow:
-        0 4px 7px rgba(0, 0, 0, 0.75),
-        0 0 14px rgba(255, 255, 255, 0.6);
+        0 4px 7px rgba(0, 0, 0, 0.8),
+        0 0 14px rgba(255, 255, 255, 0.7);
     }
 
     .roof-cap::before {
       content: "";
       position: absolute;
-      left: 20%;
-      right: 20%;
-      top: -6px;
-      height: 12px;
+      inset: -6px 22% auto 22%;
+      height: 14px;
       border-radius: 999px;
       background: linear-gradient(to bottom, #fff9e2, #e2c895);
       box-shadow:
-        0 3px 4px rgba(0, 0, 0, 0.45),
-        0 0 10px rgba(255, 255, 255, 0.7);
+        0 3px 4px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.75);
     }
 
     @keyframes roofSway {
-      0% { transform: translateX(-50%) rotate(0.4deg); }
-      50% { transform: translateX(-50%) rotate(-0.6deg); }
-      100% { transform: translateX(-50%) rotate(0.4deg); }
+      0%   { transform: translateX(-50%) rotate(.35deg); }
+      50%  { transform: translateX(-50%) rotate(-.55deg); }
+      100% { transform: translateX(-50%) rotate(.35deg); }
     }
 
-    /* lanterns */
-    .lantern-row {
+    /* center hanging lantern */
+    .center-lantern-wrap {
       position: absolute;
-      bottom: 98px;
+      bottom: 104px;
       left: 50%;
       transform: translateX(-50%);
-      width: 60%;
-      display: flex;
-      justify-content: space-around;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .lantern-wrap {
-      position: relative;
+      z-index: 4;
       transform-origin: top center;
       animation: lanternSwing 4.5s ease-in-out infinite;
     }
@@ -361,18 +442,18 @@
       width: 2px;
       height: 26px;
       margin: 0 auto;
-      background: linear-gradient(to bottom, #d9d1c2, #6d5c3b);
+      background: linear-gradient(to bottom, #e4dccb, #6d5c3b);
     }
 
     .lantern {
-      width: 32px;
-      height: 40px;
+      width: 40px;
+      height: 50px;
       margin: 0 auto;
-      border-radius: 50% 50% 45% 45%;
-      background: radial-gradient(circle at 50% 10%, #fff5d6, #fbe6b5);
+      border-radius: 50% 50% 46% 46%;
+      background: radial-gradient(circle at 50% 14%, #fff7d8, #fbe3ac);
       box-shadow:
-        0 0 10px rgba(251, 230, 181, 0.9),
-        0 0 22px rgba(251, 230, 181, 0.7);
+        0 0 14px rgba(251, 230, 181, 0.95),
+        0 0 30px rgba(251, 230, 181, 0.8);
       position: relative;
       overflow: hidden;
     }
@@ -380,10 +461,10 @@
     .lantern::before {
       content: "";
       position: absolute;
-      inset: 26% 6%;
+      inset: 26% 8%;
+      border-radius: inherit;
       border-top: 2px solid rgba(217, 173, 95, 0.8);
       border-bottom: 2px solid rgba(217, 173, 95, 0.8);
-      border-radius: inherit;
     }
 
     .lantern::after {
@@ -392,17 +473,110 @@
       left: 50%;
       bottom: -8px;
       transform: translateX(-50%);
-      width: 18px;
+      width: 20px;
       height: 10px;
       border-radius: 999px;
       background: linear-gradient(to bottom, #d0a458, #8c672e);
-      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.7);
     }
 
+    /* side lantern posts */
+    .post {
+      position: absolute;
+      bottom: 14%;
+      width: 10%;
+      max-width: 80px;
+      height: 34%;
+      z-index: 2;
+    }
+    .post.left { left: 9%; }
+    .post.right { right: 9%; }
+
+    .post-pole {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 60%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #3b2916, #22160c, #3b2916);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.85);
+    }
+
+    .post-lamp {
+      position: absolute;
+      bottom: 58%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72px;
+      height: 60px;
+      border-radius: 16px 16px 6px 6px;
+      background: linear-gradient(to bottom, #544232, #37271b);
+      box-shadow:
+        0 8px 14px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+
+    .post-lamp-inner {
+      position: absolute;
+      inset: 8px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 50% 30%, #ffeec4, #e0b46f);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.55);
+    }
+
+    .post-lamp-inner::after {
+      content: "";
+      position: absolute;
+      inset: 35% 10%;
+      border-top: 2px solid rgba(164, 117, 63, 0.9);
+      border-bottom: 2px solid rgba(164, 117, 63, 0.9);
+      opacity: .8;
+    }
+
+    .post-lamp-top {
+      position: absolute;
+      bottom: calc(58% + 60px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 16px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #f2dfb3, #c9b189);
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.65),
+        0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    /* animations */
     @keyframes lanternSwing {
-      0% { transform: rotate(2.5deg); }
-      50% { transform: rotate(-2.5deg); }
-      100% { transform: rotate(2.5deg); }
+      0%   { transform: translateX(-50%) rotate(2.5deg); }
+      50%  { transform: translateX(-50%) rotate(-2.5deg); }
+      100% { transform: translateX(-50%) rotate(2.5deg); }
+    }
+
+    .post.left .post-lamp,
+    .post.left .post-lamp-top,
+    .post.left .post-pole {
+      animation: postSwingLeft 6s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    .post.right .post-lamp,
+    .post.right .post-lamp-top,
+    .post.right .post-pole {
+      animation: postSwingRight 6s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    @keyframes postSwingLeft {
+      0%, 100% { transform: translateX(-50%) rotate(1.8deg); }
+      50%      { transform: translateX(-50%) rotate(-.3deg); }
+    }
+    @keyframes postSwingRight {
+      0%, 100% { transform: translateX(-50%) rotate(-1.8deg); }
+      50%      { transform: translateX(-50%) rotate(.3deg); }
     }
 
     /* petals */
@@ -412,8 +586,8 @@
       height: 18px;
       background: #f9c5d1;
       border-radius: 70% 40% 60% 40%;
-      opacity: 0.8;
-      filter: drop-shadow(0 0 4px rgba(249, 197, 209, 0.75));
+      opacity: .85;
+      filter: drop-shadow(0 0 4px rgba(249, 197, 209, 0.8));
       pointer-events: none;
       animation: petalFloat linear infinite;
     }
@@ -421,10 +595,8 @@
     .petal::before {
       content: "";
       position: absolute;
-      left: 12%;
-      right: 25%;
-      top: 28%;
-      bottom: 30%;
+      inset: 30% 25% auto 10%;
+      height: 40%;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.4);
     }
@@ -442,12 +614,9 @@
     }
 
     @media (max-width: 720px) {
-      .scene {
-        border-radius: 18px;
-      }
-      .shrine-wrap { width: 80%; }
-      .lantern-row { width: 72%; }
-      .tree { width: 40%; }
+      .scene { border-radius: 22px; }
+      .shrine-wrap { width: 78%; bottom: 13%; }
+      .tree { width: 38%; }
     }
   </style>
 </head>
@@ -456,7 +625,12 @@
     <div class="title">Shrine Lounge</div>
     <div class="subtitle">Cherry Blossom Ambience</div>
 
-    <!-- Trees -->
+    <div class="back-forest"></div>
+    <div class="mist"></div>
+
+    <div class="ground"></div>
+
+    <!-- Cherry trees -->
     <div class="tree left">
       <div class="tree-trunk"></div>
       <div class="tree-canopy"></div>
@@ -466,8 +640,22 @@
       <div class="tree-canopy"></div>
     </div>
 
-    <!-- Ground + path -->
-    <div class="ground"></div>
+    <!-- Side lantern posts -->
+    <div class="post left">
+      <div class="post-pole"></div>
+      <div class="post-lamp"></div>
+      <div class="post-lamp-inner"></div>
+      <div class="post-lamp-top"></div>
+    </div>
+
+    <div class="post right">
+      <div class="post-pole"></div>
+      <div class="post-lamp"></div>
+      <div class="post-lamp-inner"></div>
+      <div class="post-lamp-top"></div>
+    </div>
+
+    <!-- Stone path -->
     <div class="path">
       <div class="path-stones">
         <div class="path-stone"></div>
@@ -480,50 +668,65 @@
     <!-- Shrine -->
     <div class="shrine-wrap">
       <div class="roof">
-        <div class="roof-main"></div>
+        <div class="roof-lower"></div>
+        <div class="roof-upper"></div>
         <div class="roof-cap"></div>
+      </div>
+
+      <div class="stairs">
+        <div class="step"></div>
+        <div class="step"></div>
+        <div class="step"></div>
       </div>
 
       <div class="platform">
         <div class="shrine-body">
           <div class="pillar"></div>
-          <div class="door"></div>
+
+          <div class="wall">
+            <div class="interior-glow"></div>
+            <div class="window-grid">
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+            </div>
+          </div>
+
           <div class="pillar"></div>
         </div>
       </div>
     </div>
 
-    <!-- Lanterns -->
-    <div class="lantern-row">
-      <div class="lantern-wrap">
-        <div class="lantern-string"></div>
-        <div class="lantern"></div>
-      </div>
-      <div class="lantern-wrap">
-        <div class="lantern-string"></div>
-        <div class="lantern"></div>
-      </div>
-      <div class="lantern-wrap">
-        <div class="lantern-string"></div>
-        <div class="lantern"></div>
-      </div>
+    <!-- Center hanging lantern -->
+    <div class="center-lantern-wrap">
+      <div class="lantern-string"></div>
+      <div class="lantern"></div>
     </div>
   </div>
 
   <script>
-    // create floating petals
+    // floating cherry blossom petals
     (function () {
       const scene = document.querySelector(".scene");
-      const PETAL_COUNT = 40;
+      const PETAL_COUNT = 45;
 
       for (let i = 0; i < PETAL_COUNT; i++) {
         const petal = document.createElement("span");
         petal.className = "petal";
 
         const startLeft = Math.random() * 100;     // 0–100 vw-ish
-        const delay = Math.random() * 12;          // seconds
-        const duration = 10 + Math.random() * 10;  // 10–20s
-        const scale = 0.6 + Math.random() * 0.9;
+        const delay = Math.random() * 14;          // seconds
+        const duration = 12 + Math.random() * 10;  // 12–22s
+        const scale = 0.6 + Math.random() * 1.1;
 
         petal.style.left = startLeft + "vw";
         petal.style.animationDelay = delay + "s";
