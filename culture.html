@@ -122,16 +122,27 @@
       top: 50px;
       left: 50%;
       transform: translateX(-50%);
-      width: 26px;            /* a touch wider for the outline */
+      width: 26px;
       height: 72px;
       border-radius: 999px;
-      overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 1;
     }
 
-    .candle-body::before,
-    .candle-body::after {
-      content: none;
+    /* inner “sentinel slit” */
+    .sentinel-core {
+      width: 7px;
+      height: 46px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom,
+        rgba(250, 240, 220, 0.18),
+        rgba(0,0,0,0.98)
+      );
+      box-shadow:
+        0 0 12px rgba(250, 240, 220, 0.3);
     }
 
     /* soft shadow on the table */
@@ -151,33 +162,11 @@
       opacity: 0.75;
     }
 
-    /* ---------------- SENTINEL OUTLINE STYLES ---------------- */
-
-    /* Common sentinel inner slit */
-    .candle-body.sentinel-base {
-      background: transparent;
-      position: relative;
-    }
-    .candle-body.sentinel-base::before {
-      content: "";
-      position: absolute;
-      top: 14px;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 7px;
-      border-radius: 999px;
-      background: linear-gradient(to bottom,
-        rgba(250, 240, 220, 0.15),
-        rgba(0,0,0,0.98)
-      );
-      box-shadow:
-        0 0 12px rgba(250, 240, 220, 0.25);
-    }
+    /* ---------------- SENTINEL OUTLINE VARIANTS ---------------- */
 
     /* A) Ivory outline */
     .pill-sentinel-ivory {
-      border: 2px solid rgba(248, 233, 205, 0.95);
+      border: 2px solid rgba(248, 233, 205, 0.96);
       box-shadow:
         0 0 0 1px rgba(0,0,0,0.85),
         0 12px 22px rgba(0,0,0,0.95);
@@ -185,12 +174,118 @@
 
     /* B) Gold outline */
     .pill-sentinel-gold {
-      border: 2px solid rgba(215, 164, 81, 0.95);
+      border: 2px solid rgba(215, 164, 81, 0.96);
       box-shadow:
         0 0 0 1px rgba(0,0,0,0.85),
         0 14px 26px rgba(0,0,0,0.98);
     }
 
-    /* C) Soft outline – thinner, quieter */
+    /* C) Soft outline (thinner, quieter) */
     .pill-sentinel-soft {
-      border: 1.4px solid rgba(245, 228, 205, 0.8);
+      border: 1.4px solid rgba(245, 228, 205, 0.82);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.7),
+        0 10px 20px rgba(0,0,0,0.92);
+    }
+
+    /* D) Bold outline (strong emblem) */
+    .pill-sentinel-bold {
+      border: 3px solid rgba(245, 228, 205, 0.98);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.9),
+        0 16px 28px rgba(0,0,0,0.98);
+    }
+
+    /* ---------------- ANIMATIONS ---------------- */
+
+    @keyframes flameFlicker {
+      0%, 100% {
+        transform: translateX(-50%) scaleY(1);
+        box-shadow:
+          0 0 24px rgba(255, 244, 225, 0.9),
+          0 0 60px rgba(245, 215, 170, 0.8);
+      }
+      40% {
+        transform: translateX(-51%) scaleY(1.02);
+        box-shadow:
+          0 0 28px rgba(255, 244, 225, 1),
+          0 0 70px rgba(245, 215, 170, 0.95);
+      }
+      70% {
+        transform: translateX(-49%) scaleY(0.98);
+        box-shadow:
+          0 0 22px rgba(255, 244, 225, 0.85),
+          0 0 55px rgba(245, 215, 170, 0.75);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.9; }
+      50%      { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+
+    <!-- A: Ivory outline sentinel -->
+    <div class="variant">
+      <div class="candle-logo" aria-label="Vigil candle – Sentinel Ivory Outline">
+        <div class="candle-glow"></div>
+        <div class="candle-flame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-body pill-sentinel-ivory">
+          <div class="sentinel-core"></div>
+        </div>
+        <div class="candle-shadow"></div>
+      </div>
+      <div class="variant-label">Ivory Outline</div>
+    </div>
+
+    <!-- B: Gold outline sentinel -->
+    <div class="variant">
+      <div class="candle-logo" aria-label="Vigil candle – Sentinel Gold Outline">
+        <div class="candle-glow"></div>
+        <div class="candle-flame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-body pill-sentinel-gold">
+          <div class="sentinel-core"></div>
+        </div>
+        <div class="candle-shadow"></div>
+      </div>
+      <div class="variant-label">Gold Outline</div>
+    </div>
+
+    <!-- C: Soft outline sentinel -->
+    <div class="variant">
+      <div class="candle-logo" aria-label="Vigil candle – Sentinel Soft Outline">
+        <div class="candle-glow"></div>
+        <div class="candle-flame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-body pill-sentinel-soft">
+          <div class="sentinel-core"></div>
+        </div>
+        <div class="candle-shadow"></div>
+      </div>
+      <div class="variant-label">Soft Outline</div>
+    </div>
+
+    <!-- D: Bold outline sentinel -->
+    <div class="variant">
+      <div class="candle-logo" aria-label="Vigil candle – Sentinel Bold Outline">
+        <div class="candle-glow"></div>
+        <div class="candle-flame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-body pill-sentinel-bold">
+          <div class="sentinel-core"></div>
+        </div>
+        <div class="candle-shadow"></div>
+      </div>
+      <div class="variant-label">Bold Outline</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
