@@ -7,11 +7,12 @@
 
 <style>
   :root {
-    --text-main: #f5f6ff;
-    --text-soft: #b7bbe5;
-    --card-radius: 20px;
-    --card-bg: rgba(18, 20, 45, 0.85);
-    --card-border: rgba(255,255,255,0.12);
+    --text-main: #f9f7ff;
+    --text-soft: #c9c4f4;
+    --shell-bg: radial-gradient(circle at 10% 0%, #3b2b72 0%, #0b0718 45%, #02010a 100%);
+    --panel-bg: rgba(16, 14, 38, 0.92);
+    --panel-border: rgba(255, 255, 255, 0.12);
+    --panel-radius: 22px;
   }
 
   * {
@@ -21,110 +22,151 @@
   }
 
   body {
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at 50% -20%, #423a63 0%, #050712 60%);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     min-height: 100vh;
-    padding: 30px 20px 40px;
+    background: var(--shell-bg);
+    color: var(--text-main);
     display: flex;
     justify-content: center;
-    color: var(--text-main);
+    padding: 30px 14px 40px;
     overflow-x: hidden;
   }
 
-  .wrap {
+  .shell {
     width: 100%;
-    max-width: 1000px;
-  }
-
-  /* NEBULA + STARS */
-  .nebula {
-    position: fixed;
-    inset: 0;
-    z-index: -3;
+    max-width: 1180px;
+    position: relative;
+    border-radius: 28px;
+    padding: 26px 24px 30px;
     background:
-      radial-gradient(circle at 30% 20%, rgba(120,80,255,0.22), transparent 60%),
-      radial-gradient(circle at 80% 70%, rgba(255,90,140,0.16), transparent 60%);
-    animation: nebula-drift 36s linear infinite alternate;
-  }
-  @keyframes nebula-drift {
-    from { transform: translateY(0); }
-    to   { transform: translateY(-40px); }
+      radial-gradient(circle at 0% 100%, rgba(255, 142, 197, 0.12), transparent 55%),
+      radial-gradient(circle at 100% 0%, rgba(122, 181, 255, 0.12), transparent 55%),
+      linear-gradient(145deg, rgba(11, 9, 31, 0.95), rgba(4, 3, 18, 0.98));
+    box-shadow:
+      0 32px 80px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+    overflow: hidden;
   }
 
-  .stars {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -2;
-  }
-  .stars::before,
-  .stars::after {
+  /* ambient glow */
+  .shell::before {
     content: "";
     position: absolute;
-    width: 2px;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent 60%);
+    top: -260px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.25;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  /* shooting star */
+  .shell::after {
+    content: "";
+    position: absolute;
+    width: 220px;
     height: 2px;
-    background: #ffffff;
-    border-radius: 999px;
-    opacity: 0.8;
-    box-shadow:
-      6vw 10vh 0 #fff,
-      20vw 16vh 0 #fff,
-      32vw 30vh 0 #fff,
-      48vw 52vh 0 #fff,
-      72vw 62vh 0 #fff,
-      86vw 36vh 0 #fff,
-      92vw 78vh 0 #fff,
-      15vw 82vh 0 #fff,
-      30vw 92vh 0 #fff;
-    animation: twinkle 7s ease-in-out infinite alternate;
-  }
-  .stars::after {
-    opacity: 0.4;
-    transform: scale(0.8);
-    animation-duration: 11s;
-  }
-  @keyframes twinkle {
-    from { opacity: 0.25; transform: translateY(0); }
-    to   { opacity: 1;    transform: translateY(-4px); }
+    top: 18%;
+    left: -15%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+    opacity: 0.7;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.9));
+    animation: shoot 7s linear infinite;
+    pointer-events: none;
   }
 
-  h1 {
+  @keyframes shoot {
+    0%   { transform: translateX(0) translateY(0); opacity: 0; }
+    12%  { opacity: 0.9; }
+    40%  { transform: translateX(145%) translateY(45px); opacity: 0.7; }
+    60%  { transform: translateX(220%) translateY(70px); opacity: 0; }
+    100% { transform: translateX(220%) translateY(70px); opacity: 0; }
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
     text-align: center;
-    margin-bottom: 18px;
-    font-size: 28px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  h1 span {
-    font-size: 1.3em;
+    margin-bottom: 20px;
   }
 
-  .cluster {
-    margin-bottom: 28px;
-  }
-
-  .cluster-title {
-    font-size: 13px;
-    text-transform: uppercase;
+  header h1 {
+    font-size: 30px;
     letter-spacing: 0.16em;
-    opacity: 0.8;
-    margin: 4px 4px 10px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
   }
 
-  .grid {
-    display: grid;
-    gap: 18px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  header h1 span {
+    font-size: 1.4em;
   }
 
-  /* PLANET NAV STRIP */
+  .header-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-soft);
+    opacity: 0.9;
+  }
 
-  .planet-nav {
+  .header-line::before,
+  .header-line::after {
+    content: "";
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6));
+    opacity: 0.6;
+  }
+
+  .header-line::after {
+    background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
+  }
+
+  /* ORBIT NAV */
+
+  .orbit-nav {
+    position: relative;
+    margin: 26px auto 30px;
+    max-width: 620px;
+    padding: 14px 20px 18px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% -30%, rgba(255,255,255,0.16), transparent 60%),
+                rgba(8, 7, 28, 0.92);
+    box-shadow:
+      0 18px 45px rgba(0,0,0,0.9),
+      0 0 0 1px rgba(255,255,255,0.16);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 18px;
-    margin: 8px 0 26px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .orbit-nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 0% 50%, rgba(255,126,185,0.4), transparent 55%),
+                      radial-gradient(circle at 100% 50%, rgba(114,200,255,0.35), transparent 55%);
+    opacity: 0.45;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .orbit-track {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    gap: 14px;
   }
 
   .planet-link {
@@ -133,67 +175,78 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    width: 80px;
+    gap: 5px;
+    flex: 1;
   }
 
   .planet-orbit {
-    width: 64px;
-    height: 64px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    border: 1px dashed rgba(255,255,255,0.35);
+    border: 1px dashed rgba(255,255,255,0.55);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    animation: float 6s ease-in-out infinite alternate;
+    animation: float 6.5s ease-in-out infinite alternate;
   }
 
+  /* staggered timing */
+  .planet-link:nth-child(2) .planet-orbit { animation-delay: .6s; }
+  .planet-link:nth-child(3) .planet-orbit { animation-delay: 1.2s; }
+  .planet-link:nth-child(4) .planet-orbit { animation-delay: 1.8s; }
+
   .planet {
-    width: 44px;
-    height: 44px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #ffffff, rgba(255,255,255,0) 45%),
-                var(--planet-grad, linear-gradient(135deg,#ff9a62,#ffd93b));
-    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    background:
+      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.9), transparent 58%),
+      var(--planet-grad, linear-gradient(135deg,#ff9a62,#ffd93b));
+    box-shadow:
+      0 0 18px rgba(255,255,255,0.7),
+      0 0 32px rgba(255,255,255,0.45);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 22px;
+    transform: translateZ(0);
   }
 
   .planet-orbit::after {
     content: "";
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.8);
-    top: -4px;
-    right: 8px;
+    background: rgba(255,255,255,0.85);
+    top: -3px;
+    right: 6px;
     animation: orbit-dot 4s linear infinite;
   }
 
   .planet-label {
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.85;
-    text-align: center;
+    letter-spacing: 0.16em;
+    opacity: 0.9;
   }
 
   .planet-link:hover .planet-orbit {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.8);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.85);
+    border-style: solid;
   }
 
   .planet-link:hover .planet {
-    box-shadow: 0 0 16px rgba(255,255,255,0.9);
+    box-shadow:
+      0 0 22px rgba(255,255,255,0.95),
+      0 0 40px rgba(255,255,255,0.9);
   }
 
   @keyframes float {
     from { transform: translateY(0); }
-    to   { transform: translateY(-6px); }
+    to   { transform: translateY(-8px); }
   }
 
   @keyframes orbit-dot {
@@ -201,23 +254,50 @@
     to   { transform: rotate(360deg) translateX(0); }
   }
 
-  /* planet color variants */
-  .planet-plans   { --planet-grad: linear-gradient(135deg,#ff6f61,#ffb88c); }
-  .planet-test    { --planet-grad: linear-gradient(135deg,#ffb566,#ffd97a); }
-  .planet-templates { --planet-grad: linear-gradient(135deg,#4d9eff,#7a5cff); }
-  .planet-navmap  { --planet-grad: linear-gradient(135deg,#cb7dff,#ff4da6); }
+  .planet-plans      { --planet-grad: conic-gradient(from 210deg, #ff9a7b, #ff6f61, #ff9a7b); }
+  .planet-test       { --planet-grad: conic-gradient(from 210deg, #ffd97a, #ffb566, #ffd97a); }
+  .planet-templates  { --planet-grad: conic-gradient(from 210deg, #7bb0ff, #4d9eff, #7bb0ff); }
+  .planet-vigil-nav  { --planet-grad: conic-gradient(from 210deg, #f595ff, #cb7dff, #f595ff); }
 
-  /* CARDS */
+  /* MAIN CONTENT */
+
+  .sections {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cluster {
+    margin-bottom: 26px;
+  }
+
+  .cluster-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.85;
+    margin: 6px 4px 10px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  /* HOLOGRAPHIC PANELS */
 
   .card {
     position: relative;
+    border-radius: var(--panel-radius);
     padding: 20px 22px 22px;
-    border-radius: var(--card-radius);
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    box-shadow:
+      0 22px 55px rgba(0,0,0,0.85),
+      0 0 0 1px rgba(255,255,255,0.04);
     overflow: hidden;
-    backdrop-filter: blur(11px);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.6);
+    backdrop-filter: blur(20px);
+    transform-style: preserve-3d;
     transition:
       transform .18s ease,
       box-shadow .18s ease,
@@ -227,221 +307,263 @@
   .card::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background-size: 200% 200%;
-    opacity: 0.75;
+    inset: -40%;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255,255,255,0.32), transparent 55%),
+      var(--card-gradient, linear-gradient(135deg,#ff6f61,#ffb88c));
+    opacity: 0.7;
     mix-blend-mode: screen;
-    transition: background-position 0.8s ease;
+    transform: translate3d(0,0,0);
+    transition: transform .9s ease, opacity .2s ease;
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,0.35), transparent 40%, transparent 60%, rgba(255,255,255,0.1));
+    opacity: 0;
+    mix-blend-mode: screen;
+    transform: translateX(-40%);
+    transition: opacity .35s ease, transform .35s ease;
   }
 
   .card:hover {
-    transform: translateY(-5px) scale(1.01);
-    border-color: rgba(255,255,255,0.26);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+    transform: translateY(-8px) rotateX(4deg);
+    border-color: rgba(255,255,255,0.35);
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.95),
+      0 0 0 1px rgba(255,255,255,0.16);
   }
 
   .card:hover::before {
-    background-position: 100% 50%;
+    transform: translate3d(10px, -10px, 0);
+    opacity: 0.9;
   }
 
-  .red::before    { background-image: linear-gradient(135deg, #ff6f61, #ffb88c); }
-  .orange::before { background-image: linear-gradient(135deg, #ffb566, #ffd97a); }
-  .blue::before   { background-image: linear-gradient(135deg, #4d9eff, #7a5cff); }
-  .violet::before { background-image: linear-gradient(135deg, #cb7dff, #ff4da6); }
+  .card:hover::after {
+    opacity: 1;
+    transform: translateX(30%);
+  }
 
   .card-inner {
     position: relative;
     z-index: 2;
   }
 
-  .label {
+  .tag {
     font-size: 11px;
     text-transform: uppercase;
-    opacity: 0.7;
+    letter-spacing: 0.16em;
+    opacity: 0.8;
     margin-bottom: 6px;
-    letter-spacing: 0.12em;
   }
 
   .title-row {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
     margin-bottom: 6px;
   }
 
-  .icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 999px;
-    background: rgba(5,6,18,0.75);
+  .icon-chip {
+    width: 32px;
+    height: 32px;
+    border-radius: 14px;
+    background: rgba(5,6,20,0.85);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.8);
   }
 
-  .title {
+  .card-title {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
   }
 
   .card p {
     font-size: 14px;
     color: var(--text-soft);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .card a {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     padding: 8px 16px;
     border-radius: 999px;
     text-decoration: none;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.26);
+    background: rgba(7,9,30,0.95);
+    border: 1px solid rgba(255,255,255,0.3);
     font-size: 14px;
     color: #ffffff;
-    transition: background .15s ease;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.85);
+    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
   }
 
   .card a:hover {
-    background: rgba(255,255,255,0.23);
+    background: rgba(12,16,50,0.98);
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.9);
   }
 
   .card a .arrow {
-    font-size: 14px;
+    font-size: 16px;
   }
 
-  @media (max-width: 640px) {
-    body {
-      padding: 22px 14px 30px;
+  .card-plans      { --card-gradient: linear-gradient(135deg,#ff6f61,#ffb88c); }
+  .card-test       { --card-gradient: linear-gradient(135deg,#ffb566,#ffd97a); }
+  .card-templates  { --card-gradient: linear-gradient(135deg,#4d9eff,#7a5cff); }
+  .card-vigil-nav  { --card-gradient: linear-gradient(135deg,#cb7dff,#ff4da6); }
+
+  @media (max-width: 720px) {
+    .shell {
+      padding: 20px 16px 24px;
+      border-radius: 20px;
     }
-    .planet-nav {
-      gap: 14px;
+
+    header h1 {
+      font-size: 24px;
+    }
+
+    .orbit-nav {
+      padding-inline: 14px;
+    }
+
+    .planet-orbit {
+      width: 62px;
+      height: 62px;
+    }
+    .planet {
+      width: 44px;
+      height: 44px;
     }
   }
 </style>
 </head>
 <body>
 
-<div class="nebula"></div>
-<div class="stars"></div>
+<div class="shell">
+  <header>
+    <h1><span>✦</span> Dashboard <span>✦</span></h1>
+    <div class="header-line">Core orbits</div>
+  </header>
 
-<div class="wrap">
-  <h1><span>✦</span> Dashboard <span>✦</span></h1>
+  <!-- ORBIT NAVIGATION -->
+  <nav class="orbit-nav">
+    <div class="orbit-track">
 
-  <!-- PLANET NAVIGATION -->
-  <div class="planet-nav">
+      <a class="planet-link" href="https://vigilproject.org/plans.html" target="_blank">
+        <div class="planet-orbit">
+          <div class="planet planet-plans">🗺️</div>
+        </div>
+        <div class="planet-label">Plans</div>
+      </a>
 
-    <a class="planet-link" href="https://vigilproject.org/plans.html" target="_blank">
-      <div class="planet-orbit">
-        <div class="planet planet-plans">🗺️</div>
+      <a class="planet-link" href="https://vigilproject.org/test101.html" target="_blank">
+        <div class="planet-orbit">
+          <div class="planet planet-test">⭐</div>
+        </div>
+        <div class="planet-label">Test 101</div>
+      </a>
+
+      <a class="planet-link" href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
+        <div class="planet-orbit">
+          <div class="planet planet-templates">📚</div>
+        </div>
+        <div class="planet-label">Templates</div>
+      </a>
+
+      <a class="planet-link" href="https://vigilproject.org/2001vigilnavigation.html" target="_blank">
+        <div class="planet-orbit">
+          <div class="planet planet-vigil-nav">🧭</div>
+        </div>
+        <div class="planet-label">Vigil Nav</div>
+      </a>
+
+    </div>
+  </nav>
+
+  <div class="sections">
+    <!-- HIDDEN WORKSPACES -->
+    <section class="cluster">
+      <div class="cluster-label">Hidden Workspaces</div>
+      <div class="grid">
+
+        <article class="card card-plans">
+          <div class="card-inner">
+            <div class="tag">Hidden workspace</div>
+            <div class="title-row">
+              <div class="icon-chip">🗺️</div>
+              <div class="card-title">Plans</div>
+            </div>
+            <p>https://vigilproject.org/plans.html</p>
+            <a href="https://vigilproject.org/plans.html" target="_blank">
+              <span class="arrow">✦</span>
+              Open
+            </a>
+          </div>
+        </article>
+
+        <article class="card card-test">
+          <div class="card-inner">
+            <div class="tag">Hidden workspace</div>
+            <div class="title-row">
+              <div class="icon-chip">⭐</div>
+              <div class="card-title">Test 101</div>
+            </div>
+            <p>https://vigilproject.org/test101.html</p>
+            <a href="https://vigilproject.org/test101.html" target="_blank">
+              <span class="arrow">✦</span>
+              Open
+            </a>
+          </div>
+        </article>
+
       </div>
-      <div class="planet-label">Plans</div>
-    </a>
+    </section>
 
-    <a class="planet-link" href="https://vigilproject.org/test101.html" target="_blank">
-      <div class="planet-orbit">
-        <div class="planet planet-test">⭐</div>
+    <!-- VIGIL -->
+    <section class="cluster">
+      <div class="cluster-label">Vigil</div>
+      <div class="grid">
+
+        <article class="card card-templates">
+          <div class="card-inner">
+            <div class="tag">Vigil</div>
+            <div class="title-row">
+              <div class="icon-chip">📚</div>
+              <div class="card-title">Template Library</div>
+            </div>
+            <p>https://vigilproject.org/2001LibraryofTemplates</p>
+            <a href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
+              <span class="arrow">✦</span>
+              Open
+            </a>
+          </div>
+        </article>
+
+        <article class="card card-vigil-nav">
+          <div class="card-inner">
+            <div class="tag">Vigil</div>
+            <div class="title-row">
+              <div class="icon-chip">🧭</div>
+              <div class="card-title">Vigil Navigation</div>
+            </div>
+            <p>https://vigilproject.org/2001vigilnavigation.html</p>
+            <a href="https://vigilproject.org/2001vigilnavigation.html" target="_blank">
+              <span class="arrow">✦</span>
+              Open
+            </a>
+          </div>
+        </article>
+
       </div>
-      <div class="planet-label">Test 101</div>
-    </a>
-
-    <a class="planet-link" href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
-      <div class="planet-orbit">
-        <div class="planet planet-templates">📚</div>
-      </div>
-      <div class="planet-label">Templates</div>
-    </a>
-
-    <a class="planet-link" href="https://vigilproject.org/2001vigilnavigation.html" target="_blank">
-      <div class="planet-orbit">
-        <div class="planet planet-navmap">🧭</div>
-      </div>
-      <div class="planet-label">Vigil Nav</div>
-    </a>
-
+    </section>
   </div>
-
-  <!-- HIDDEN WORKSPACES -->
-  <section class="cluster">
-    <div class="cluster-title">Hidden Workspaces</div>
-
-    <div class="grid">
-
-      <!-- PLANS (Hidden Workspace) -->
-      <div class="card red">
-        <div class="card-inner">
-          <div class="label">Hidden workspace</div>
-          <div class="title-row">
-            <div class="icon">🗺️</div>
-            <div class="title">Plans</div>
-          </div>
-          <p>https://vigilproject.org/plans.html</p>
-          <a href="https://vigilproject.org/plans.html" target="_blank">
-            <span class="arrow">✦</span> Open
-          </a>
-        </div>
-      </div>
-
-      <!-- TEST 101 (Hidden Workspace) -->
-      <div class="card orange">
-        <div class="card-inner">
-          <div class="label">Hidden workspace</div>
-          <div class="title-row">
-            <div class="icon">⭐</div>
-            <div class="title">Test 101</div>
-          </div>
-          <p>https://vigilproject.org/test101.html</p>
-          <a href="https://vigilproject.org/test101.html" target="_blank">
-            <span class="arrow">✦</span> Open
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- VIGIL -->
-  <section class="cluster">
-    <div class="cluster-title">Vigil</div>
-
-    <div class="grid">
-
-      <!-- TEMPLATE LIBRARY (Vigil) -->
-      <div class="card blue">
-        <div class="card-inner">
-          <div class="label">Vigil</div>
-          <div class="title-row">
-            <div class="icon">📚</div>
-            <div class="title">Template Library</div>
-          </div>
-          <p>https://vigilproject.org/2001LibraryofTemplates</p>
-          <a href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
-            <span class="arrow">✦</span> Open
-          </a>
-        </div>
-      </div>
-
-      <!-- VIGIL NAVIGATION MAP -->
-      <div class="card violet">
-        <div class="card-inner">
-          <div class="label">Vigil</div>
-          <div class="title-row">
-            <div class="icon">🧭</div>
-            <div class="title">Vigil Navigation</div>
-          </div>
-          <p>https://vigilproject.org/2001vigilnavigation.html</p>
-          <a href="https://vigilproject.org/2001vigilnavigation.html" target="_blank">
-            <span class="arrow">✦</span> Open
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
 </div>
 
 </body>
