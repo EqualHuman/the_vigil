@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Soft Skies Personal Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Optional cute font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink-soft: #ffd8f0;
+      --pink-medium: #f7a9d9;
+      --pink-deep: #f06292;
+      --lavender: #e0c7ff;
+      --cloud-white: #ffffff;
+      --text-main: #3b3056;
+      --text-soft: #6f5c8a;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --shadow-soft: 0 18px 40px rgba(180, 130, 170, 0.3);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 20%, #ffe0f5 0, transparent 55%),
+        radial-gradient(circle at 90% 10%, #ffe8ff 0, transparent 55%),
+        radial-gradient(circle at 80% 80%, #f9e2ff 0, transparent 55%),
+        linear-gradient(180deg, #ffeaf7 0%, #f9f0ff 35%, #f6ecff 70%, #ffe5f0 100%);
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 48px;
+    }
+
+    .sky-container {
+      position: relative;
+      max-width: 1100px;
+      width: 100%;
+      border-radius: var(--radius-xl);
+      padding: 28px 24px 32px;
+      background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 240, 252, 0.9)
+        );
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    /* Decorative clouds */
+    .cloud {
+      position: absolute;
+      background: radial-gradient(circle at 30% 30%, #ffffff 0%, #fbe9ff 70%);
+      filter: blur(1px);
+      opacity: 0.75;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .cloud.cloud-1 { width: 220px; height: 90px; top: -30px; left: -20px; }
+    .cloud.cloud-2 { width: 260px; height: 110px; top: 40px; right: -40px; }
+    .cloud.cloud-3 { width: 260px; height: 110px; bottom: -40px; left: 10%; opacity: 0.5; }
+    .cloud.cloud-4 { width: 210px; height: 90px; bottom: -30px; right: 5%; opacity: 0.6; }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 2.4vw, 2.4rem);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h1 span.emoji {
+      font-size: 1.6rem;
+    }
+
+    .sub {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 480px;
+    }
+
+    .quick-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 10px;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffe9f6, #fbe0ff);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill span {
+      font-size: 1rem;
+    }
+
+    main {
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 25px rgba(200, 142, 190, 0.18);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at top left, rgba(255, 192, 203, 0.32), transparent 55%);
+      opacity: 0.9;
+      mix-blend-mode: screen;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+      opacity: 0.85;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-title span.emoji {
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .card ul li {
+      margin-bottom: 4px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--pink-medium), var(--pink-deep));
+      color: #ffffff;
+      box-shadow: 0 9px 20px rgba(240, 98, 146, 0.4);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+    }
+
+    .btn.secondary {
+      background: linear-gradient(135deg, #ffe6fb, #fbd6ff);
+      color: var(--text-main);
+      box-shadow: 0 6px 15px rgba(210, 160, 200, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 12px 25px rgba(240, 98, 146, 0.5);
+    }
+
+    .btn span.icon {
+      font-size: 1rem;
+    }
+
+    .card-tag {
+      font-size: 0.8rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(255, 219, 244, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-soft);
+    }
+
+    /* “Intentional space” note style */
+    .placeholder-note {
+      font-size: 0.8rem;
+      padding: 6px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px dashed rgba(210, 170, 210, 0.9);
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      .sky-container {
+        padding: 18px 14px 22px;
+        border-radius: 18px;
+      }
+      header {
+        margin-bottom: 16px;
+      }
+      .card {
+        padding: 14px 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky-container">
+    <!-- Soft background clouds -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
+
+    <div class="content">
+      <header>
+        <div class="tagline">Soft Skies • Personal Dashboard</div>
+        <h1>
+          <span class="emoji">☁️</span>
+          Welcome back, dreamer
+        </h1>
+        <p class="sub">
+          A gentle place to land, peek at your plans, and keep your most important links close.
+        </p>
+
+        <div class="quick-row">
+          <div class="pill">
+            <span>🎯</span>
+            <span>Today’s focus: <strong>Set one small, kind goal</strong></span>
+          </div>
+          <div class="pill">
+            <span>☕</span>
+            <span>Remember: breaks are productive</span>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="grid">
+          <!-- VIGIL TEMPLATE LIBRARY (requested link) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Core link</div>
+              <div class="card-title">
+                <span class="emoji">📚</span>
+                Vigil Template Library
+              </div>
+              <p>
+                Your central space for reusable templates. Open this whenever you’re building
+                something new and don’t want to start from scratch.
+              </p>
+              <div class="btn-row">
+                <a class="btn" href="https://vigilproject.org/2001LibraryofTemplates" target="_blank" rel="noopener noreferrer">
+                  <span class="icon">🔗</span>
+                  Open Template Library
+                </a>
+              </div>
+              <div class="placeholder-note">
+                Idea: Add notes here about <strong>which templates you use the most</strong> or ones
+                you want to try this week.
+              </div>
+            </div>
+          </section>
+
+          <!-- VIGIL PLANS / ROADMAP (requested link) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Core link</div>
+              <div class="card-title">
+                <span class="emoji">🗺️</span>
+                Vigil Plans & Roadmap
+              </div>
+              <p>
+                High-level view of where you’re headed. Use this when you want to zoom out and
+                reconnect with the bigger picture.
+              </p>
+              <div class="btn-row">
+                <a class="btn secondary" href="https://vigilproject.org/plans.html" target="_blank" rel="noopener noreferrer">
+                  <span class="icon">🌤️</span>
+                  View Plans Page
+                </a>
+              </div>
+              <div class="placeholder-note">
+                Intentional space: jot a <strong>one-sentence “north star”</strong> for the month or
+                link a doc where you brain-dump strategy thoughts.
+              </div>
+            </div>
+          </section>
+
+          <!-- TODAY'S FOCUS (suggested space) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Daily anchor</div>
+              <div class="card-title">
+                <span class="emoji">✨</span>
+                Today’s Focus & Tiny Wins
+              </div>
+              <p>
+                A gentle place to choose <em>one</em> priority and make it feel achievable.
+              </p>
+              <ul>
+                <li>[ ] Main focus for today</li>
+                <li>[ ] One 5-minute task</li>
+                <li>[ ] One kindness to myself</li>
+              </ul>
+              <div class="placeholder-note">
+                You could link this card to:
+                <br>
+                • A task app / Notion page<br>
+                • A Google Doc for daily logs<br>
+                • A calendar view with your day
+              </div>
+            </div>
+          </section>
+
+          <!-- QUICK LINKS HUB (suggested space) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Intentional space</div>
+              <div class="card-title">
+                <span class="emoji">🔮</span>
+                Quick Links Hub
+              </div>
+              <p>
+                A little launchpad for places you visit constantly.
+              </p>
+              <ul>
+                <li>• [Add link] Personal email</li>
+                <li>• [Add link] Cloud storage / drive</li>
+                <li>• [Add link] Content planner / social dashboard</li>
+                <li>• [Add link] Money dashboard / budget</li>
+              </ul>
+              <div class="placeholder-note">
+                Label this however you like: <strong>“Command Center”</strong>, <strong>“Heart of the Chaos”</strong>, etc.
+              </div>
+            </div>
+          </section>
+
+          <!-- IDEAS & BRAINSPARKS (suggested space) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Creative cloud</div>
+              <div class="card-title">
+                <span class="emoji">💡</span>
+                Ideas & Brainsparks
+              </div>
+              <p>
+                A soft landing spot for random ideas so they don’t vanish mid-shower thought.
+              </p>
+              <ul>
+                <li>• [Add link] Master idea bank (Notion/Doc)</li>
+                <li>• [Add link] Current “in progress” project</li>
+                <li>• [Add link] Inspiration board / Pinterest</li>
+              </ul>
+              <div class="placeholder-note">
+                You can also dedicate this card specifically to <strong>story ideas</strong>,
+                <strong>channel topics</strong>, or <strong>future Vigil themes</strong>.
+              </div>
+            </div>
+          </section>
+
+          <!-- SELF-CARE & ENERGY CHECK (suggested space) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Support system</div>
+              <div class="card-title">
+                <span class="emoji">🫧</span>
+                Self-Care & Energy Check
+              </div>
+              <p>
+                Reminders that you, the human, are not a machine. Treat this like a tiny
+                control panel for your energy.
+              </p>
+              <ul>
+                <li>• [ ] Water & food check</li>
+                <li>• [ ] Stretch / move 3 minutes</li>
+                <li>• [ ] One thing I’m proud of today</li>
+              </ul>
+              <div class="placeholder-note">
+                Link ideas:
+                <br>
+                • Mood tracker / journal<br>
+                • Playlist that makes you feel safe<br>
+                • Gentle movement / physio routine
+              </div>
+            </div>
+          </section>
+
+          <!-- “THE VIGIL” META SPACE (suggested) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">The Vigil</div>
+              <div class="card-title">
+                <span class="emoji">🕯️</span>
+                The Vigil — Meta Hub
+              </div>
+              <p>
+                A space to keep track of how “The Vigil” is growing as its own entity.
+              </p>
+              <ul>
+                <li>• [Add link] Mission statement / guiding principles</li>
+                <li>• [Add link] Content schedule or channel tracker</li>
+                <li>• [Add link] Donation partners / orgs list</li>
+              </ul>
+              <div class="placeholder-note">
+                Intention: this card is for <strong>“how we’re showing up”</strong> rather than
+                individual tasks. Make it your moral compass bookmark.
+              </div>
+            </div>
+          </section>
+
+          <!-- IMPORTANT PEOPLE & CONTACTS (suggested space) -->
+          <section class="card">
+            <div class="card-inner">
+              <div class="card-label">Safety net</div>
+              <div class="card-title">
+                <span class="emoji">🕸️</span>
+                Important People & Contacts
+              </div>
+              <p>
+                When everything feels chaotic, it helps to have your support web one click away.
+              </p>
+              <ul>
+                <li>• [Add link] Emergency info / medical notes</li>
+                <li>• [Add link] Close friends / support chat</li>
+                <li>• [Add link] Therapist / doctor portal</li>
+              </ul>
+              <div class="placeholder-note">
+                Option: make this a private doc with phone numbers, scripts you can read when anxious,
+                and any “in case of meltdown” notes.
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer>
+        <span>☁️ This is your cloud. Rearrange, rename, and reclaim as needed.</span>
+        <span class="card-tag">
+          <span>🎀</span> Version 1 — made for you
+        </span>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
