@@ -3,736 +3,653 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> Vigil — Navigation Hub</title>
+  <title>Vigil — Navigation Hub</title>
   <meta name="color-scheme" content="dark light" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-  
   <style>
-   :root{
-  /* Neon Aurora theme (no orange/yellow) */
-  --bg0: #050510;
-  --bg1: #070a1c;
+    :root{
+      /* Neon Aurora theme (no orange/yellow) */
+      --bg0: #050510;
+      --bg1: #070a1c;
 
-  --panel: rgba(255,255,255,.07);
-  --panel-2: rgba(255,255,255,.045);
-  --border: rgba(255,255,255,.14);
+      --panel: rgba(255,255,255,.07);
+      --panel-2: rgba(255,255,255,.045);
+      --border: rgba(255,255,255,.14);
 
-  --text: rgba(255,255,255,.93);
-  --muted: rgba(255,255,255,.68);
-  --muted2: rgba(255,255,255,.55);
+      --text: rgba(255,255,255,.93);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.55);
 
-  --accentA: #6d5efc;   /* violet */
-  --accentB: #22d3ee;   /* cyan */
-  --accentC: #ff4fd8;   /* pink */
+      --accentA: #6d5efc;   /* violet */
+      --accentB: #22d3ee;   /* cyan */
+      --accentC: #ff4fd8;   /* pink */
 
-  --ok: #33d17a;
---warn: #a78bfa; /* lavender “checking…” */
-  --bad: #ff6b6b;
+      --ok: #33d17a;
+      --warn: #a78bfa;      /* lavender “checking…” */
+      --bad: #ff6b6b;
 
-  --shadow: 0 18px 70px rgba(0,0,0,.55);
-  --ring: 0 0 0 3px rgba(34,211,238,.22);
-  --radius: 20px;
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
+      --ring: 0 0 0 3px rgba(34,211,238,.22);
+      --radius: 20px;
 
-  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-  --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
 
-  --ease: cubic-bezier(.2,.8,.2,1);
-}
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
 
-*{ box-sizing:border-box; }
+    *{ box-sizing:border-box; }
 
-body{
-  margin:0;
-  font-family: var(--sans);
-  color:var(--text);
-  min-height:100vh;
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      min-height:100vh;
 
-  background:
-    radial-gradient(900px 520px at 15% 10%, color-mix(in oklab, var(--accentB), transparent 78%), transparent 65%),
-    radial-gradient(900px 520px at 90% 20%, color-mix(in oklab, var(--accentA), transparent 80%), transparent 60%),
-    radial-gradient(1100px 650px at 50% 110%, color-mix(in oklab, var(--accentC), transparent 82%), transparent 60%),
-    linear-gradient(180deg, var(--bg0), var(--bg1));
-  position: relative;
-  overflow-x:hidden;
-}
+      background:
+        radial-gradient(900px 520px at 15% 10%, color-mix(in oklab, var(--accentB), transparent 78%), transparent 65%),
+        radial-gradient(900px 520px at 90% 20%, color-mix(in oklab, var(--accentA), transparent 80%), transparent 60%),
+        radial-gradient(1100px 650px at 50% 110%, color-mix(in oklab, var(--accentC), transparent 82%), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      position: relative;
+      overflow-x:hidden;
+    }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:-40px;
-  pointer-events:none;
-  background:
-    radial-gradient(closest-side at 25% 25%, rgba(34,211,238,.18), transparent 60%),
-    radial-gradient(closest-side at 75% 35%, rgba(109,94,252,.16), transparent 62%),
-    radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
-  filter: blur(22px);
-  opacity:.9;
-  animation: drift 14s var(--ease) infinite alternate;
-  z-index: -1;
-}
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-40px;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 25% 25%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(closest-side at 75% 35%, rgba(109,94,252,.16), transparent 62%),
+        radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
+      filter: blur(22px);
+      opacity:.9;
+      animation: drift 14s var(--ease) infinite alternate;
+      z-index: -1;
+    }
 
-@keyframes drift{
-  from{ transform: translate3d(-10px,-10px,0) scale(1.02); }
-  to  { transform: translate3d(14px,10px,0)  scale(1.05); }
-}
+    @keyframes drift{
+      from{ transform: translate3d(-10px,-10px,0) scale(1.02); }
+      to  { transform: translate3d(14px,10px,0)  scale(1.05); }
+    }
 
-.wrap{
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 36px 18px 60px;
-}
+    .wrap{
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
 
-header{
-  display:flex;
-  gap:16px;
-  align-items:flex-end;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  margin-bottom: 18px;
-}
-
-.brand{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-h1{
-  margin:0;
-  font-size: clamp(24px, 3.2vw, 34px);
-  font-weight: 750;
-  letter-spacing: -.03em;
-  line-height:1.1;
-  background: linear-gradient(90deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.brandLine{
-  height: 2px;
-  width: min(260px, 70vw);
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.40), rgba(255,255,255,0));
-  opacity: .9;
-}
-
-.subtitle{
-  margin-top:2px;
-  color:var(--muted);
-  max-width: 70ch;
-  font-size: 14.5px;
-  line-height:1.5;
-}
-
-.card{
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow:hidden;
-  backdrop-filter: blur(14px);
-  transform: translateZ(0);
-}
-
-.toolbar{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  padding: 14px 14px 12px;
-  background:
-    linear-gradient(90deg,
-      color-mix(in oklab, var(--accentB), transparent 88%),
-      transparent 30%,
-      color-mix(in oklab, var(--accentA), transparent 88%) 60%,
-      color-mix(in oklab, var(--accentC), transparent 90%));
-  border-bottom: 1px solid rgba(255,255,255,.12);
-}
-
-.leftTools, .rightTools{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.btn{
-  border: 1px solid rgba(255,255,255,.16);
-  background: rgba(255,255,255,.06);
-  color: var(--text);
-  padding: 9px 12px;
-  border-radius: 14px;
-  cursor:pointer;
-  font-size: 13px;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  user-select:none;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-}
-.btn:hover{
-  background: rgba(255,255,255,.09);
-  transform: translateY(-1px);
-  box-shadow: 0 14px 40px rgba(0,0,0,.30);
-}
-.btn:active{ transform: translateY(0px) scale(.99); }
-.btn:focus-visible{ outline:none; box-shadow: var(--ring); }
-
-.input{
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.20);
-  color: var(--text);
-  padding: 10px 12px;
-  border-radius: 14px;
-  font-size: 13.5px;
-  min-width: 260px;
-  max-width: 420px;
-  flex: 1 1 260px;
-  transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
-}
-.input:focus{
-  outline:none;
-  border-color: color-mix(in oklab, var(--accentB), rgba(255,255,255,.16) 40%);
-  box-shadow: 0 0 0 3px rgba(34,211,238,.18);
-}
-
-.meta{
-  padding: 0 14px 14px;
-  color: var(--muted2);
-  font-size: 12.5px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.tree{
-  padding: 10px 12px 16px;
-  border-top: 1px solid rgba(255,255,255,.10);
-}
-
-.node{
-  margin: 8px 0;
-  padding-left: var(--indent, 0px);
-  animation: rise .22s var(--ease) both;
-}
-@keyframes rise{
-  from{ opacity:0; transform: translateY(4px); }
-  to{ opacity:1; transform: translateY(0); }
-}
-
-.row{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  padding: 12px 12px;
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-  transition: transform .14s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
-  position: relative;
-}
-.row:hover{
-  transform: translateY(-2px);
-  border-color: rgba(255,255,255,.18);
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-}
-
-.toggle{
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  flex: 0 0 auto;
-  margin-top: 1px;
-  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-}
-.toggle:hover{
-  background: rgba(255,255,255,.10);
-  box-shadow: 0 0 0 3px rgba(109,94,252,.12);
-}
-.toggle:active{ transform: translateY(1px); }
-.toggle[aria-disabled="true"]{ opacity:.35; cursor:default; }
-
-.content{
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.titleLine{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom: 4px;
-}
-
-.title{
-  font-weight: 650;
-  letter-spacing: -.01em;
-}
-
-.chip{
-  font-size: 11.5px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  color: var(--muted);
-}
-
-.url{
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--muted);
-  word-break: break-all;
-  line-height: 1.35;
-}
-
-.notes{
-  margin-top: 6px;
-  font-size: 12.5px;
-  color: var(--muted2);
-  line-height: 1.45;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex: 0 0 auto;
-  margin-left:auto;
-}
-
-.iconBtn{
-  width: 36px;
-  height: 36px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  cursor:pointer;
-  display:grid;
-  place-items:center;
-  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-}
-.iconBtn:hover{
-  background: rgba(255,255,255,.10);
-  box-shadow: 0 0 0 3px rgba(109,94,252,.12);
-}
-.iconBtn:active{ transform: translateY(1px); }
-.iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
-
-a.link{
-  color: inherit;
-  text-decoration: none;
-}
-a.link:hover .title{
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
-
-.children{
-  margin-top: 8px;
-  padding-left: 18px;
-  border-left: 1px dashed rgba(255,255,255,.18);
-  position: relative;
-}
-.children::before{
-  content:"";
-  position:absolute;
-  left:-1px;
-  top:0;
-  bottom:0;
-  width:2px;
-  background: linear-gradient(180deg,
-    color-mix(in oklab, var(--accentB), transparent 65%),
-    color-mix(in oklab, var(--accentA), transparent 70%),
-    color-mix(in oklab, var(--accentC), transparent 75%));
-  opacity:.55;
-  filter: blur(.2px);
-}
-
-.statusDot{
-  width:10px; height:10px;
-  border-radius:999px;
-  display:inline-block;
-  margin-right:6px;
-  border: 1px solid rgba(255,255,255,.14);
-  vertical-align: -1px;
-}
-
-.ok{ background: color-mix(in oklab, var(--ok), transparent 55%); border-color: color-mix(in oklab, var(--ok), rgba(255,255,255,.14) 60%); }
-.bad{ background: color-mix(in oklab, var(--bad), transparent 55%); border-color: color-mix(in oklab, var(--bad), rgba(255,255,255,.14) 60%); }
-.warn{ background: color-mix(in oklab, var(--warn), transparent 55%); border-color: color-mix(in oklab, var(--warn), rgba(255,255,255,.14) 60%); }
-
-.dot-k{ background: rgba(255,255,255,.20); }
-.dot-page{ background: color-mix(in oklab, var(--accentB), transparent 55%); border-color: rgba(34,211,238,.35); }
-.dot-section{ background: color-mix(in oklab, var(--accentA), transparent 55%); border-color: rgba(109,94,252,.35); }
-.dot-donate{ background: color-mix(in oklab, var(--accentC), transparent 55%); border-color: rgba(255,79,216,.35); }
-.dot-resource{ background: color-mix(in oklab, var(--ok), transparent 60%); border-color: rgba(51,209,122,.35); }
-
-.sr-only{
-  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
-  overflow:hidden; clip:rect(0,0,0,0); border:0;
-}
-
-@media (prefers-reduced-motion: reduce){
-  body::before, .node{ animation: none !important; }
-  .btn, .row, .toggle, .iconBtn{ transition: none !important; }
-}
-    /* --- Header upgrades --- */
-.hero{
-  margin-bottom: 14px;
-}
-
-.kicker{
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: color-mix(in oklab, var(--muted), transparent 12%);
-  opacity: .95;
-}
-
-.subtitle{
-  margin-top: 2px;
-  color: var(--muted);
-  max-width: 70ch;
-  font-size: 14.5px;
-  line-height: 1.55;
-}
-
-h1{
-  font-size: clamp(28px, 3.6vw, 40px);
-  line-height: 1.05;
-}
-
-/* Slightly tighter wrap padding so header feels intentional */
-.wrap{
-  padding-top: 28px;
-}
-
-/* --- Fix “4 shown • 4 total” spacing (meta row) --- */
-.meta{
-  padding: 10px 14px 12px;
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  align-items: center;
-  gap: 10px 14px;
-}
-
-#metaLeft{
-  font-variant-numeric: tabular-nums;
-  letter-spacing: .01em;
-  white-space: nowrap;
-  padding: 6px 10px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-  border-radius: 999px;
-}
-
-#metaRight{
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* When screen is small, stack nicely */
-@media (max-width: 640px){
-  .meta{
-    grid-template-columns: 1fr;
-  }
-  #metaRight{
-    text-align: left;
-    white-space: normal;
-  }
-}
-
-    .modalBackdrop{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  z-index: 50;
-}
-
-.modal{
-  width: min(820px, 96vw);
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-  box-shadow: 0 30px 120px rgba(0,0,0,.65);
-  backdrop-filter: blur(14px);
-  overflow: hidden;
-}
-
-.modalHead{
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(255,255,255,.10);
-}
-
-.modalTitle{
-  font-weight: 700;
-  letter-spacing: -.02em;
-}
-
-.modalBody{
-  padding: 14px;
-  display: grid;
-  gap: 12px;
-}
-
-.field{
-  display:grid;
-  gap:6px;
-}
-
-.field > span{
-  font-size: 12px;
-  color: var(--muted2);
-}
-
-.grid2{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-@media (max-width: 720px){
-  .grid2{ grid-template-columns: 1fr; }
-}
-
-.modalActions{
-  display:flex;
-  align-items:center;
-  gap: 10px;
-  padding-top: 6px;
-}
     /* === Hero Banner === */
-.heroBanner{
-  position: relative;
-  margin: 10px 0 16px;
-  border-radius: calc(var(--radius) + 6px);
-  border: 1px solid rgba(255,255,255,.14);
-  overflow: hidden;
-  box-shadow: 0 22px 90px rgba(0,0,0,.55);
-  backdrop-filter: blur(14px);
-  isolation: isolate;
-}
+    .heroBanner{
+      position: relative;
+      margin: 10px 0 16px;
+      border-radius: calc(var(--radius) + 6px);
+      border: 1px solid rgba(255,255,255,.14);
+      overflow: hidden;
+      box-shadow: 0 22px 90px rgba(0,0,0,.55);
+      backdrop-filter: blur(14px);
+      isolation: isolate;
+    }
 
-.heroInner{
-  position: relative;
-  padding: 18px 18px 18px;
-}
+    .heroInner{
+      position: relative;
+      padding: 18px 18px 18px;
+      z-index: 1;
+    }
 
-.heroBg{
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(900px 320px at 10% 20%, color-mix(in oklab, var(--accentB), transparent 70%), transparent 62%),
-    radial-gradient(900px 340px at 85% 25%, color-mix(in oklab, var(--accentA), transparent 72%), transparent 60%),
-    radial-gradient(1100px 420px at 50% 120%, color-mix(in oklab, var(--accentC), transparent 78%), transparent 62%),
-    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-  filter: saturate(1.12);
-  z-index: -2;
-}
+    .heroBg{
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 320px at 10% 20%, color-mix(in oklab, var(--accentB), transparent 70%), transparent 62%),
+        radial-gradient(900px 340px at 85% 25%, color-mix(in oklab, var(--accentA), transparent 72%), transparent 60%),
+        radial-gradient(1100px 420px at 50% 120%, color-mix(in oklab, var(--accentC), transparent 78%), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      filter: saturate(1.12);
+      z-index: 0;
+    }
 
-/* shimmer sweep */
-.heroBanner::before{
-  content:"";
-  position:absolute;
-  inset:-40%;
-  background: linear-gradient(110deg,
-    transparent 20%,
-    rgba(255,255,255,.10) 35%,
-    rgba(255,255,255,.04) 48%,
-    transparent 60%);
-  transform: translateX(-18%) rotate(8deg);
-  animation: heroSweep 9s var(--ease) infinite;
-  z-index: -1;
-  mix-blend-mode: screen;
-  opacity: .65;
-}
-@keyframes heroSweep{
-  0%{ transform: translateX(-22%) rotate(8deg); opacity:.55; }
-  55%{ opacity:.75; }
-  100%{ transform: translateX(22%) rotate(8deg); opacity:.55; }
-}
+    .heroBanner::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(110deg,
+        transparent 20%,
+        rgba(255,255,255,.10) 35%,
+        rgba(255,255,255,.04) 48%,
+        transparent 60%);
+      transform: translateX(-18%) rotate(8deg);
+      animation: heroSweep 9s var(--ease) infinite;
+      z-index: 0;
+      mix-blend-mode: screen;
+      opacity: .65;
+      pointer-events:none;
+    }
 
-/* scanline + soft noise */
-.heroBanner::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(255,255,255,.06) 0px,
-      rgba(255,255,255,.06) 1px,
-      transparent 2px,
-      transparent 6px
-    );
-  opacity: .10;
-  pointer-events:none;
-  z-index: 0;
-}
+    @keyframes heroSweep{
+      0%{ transform: translateX(-22%) rotate(8deg); opacity:.55; }
+      55%{ opacity:.75; }
+      100%{ transform: translateX(22%) rotate(8deg); opacity:.55; }
+    }
 
-.heroTop{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-}
+    .heroBanner::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 1px,
+          transparent 2px,
+          transparent 6px
+        );
+      opacity: .10;
+      pointer-events:none;
+      z-index: 0;
+    }
 
-.kickerPill{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.22);
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: color-mix(in oklab, var(--muted), rgba(255,255,255,.12) 30%);
-}
+    .heroTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
 
-.kDot{
-  width:10px; height:10px;
-  border-radius:999px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 40%),
-              color-mix(in oklab, var(--accentB), transparent 35%);
-  box-shadow:
-    0 0 0 2px rgba(34,211,238,.14),
-    0 0 18px rgba(34,211,238,.22);
-}
+    .kickerPill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--muted), rgba(255,255,255,.12) 30%);
+    }
 
-.heroBadges{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
+    .kDot{
+      width:10px; height:10px;
+      border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 40%),
+                color-mix(in oklab, var(--accentB), transparent 35%);
+      box-shadow:
+        0 0 0 2px rgba(34,211,238,.14),
+        0 0 18px rgba(34,211,238,.22);
+    }
 
-.badgePill{
-  font-size: 12px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-  color: rgba(255,255,255,.78);
-}
+    .heroBadges{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
 
-.heroTitle{
-  margin: 10px 0 6px;
-  font-size: clamp(30px, 4vw, 46px);
-  line-height: 1.02;
-  letter-spacing: -.035em;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,.96),
-    rgba(255,255,255,.78),
-    rgba(255,255,255,.92));
-  -webkit-background-clip: text;
-  background-clip:text;
-  color: transparent;
-  text-shadow: 0 12px 60px rgba(0,0,0,.35);
-}
+    .badgePill{
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      color: rgba(255,255,255,.78);
+    }
 
-.heroSubtitle{
-  margin: 0;
-  max-width: 78ch;
-  color: rgba(255,255,255,.72);
-  font-size: 14.5px;
-  line-height: 1.55;
-}
+    .heroTitle{
+      margin: 10px 0 6px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.96),
+        rgba(255,255,255,.78),
+        rgba(255,255,255,.92));
+      -webkit-background-clip: text;
+      background-clip:text;
+      color: transparent;
+      text-shadow: 0 12px 60px rgba(0,0,0,.35);
+    }
 
-.heroDivider{
-  margin-top: 14px;
-  height: 2px;
-  width: min(520px, 85vw);
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0),
-    color-mix(in oklab, var(--accentB), rgba(255,255,255,.55) 45%),
-    color-mix(in oklab, var(--accentA), rgba(255,255,255,.55) 45%),
-    color-mix(in oklab, var(--accentC), rgba(255,255,255,.50) 40%),
-    rgba(255,255,255,0));
-  opacity: .95;
-}
+    .heroSubtitle{
+      margin: 0;
+      max-width: 78ch;
+      color: rgba(255,255,255,.72);
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
 
-@media (max-width: 640px){
-  .heroInner{ padding: 16px 14px 16px; }
-  .heroBadges{ justify-content:flex-start; }
-}
+    .heroDivider{
+      margin-top: 14px;
+      height: 2px;
+      width: min(520px, 85vw);
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0),
+        color-mix(in oklab, var(--accentB), rgba(255,255,255,.55) 45%),
+        color-mix(in oklab, var(--accentA), rgba(255,255,255,.55) 45%),
+        color-mix(in oklab, var(--accentC), rgba(255,255,255,.50) 40%),
+        rgba(255,255,255,0));
+      opacity: .95;
+    }
 
+    @media (max-width: 640px){
+      .heroInner{ padding: 16px 14px 16px; }
+      .heroBadges{ justify-content:flex-start; }
+    }
 
-     
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(14px);
+      transform: translateZ(0);
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      padding: 14px 14px 12px;
+      background:
+        linear-gradient(90deg,
+          color-mix(in oklab, var(--accentB), transparent 88%),
+          transparent 30%,
+          color-mix(in oklab, var(--accentA), transparent 88%) 60%,
+          color-mix(in oklab, var(--accentC), transparent 90%));
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .leftTools, .rightTools{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-size: 13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .btn:hover{
+      background: rgba(255,255,255,.09);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.30);
+    }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    .input{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      min-width: 260px;
+      max-width: 520px;
+      flex: 1 1 260px;
+      transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
+    }
+    .input:focus{
+      outline:none;
+      border-color: color-mix(in oklab, var(--accentB), rgba(255,255,255,.16) 40%);
+      box-shadow: 0 0 0 3px rgba(34,211,238,.18);
+    }
+
+    /* --- Fix “4 shown • 4 total” spacing --- */
+    .meta{
+      padding: 10px 14px 12px;
+      color: var(--muted2);
+      font-size: 12.5px;
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      align-items: center;
+      gap: 10px 14px;
+    }
+
+    #metaLeft{
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 999px;
+    }
+
+    #metaRight{
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px){
+      .meta{ grid-template-columns: 1fr; }
+      #metaRight{ text-align: left; white-space: normal; }
+    }
+
+    .tree{
+      padding: 10px 12px 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+
+    .node{
+      margin: 8px 0;
+      padding-left: var(--indent, 0px);
+      animation: rise .22s var(--ease) both;
+    }
+
+    @keyframes rise{
+      from{ opacity:0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      transition: transform .14s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+      position: relative;
+    }
+    .row:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+    }
+
+    .toggle{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      flex: 0 0 auto;
+      margin-top: 1px;
+      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .toggle:hover{
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 0 0 3px rgba(109,94,252,.12);
+    }
+    .toggle:active{ transform: translateY(1px); }
+    .toggle[aria-disabled="true"]{ opacity:.35; cursor:default; }
+
+    .content{
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .titleLine{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom: 4px;
+    }
+
+    .title{
+      font-weight: 650;
+      letter-spacing: -.01em;
+    }
+
+    .chip{
+      font-size: 11.5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      color: var(--muted);
+    }
+
+    .url{
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+      word-break: break-all;
+      line-height: 1.35;
+    }
+
+    .notes{
+      margin-top: 6px;
+      font-size: 12.5px;
+      color: var(--muted2);
+      line-height: 1.45;
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex: 0 0 auto;
+      margin-left:auto;
+    }
+
+    .iconBtn{
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .iconBtn:hover{
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 0 0 3px rgba(109,94,252,.12);
+    }
+    .iconBtn:active{ transform: translateY(1px); }
+    .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    a.link{
+      color: inherit;
+      text-decoration: none;
+      display:block;
+    }
+    a.link:hover .title{
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .children{
+      margin-top: 8px;
+      padding-left: 18px;
+      border-left: 1px dashed rgba(255,255,255,.18);
+      position: relative;
+    }
+    .children::before{
+      content:"";
+      position:absolute;
+      left:-1px;
+      top:0;
+      bottom:0;
+      width:2px;
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--accentB), transparent 65%),
+        color-mix(in oklab, var(--accentA), transparent 70%),
+        color-mix(in oklab, var(--accentC), transparent 75%));
+      opacity:.55;
+      filter: blur(.2px);
+    }
+
+    .statusDot{
+      width:10px; height:10px;
+      border-radius:999px;
+      display:inline-block;
+      margin-right:6px;
+      border: 1px solid rgba(255,255,255,.14);
+      vertical-align: -1px;
+      background: rgba(255,255,255,.20);
+    }
+
+    .ok{ background: color-mix(in oklab, var(--ok), transparent 55%); border-color: color-mix(in oklab, var(--ok), rgba(255,255,255,.14) 60%); }
+    .bad{ background: color-mix(in oklab, var(--bad), transparent 55%); border-color: color-mix(in oklab, var(--bad), rgba(255,255,255,.14) 60%); }
+    .warn{ background: color-mix(in oklab, var(--warn), transparent 55%); border-color: color-mix(in oklab, var(--warn), rgba(255,255,255,.14) 60%); }
+
+    .dot-k{ background: rgba(255,255,255,.20); }
+    .dot-page{ background: color-mix(in oklab, var(--accentB), transparent 55%); border-color: rgba(34,211,238,.35); }
+    .dot-section{ background: color-mix(in oklab, var(--accentA), transparent 55%); border-color: rgba(109,94,252,.35); }
+    .dot-donate{ background: color-mix(in oklab, var(--accentC), transparent 55%); border-color: rgba(255,79,216,.35); }
+    .dot-resource{ background: color-mix(in oklab, var(--ok), transparent 60%); border-color: rgba(51,209,122,.35); }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); border:0;
+    }
+
+    /* Modal */
+    .modalBackdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      z-index: 50;
+    }
+
+    .modal{
+      width: min(820px, 96vw);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: 0 30px 120px rgba(0,0,0,.65);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    .kicker{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--muted), transparent 12%);
+      opacity: .95;
+    }
+
+    .modalTitle{
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .modalBody{
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .field{
+      display:grid;
+      gap:6px;
+    }
+    .field > span{
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 720px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+
+    .modalActions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding-top: 6px;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      body::before, .node, .heroBanner::before{ animation: none !important; }
+      .btn, .row, .toggle, .iconBtn{ transition: none !important; }
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-  <header class="heroBanner" aria-label="Vigil header">
-  <div class="heroBg" aria-hidden="true"></div>
+    <header class="heroBanner" aria-label="Vigil header">
+      <div class="heroBg" aria-hidden="true"></div>
+      <div class="heroInner">
+        <div class="heroTop">
+          <div class="kickerPill">
+            <span class="kDot" aria-hidden="true"></span>
+            NAVIGATION CONSOLE
+          </div>
+          <div class="heroBadges">
+            <span class="badgePill">vigilia • watchfulness</span>
+            <span class="badgePill">links • notes • resources</span>
+          </div>
+        </div>
 
-  <div class="heroInner">
-    <div class="heroTop">
-      <div class="kickerPill">
-        <span class="kDot" aria-hidden="true"></span>
-        NAVIGATION CONSOLE
+        <h1 class="heroTitle">Vigil — Navigation Hub</h1>
+        <p class="heroSubtitle">
+          A living index for what we’re watching, learning, and acting on—kept clear, calm, and current.
+        </p>
+
+        <div class="heroDivider" aria-hidden="true"></div>
       </div>
-
-      <div class="heroBadges">
-        <span class="badgePill">vigilia • watchfulness</span>
-        <span class="badgePill">links • notes • resources</span>
-      </div>
-    </div>
-
-    <h1 class="heroTitle">Vigil — Navigation Hub</h1>
-
-    <p class="heroSubtitle">
-      A living index for what we’re watching, learning, and acting on—kept clear, calm, and current.
-    </p>
-
-    <div class="heroDivider" aria-hidden="true"></div>
-  </div>
-</header>
-
+    </header>
 
     <section class="card" aria-label="Navigation hub">
       <div class="toolbar">
         <div class="leftTools">
-         <button class="btn" id="expandAll" type="button">▾ Expand all</button>
-<button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
-<button class="btn" id="checkLinks" type="button" title="Checks relative/same-origin links best">✓ Check links</button>
+          <button class="btn" id="expandAll" type="button">▾ Expand all</button>
+          <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
+          <button class="btn" id="checkLinks" type="button" title="Checks relative/same-origin links best">✓ Check links</button>
+
           <button class="btn" id="addItem" type="button">＋ Add</button>
-<button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
-<button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
-
-
+          <button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
+          <button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
         </div>
+
         <div class="rightTools" style="flex:1">
           <label class="sr-only" for="search">Search</label>
           <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
@@ -748,452 +665,465 @@ h1{
     </section>
   </div>
 
-<div class="modalBackdrop" id="modalBackdrop" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modalHead">
-      <div>
-        <div class="kicker" id="modalKicker">EDIT ITEM</div>
-        <div id="modalTitle" class="modalTitle">Navigation Item</div>
-      </div>
-      <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
-    </div>
-
-    <div class="modalBody">
-      <label class="field">
-        <span>Title</span>
-        <input class="input" id="fTitle" placeholder="Home" />
-      </label>
-
-      <label class="field">
-        <span>Href</span>
-        <input class="input" id="fHref" placeholder="/index.html or https://…" />
-      </label>
-
-      <div class="grid2">
-        <label class="field">
-          <span>ID</span>
-          <input class="input" id="fId" placeholder="home" />
-        </label>
-
-        <label class="field">
-          <span>Parent ID (blank = root)</span>
-          <input class="input" id="fParent" placeholder="home" />
-        </label>
+  <!-- Modal -->
+  <div class="modalBackdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modalHead">
+        <div>
+          <div class="kicker" id="modalKicker">EDIT ITEM</div>
+          <div id="modalTitle" class="modalTitle">Navigation Item</div>
+        </div>
+        <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
       </div>
 
-      <div class="grid2">
+      <div class="modalBody">
         <label class="field">
-          <span>Kind</span>
-          <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+          <span>Title</span>
+          <input class="input" id="fTitle" placeholder="Home" />
         </label>
 
         <label class="field">
-          <span>Notes</span>
-          <input class="input" id="fNotes" placeholder="Optional description" />
+          <span>Href</span>
+          <input class="input" id="fHref" placeholder="/index.html or https://…" />
         </label>
-      </div>
 
-      <div class="modalActions">
-        <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
-        <div style="flex:1"></div>
-        <button class="btn" id="saveItem" type="button">💾 Save</button>
+        <div class="grid2">
+          <label class="field">
+            <span>ID</span>
+            <input class="input" id="fId" placeholder="home" />
+          </label>
+
+          <label class="field">
+            <span>Parent ID (blank = root)</span>
+            <input class="input" id="fParent" placeholder="home" />
+          </label>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Kind</span>
+            <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+          </label>
+
+          <label class="field">
+            <span>Notes</span>
+            <input class="input" id="fNotes" placeholder="Optional description" />
+          </label>
+        </div>
+
+        <div class="modalActions">
+          <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
+          <div style="flex:1"></div>
+          <button class="btn" id="saveItem" type="button">💾 Save</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-  
- <script>
-  let NAV_ITEMS = [];
+  <script>
+    let NAV_ITEMS = [];
 
-   const LS_KEY = "nav_overrides_v1";
-let editingId = null;
+    // ---- Local edit storage (device-local) ----
+    const LS_KEY = "nav_overrides_v2"; // v2 includes soft-deletes
+    let editingId = null;
 
-function loadOverrides(){
-  try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
-  catch { return []; }
-}
-function saveOverrides(items){
-  localStorage.setItem(LS_KEY, JSON.stringify(items, null, 2));
-}
-
-function mergedItems(base, overrides){
-  // overrides replace by id; also allow new items
-  const map = new Map(base.map(x => [x.id, x]));
-  for (const o of overrides) map.set(o.id, o);
-  return Array.from(map.values());
-}
-
-  // UI refs
-  const treeEl = document.getElementById("tree");
-  const searchEl = document.getElementById("search");
-  const metaLeft = document.getElementById("metaLeft");
-
-  const expandAllBtn = document.getElementById("expandAll");
-  const collapseAllBtn = document.getElementById("collapseAll");
-  const checkLinksBtn = document.getElementById("checkLinks");
-
-   
-  // State (built AFTER nav.json loads)
-  let byId;
-  let childrenByParent;
-  let expanded;
-  let linkStatus;
-  let filter = "";
-
-  const isExternal = (href) => /^https?:\/\//i.test(href || "");
-  const isSameOriginOrRelative = (href) => {
-    if (!href) return false;
-    if (href.startsWith("/")) return true;
-    if (href.startsWith("./") || href.startsWith("../")) return true;
-    if (isExternal(href)) {
-      try { return new URL(href).origin === location.origin; } catch { return false; }
+    function loadOverrides(){
+      try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+      catch { return []; }
     }
-    return false;
-  };
+    function saveOverrides(items){
+      localStorage.setItem(LS_KEY, JSON.stringify(items, null, 2));
+    }
 
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-  }
+    function mergedItems(base, overrides){
+      // overrides replace by id; overrides can also be {id, _deleted:true} to hide base items
+      const baseMap = new Map(base.map(x => [x.id, x]));
+      for (const o of overrides) baseMap.set(o.id, o);
 
-  function matches(item){
-    if (!filter) return true;
-    const hay = `${item.title||""} ${item.href||""} ${item.notes||""} ${(item.kind||"")}`.toLowerCase();
-    return hay.includes(filter);
-  }
-
-  function subtreeMatches(id){
-    const item = byId.get(id);
-    if (!item) return false;
-    if (matches(item)) return true;
-    const kids = childrenByParent.get(id) || [];
-    return kids.some(k => subtreeMatches(k.id));
-  }
-
-  function toggle(id){
-    if (expanded.has(id)) expanded.delete(id);
-    else expanded.add(id);
-    render();
-  }
-
-  function setAllExpanded(expand){
-    for (const item of NAV_ITEMS) {
-      const kids = childrenByParent.get(item.id) || [];
-      if (kids.length) {
-        if (expand) expanded.add(item.id);
-        else expanded.delete(item.id);
+      const out = [];
+      for (const v of baseMap.values()){
+        if (v && v._deleted) continue;
+        out.push(v);
       }
+      return out;
     }
-    render();
-  }
 
-  async function copy(text){
-    try { await navigator.clipboard.writeText(text); } catch {}
-  }
+    function upsertOverride(updated){
+      const overrides = loadOverrides();
+      const idx = overrides.findIndex(x => x.id === updated.id);
+      if (idx >= 0) overrides[idx] = updated;
+      else overrides.push(updated);
+      saveOverrides(overrides);
+      // Update in-memory list too
+      NAV_ITEMS = mergedItems(NAV_ITEMS, [updated]);
+      initNav();
+    }
 
- function statusDot(id){
-  const item = byId.get(id);
-  const kind = (item?.kind || "").toLowerCase();
+    function softDelete(id){
+      const overrides = loadOverrides().filter(x => x.id !== id);
+      overrides.push({ id, _deleted: true });
+      saveOverrides(overrides);
+      // remove from current view too
+      NAV_ITEMS = NAV_ITEMS.filter(x => x.id !== id);
+      initNav();
+    }
 
-  const kindClass =
-    kind === "page" ? "dot-page" :
-    kind === "section" ? "dot-section" :
-    kind === "donate" ? "dot-donate" :
-    kind === "resource" ? "dot-resource" :
-    "dot-k";
+    // ---- UI refs ----
+    const treeEl = document.getElementById("tree");
+    const searchEl = document.getElementById("search");
+    const metaLeft = document.getElementById("metaLeft");
+    const metaRight = document.getElementById("metaRight");
 
-  const st = linkStatus.get(id) || "";
-  const cls = st === "ok" ? "ok" : st === "bad" ? "bad" : st === "warn" ? "warn" : "";
+    const expandAllBtn = document.getElementById("expandAll");
+    const collapseAllBtn = document.getElementById("collapseAll");
+    const checkLinksBtn = document.getElementById("checkLinks");
+    const addItemBtn = document.getElementById("addItem");
+    const exportBtn = document.getElementById("exportJson");
+    const resetBtn = document.getElementById("resetEdits");
 
-  return `<span class="statusDot ${cls} ${kindClass}" aria-hidden="true"></span>`;
-}
+    // ---- Modal refs ----
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const closeModalBtn = document.getElementById("closeModal");
+    const saveItemBtn = document.getElementById("saveItem");
+    const deleteItemBtn = document.getElementById("deleteItem");
 
+    const fTitle = document.getElementById("fTitle");
+    const fHref  = document.getElementById("fHref");
+    const fId    = document.getElementById("fId");
+    const fParent= document.getElementById("fParent");
+    const fKind  = document.getElementById("fKind");
+    const fNotes = document.getElementById("fNotes");
 
-  function nodeHTML(item, depth){
-    if (filter && !subtreeMatches(item.id)) return "";
-    const kids = childrenByParent.get(item.id) || [];
-    const hasKids = kids.length > 0;
-    const open = expanded.has(item.id);
+    // ---- State built after load ----
+    let byId;
+    let childrenByParent;
+    let expanded;
+    let linkStatus;
+    let filter = "";
 
-    const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
-    const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
+    const isExternal = (href) => /^https?:\/\//i.test(href || "");
+    const isSameOriginOrRelative = (href) => {
+      if (!href) return false;
+      if (href.startsWith("/")) return true;
+      if (href.startsWith("./") || href.startsWith("../")) return true;
+      if (isExternal(href)) {
+        try { return new URL(href).origin === location.origin; } catch { return false; }
+      }
+      return false;
+    };
 
-    const toggleBtn = hasKids
-      ? `<button class="toggle" type="button"
-            aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(item.title)}"
-            aria-expanded="${open}"
-            onclick="window.__toggle('${item.id}')">${open ? "−" : "+"}</button>`
-      : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
+    function escapeHtml(s){
+      return (s ?? "").toString()
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
 
-const target = `target="_blank" rel="noreferrer noopener"`;
+    function matches(item){
+      if (!filter) return true;
+      const hay = `${item.title||""} ${item.href||""} ${item.notes||""} ${(item.kind||"")}`.toLowerCase();
+      return hay.includes(filter);
+    }
 
-    return `
-      <div class="node" style="--indent:${Math.min(depth, 10) * 18}px">
-        <div class="row">
-          ${toggleBtn}
+    function subtreeMatches(id){
+      const item = byId.get(id);
+      if (!item) return false;
+      if (matches(item)) return true;
+      const kids = childrenByParent.get(id) || [];
+      return kids.some(k => subtreeMatches(k.id));
+    }
 
-          <div class="content">
-            <a class="link" href="${escapeHtml(item.href)}" ${target}>
-              <div class="titleLine">
-                ${statusDot(item.id)}
-                <span class="title">${escapeHtml(item.title)}</span>
-                ${chip}
-              </div>
-              <div class="url">${escapeHtml(item.href)}</div>
-            </a>
-            ${notes}
-          </div>
+    function toggle(id){
+      if (expanded.has(id)) expanded.delete(id);
+      else expanded.add(id);
+      render();
+    }
 
-          <div class="actions">
-  <button class="iconBtn" type="button" aria-label="Edit" title="Edit"
-    onclick="window.__edit('${item.id}')">✎</button>
-
-  <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
-    onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
-</div>
-
-        </div>
-
-        ${hasKids && open ? `<div class="children">
-          ${(kids.map(k => nodeHTML(k, depth + 1)).join(""))}
-        </div>` : ""}
-      </div>
-    `;
-  }
-
-  function render(){
-    const roots = childrenByParent.get("__root__") || [];
-
-    // Auto-expand matching branches when searching
-    if (filter) {
+    function setAllExpanded(expand){
       for (const item of NAV_ITEMS) {
         const kids = childrenByParent.get(item.id) || [];
-        if (kids.length && subtreeMatches(item.id)) expanded.add(item.id);
+        if (kids.length) {
+          if (expand) expanded.add(item.id);
+          else expanded.delete(item.id);
+        }
       }
+      render();
     }
 
-    const shownCount = NAV_ITEMS.filter(i => !filter || subtreeMatches(i.id)).length;
-    metaLeft.textContent = `${shownCount} shown • ${NAV_ITEMS.length} total`;
+    async function copy(text){
+      try { await navigator.clipboard.writeText(text); } catch {}
+    }
 
-    const html = roots.map(r => nodeHTML(r, 0)).filter(Boolean).join("");
-    treeEl.innerHTML = html || `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
-  }
+    function statusDot(id){
+      const item = byId.get(id);
+      const kind = (item?.kind || "").toLowerCase();
 
-  async function checkLinks(){
-    linkStatus.clear();
-    render();
+      const kindClass =
+        kind === "page" ? "dot-page" :
+        kind === "section" ? "dot-section" :
+        kind === "donate" ? "dot-donate" :
+        kind === "resource" ? "dot-resource" :
+        "dot-k";
 
-    const candidates = NAV_ITEMS.filter(i => isSameOriginOrRelative(i.href));
-    if (!candidates.length) return;
+      const st = linkStatus.get(id) || "";
+      const cls = st === "ok" ? "ok" : st === "bad" ? "bad" : st === "warn" ? "warn" : "";
 
-    for (const item of candidates) {
-      linkStatus.set(item.id, "warn");
+      return `<span class="statusDot ${cls} ${kindClass}" aria-hidden="true"></span>`;
+    }
+
+    function nodeHTML(item, depth){
+      if (filter && !subtreeMatches(item.id)) return "";
+      const kids = childrenByParent.get(item.id) || [];
+      const hasKids = kids.length > 0;
+      const open = expanded.has(item.id);
+
+      const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
+      const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
+
+      const toggleBtn = hasKids
+        ? `<button class="toggle" type="button"
+              aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(item.title)}"
+              aria-expanded="${open}"
+              onclick="window.__toggle('${item.id}')">${open ? "−" : "+"}</button>`
+        : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
+
+      // Always open in a new tab (your request)
+      const target = `target="_blank" rel="noreferrer noopener"`;
+
+      return `
+        <div class="node" style="--indent:${Math.min(depth, 10) * 18}px">
+          <div class="row">
+            ${toggleBtn}
+
+            <div class="content">
+              <a class="link" href="${escapeHtml(item.href)}" ${target}>
+                <div class="titleLine">
+                  ${statusDot(item.id)}
+                  <span class="title">${escapeHtml(item.title)}</span>
+                  ${chip}
+                </div>
+                <div class="url">${escapeHtml(item.href)}</div>
+              </a>
+              ${notes}
+            </div>
+
+            <div class="actions">
+              <button class="iconBtn" type="button" aria-label="Edit" title="Edit"
+                onclick="window.__edit('${item.id}')">✎</button>
+
+              <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
+                onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
+            </div>
+          </div>
+
+          ${hasKids && open ? `<div class="children">
+            ${(kids.map(k => nodeHTML(k, depth + 1)).join(""))}
+          </div>` : ""}
+        </div>
+      `;
+    }
+
+    function render(){
+      const roots = childrenByParent.get("__root__") || [];
+
+      // Auto-expand matching branches when searching
+      if (filter) {
+        for (const item of NAV_ITEMS) {
+          const kids = childrenByParent.get(item.id) || [];
+          if (kids.length && subtreeMatches(item.id)) expanded.add(item.id);
+        }
+      }
+
+      const shownCount = NAV_ITEMS.filter(i => !filter || subtreeMatches(i.id)).length;
+      metaLeft.textContent = `${shownCount} shown • ${NAV_ITEMS.length} total`;
+
+      const html = roots.map(r => nodeHTML(r, 0)).filter(Boolean).join("");
+      treeEl.innerHTML = html || `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
+    }
+
+    async function checkLinks(){
+      linkStatus.clear();
       render();
 
-      try{
-        const url = new URL(item.href, location.origin).toString();
-        let res = await fetch(url, { method:"HEAD", cache:"no-store" });
-        if (!res.ok && (res.status === 405 || res.status === 501)) {
-          res = await fetch(url, { method:"GET", cache:"no-store" });
+      const candidates = NAV_ITEMS.filter(i => isSameOriginOrRelative(i.href));
+      if (!candidates.length) return;
+
+      for (const item of candidates) {
+        linkStatus.set(item.id, "warn");
+        render();
+
+        try{
+          const url = new URL(item.href, location.origin).toString();
+          let res = await fetch(url, { method:"HEAD", cache:"no-store" });
+          if (!res.ok && (res.status === 405 || res.status === 501)) {
+            res = await fetch(url, { method:"GET", cache:"no-store" });
+          }
+          linkStatus.set(item.id, res.ok ? "ok" : "bad");
+        } catch {
+          linkStatus.set(item.id, "bad");
         }
-        linkStatus.set(item.id, res.ok ? "ok" : "bad");
-      } catch {
-        linkStatus.set(item.id, "bad");
+      }
+
+      render();
+    }
+
+    function initNav(){
+      byId = new Map(NAV_ITEMS.map(x => [x.id, x]));
+      childrenByParent = new Map();
+      expanded = new Set();
+      linkStatus = new Map();
+
+      for (const item of NAV_ITEMS) {
+        const key = item.parent ?? "__root__";
+        if (!childrenByParent.has(key)) childrenByParent.set(key, []);
+        childrenByParent.get(key).push(item);
+      }
+
+      for (const [k, list] of childrenByParent.entries()) {
+        list.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
+      }
+
+      // Default: expand root level
+      for (const r of (childrenByParent.get("__root__") || [])) {
+        expanded.add(r.id);
+      }
+
+      render();
+    }
+
+    async function loadNav(){
+      try{
+        const res = await fetch("./nav.json", { cache: "no-store" });
+        if (!res.ok) throw new Error(`nav.json load failed (HTTP ${res.status})`);
+
+        const base = await res.json();
+        const merged = mergedItems(base, loadOverrides());
+        NAV_ITEMS = merged;
+
+        const now = new Date();
+        metaRight.textContent = `Loaded ${now.toLocaleString()} • Tip: Use Tab/Enter to open/close sections.`;
+
+        initNav();
+      } catch (err){
+        metaLeft.textContent = "Could not load nav.json";
+        treeEl.innerHTML = `
+          <div style="color:var(--muted); padding:14px; line-height:1.5;">
+            <b>Load error:</b> ${escapeHtml(err.message || String(err))}<br/>
+            <span style="color:var(--muted2)">
+              Make sure <code>nav.json</code> is in the same folder as this HTML file and you're opening the page via <code>http://</code> (not <code>file://</code>).
+            </span>
+          </div>`;
+        console.error(err);
       }
     }
 
-    render();
-  }
+    // ---- Modal helpers ----
+    function openModal(item, isNew=false){
+      modalBackdrop.hidden = false;
+      editingId = isNew ? null : item.id;
 
-  function initNav(){
-    byId = new Map(NAV_ITEMS.map(x => [x.id, x]));
-    childrenByParent = new Map();
-    expanded = new Set();
-    linkStatus = new Map();
+      document.getElementById("modalKicker").textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
+      document.getElementById("modalTitle").textContent = isNew ? "New Navigation Item" : (item.title || "Navigation Item");
 
-    for (const item of NAV_ITEMS) {
-      const key = item.parent ?? "__root__";
-      if (!childrenByParent.has(key)) childrenByParent.set(key, []);
-      childrenByParent.get(key).push(item);
+      fTitle.value  = item.title || "";
+      fHref.value   = item.href || "";
+      fId.value     = item.id || "";
+      fParent.value = item.parent ?? "";
+      fKind.value   = item.kind || "";
+      fNotes.value  = item.notes || "";
+
+      deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
+      fId.disabled = !isNew; // keep IDs stable once created
+
+      // focus
+      setTimeout(() => fTitle.focus(), 0);
     }
 
-    for (const [k, list] of childrenByParent.entries()) {
-      list.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
+    function closeModal(){
+      modalBackdrop.hidden = true;
+      editingId = null;
     }
 
-    // Default: expand root level
-    for (const r of (childrenByParent.get("__root__") || [])) {
-      expanded.add(r.id);
-    }
+    window.__edit = (id) => {
+      const item = byId.get(id);
+      if (!item) return;
+      openModal(item, false);
+    };
 
-    render();
-  }
+    window.__toggle = toggle;
+    window.__copy = (href) => copy(href);
 
- async function loadNav(){
-  try{
-    const res = await fetch("./nav.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`nav.json load failed (HTTP ${res.status})`);
-    NAV_ITEMS = await res.json();
-NAV_ITEMS = mergedItems(NAV_ITEMS, loadOverrides());
+    // ---- Events ----
+    searchEl.addEventListener("input", (e) => {
+      filter = (e.target.value || "").trim().toLowerCase();
+      render();
+    });
 
-    const now = new Date();
-    document.getElementById("metaRight").textContent =
-      `Loaded ${now.toLocaleString()} • Tip: Use Tab/Enter to open/close sections.`;
+    expandAllBtn.addEventListener("click", () => setAllExpanded(true));
+    collapseAllBtn.addEventListener("click", () => setAllExpanded(false));
+    checkLinksBtn.addEventListener("click", checkLinks);
 
-    initNav();
-  } catch (err){
-    metaLeft.textContent = "Could not load nav.json";
-    treeEl.innerHTML = `
-      <div style="color:var(--muted); padding:14px; line-height:1.5;">
-        <b>Load error:</b> ${escapeHtml(err.message || String(err))}<br/>
-        <span style="color:var(--muted2)">
-          Make sure <code>nav.json</code> is in the same folder as this HTML file and you're opening the page via <code>http://</code> (not <code>file://</code>).
-        </span>
-      </div>`;
-    console.error(err);
-  }
-}
+    // Modal close (X, outside click, ESC)
+    closeModalBtn.addEventListener("click", closeModal);
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modalBackdrop.hidden) closeModal();
+    });
 
+    // Save
+    saveItemBtn.addEventListener("click", () => {
+      const updated = {
+        id: (fId.value || "").trim(),
+        title: (fTitle.value || "").trim(),
+        href: (fHref.value || "").trim(),
+        parent: (fParent.value || "").trim() || null,
+        kind: (fKind.value || "").trim(),
+        notes: (fNotes.value || "").trim()
+      };
 
-  // Wire up
-  window.__toggle = toggle;
-  window.__copy = (href) => copy(href);
+      if (!updated.id) return alert("ID is required (unique).");
+      if (!updated.title) return alert("Title is required.");
+      if (!updated.href) return alert("Href is required.");
 
-  searchEl.addEventListener("input", (e) => {
-    filter = (e.target.value || "").trim().toLowerCase();
-    render();
-  });
+      upsertOverride(updated);
+      closeModal();
+    });
 
-  expandAllBtn.addEventListener("click", () => setAllExpanded(true));
-  collapseAllBtn.addEventListener("click", () => setAllExpanded(false));
-  checkLinksBtn.addEventListener("click", checkLinks);
+    // Delete (soft delete so it stays hidden locally)
+    deleteItemBtn.addEventListener("click", () => {
+      const id = editingId;
+      if (!id) return;
+      if (!confirm("Delete this item (saved locally on this device)?")) return;
+      softDelete(id);
+      closeModal();
+    });
 
+    // Add new
+    addItemBtn.addEventListener("click", () => {
+      openModal({ id:"", title:"", href:"", parent:null, kind:"page", notes:"" }, true);
+    });
 
-   // Modal refs
-const modalBackdrop = document.getElementById("modalBackdrop");
-const closeModalBtn = document.getElementById("closeModal");
-const saveItemBtn = document.getElementById("saveItem");
-const deleteItemBtn = document.getElementById("deleteItem");
+    // Export JSON (copy to clipboard)
+    exportBtn.addEventListener("click", async () => {
+      const json = JSON.stringify(NAV_ITEMS, null, 2);
+      try{
+        await navigator.clipboard.writeText(json);
+        alert("Copied current nav JSON to clipboard.\n\nPaste it into nav.json on GitHub to make edits permanent.");
+      } catch {
+        alert("Could not copy automatically. Check console for JSON.");
+        console.log(json);
+      }
+    });
 
-const fTitle = document.getElementById("fTitle");
-const fHref = document.getElementById("fHref");
-const fId = document.getElementById("fId");
-const fParent = document.getElementById("fParent");
-const fKind = document.getElementById("fKind");
-const fNotes = document.getElementById("fNotes");
+    // Reset local edits
+    resetBtn.addEventListener("click", () => {
+      if (!confirm("Clear saved edits on this device?")) return;
+      localStorage.removeItem(LS_KEY);
+      location.reload();
+    });
 
-const addItemBtn = document.getElementById("addItem");
-const exportBtn = document.getElementById("exportJson");
-const resetBtn = document.getElementById("resetEdits");
-
-function openModal(item, isNew=false){
-  modalBackdrop.hidden = false;
-  editingId = isNew ? null : item.id;
-
-  document.getElementById("modalKicker").textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
-  document.getElementById("modalTitle").textContent = isNew ? "New Navigation Item" : item.title;
-
-  fTitle.value = item.title || "";
-  fHref.value = item.href || "";
-  fId.value = item.id || "";
-  fParent.value = item.parent ?? "";
-  fKind.value = item.kind || "";
-  fNotes.value = item.notes || "";
-
-  deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
-  fId.disabled = !isNew; // id is the key; keep stable on edits
-  fTitle.focus();
-}
-
-function closeModal(){
-  modalBackdrop.hidden = true;
-  editingId = null;
-}
-
-function upsertOverride(updated){
-  const overrides = loadOverrides();
-  const idx = overrides.findIndex(x => x.id === updated.id);
-  if (idx >= 0) overrides[idx] = updated;
-  else overrides.push(updated);
-  saveOverrides(overrides);
-
-  // update in-memory list too
-  NAV_ITEMS = mergedItems(NAV_ITEMS, [updated]);
-  initNav();
-}
-
-function removeOverride(id){
-  const overrides = loadOverrides().filter(x => x.id !== id);
-  saveOverrides(overrides);
-
-  // Rebuild from base nav.json again by reloading page data
-  // simplest: hard refresh the data layer
-  location.reload();
-}
-
-window.__edit = (id) => {
-  const item = byId.get(id);
-  if (!item) return;
-  openModal(item, false);
-};
-
-saveItemBtn.addEventListener("click", () => {
-  const updated = {
-    id: (fId.value || "").trim(),
-    title: (fTitle.value || "").trim(),
-    href: (fHref.value || "").trim(),
-    parent: (fParent.value || "").trim() || null,
-    kind: (fKind.value || "").trim(),
-    notes: (fNotes.value || "").trim()
-  };
-
-  if (!updated.id) return alert("ID is required (unique).");
-  if (!updated.title) return alert("Title is required.");
-  if (!updated.href) return alert("Href is required.");
-
-  upsertOverride(updated);
-  closeModal();
-});
-
-deleteItemBtn.addEventListener("click", () => {
-  if (!editingId) return;
-  if (!confirm("Delete this item (local edits only)?")) return;
-  removeOverride(editingId);
-});
-
-closeModalBtn.addEventListener("click", closeModal);
-modalBackdrop.addEventListener("click", (e) => {
-  if (e.target === modalBackdrop) closeModal();
-});
-
-// Add new
-addItemBtn?.addEventListener("click", () => {
-  openModal({ id:"", title:"", href:"", parent:null, kind:"page", notes:"" }, true);
-});
-
-// Export
-exportBtn?.addEventListener("click", async () => {
-  const json = JSON.stringify(NAV_ITEMS, null, 2);
-  try{
-    await navigator.clipboard.writeText(json);
-    alert("Copied current nav JSON to clipboard.");
-  } catch {
-    alert("Could not copy automatically. Open console to copy.");
-    console.log(json);
-  }
-});
-
-// Reset local edits
-resetBtn?.addEventListener("click", () => {
-  if (!confirm("Clear saved edits on this device?")) return;
-  localStorage.removeItem(LS_KEY);
-  location.reload();
-});
-
-  loadNav();
-</script>
-
+    loadNav();
+  </script>
 </body>
 </html>
