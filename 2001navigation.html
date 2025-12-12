@@ -327,19 +327,15 @@
    * - kind: optional chip label (e.g., "page", "donate", "resource")
    * - notes: optional description
    */
-  const NAV_ITEMS = [
-    { id: "home", title: "Home", href: "/index.html", parent: null, kind: "page", notes: "Landing page" },
+ let NAV_ITEMS = [];
 
-    { id: "animals", title: "Animals", href: "/animals/index.html", parent: "home", kind: "section" },
-    { id: "endangered", title: "Endangered Animals", href: "/animals/endangered.html", parent: "animals", kind: "page" },
-    { id: "donate-wwf", title: "Donate: WWF", href: "https://www.worldwildlife.org/", parent: "endangered", kind: "donate" },
+async function loadNav() {
+  NAV_ITEMS = await fetch("./nav.json").then(r => r.json());
+  initNav();
+}
 
-    { id: "human", title: "Human Impact", href: "/human-impact/index.html", parent: "home", kind: "section" },
-    { id: "trafficking", title: "Trafficking Awareness", href: "/human-impact/trafficking.html", parent: "human", kind: "page" },
-    { id: "hotline", title: "National Human Trafficking Hotline", href: "https://humantraffickinghotline.org/", parent: "trafficking", kind: "resource" },
+loadNav();
 
-    { id: "resources", title: "Resources", href: "/resources.html", parent: "home", kind: "page" }
-  ];
 
   // ---------- Rendering logic (no need to edit) ----------
   const treeEl = document.getElementById("tree");
@@ -412,8 +408,11 @@
         else expanded.delete(item.id);
       }
     }
-    render();
-  }
+    function initNav() {
+  // existing setup code
+  render();
+}
+
 
   async function copy(text){
     try { await navigator.clipboard.writeText(text); } catch {}
