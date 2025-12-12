@@ -12,6 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
+    /* Ensure "hidden" always wins */
+[hidden] { display: none !important; }
+
     :root{
       /* Neon Aurora theme (no orange/yellow) */
       --bg0:#050510;
@@ -870,32 +873,34 @@
     // ---------------------------
     // Modal control
     // ---------------------------
-    const openModal = (item, isNew=false) => {
-      // Show modal
-      modalBackdrop.hidden = false;
+    
+    const showModal = () => modalBackdrop.removeAttribute("hidden");
+const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
-      editingId = isNew ? null : item.id;
+const openModal = (item, isNew = false) => {
+  showModal();
+  editingId = isNew ? null : item.id;
 
-      modalKicker.textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
-      modalTitle.textContent  = isNew ? "New Navigation Item" : (item.title || "Navigation Item");
+  modalKicker.textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
+  modalTitle.textContent  = isNew ? "New Navigation Item" : (item.title || "Navigation Item");
 
-      fTitle.value  = item.title || "";
-      fHref.value   = item.href || "";
-      fId.value     = item.id || "";
-      fParent.value = item.parent ?? "";
-      fKind.value   = item.kind || "";
-      fNotes.value  = item.notes || "";
+  fTitle.value  = item.title || "";
+  fHref.value   = item.href || "";
+  fId.value     = item.id || "";
+  fParent.value = item.parent ?? "";
+  fKind.value   = item.kind || "";
+  fNotes.value  = item.notes || "";
 
-      deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
-      fId.disabled = !isNew; // IDs stable after creation
+  deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
+  fId.disabled = !isNew;
 
-      setTimeout(() => fTitle.focus(), 0);
-    };
+  setTimeout(() => fTitle.focus(), 0);
+};
 
-    const closeModal = () => {
-      modalBackdrop.hidden = true;
-      editingId = null;
-    };
+const closeModal = () => {
+  hideModal();
+  editingId = null;
+};
 
     // ---------------------------
     // Rendering
@@ -1122,8 +1127,9 @@
       if (e.target === modalBackdrop) closeModal();
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modalBackdrop.hidden) closeModal();
-    });
+  if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal();
+});
+
 
     // Save
     saveItemBtn.addEventListener("click", () => {
