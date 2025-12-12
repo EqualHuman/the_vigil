@@ -316,28 +316,10 @@
       <div class="tree" id="tree"></div>
     </section>
   </div>
+ <script>
+  let NAV_ITEMS = [];
 
-<script>
-  /**
-   * ✅ EDIT HERE (simple + clean):
-   * - id: unique string
-   * - title: label
-   * - href: link (relative like "/index.html" or full "https://...")
-   * - parent: id of the parent item (null = top level)
-   * - kind: optional chip label (e.g., "page", "donate", "resource")
-   * - notes: optional description
-   */
- let NAV_ITEMS = [];
-
-async function loadNav() {
-  NAV_ITEMS = await fetch("./nav.json").then(r => r.json());
-  initNav();
-}
-
-loadNav();
-
-
-  // ---------- Rendering logic (no need to edit) ----------
+  // UI refs
   const treeEl = document.getElementById("tree");
   const searchEl = document.getElementById("search");
   const metaLeft = document.getElementById("metaLeft");
@@ -346,22 +328,12 @@ loadNav();
   const collapseAllBtn = document.getElementById("collapseAll");
   const checkLinksBtn = document.getElementById("checkLinks");
 
-  const byId = new Map(NAV_ITEMS.map(x => [x.id, x]));
-  const childrenByParent = new Map();
-  const expanded = new Set();
-
-  const linkStatus = new Map(); // id -> "ok"|"bad"|"warn"|""
-
+  // State (built AFTER nav.json loads)
+  let byId;
+  let childrenByParent;
+  let expanded;
+  let linkStatus;
   let filter = "";
-
-  for (const item of NAV_ITEMS) {
-    const key = item.parent ?? "__root__";
-    if (!childrenByParent.has(key)) childrenByParent.set(key, []);
-    childrenByParent.get(key).push(item);
-  }
-  for (const [k, list] of childrenByParent.entries()) {
-    list.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
-  }
 
   const isExternal = (href) => /^https?:\/\//i.test(href || "");
   const isSameOriginOrRelative = (href) => {
@@ -408,11 +380,8 @@ loadNav();
         else expanded.delete(item.id);
       }
     }
-    function initNav() {
-  // existing setup code
-  render();
-}
-
+    render();
+  }
 
   async function copy(text){
     try { await navigator.clipboard.writeText(text); } catch {}
@@ -434,9 +403,10 @@ loadNav();
     const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
 
     const toggleBtn = hasKids
-      ? `<button class="toggle" type="button" aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(item.title)}" aria-expanded="${open}" onclick="window.__toggle('${item.id}')">
-          ${open ? "−" : "+"}
-        </button>`
+      ? `<button class="toggle" type="button"
+            aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(item.title)}"
+            aria-expanded="${open}"
+            onclick="window.__toggle('${item.id}')">${open ? "−" : "+"}</button>`
       : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
 
     const target = isExternal(item.href) ? `target="_blank" rel="noreferrer"` : "";
@@ -460,9 +430,7 @@ loadNav();
 
           <div class="actions">
             <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
-              onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">
-              ⧉
-            </button>
+              onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
           </div>
         </div>
 
@@ -475,7 +443,8 @@ loadNav();
 
   function render(){
     const roots = childrenByParent.get("__root__") || [];
-    // auto-expand matching branches when searching
+
+    // Auto-expand matching branches when searching
     if (filter) {
       for (const item of NAV_ITEMS) {
         const kids = childrenByParent.get(item.id) || [];
@@ -491,16 +460,14 @@ loadNav();
   }
 
   async function checkLinks(){
-    // Best effort: relative + same-origin links only (CORS can block external)
     linkStatus.clear();
     render();
 
     const candidates = NAV_ITEMS.filter(i => isSameOriginOrRelative(i.href));
     if (!candidates.length) return;
 
-    // Try HEAD first; fallback to GET if needed
     for (const item of candidates) {
-      linkStatus.set(item.id, "warn"); // in-progress feel
+      linkStatus.set(item.id, "warn");
       render();
 
       try{
@@ -518,6 +485,49 @@ loadNav();
     render();
   }
 
+  function initNav(){
+    byId = new Map(NAV_ITEMS.map(x => [x.id, x]));
+    childrenByParent = new Map();
+    expanded = new Set();
+    linkStatus = new Map();
+
+    for (const item of NAV_ITEMS) {
+      const key = item.parent ?? "__root__";
+      if (!childrenByParent.has(key)) childrenByParent.set(key, []);
+      childrenByParent.get(key).push(item);
+    }
+
+    for (const [k, list] of childrenByParent.entries()) {
+      list.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
+    }
+
+    // Default: expand root level
+    for (const r of (childrenByParent.get("__root__") || [])) {
+      expanded.add(r.id);
+    }
+
+    render();
+  }
+
+  async function loadNav(){
+    try{
+      const res = await fetch("./nav.json", { cache: "no-store" });
+      if (!res.ok) throw new Error(`nav.json load failed (HTTP ${res.status})`);
+      NAV_ITEMS = await res.json();
+      initNav();
+    } catch (err){
+      metaLeft.textContent = "Could not load nav.json";
+      treeEl.innerHTML = `
+        <div style="color:var(--muted); padding:14px; line-height:1.5;">
+          <b>Load error:</b> ${escapeHtml(err.message || String(err))}<br/>
+          <span style="color:var(--muted2)">
+            Make sure <code>nav.json</code> is in the same folder as this HTML file and you're opening the page via <code>http://</code> (not <code>file://</code>).
+          </span>
+        </div>`;
+      console.error(err);
+    }
+  }
+
   // Wire up
   window.__toggle = toggle;
   window.__copy = (href) => copy(href);
@@ -531,12 +541,8 @@ loadNav();
   collapseAllBtn.addEventListener("click", () => setAllExpanded(false));
   checkLinksBtn.addEventListener("click", checkLinks);
 
-  // Default: expand root level
-  for (const r of (childrenByParent.get("__root__") || [])) {
-    expanded.add(r.id);
-  }
-
-  render();
+  loadNav();
 </script>
+
 </body>
 </html>
