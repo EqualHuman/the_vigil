@@ -1,0 +1,176 @@
+/* 
+VIGIL CANDLE — HOW TO USE
+
+1) Inside <head>:
+<link rel="stylesheet" href="assets/candle.css">
+
+2) Wherever you want the candle:
+<div class="candle-logo">
+  <div class="candle-glow"></div>
+  <div class="candle-flame"></div>
+  <div class="candle-wick"></div>
+  <div class="candle-body pill-sentinel-soft">
+    <div class="sentinel-core"></div>
+  </div>
+  <div class="candle-shadow"></div>
+</div>
+*/
+
+
+/* ============================================================
+   VIGIL — Sentinel Candle Logo (Soft Outline Variant)
+   Standalone CSS Component
+   ============================================================ */
+
+/* ---------- Candle logo container ---------- */
+.candle-logo {
+  position: relative;
+  width: 80px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+/* ---------- Halo glow behind the candle ---------- */
+.candle-glow {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 20%,
+    rgba(255, 244, 225, 0.9) 0%,
+    rgba(244, 209, 157, 0.5) 35%,
+    rgba(190, 145, 85, 0.18) 65%,
+    transparent 100%
+  );
+  filter: blur(8px);
+  opacity: 0.9;
+  pointer-events: none;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+/* ---------- Flame ---------- */
+.candle-flame {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 34px;
+  border-radius: 999px 999px 55% 55%;
+  background: linear-gradient(to bottom,
+    #fffdf8 0%,
+    #f9f0dd 45%,
+    #f0d29c 100%
+  );
+  box-shadow:
+    0 0 26px rgba(255, 244, 225, 0.95),
+    0 0 70px rgba(245, 215, 170, 0.85);
+  animation: flameFlicker 2.4s ease-in-out infinite;
+  z-index: 2;
+}
+
+/* ---------- Wick ---------- */
+.candle-wick {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 12px;
+  border-radius: 999px;
+  background: #242424;
+  z-index: 2;
+}
+
+/* ---------- Candle body container ---------- */
+.candle-body {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 72px;
+  border-radius: 999px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* ---------- Sentinel slit core ---------- */
+.sentinel-core {
+  width: 7px;
+  height: 46px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom,
+    rgba(250, 240, 220, 0.18),
+    rgba(0, 0, 0, 0.98)
+  );
+  box-shadow: 0 0 12px rgba(250, 240, 220, 0.3);
+}
+
+/* ---------- Soft outline variant ---------- */
+.pill-sentinel-soft {
+  border: 1.4px solid rgba(245, 228, 205, 0.82);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.7),
+    0 10px 20px rgba(0, 0, 0, 0.92);
+}
+
+/* ---------- Table shadow ---------- */
+.candle-shadow {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    rgba(0, 0, 0, 0.6),
+    transparent
+  );
+  filter: blur(4px);
+  opacity: 0.75;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+/* Dramatic but centered flame flicker */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 1;
+    box-shadow:
+      0 0 26px rgba(255, 244, 225, 0.95),
+      0 0 70px rgba(245, 215, 170, 0.85);
+  }
+
+  35% {
+    transform: translateX(-50%) scaleY(1.12);
+    opacity: 0.94;
+    box-shadow:
+      0 0 36px rgba(255, 244, 225, 1),
+      0 0 95px rgba(245, 215, 170, 1);
+  }
+
+  65% {
+    transform: translateX(-50%) scaleY(0.88);
+    opacity: 0.88;
+    box-shadow:
+      0 0 18px rgba(255, 244, 225, 0.75),
+      0 0 55px rgba(245, 215, 170, 0.6);
+  }
+}
+
+/* Gentle breathing halo pulse */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.9; }
+  50%      { opacity: 1; }
+}
