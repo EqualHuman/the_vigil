@@ -9,7 +9,7 @@
   :root {
     --text-main: #f5f6ff;
     --text-soft: #b7bbe5;
-    --card-radius: 16px;
+    --card-radius: 20px;
     --card-bg: rgba(18, 20, 45, 0.85);
     --card-border: rgba(255,255,255,0.12);
   }
@@ -33,7 +33,7 @@
 
   .wrap {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
   }
 
   /* NEBULA + STARS */
@@ -90,7 +90,7 @@
 
   h1 {
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 18px;
     font-size: 28px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -108,7 +108,7 @@
     text-transform: uppercase;
     letter-spacing: 0.16em;
     opacity: 0.8;
-    margin-bottom: 10px;
+    margin: 4px 4px 10px;
   }
 
   .grid {
@@ -117,9 +117,101 @@
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 
+  /* PLANET NAV STRIP */
+
+  .planet-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    margin: 8px 0 26px;
+  }
+
+  .planet-link {
+    text-decoration: none;
+    color: #fdfdff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 80px;
+  }
+
+  .planet-orbit {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: float 6s ease-in-out infinite alternate;
+  }
+
+  .planet {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, rgba(255,255,255,0) 45%),
+                var(--planet-grad, linear-gradient(135deg,#ff9a62,#ffd93b));
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .planet-orbit::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.8);
+    top: -4px;
+    right: 8px;
+    animation: orbit-dot 4s linear infinite;
+  }
+
+  .planet-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.85;
+    text-align: center;
+  }
+
+  .planet-link:hover .planet-orbit {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.8);
+  }
+
+  .planet-link:hover .planet {
+    box-shadow: 0 0 16px rgba(255,255,255,0.9);
+  }
+
+  @keyframes float {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-6px); }
+  }
+
+  @keyframes orbit-dot {
+    from { transform: rotate(0deg) translateX(0); }
+    to   { transform: rotate(360deg) translateX(0); }
+  }
+
+  /* planet color variants */
+  .planet-plans   { --planet-grad: linear-gradient(135deg,#ff6f61,#ffb88c); }
+  .planet-test    { --planet-grad: linear-gradient(135deg,#ffb566,#ffd97a); }
+  .planet-templates { --planet-grad: linear-gradient(135deg,#4d9eff,#7a5cff); }
+  .planet-navmap  { --planet-grad: linear-gradient(135deg,#cb7dff,#ff4da6); }
+
+  /* CARDS */
+
   .card {
     position: relative;
-    padding: 18px 18px 20px;
+    padding: 20px 22px 22px;
     border-radius: var(--card-radius);
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -152,8 +244,8 @@
     background-position: 100% 50%;
   }
 
-  .red::before    { background-image: linear-gradient(135deg, #ff4d4d, #ff9a62); }
-  .orange::before { background-image: linear-gradient(135deg, #ff9a62, #ffd93b); }
+  .red::before    { background-image: linear-gradient(135deg, #ff6f61, #ffb88c); }
+  .orange::before { background-image: linear-gradient(135deg, #ffb566, #ffd97a); }
   .blue::before   { background-image: linear-gradient(135deg, #4d9eff, #7a5cff); }
   .violet::before { background-image: linear-gradient(135deg, #cb7dff, #ff4da6); }
 
@@ -178,18 +270,18 @@
   }
 
   .icon {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 999px;
     background: rgba(5,6,18,0.75);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .title {
-    font-size: 19px;
+    font-size: 20px;
     font-weight: bold;
   }
 
@@ -203,7 +295,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 8px 16px;
     border-radius: 999px;
     text-decoration: none;
     background: rgba(255,255,255,0.12);
@@ -225,6 +317,9 @@
     body {
       padding: 22px 14px 30px;
     }
+    .planet-nav {
+      gap: 14px;
+    }
   }
 </style>
 </head>
@@ -235,6 +330,39 @@
 
 <div class="wrap">
   <h1><span>✦</span> Dashboard <span>✦</span></h1>
+
+  <!-- PLANET NAVIGATION -->
+  <div class="planet-nav">
+
+    <a class="planet-link" href="https://vigilproject.org/plans.html" target="_blank">
+      <div class="planet-orbit">
+        <div class="planet planet-plans">🗺️</div>
+      </div>
+      <div class="planet-label">Plans</div>
+    </a>
+
+    <a class="planet-link" href="https://vigilproject.org/test101.html" target="_blank">
+      <div class="planet-orbit">
+        <div class="planet planet-test">⭐</div>
+      </div>
+      <div class="planet-label">Test 101</div>
+    </a>
+
+    <a class="planet-link" href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
+      <div class="planet-orbit">
+        <div class="planet planet-templates">📚</div>
+      </div>
+      <div class="planet-label">Templates</div>
+    </a>
+
+    <a class="planet-link" href="https://vigilproject.org/2001vigilnavigation.html" target="_blank">
+      <div class="planet-orbit">
+        <div class="planet planet-navmap">🧭</div>
+      </div>
+      <div class="planet-label">Vigil Nav</div>
+    </a>
+
+  </div>
 
   <!-- HIDDEN WORKSPACES -->
   <section class="cluster">
