@@ -30,7 +30,7 @@
   --accentC: #ff4fd8;   /* pink */
 
   --ok: #33d17a;
-  --warn: #f6d32d; /* (only used for link-check state; if you truly want NO yellow anywhere, tell me and I’ll swap it) */
+--warn: #a78bfa; /* lavender “checking…” */
   --bad: #ff6b6b;
 
   --shadow: 0 18px 70px rgba(0,0,0,.55);
@@ -392,21 +392,90 @@ a.link:hover .title{
   body::before, .node{ animation: none !important; }
   .btn, .row, .toggle, .iconBtn{ transition: none !important; }
 }
+    /* --- Header upgrades --- */
+.hero{
+  margin-bottom: 14px;
+}
+
+.kicker{
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--muted), transparent 12%);
+  opacity: .95;
+}
+
+.subtitle{
+  margin-top: 2px;
+  color: var(--muted);
+  max-width: 70ch;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+h1{
+  font-size: clamp(28px, 3.6vw, 40px);
+  line-height: 1.05;
+}
+
+/* Slightly tighter wrap padding so header feels intentional */
+.wrap{
+  padding-top: 28px;
+}
+
+/* --- Fix “4 shown • 4 total” spacing (meta row) --- */
+.meta{
+  padding: 10px 14px 12px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+#metaLeft{
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  border-radius: 999px;
+}
+
+#metaRight{
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* When screen is small, stack nicely */
+@media (max-width: 640px){
+  .meta{
+    grid-template-columns: 1fr;
+  }
+  #metaRight{
+    text-align: left;
+    white-space: normal;
+  }
+}
+
      
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
-       <div class="brand">
-  <h1>Vigil — Navigation Hub</h1>
-  <div class="brandLine"></div>
-  <div class="subtitle">
-subtitle :))  </div>
-</div>
-
-    </header>
+   <header class="hero">
+  <div class="brand">
+    <div class="kicker">NAVIGATION CONSOLE</div>
+    <h1>Vigil — Navigation Hub</h1>
+    <div class="brandLine"></div>
+    <div class="subtitle">subtitle :))</div>
+  </div>
+</header>
 
     <section class="card" aria-label="Navigation hub">
       <div class="toolbar">
