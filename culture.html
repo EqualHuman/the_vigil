@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vigil Candle Logo – Sentinel Outline Variants</title>
+  <title>Vigil – Header Test Page</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -12,7 +12,11 @@
       --bg: #0F0F0F;
       --text: #F7F4F0;
       --accent: #D7A451;
+      --accent-soft: rgba(215, 164, 81, 0.35);
       --highlight: #FCE6C2;
+      --muted: #8f8b84;
+      --danger: #e05454;
+      --soft-border: rgba(247, 244, 240, 0.14);
     }
 
     * {
@@ -23,269 +27,533 @@
 
     body {
       min-height: 100vh;
+      background: radial-gradient(circle at top, #25211c 0, #050505 55%, #000 100%);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        radial-gradient(circle at top, #25211c 0, #050505 55%, #000 100%);
-      font-family: "Inter", sans-serif;
-      color: var(--text);
+      padding: 2rem;
     }
 
-    /* ------- layout for the four candles ------- */
+    /* ---------- Brand Layout Container ---------- */
 
-    .grid {
-      display: flex;
-      gap: 3rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .variant {
+    .vigil-container {
+      width: 100%;
+      max-width: 1000px;
+      padding: 2.5rem;
+      border-radius: 18px;
+      background: rgba(20, 20, 20, 0.55);
+      box-shadow: 0 0 18px rgba(0,0,0,0.8), inset 0 0 8px rgba(255,255,255,0.06);
+      backdrop-filter: blur(6px);
       text-align: center;
     }
 
-    .variant-label {
-      margin-top: 0.6rem;
-      font-size: 0.8rem;
+    .vigil-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.35rem;
+      color: var(--highlight);
+    }
+
+    .vigil-subtitle {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #8f8b84;
+      margin-bottom: 2rem;
+    }
+
+    /* ---------- Test Area ---------- */
+
+    .test-area {
+      margin-top: 2rem;
+      padding: 2rem;
+      border: 1px dashed var(--accent-soft);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .test-heading {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 900px) {
+      .header-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    /* ---------- Base Header Component ---------- */
+
+    .vh-header {
+      position: relative;
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem 1.6rem;
+      background: rgba(5, 5, 5, 0.85);
+      border: 1px solid var(--soft-border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .vh-eyebrow {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .vh-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.25rem;
+      line-height: 1.25;
+      letter-spacing: 0.03em;
+      color: var(--text);
+    }
+
+    .vh-subtitle {
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: rgba(247, 244, 240, 0.8);
+      max-width: 26rem;
+    }
+
+    .vh-meta-row {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .vh-pill {
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(247, 244, 240, 0.18);
+      background: radial-gradient(circle at top, rgba(252, 230, 194, 0.18), transparent 55%);
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #8f8b84;
-    }
-
-    /* ---------------- shared candle logo ---------------- */
-
-    .candle-logo {
-      position: relative;
-      width: 80px;
-      height: 150px;
-    }
-
-    /* soft halo behind the candle */
-    .candle-glow {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 50% 20%,
-        rgba(255, 244, 225, 0.9) 0%,
-        rgba(244, 209, 157, 0.5) 35%,
-        rgba(190, 145, 85, 0.18) 65%,
-        transparent 100%
-      );
-      filter: blur(8px);
-      opacity: 0.9;
-      pointer-events: none;
-      animation: glowPulse 6s ease-in-out infinite;
-    }
-
-    /* flame */
-    .candle-flame {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 34px;
-      border-radius: 999px 999px 55% 55%;
-      background: linear-gradient(to bottom,
-        #fffdf8 0%,
-        #f9f0dd 45%,
-        #f0d29c 100%
-      );
-      box-shadow:
-        0 0 26px rgba(255, 244, 225, 0.95),
-        0 0 70px rgba(245, 215, 170, 0.85);
-      animation: flameFlicker 2.8s ease-in-out infinite;
-      z-index: 2;
-    }
-
-    /* wick */
-    .candle-wick {
-      position: absolute;
-      top: 42px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3px;
-      height: 12px;
-      border-radius: 999px;
-      background: #242424;
-      z-index: 2;
-    }
-
-    /* base body box */
-    .candle-body {
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 72px;
-      border-radius: 999px;
-      background: transparent;
-      display: flex;
+      color: var(--highlight);
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .vh-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .vh-accent {
+      color: var(--accent);
+    }
+
+    /* ---------- VARIANT 1: Glowing Underline ---------- */
+
+    .vh--glow {
+      border: none;
+      background: radial-gradient(circle at top left, rgba(215,164,81,0.18), rgba(5,5,5,0.95));
+      box-shadow:
+        0 0 20px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(247,244,240,0.06);
+    }
+
+    .vh--glow .vh-title {
+      position: relative;
+      padding-bottom: 0.35rem;
+    }
+
+    .vh--glow .vh-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 42%;
+      height: 2px;
+      border-radius: 999px;
+      background-image: linear-gradient(to right, var(--accent), transparent);
+      opacity: 0.9;
+    }
+
+    /* ---------- VARIANT 2: Left Border + Vertical Line ---------- */
+
+    .vh--border-left {
+      border-radius: 0;
+      border: none;
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(215,164,81,0.12), rgba(5,5,5,0.96));
+    }
+
+    .vh--border-left .vh-eyebrow {
+      color: var(--accent);
+    }
+
+    .vh--border-left .vh-meta-row {
+      border-top: 1px solid rgba(247,244,240,0.1);
+      padding-top: 0.55rem;
+      margin-top: 0.7rem;
+    }
+
+    /* ---------- VARIANT 3: Corner Tag ---------- */
+
+    .vh--corner-tag {
+      background: radial-gradient(circle at top right, rgba(252,230,194,0.18), rgba(5,5,5,0.95));
+      border-radius: 18px;
+    }
+
+    .vh--corner-tag::before {
+      content: "Live Vigil";
+      position: absolute;
+      top: 0.8rem;
+      right: 0.9rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(5,5,5,0.9);
+      border: 1px solid rgba(252,230,194,0.6);
+      color: var(--highlight);
+    }
+
+    .vh--corner-tag .vh-title {
+      max-width: 18rem;
+    }
+
+    /* ---------- VARIANT 4: Split Layout ---------- */
+
+    .vh--split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .vh--split::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at right, rgba(215,164,81,0.14), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .vh--split > * {
+      position: relative;
       z-index: 1;
     }
 
-    /* inner “sentinel slit” */
-    .sentinel-core {
-      width: 7px;
-      height: 46px;
+    .vh--split-right {
+      justify-self: flex-end;
+      text-align: right;
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .vh-badge-row {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      justify-content: flex-end;
+    }
+
+    .vh-badge {
       border-radius: 999px;
-      background: linear-gradient(to bottom,
-        rgba(250, 240, 220, 0.18),
-        rgba(0,0,0,0.98)
-      );
-      box-shadow:
-        0 0 12px rgba(250, 240, 220, 0.3);
+      padding: 0.18rem 0.55rem;
+      border: 1px solid rgba(247,244,240,0.16);
+      background: rgba(0,0,0,0.6);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    /* soft shadow on the table */
-    .candle-shadow {
+    @media (max-width: 720px) {
+      .vh--split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .vh--split-right {
+        text-align: left;
+        justify-self: flex-start;
+        align-items: flex-start;
+      }
+
+      .vh-badge-row {
+        justify-content: flex-start;
+      }
+    }
+
+    /* ---------- VARIANT 5: Minimal Line + Timestamp ---------- */
+
+    .vh--minimal {
+      background: rgba(5,5,5,0.9);
+      border-radius: 0;
+      border-top: 1px solid rgba(247,244,240,0.26);
+      border-bottom: 1px solid rgba(247,244,240,0.06);
+    }
+
+    .vh--minimal .vh-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .vh-timestamp {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* ---------- VARIANT 6: Monogram Circle ---------- */
+
+    .vh--monogram {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 1rem;
+      align-items: center;
+      background: radial-gradient(circle at left, rgba(252,230,194,0.16), rgba(5,5,5,0.96));
+    }
+
+    .vh-monogram {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(252,230,194,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Playfair Display", serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--highlight);
+      box-shadow: 0 0 12px rgba(252,230,194,0.35);
+      background: radial-gradient(circle at top, rgba(252,230,194,0.35), rgba(5,5,5,0.95));
+    }
+
+    .vh--monogram .vh-title {
+      font-size: 1.15rem;
+    }
+
+    @media (max-width: 540px) {
+      .vh--monogram {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .vh-monogram {
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* ---------- VARIANT 7: Banner Ribbon ---------- */
+
+    .vh--ribbon {
+      padding-top: 2rem;
+      background: rgba(5,5,5,0.9);
+      border-radius: 14px;
+      overflow: visible;
+    }
+
+    .vh-ribbon {
       position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 14px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at center,
-        rgba(0, 0, 0, 0.6),
-        transparent
-      );
-      filter: blur(4px);
-      opacity: 0.75;
+      top: 0;
+      left: 1.2rem;
+      transform: translateY(-55%);
+      padding: 0.3rem 0.9rem;
+      background: linear-gradient(135deg, var(--danger), #b13f3f);
+      color: #fff;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.6);
     }
 
-    /* ---------------- SENTINEL OUTLINE VARIANTS ---------------- */
-
-    /* A) Ivory outline */
-    .pill-sentinel-ivory {
-      border: 2px solid rgba(248, 233, 205, 0.96);
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.85),
-        0 12px 22px rgba(0,0,0,0.95);
+    .vh--ribbon .vh-eyebrow {
+      color: var(--danger);
     }
 
-    /* B) Gold outline */
-    .pill-sentinel-gold {
-      border: 2px solid rgba(215, 164, 81, 0.96);
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.85),
-        0 14px 26px rgba(0,0,0,0.98);
+    /* ---------- VARIANT 8: Tag Stack ---------- */
+
+    .vh--tags {
+      background: radial-gradient(circle at bottom, rgba(215,164,81,0.2), rgba(5,5,5,0.95));
     }
 
-    /* C) Soft outline (thinner, quieter) */
-    .pill-sentinel-soft {
-      border: 1.4px solid rgba(245, 228, 205, 0.82);
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.7),
-        0 10px 20px rgba(0,0,0,0.92);
+    .vh-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
     }
 
-    /* D) Bold outline (strong emblem) */
-    .pill-sentinel-bold {
-      border: 3px solid rgba(245, 228, 205, 0.98);
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.9),
-        0 16px 28px rgba(0,0,0,0.98);
+    .vh-tag {
+      font-size: 0.68rem;
+      border-radius: 999px;
+      padding: 0.16rem 0.6rem;
+      border: 1px solid rgba(247,244,240,0.18);
+      background: rgba(0,0,0,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
     }
 
-    /* ---------------- ANIMATIONS ---------------- */
-
-    @keyframes flameFlicker {
-      0%, 100% {
-        transform: translateX(-50%) scaleY(1);
-        box-shadow:
-          0 0 24px rgba(255, 244, 225, 0.9),
-          0 0 60px rgba(245, 215, 170, 0.8);
-      }
-      40% {
-        transform: translateX(-51%) scaleY(1.02);
-        box-shadow:
-          0 0 28px rgba(255, 244, 225, 1),
-          0 0 70px rgba(245, 215, 170, 0.95);
-      }
-      70% {
-        transform: translateX(-49%) scaleY(0.98);
-        box-shadow:
-          0 0 22px rgba(255, 244, 225, 0.85),
-          0 0 55px rgba(245, 215, 170, 0.75);
-      }
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.9; }
-      50%      { opacity: 1; }
-    }
   </style>
 </head>
+
 <body>
+  <div class="vigil-container">
+    <div class="vigil-title">Vigil Test Screen</div>
+    <div class="vigil-subtitle">Framework for component testing</div>
 
-  <div class="grid">
+    <div class="test-area">
+      <div class="test-heading">Header component gallery</div>
 
-    <!-- A: Ivory outline sentinel -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle – Sentinel Ivory Outline">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-sentinel-ivory">
-          <div class="sentinel-core"></div>
-        </div>
-        <div class="candle-shadow"></div>
+      <div class="header-grid">
+        <!-- VARIANT 1: Glowing Underline -->
+        <section class="vh-header vh--glow">
+          <div class="vh-eyebrow">Case Brief · Human Rights</div>
+          <h1 class="vh-title">When the world looks away, the damage doesn’t.</h1>
+          <p class="vh-subtitle">
+            A concise overview of ongoing violations that rarely trend, but quietly reshape entire generations.
+          </p>
+          <div class="vh-meta-row">
+            <span class="vh-pill"><span class="vh-dot"></span>New Dossier</span>
+            <span>Estimated read: <span class="vh-accent">9 minutes</span></span>
+          </div>
+        </section>
+
+        <!-- VARIANT 2: Left Border + Vertical Line -->
+        <section class="vh-header vh--border-left">
+          <div class="vh-eyebrow">Signal Report</div>
+          <h1 class="vh-title">The small policies that turn into quiet disasters.</h1>
+          <p class="vh-subtitle">
+            Tracing how unnoticed decisions compound into systemic harm — long before the headlines arrive.
+          </p>
+          <div class="vh-meta-row">
+            <span>Region: Northern Corridor</span>
+            <span>Updated 6 hours ago</span>
+          </div>
+        </section>
+
+        <!-- VARIANT 3: Corner Tag -->
+        <section class="vh-header vh--corner-tag">
+          <div class="vh-eyebrow">Live Watch</div>
+          <h1 class="vh-title">Tonight’s vigil: staying awake to what we’d rather ignore.</h1>
+          <p class="vh-subtitle">
+            A rotating feed of situations at risk of slipping into silence — curated, verified, and human-centered.
+          </p>
+          <div class="vh-meta-row">
+            <span>Live sources: <span class="vh-accent">12</span></span>
+            <span>Latency: under 5 minutes</span>
+          </div>
+        </section>
+
+        <!-- VARIANT 4: Split Layout -->
+        <section class="vh-header vh--split">
+          <div>
+            <div class="vh-eyebrow">Deep Dive · Environmental Impact</div>
+            <h1 class="vh-title">When a single river carries the weight of a nation.</h1>
+            <p class="vh-subtitle">
+              Following the thread from polluted banks to crowded hospitals, and the communities in between.
+            </p>
+          </div>
+          <div class="vh--split-right">
+            <div>Scope: 3 countries · 18 communities</div>
+            <div class="vh-badge-row">
+              <span class="vh-badge">Water safety</span>
+              <span class="vh-badge">Policy gaps</span>
+              <span class="vh-badge">Local voices</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- VARIANT 5: Minimal Line + Timestamp -->
+        <section class="vh-header vh--minimal">
+          <div class="vh-top-row">
+            <div class="vh-eyebrow">Quiet Ledger</div>
+            <div class="vh-timestamp">Updated · 02:14 UTC</div>
+          </div>
+          <h1 class="vh-title">The cost of “it’s probably fine” over ten years.</h1>
+          <p class="vh-subtitle">
+            A timeline of overlooked warnings, archived emails, and the people who tried to speak up.
+          </p>
+          <div class="vh-meta-row">
+            <span>Evidence sources: <span class="vh-accent">Court records · FOIA · Field notes</span></span>
+          </div>
+        </section>
+
+        <!-- VARIANT 6: Monogram Circle -->
+        <section class="vh-header vh--monogram">
+          <div class="vh-monogram">V</div>
+          <div>
+            <div class="vh-eyebrow">The Vigil Brief</div>
+            <h1 class="vh-title">Holding a light over the stories that don’t get closure.</h1>
+            <p class="vh-subtitle">
+              A recurring digest of unresolved cases, stalled investigations, and the people still waiting.
+            </p>
+            <div class="vh-meta-row">
+              <span class="vh-pill"><span class="vh-dot"></span>Issue 03</span>
+              <span>Subscribers: <span class="vh-accent">14,392</span></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- VARIANT 7: Banner Ribbon -->
+        <section class="vh-header vh--ribbon">
+          <div class="vh-ribbon">Focus Case</div>
+          <div class="vh-eyebrow">Legal Spotlight</div>
+          <h1 class="vh-title">The trial everyone forgot, and the precedent it quietly set.</h1>
+          <p class="vh-subtitle">
+            Breaking down how one overlooked verdict reshaped protections — and who paid the price.
+          </p>
+          <div class="vh-meta-row">
+            <span>Jurisdiction: Federal</span>
+            <span>Year: 2011</span>
+          </div>
+        </section>
+
+        <!-- VARIANT 8: Tag Stack -->
+        <section class="vh-header vh--tags">
+          <div class="vh-eyebrow">Field Notes</div>
+          <h1 class="vh-title">What we see when we sit and listen first.</h1>
+          <p class="vh-subtitle">
+            Ground-level observations from volunteers, organizers, and witnesses across overlapping crises.
+          </p>
+          <div class="vh-tag-row">
+            <span class="vh-tag">On the ground</span>
+            <span class="vh-tag">First-hand</span>
+            <span class="vh-tag">Community-led</span>
+            <span class="vh-tag">Long view</span>
+          </div>
+        </section>
       </div>
-      <div class="variant-label">Ivory Outline</div>
     </div>
-
-    <!-- B: Gold outline sentinel -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle – Sentinel Gold Outline">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-sentinel-gold">
-          <div class="sentinel-core"></div>
-        </div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Gold Outline</div>
-    </div>
-
-    <!-- C: Soft outline sentinel -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle – Sentinel Soft Outline">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-sentinel-soft">
-          <div class="sentinel-core"></div>
-        </div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Soft Outline</div>
-    </div>
-
-    <!-- D: Bold outline sentinel -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle – Sentinel Bold Outline">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-sentinel-bold">
-          <div class="sentinel-core"></div>
-        </div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Bold Outline</div>
-    </div>
-
   </div>
-
 </body>
 </html>
