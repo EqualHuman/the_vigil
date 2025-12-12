@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vigil Candle Logo – Symbolic Variants</title>
+  <title>Vigil Candle Logo – Sentinel Outline Variants</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -122,8 +122,8 @@
       top: 50px;
       left: 50%;
       transform: translateX(-50%);
-      width: 24px;
-      height: 70px;
+      width: 26px;            /* a touch wider for the outline */
+      height: 72px;
       border-radius: 999px;
       overflow: hidden;
       z-index: 1;
@@ -151,177 +151,46 @@
       opacity: 0.75;
     }
 
-    /* ---------------- symbolic pill styles ---------------- */
+    /* ---------------- SENTINEL OUTLINE STYLES ---------------- */
 
-    /* 1) Outline – gold border, empty inside */
-    .pill-outline {
-      border: 2px solid rgba(248, 233, 205, 0.95);
+    /* Common sentinel inner slit */
+    .candle-body.sentinel-base {
       background: transparent;
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.75),
-        0 10px 20px rgba(0,0,0,0.9);
+      position: relative;
     }
-
-    /* 2) Gold-core – thin border + soft inner fill */
-    .pill-goldcore {
-      border: 2px solid rgba(245, 225, 195, 0.95);
-      background: radial-gradient(circle at 50% 15%,
-        rgba(255, 244, 220, 0.8),
-        rgba(90, 70, 50, 0.15),
-        rgba(10, 10, 10, 0.95)
+    .candle-body.sentinel-base::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 7px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom,
+        rgba(250, 240, 220, 0.15),
+        rgba(0,0,0,0.98)
       );
       box-shadow:
-        0 0 0 1px rgba(0,0,0,0.75),
+        0 0 12px rgba(250, 240, 220, 0.25);
+    }
+
+    /* A) Ivory outline */
+    .pill-sentinel-ivory {
+      border: 2px solid rgba(248, 233, 205, 0.95);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.85),
         0 12px 22px rgba(0,0,0,0.95);
     }
 
-    /* 3) Sentinel slit – charcoal with inner bar */
-    .pill-sentinel {
-      background: #101010;
+    /* B) Gold outline */
+    .pill-sentinel-gold {
+      border: 2px solid rgba(215, 164, 81, 0.95);
       box-shadow:
-        0 0 0 1px rgba(0,0,0,0.9),
-        0 12px 22px rgba(0,0,0,0.98);
-      position: relative;
-    }
-    .pill-sentinel::before {
-      content: "";
-      position: absolute;
-      top: 12px;
-      bottom: 10px;
-      left: 50%;
-      width: 6px;
-      transform: translateX(-50%);
-      border-radius: 999px;
-      background: linear-gradient(to bottom,
-        rgba(250, 240, 220, 0.12),
-        rgba(0,0,0,0.95)
-      );
-      box-shadow:
-        0 0 10px rgba(250, 240, 220, 0.25);
+        0 0 0 1px rgba(0,0,0,0.85),
+        0 14px 26px rgba(0,0,0,0.98);
     }
 
-    /* 4) Hollow glow – negative inner pill lit from within */
-    .pill-hollow {
-      background: #050505;
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.9),
-        0 10px 18px rgba(0,0,0,0.95);
-      position: relative;
-    }
-    .pill-hollow::before {
-      content: "";
-      position: absolute;
-      top: 8px;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 16px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 50% 10%,
-          rgba(255, 244, 220, 0.6),
-          rgba(130, 100, 70, 0.18),
-          transparent 80%
-        );
-      box-shadow:
-        0 0 22px rgba(255, 244, 220, 0.5);
-      opacity: 0.95;
-    }
-    .pill-hollow::after {
-      /* cut the center darker, so glow becomes a ring */
-      content: "";
-      position: absolute;
-      top: 16px;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 10px;
-      border-radius: 999px;
-      background: #050505;
-    }
-
-    /* ---------------- ANIMATIONS ---------------- */
-
-    @keyframes flameFlicker {
-      0%, 100% {
-        transform: translateX(-50%) scaleY(1);
-        box-shadow:
-          0 0 24px rgba(255, 244, 225, 0.9),
-          0 0 60px rgba(245, 215, 170, 0.8);
-      }
-      40% {
-        transform: translateX(-51%) scaleY(1.02);
-        box-shadow:
-          0 0 28px rgba(255, 244, 225, 1),
-          0 0 70px rgba(245, 215, 170, 0.95);
-      }
-      70% {
-        transform: translateX(-49%) scaleY(0.98);
-        box-shadow:
-          0 0 22px rgba(255, 244, 225, 0.85),
-          0 0 55px rgba(245, 215, 170, 0.75);
-      }
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.9; }
-      50%      { opacity: 1; }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="grid">
-
-    <!-- 1: Outline -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle logo – outline pill">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-outline"></div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Outline</div>
-    </div>
-
-    <!-- 2: Gold-core -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle logo – gold-core pill">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-goldcore"></div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Gold Core</div>
-    </div>
-
-    <!-- 3: Sentinel slit -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle logo – sentinel pill">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-sentinel"></div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Sentinel</div>
-    </div>
-
-    <!-- 4: Hollow glow -->
-    <div class="variant">
-      <div class="candle-logo" aria-label="Vigil candle logo – hollow pill">
-        <div class="candle-glow"></div>
-        <div class="candle-flame"></div>
-        <div class="candle-wick"></div>
-        <div class="candle-body pill-hollow"></div>
-        <div class="candle-shadow"></div>
-      </div>
-      <div class="variant-label">Hollow Glow</div>
-    </div>
-
-  </div>
-
-</body>
-</html>
+    /* C) Soft outline – thinner, quieter */
+    .pill-sentinel-soft {
+      border: 1.4px solid rgba(245, 228, 205, 0.8);
