@@ -2,39 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Vigil • Plan docket</title>
+  <title>Vigil plan docket • Internal roadmap</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      /* Base */
-      --bg: #050605;
-      --bg-alt: #0b0d0b;
-      --bg-card: #10120f;
-      --bg-soft: rgba(232, 221, 203, 0.03);
-      --border-soft: rgba(232, 221, 203, 0.18);
+      --bg: #050506;
+      --bg-soft: #111315;
+      --bg-softer: #15181a;
+      --card: #171b1e;
+      --card-soft: #1e2327;
+      --border-subtle: rgba(245, 235, 220, 0.14);
+      --border-strong: rgba(245, 235, 220, 0.32);
 
-      /* Cottage-core leaning accents */
-      --accent: #e5c787;          /* warm gold */
-      --accent-soft: rgba(229, 199, 135, 0.30);
-      --fern: #8bb79b;            /* soft green */
-      --fern-soft: rgba(139, 183, 155, 0.25);
-      --rose: #d8a1a1;
-      --ink: #f7f4ef;
-      --muted: #94918a;
+      --text: #f7f3ea;
+      --muted: #a6a3a0;
+      --accent: #d9b36b;
 
-      /* Status colors */
-      --status-idea: #9aa6ff;
-      --status-draft: #f8c36b;
-      --status-active: #8cd1b4;
-      --status-review: #e2a0ff;
-      --status-archive: #84889a;
+      /* cottage-core inspired accents */
+      --rose: #f2b9b3;
+      --sage: #a3c6a3;
+      --sky: #9dc4da;
+      --moss: #6b8c7d;
+      --lav: #b7acd9;
+      --honey: #f0cc7b;
+      --berry: #d5898e;
 
-      --radius-card: 1.4rem;
+      --radius-xl: 18px;
       --radius-pill: 999px;
-      --shadow-soft: 0 22px 40px rgba(0, 0, 0, 0.55);
+      --shadow-soft: 0 22px 45px rgba(0, 0, 0, 0.55);
     }
 
     * {
@@ -45,999 +43,552 @@
 
     body {
       min-height: 100vh;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(213, 190, 145, 0.16), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(139, 183, 155, 0.16), transparent 55%),
-        linear-gradient(145deg, #050605, #050605 40%, #070808 100%);
-      color: var(--ink);
-      padding: 3rem 1.5rem 4rem;
+      background: radial-gradient(circle at top, #15181b 0, #050506 52%, #040304 100%);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 32px 16px 48px;
       display: flex;
       justify-content: center;
     }
 
-    .page {
+    .page-shell {
       width: 100%;
       max-width: 1120px;
-      border-radius: 2rem;
-      background: linear-gradient(145deg, rgba(239, 229, 210, 0.09), rgba(7, 8, 7, 0.95));
-      padding: 1px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(120, 120, 120, 0.02));
+      border-radius: 28px;
+      padding: 28px 26px 28px;
+      border: 1px solid rgba(240, 225, 204, 0.22);
       box-shadow: var(--shadow-soft);
       position: relative;
       overflow: hidden;
     }
 
-    .page-inner {
-      border-radius: 1.9rem;
+    .page-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
       background:
-        linear-gradient(145deg, rgba(232, 221, 203, 0.06), transparent 35%),
-        radial-gradient(circle at top right, rgba(213, 184, 117, 0.18), transparent 60%),
-        #050605;
-      padding: 2.2rem 2.4rem 2.1rem;
+        radial-gradient(circle at 0% 0%, rgba(242, 185, 179, 0.18) 0, transparent 52%),
+        radial-gradient(circle at 100% 0%, rgba(173, 201, 177, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 50% 120%, rgba(178, 151, 223, 0.16) 0, transparent 58%);
+      mix-blend-mode: soft-light;
+      opacity: 0.7;
+    }
+
+    .page-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* header */
+    .eyebrow {
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(28px, 3vw, 34px);
+      letter-spacing: 0.01em;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .meta-tag {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(240, 225, 204, 0.4);
+      background: linear-gradient(135deg, rgba(243, 227, 204, 0.12), rgba(55, 35, 14, 0.55));
+      color: #fdf7ee;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .meta-row span strong {
+      font-weight: 500;
+      color: #f8efe2;
+    }
+
+    .badge-soft {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(240, 225, 204, 0.2);
+      padding: 3px 9px;
+      font-size: 11px;
+    }
+
+    .badge-soft span {
+      opacity: 0.85;
+    }
+
+    /* intro */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr);
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .intro-text {
+      font-size: 13px;
+      color: var(--muted);
+      padding-right: 8px;
+    }
+
+    .card-note {
+      border-radius: 18px;
+      background: radial-gradient(circle at 0 0, rgba(242, 185, 179, 0.25), transparent 55%);
+      background-color: var(--bg-soft);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 12px;
       position: relative;
     }
 
-    @media (max-width: 768px) {
-      body {
-        padding: 1.5rem 1rem 2rem;
-      }
-      .page-inner {
-        padding: 1.6rem 1.4rem 1.8rem;
-      }
+    .card-note::before {
+      content: "✶";
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      font-size: 14px;
+      color: rgba(240, 225, 204, 0.82);
     }
 
-    /* Header strip */
-    .page-meta {
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
+    .card-note h2 {
+      font-size: 12px;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 8px;
+      color: #fdf2e3;
+    }
+
+    .card-note ul {
+      list-style: none;
+      padding-left: 0;
+      font-size: 12px;
       color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
     }
 
-    .page-meta span {
-      white-space: nowrap;
+    .card-note li + li {
+      margin-top: 4px;
     }
 
-    .page-meta-line {
-      flex-grow: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(149, 143, 132, 0.3), transparent);
-    }
-
-    /* Hero header */
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.6fr);
-      gap: 1.8rem;
-      margin-bottom: 1.8rem;
-    }
-
-    @media (max-width: 840px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .hero-main h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(2rem, 2.5vw, 2.3rem);
-      letter-spacing: 0.03em;
-      margin-bottom: 0.3rem;
-    }
-
-    .hero-tagline {
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 0.7rem;
-    }
-
-    .hero-breadcrumbs {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-
-    .hero-badges {
+    /* section chips */
+    .section-bar {
+      margin: 18px 0 18px;
+      padding: 12px 12px 10px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(120deg, rgba(22, 27, 28, 0.9), rgba(29, 25, 29, 0.9));
+      border: 1px solid var(--border-subtle);
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
       align-items: center;
-      margin-bottom: 1.2rem;
+      gap: 10px;
     }
 
-    .pill {
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+
+    .chip {
+      font-size: 11px;
+      white-space: nowrap;
+      border-radius: var(--radius-pill);
+      padding: 6px 10px 5px;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.25rem 0.8rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(232, 221, 203, 0.2);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      backdrop-filter: blur(14px);
-    }
-
-    .pill-amber {
-      background: radial-gradient(circle at top left, rgba(229, 199, 135, 0.18), transparent 55%);
-      border-color: rgba(229, 199, 135, 0.55);
-      color: #f7f2e8;
-    }
-
-    .pill-soft {
-      background: rgba(9, 11, 10, 0.65);
-      color: var(--muted);
-    }
-
-    .pill-dot {
-      width: 0.33rem;
-      height: 0.33rem;
-      border-radius: 999px;
-      background: currentColor;
-      opacity: 0.8;
-    }
-
-    .hero-main p.explainer {
-      font-size: 0.88rem;
-      color: var(--muted);
-      max-width: 32rem;
-      line-height: 1.7;
-    }
-
-    /* How to use card */
-    .howto-card {
-      align-self: stretch;
-      border-radius: 1.3rem;
-      background:
-        radial-gradient(circle at top right, rgba(214, 190, 142, 0.25), transparent 60%),
-        rgba(6, 7, 6, 0.96);
-      border: 1px solid rgba(229, 199, 135, 0.5);
-      padding: 1.2rem 1.3rem 1.1rem;
+      gap: 6px;
+      border: 1px solid rgba(250, 240, 220, 0.35);
+      background: radial-gradient(circle at 0 0, rgba(242, 185, 179, 0.2), transparent 55%);
+      cursor: default;
       position: relative;
       overflow: hidden;
     }
 
-    .howto-card::before {
-      content: "";
-      position: absolute;
-      inset: 1px;
-      border-radius: 1.15rem;
-      border: 1px dashed rgba(232, 221, 203, 0.28);
-      opacity: 0.7;
-      pointer-events: none;
+    .chip span {
+      font-weight: 500;
     }
 
-    .howto-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .howto-heading h2 {
-      font-family: "Playfair Display", serif;
-      font-size: 0.96rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .howto-heading span {
-      font-size: 0.7rem;
-      color: rgba(26, 17, 8, 0.85);
-      background: rgba(247, 239, 224, 0.8);
-      border-radius: var(--radius-pill);
-      padding: 0.12rem 0.5rem;
-    }
-
-    .howto-list {
-      font-size: 0.82rem;
-      color: rgba(247, 244, 239, 0.9);
-      padding-left: 0.9rem;
-      list-style: disc;
-    }
-
-    .howto-list li + li {
-      margin-top: 0.25rem;
-    }
-
-    /* Section navigation */
-    .section-nav {
-      margin: 1.3rem 0 1.1rem;
-      padding: 0.85rem 1rem;
-      border-radius: 999px;
-      background: radial-gradient(circle at left, rgba(139, 183, 155, 0.15), transparent 60%),
-                  rgba(9, 10, 9, 0.94);
-      border: 1px solid rgba(157, 176, 160, 0.5);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.55rem;
-      font-size: 0.75rem;
-    }
-
-    .section-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-right: 0.25rem;
-      white-space: nowrap;
-    }
-
-    .section-pill {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.42rem;
-      padding: 0.32rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(232, 221, 203, 0.35);
-      background: rgba(12, 14, 13, 0.95);
-      cursor: pointer;
-      transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
-      color: #f5f1ea;
-      text-decoration: none;
-    }
-
-    .section-pill span.index {
-      font-size: 0.7rem;
-      opacity: 0.85;
-    }
-
-    .section-pill span.name {
-      font-size: 0.76rem;
+    .chip small {
+      font-size: 10px;
+      opacity: 0.8;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    .section-pill.highlight {
-      background:
-        linear-gradient(120deg, rgba(232, 221, 203, 0.12), transparent),
-        rgba(18, 21, 18, 0.96);
-      border-color: rgba(229, 199, 135, 0.75);
+    .chip.chip-sage {
+      background: radial-gradient(circle at 0 0, rgba(163, 198, 163, 0.24), transparent 54%);
+    }
+    .chip.chip-sky {
+      background: radial-gradient(circle at 0 0, rgba(157, 196, 218, 0.24), transparent 54%);
+    }
+    .chip.chip-moss {
+      background: radial-gradient(circle at 0 0, rgba(107, 140, 125, 0.28), transparent 54%);
+    }
+    .chip.chip-honey {
+      background: radial-gradient(circle at 0 0, rgba(240, 204, 123, 0.28), transparent 54%);
+    }
+    .chip.chip-lav {
+      background: radial-gradient(circle at 0 0, rgba(183, 172, 217, 0.26), transparent 54%);
     }
 
-    .section-pill:hover {
-      transform: translateY(-1px);
-      border-color: rgba(229, 199, 135, 0.9);
-      background:
-        radial-gradient(circle at top left, rgba(229, 199, 135, 0.16), transparent 55%),
-        rgba(12, 13, 12, 0.98);
-    }
-
-    /* Track rows wrapper */
-    .tracks {
-      margin-top: 0.7rem;
+    /* rows */
+    .tracks-stack {
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
+      gap: 10px;
+      margin-bottom: 14px;
+      margin-top: 6px;
     }
 
-    .track {
-      border-radius: var(--radius-card);
-      background:
-        linear-gradient(120deg, rgba(232, 221, 203, 0.05), transparent 35%),
-        radial-gradient(circle at left, rgba(139, 183, 155, 0.12), transparent 55%),
-        rgba(7, 8, 7, 0.98);
-      border: 1px solid rgba(232, 221, 203, 0.16);
-      padding: 1.1rem 1.3rem 1.1rem;
-      position: relative;
+    .track-row {
+      border-radius: var(--radius-xl);
+      background: var(--bg-soft);
+      border: 1px solid rgba(250, 240, 220, 0.12);
       overflow: hidden;
-    }
-
-    .track::before {
-      content: "";
-      position: absolute;
-      inset-inline-start: 0.7rem;
-      inset-block-start: 0.9rem;
-      inset-block-end: 0.9rem;
-      width: 3px;
-      border-radius: 999px;
-      background: linear-gradient(180deg,
-        rgba(229, 199, 135, 0.7),
-        rgba(216, 154, 141, 0.75),
-        rgba(139, 183, 155, 0.8)
-      );
-      opacity: 0.7;
+      position: relative;
     }
 
     .track-inner {
-      margin-left: 1.3rem;
       display: grid;
-      grid-template-columns: minmax(0, 2.6fr) auto;
-      gap: 0.75rem 1rem;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 720px) {
-      .track-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 14px 11px 18px;
+      position: relative;
     }
 
     .track-header {
       display: flex;
       flex-direction: column;
-      gap: 0.15rem;
+      gap: 2px;
     }
 
     .track-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.24em;
+      font-size: 11px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
     }
 
     .track-title {
-      font-size: 0.98rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #f6f1e8;
-    }
-
-    .track-subtitle {
-      font-size: 0.84rem;
-      color: var(--muted);
-      max-width: 32rem;
-    }
-
-    .track-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.4rem;
-    }
-
-    .set-pill {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.9rem;
-      border-radius: 999px;
-      background: radial-gradient(circle at top, rgba(232,221,203,0.14), transparent 60%),
-                  rgba(13, 14, 12, 0.98);
-      border: 1px solid rgba(232, 221, 203, 0.65);
-    }
-
-    .set-pill span.index {
-      opacity: 0.8;
-    }
-
-    .track-meta-note {
-      font-size: 0.74rem;
-      color: var(--muted);
-    }
-
-    /* Template rows inside each track */
-    .template-grid {
-      margin-top: 0.7rem;
-      padding-top: 0.6rem;
-      border-top: 1px solid rgba(232, 221, 203, 0.12);
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2.4fr) auto;
-      column-gap: 1rem;
-      row-gap: 0.45rem;
-      font-size: 0.8rem;
-      align-items: center;
-    }
-
-    @media (max-width: 720px) {
-      .template-grid {
-        grid-template-columns: minmax(0, 1.7fr) minmax(0, 2.6fr);
-        grid-template-rows: auto;
-      }
-      .template-grid .template-status {
-        grid-column: 1 / -1;
-        justify-self: flex-start;
-      }
-    }
-
-    .template-name {
+      font-size: 13px;
       font-weight: 500;
-      color: #f6f2ea;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #fdf4e7;
     }
 
-    .template-desc {
+    .track-title::before {
+      content: "⟡";
+      font-size: 12px;
+      color: rgba(245, 235, 220, 0.88);
+    }
+
+    .track-notes {
+      font-size: 12px;
       color: var(--muted);
-    }
-
-    .template-status {
-      justify-self: flex-end;
+      padding-right: 4px;
     }
 
     .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.18rem 0.7rem;
-      border-radius: 999px;
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
+      align-self: flex-start;
+      border-radius: var(--radius-pill);
+      padding: 5px 10px 4px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      border: 1px solid rgba(232, 221, 203, 0.3);
-      background: rgba(9, 10, 9, 0.9);
+      font-weight: 500;
+      border: 1px solid rgba(250, 240, 220, 0.4);
       white-space: nowrap;
     }
 
-    .status-pill span.dot {
-      width: 0.36rem;
-      height: 0.36rem;
-      border-radius: 999px;
-      background: currentColor;
-    }
-
     .status-idea {
-      color: var(--status-idea);
-      border-color: rgba(154, 166, 255, 0.5);
-      background: rgba(22, 28, 54, 0.9);
+      background: rgba(183, 172, 217, 0.17);
+      border-color: rgba(183, 172, 217, 0.64);
+      color: #f8f3ff;
     }
-
     .status-draft {
-      color: var(--status-draft);
-      border-color: rgba(248, 195, 107, 0.5);
-      background: rgba(53, 38, 14, 0.92);
+      background: rgba(157, 196, 218, 0.16);
+      border-color: rgba(157, 196, 218, 0.62);
+      color: #f1f8ff;
+    }
+    .status-building {
+      background: rgba(240, 204, 123, 0.2);
+      border-color: rgba(240, 204, 123, 0.72);
+      color: #fff9e9;
+    }
+    .status-live {
+      background: rgba(163, 198, 163, 0.2);
+      border-color: rgba(163, 198, 163, 0.78);
+      color: #f3fff1;
     }
 
-    .status-active {
-      color: var(--status-active);
-      border-color: rgba(140, 209, 180, 0.55);
-      background: rgba(10, 36, 26, 0.95);
+    .set-pill {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      border-radius: var(--radius-pill);
+      padding: 4px 11px 3px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      background: rgba(0, 0, 0, 0.4);
+      color: rgba(249, 241, 229, 0.86);
     }
 
-    .status-review {
-      color: var(--status-review);
-      border-color: rgba(226, 160, 255, 0.5);
-      background: rgba(40, 14, 51, 0.94);
+    .track-row:nth-child(1) .set-pill { border-color: rgba(242, 185, 179, 0.8); box-shadow: 0 0 0 1px rgba(242, 185, 179, 0.55); }
+    .track-row:nth-child(2) .set-pill { border-color: rgba(240, 204, 123, 0.86); box-shadow: 0 0 0 1px rgba(240, 204, 123, 0.55); }
+    .track-row:nth-child(3) .set-pill { border-color: rgba(163, 198, 163, 0.86); box-shadow: 0 0 0 1px rgba(163, 198, 163, 0.55); }
+    .track-row:nth-child(4) .set-pill { border-color: rgba(157, 196, 218, 0.86); box-shadow: 0 0 0 1px rgba(157, 196, 218, 0.55); }
+    .track-row:nth-child(5) .set-pill { border-color: rgba(183, 172, 217, 0.86); box-shadow: 0 0 0 1px rgba(183, 172, 217, 0.55); }
+    .track-row:nth-child(6) .set-pill { border-color: rgba(213, 137, 142, 0.86); box-shadow: 0 0 0 1px rgba(213, 137, 142, 0.55); }
+
+    .track-row::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.7;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      background:
+        linear-gradient(120deg, rgba(242, 185, 179, 0.08), rgba(157, 196, 218, 0.06)),
+        radial-gradient(circle at 0 100%, rgba(240, 204, 123, 0.18), transparent 55%);
     }
 
-    .status-archive {
-      color: var(--status-archive);
-      border-color: rgba(132, 136, 154, 0.5);
-      background: rgba(20, 21, 27, 0.96);
+    .track-row:hover {
+      border-color: rgba(250, 240, 220, 0.4);
+      background: linear-gradient(135deg, #1d2227, #191e22);
+      transform: translateY(-1px);
+      transition: all 0.12s ease-out;
     }
 
-    /* Legend + footer */
-    .legend {
-      margin-top: 1.3rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid rgba(232, 221, 203, 0.16);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 1.2rem;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.74rem;
+    /* footer */
+    .footer-row {
+      margin-top: 10px;
+      font-size: 11px;
       color: var(--muted);
-    }
-
-    .legend-left {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+      justify-content: space-between;
+      gap: 10px;
       align-items: center;
     }
 
-    .legend-set {
-      opacity: 0.8;
+    .footer-row a {
+      color: rgba(239, 219, 184, 0.94);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(239, 219, 184, 0.4);
+      padding-bottom: 1px;
+      font-size: 11px;
     }
 
-    .legend-statuses {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
+    .footer-row a:hover {
+      border-bottom-style: solid;
     }
 
-    .legend-statuses .status-pill {
-      font-size: 0.66rem;
-      padding-inline: 0.5rem;
+    @media (max-width: 780px) {
+      .page-shell {
+        padding: 20px 16px 22px;
+        border-radius: 22px;
+      }
+      .intro-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .track-inner {
+        grid-template-columns: minmax(0, 1fr);
+        padding-right: 32px;
+      }
+      .set-pill {
+        bottom: 9px;
+      }
     }
-
-    .legend-path {
-      font-size: 0.72rem;
-      opacity: 0.8;
-    }
-
-    .legend-path span {
-      color: var(--accent);
-    }
-
   </style>
 </head>
 <body>
-  <main class="page">
+  <main class="page-shell">
     <div class="page-inner">
 
-      <!-- Top meta strip -->
-      <div class="page-meta">
-        <span>Internal roadmap</span>
-        <div class="page-meta-line"></div>
-        <span>Vigil plan docket</span>
+      <div class="eyebrow">Internal roadmap</div>
+      <h1>Vigil plan docket</h1>
+      <p class="subtitle">One page to park active tracks, templates, and next steps so previous threads stay visible.</p>
+
+      <div class="meta-row">
+        <span><strong>Main project:</strong> Vigil</span>
+        <span>•</span>
+        <span><strong>Current track:</strong> Template library</span>
+        <span class="badge-soft"><span>Status labels can be edited directly in the code.</span></span>
+        <span class="meta-tag">Hidden workspace</span>
       </div>
 
-      <!-- Hero area -->
-      <section class="hero">
-        <div class="hero-main">
-          <h1>Vigil plan docket</h1>
-          <p class="hero-tagline">
-            One page to keep active tracks, template sets, and next steps stitched together.
-          </p>
+      <section class="intro-grid">
+        <p class="intro-text">
+          This page holds the high-level outline for the template library. Each section groups related files.
+          Each row is a planned template set with a short description and status tag. When a template moves
+          from idea to in-use, only this page needs to change to keep the line of work in view.
+        </p>
 
-          <div class="hero-breadcrumbs">
-            Main project: <strong>Vigil</strong>
-            <span style="opacity:0.5;">·</span>
-            Current track: <strong>Template library</strong>
-          </div>
-
-          <div class="hero-badges">
-            <div class="pill pill-amber">
-              <span class="pill-dot"></span>
-              <span>Hidden workspace</span>
-            </div>
-            <div class="pill pill-soft">
-              <span class="pill-dot"></span>
-              <span>Status labels can be edited directly in the code.</span>
-            </div>
-          </div>
-
-          <p class="explainer">
-            This page gathers the high-level outline for the template library. Each section groups related files.
-            Every row is a planned template set with a short description and a status tag. When a template moves from
-            idea to in use, only this page needs to be touched to keep the track in view.
-          </p>
-        </div>
-
-        <aside class="howto-card" aria-label="How to use this page">
-          <div class="howto-heading">
-            <h2>How to use</h2>
-            <span>Quick notes</span>
-          </div>
-          <ul class="howto-list">
-            <li>Change the status pill text and class when work begins, pauses, or ships.</li>
-            <li>Drop links or dates into the notes column once a template lives in the repo.</li>
-            <li>Duplicate full sections when new subprojects or collections appear.</li>
+        <aside class="card-note">
+          <h2>How to use</h2>
+          <ul>
+            <li>Change the status pill text and class when work begins or ships.</li>
+            <li>Add links, dates, or owner initials in the notes column.</li>
+            <li>Duplicate rows when new sub-projects appear under this track.</li>
           </ul>
         </aside>
       </section>
 
-      <!-- Section navigation -->
-      <nav class="section-nav" aria-label="Template sections">
-        <span class="section-label">Sections</span>
-
-        <button class="section-pill highlight" type="button">
-          <span class="index">01</span>
-          <span class="name">Page layouts</span>
+      <section class="section-bar">
+        <div class="section-label">Sections</div>
+        <button class="chip chip-sage" type="button">
+          <span>Page layouts</span>
+          <small>01</small>
         </button>
-
-        <button class="section-pill" type="button">
-          <span class="index">02</span>
-          <span class="name">Content blocks</span>
+        <button class="chip chip-honey" type="button">
+          <span>Content blocks</span>
+          <small>02</small>
         </button>
-
-        <button class="section-pill" type="button">
-          <span class="index">03</span>
-          <span class="name">Interaction &amp; utility</span>
+        <button class="chip chip-moss" type="button">
+          <span>Interaction &amp; utility</span>
+          <small>03</small>
         </button>
-
-        <button class="section-pill" type="button">
-          <span class="index">04</span>
-          <span class="name">Content types</span>
+        <button class="chip chip-sky" type="button">
+          <span>Content types</span>
+          <small>04</small>
         </button>
-
-        <button class="section-pill" type="button">
-          <span class="index">05</span>
-          <span class="name">Support templates</span>
+        <button class="chip chip-lav" type="button">
+          <span>Support templates</span>
+          <small>05</small>
         </button>
-
-        <button class="section-pill" type="button">
-          <span class="index">06</span>
-          <span class="name">System &amp; style</span>
+        <button class="chip" type="button">
+          <span>System &amp; style</span>
+          <small>06</small>
         </button>
-      </nav>
+      </section>
 
-      <!-- Track rows -->
-      <section class="tracks">
+      <section class="tracks-stack">
 
-        <!-- Track 1 -->
-        <article class="track" id="track-page-layouts">
+        <article class="track-row">
           <div class="track-inner">
-            <div>
-              <header class="track-header">
-                <div class="track-eyebrow">Template library</div>
-                <div class="track-title">Page layout design sets</div>
-                <p class="track-subtitle">
-                  Full-page skeletons for core Vigil pages: landing, case dossiers, archives, resource directories.
-                </p>
-              </header>
-
-              <div class="template-grid">
-                <div class="template-name">Home layout</div>
-                <div class="template-desc">Hero + current focus strip, featured threads, and newsletter band.</div>
-                <div class="template-status">
-                  <span class="status-pill status-active">
-                    <span class="dot"></span>
-                    Active build
-                  </span>
-                </div>
-
-                <div class="template-name">Case dossier layout</div>
-                <div class="template-desc">Timeline sidebar, key facts grid, and evidence links block.</div>
-                <div class="template-status">
-                  <span class="status-pill status-draft">
-                    <span class="dot"></span>
-                    Drafting
-                  </span>
-                </div>
-
-                <div class="template-name">Series index layout</div>
-                <div class="template-desc">Filterable index for ongoing series and recurring themes.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Library archive layout</div>
-                <div class="template-desc">Chronological + faceted archive of cases, essays, and signals.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-              </div>
+            <div class="track-header">
+              <div class="track-eyebrow">Template library</div>
+              <div class="track-title">Page layout design sets</div>
             </div>
-
-            <aside class="track-meta">
-              <div class="set-pill">
-                <span class="index">Set 01 ·</span> Layouts
-              </div>
-              <div class="track-meta-note">
-                Anchor pages for Vigil’s main navigation.
-              </div>
-            </aside>
+            <p class="track-notes">
+              Home, article, case-file, and resource layouts. Establish default header/footer blocks so new
+              pages inherit a consistent frame.
+            </p>
+            <div class="status-pill status-idea">Idea</div>
           </div>
+          <div class="set-pill">Set 01</div>
         </article>
 
-        <!-- Track 2 -->
-        <article class="track" id="track-content-blocks">
+        <article class="track-row">
           <div class="track-inner">
-            <div>
-              <header class="track-header">
-                <div class="track-eyebrow">Template library</div>
-                <div class="track-title">Content block kit</div>
-                <p class="track-subtitle">
-                  Reusable components: cards, meta rows, pull quotes, callouts, and evidence notes.
-                </p>
-              </header>
-
-              <div class="template-grid">
-                <div class="template-name">Case summary card</div>
-                <div class="template-desc">Compact overview with tags, region, and last updated stamp.</div>
-                <div class="template-status">
-                  <span class="status-pill status-active">
-                    <span class="dot"></span>
-                    Active build
-                  </span>
-                </div>
-
-                <div class="template-name">Pull quote block</div>
-                <div class="template-desc">Highlight for key lines or sourced quotes within essays.</div>
-                <div class="template-status">
-                  <span class="status-pill status-draft">
-                    <span class="dot"></span>
-                    Drafting
-                  </span>
-                </div>
-
-                <div class="template-name">Source note strip</div>
-                <div class="template-desc">Slim row to log source count, trust markers, and last review date.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Action footer</div>
-                <div class="template-desc">Space for suggested reading, donation links, and practical steps.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-              </div>
+            <div class="track-header">
+              <div class="track-eyebrow">Template library</div>
+              <div class="track-title">Content block patterns</div>
             </div>
-
-            <aside class="track-meta">
-              <div class="set-pill">
-                <span class="index">Set 02 ·</span> Blocks
-              </div>
-              <div class="track-meta-note">
-                Mix-and-match pieces for every layout.
-              </div>
-            </aside>
+            <p class="track-notes">
+              Reusable blocks: pull-quotes, callouts, timelines, evidence cards, and “further reading”
+              rails for articles and dossiers.
+            </p>
+            <div class="status-pill status-draft">Drafting</div>
           </div>
+          <div class="set-pill">Set 02</div>
         </article>
 
-        <!-- Track 3 -->
-        <article class="track" id="track-interaction">
+        <article class="track-row">
           <div class="track-inner">
-            <div>
-              <header class="track-header">
-                <div class="track-eyebrow">Template library</div>
-                <div class="track-title">Interaction &amp; utility</div>
-                <p class="track-subtitle">
-                  Navigation patterns, search and filter shells, small forms, and newsletter capture.
-                </p>
-              </header>
-
-              <div class="template-grid">
-                <div class="template-name">Search + filter bar</div>
-                <div class="template-desc">Combined search field, filters, and topic chips.</div>
-                <div class="template-status">
-                  <span class="status-pill status-draft">
-                    <span class="dot"></span>
-                    Drafting
-                  </span>
-                </div>
-
-                <div class="template-name">Newsletter panel</div>
-                <div class="template-desc">Small, low-friction sign-up block for monthly dispatch.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Reading progress</div>
-                <div class="template-desc">Slim progress indicator for long-form pieces.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Bookmark toggle</div>
-                <div class="template-desc">Lightweight way to mark cases for later review.</div>
-                <div class="template-status">
-                  <span class="status-pill status-archive">
-                    <span class="dot"></span>
-                    Parked
-                  </span>
-                </div>
-              </div>
+            <div class="track-header">
+              <div class="track-eyebrow">Template library</div>
+              <div class="track-title">Interaction &amp; filters</div>
             </div>
-
-            <aside class="track-meta">
-              <div class="set-pill">
-                <span class="index">Set 03 ·</span> Interaction
-              </div>
-              <div class="track-meta-note">
-                Utility pieces for navigation and discovery.
-              </div>
-            </aside>
+            <p class="track-notes">
+              Search, filtering, case-status chips, and hover interactions for archives and indexes.
+            </p>
+            <div class="status-pill status-building">Building</div>
           </div>
+          <div class="set-pill">Set 03</div>
         </article>
 
-        <!-- Track 4 -->
-        <article class="track" id="track-content-types">
+        <article class="track-row">
           <div class="track-inner">
-            <div>
-              <header class="track-header">
-                <div class="track-eyebrow">Template library</div>
-                <div class="track-title">Content type frames</div>
-                <p class="track-subtitle">
-                  Frames for essays, signals, dispatches, case briefs, and long investigations.
-                </p>
-              </header>
-
-              <div class="template-grid">
-                <div class="template-name">Signal note</div>
-                <div class="template-desc">Short-form signal layout with context and link set.</div>
-                <div class="template-status">
-                  <span class="status-pill status-active">
-                    <span class="dot"></span>
-                    Active build
-                  </span>
-                </div>
-
-                <div class="template-name">Long investigation</div>
-                <div class="template-desc">Chaptered layout with inline references and summary rail.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Quiet ledger</div>
-                <div class="template-desc">Data-forward view for finance or resource trails.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Reading list</div>
-                <div class="template-desc">Curated references, books, and reports in one place.</div>
-                <div class="template-status">
-                  <span class="status-pill status-draft">
-                    <span class="dot"></span>
-                    Drafting
-                  </span>
-                </div>
-              </div>
+            <div class="track-header">
+              <div class="track-eyebrow">Template library</div>
+              <div class="track-title">Content-type shells</div>
             </div>
-
-            <aside class="track-meta">
-              <div class="set-pill">
-                <span class="index">Set 04 ·</span> Content
-              </div>
-              <div class="track-meta-note">
-                Shapes for each recurring content style.
-              </div>
-            </aside>
+            <p class="track-notes">
+              Long-form analysis, short dispatch, signals, and quiet-ledger templates, each with tailored
+              meta rows and footnotes.
+            </p>
+            <div class="status-pill status-building">Building</div>
           </div>
+          <div class="set-pill">Set 04</div>
         </article>
 
-        <!-- Track 5 -->
-        <article class="track" id="track-support">
+        <article class="track-row">
           <div class="track-inner">
-            <div>
-              <header class="track-header">
-                <div class="track-eyebrow">Template library</div>
-                <div class="track-title">Support templates</div>
-                <p class="track-subtitle">
-                  Utility pages and behind-the-scenes layouts that keep everything running quietly.
-                </p>
-              </header>
-
-              <div class="template-grid">
-                <div class="template-name">In-progress screen</div>
-                <div class="template-desc">Gentle placeholder for unfinished sections or drafts.</div>
-                <div class="template-status">
-                  <span class="status-pill status-active">
-                    <span class="dot"></span>
-                    Active build
-                  </span>
-                </div>
-
-                <div class="template-name">Error / 404</div>
-                <div class="template-desc">Soft, cottage-core styled error page with simple navigation home.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Internal notes index</div>
-                <div class="template-desc">Index for internal-only planning pages like this docket.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Changelog</div>
-                <div class="template-desc">Timeline of shipped templates and structural changes.</div>
-                <div class="template-status">
-                  <span class="status-pill status-review">
-                    <span class="dot"></span>
-                    Ready to ship
-                  </span>
-                </div>
-              </div>
+            <div class="track-header">
+              <div class="track-eyebrow">Template library</div>
+              <div class="track-title">Support &amp; system docs</div>
             </div>
-
-            <aside class="track-meta">
-              <div class="set-pill">
-                <span class="index">Set 05 ·</span> Support
-              </div>
-              <div class="track-meta-note">
-                Quiet helpers that keep Vigil tidy.
-              </div>
-            </aside>
+            <p class="track-notes">
+              Pattern usage notes, naming conventions, and lightweight documentation pages for future
+              collaborators.
+            </p>
+            <div class="status-pill status-idea">Idea</div>
           </div>
+          <div class="set-pill">Set 05</div>
         </article>
 
-        <!-- Track 6 -->
-        <article class="track" id="track-system-style">
+        <article class="track-row">
           <div class="track-inner">
-            <div>
-              <header class="track-header">
-                <div class="track-eyebrow">Template library</div>
-                <div class="track-title">System &amp; style</div>
-                <p class="track-subtitle">
-                  Tokens, grids, typographic scales, and reusable patterns that keep the project consistent.
-                </p>
-              </header>
-
-              <div class="template-grid">
-                <div class="template-name">Design tokens</div>
-                <div class="template-desc">Color, type, spacing, and elevation variables.</div>
-                <div class="template-status">
-                  <span class="status-pill status-active">
-                    <span class="dot"></span>
-                    Active build
-                  </span>
-                </div>
-
-                <div class="template-name">Grid &amp; rhythm guide</div>
-                <div class="template-desc">Documentation for column widths and vertical rhythm.</div>
-                <div class="template-status">
-                  <span class="status-pill status-draft">
-                    <span class="dot"></span>
-                    Drafting
-                  </span>
-                </div>
-
-                <div class="template-name">Component index</div>
-                <div class="template-desc">Reference list for all shared components and where they live.</div>
-                <div class="template-status">
-                  <span class="status-pill status-idea">
-                    <span class="dot"></span>
-                    Idea bank
-                  </span>
-                </div>
-
-                <div class="template-name">Accessibility checks</div>
-                <div class="template-desc">Checklist layout for color contrast, semantics, and keyboard paths.</div>
-                <div class="template-status">
-                  <span class="status-pill status-archive">
-                    <span class="dot"></span>
-                    Parked
-                  </span>
-                </div>
-              </div>
+            <div class="track-header">
+              <div class="track-eyebrow">Template library</div>
+              <div class="track-title">Style &amp; theming tokens</div>
             </div>
-
-            <aside class="track-meta">
-              <div class="set-pill">
-                <span class="index">Set 06 ·</span> System
-              </div>
-              <div class="track-meta-note">
-                Under-the-surface rules for Vigil.
-              </div>
-            </aside>
+            <p class="track-notes">
+              Color tokens, type scales, spacing rhythm, and card treatments so new tracks stay visually aligned.
+            </p>
+            <div class="status-pill status-live">Live</div>
           </div>
+          <div class="set-pill">Set 06</div>
         </article>
 
       </section>
 
-      <!-- Legend + footer -->
-      <footer class="legend">
-        <div class="legend-left">
-          <span class="legend-set">Additional tracks can sit below this line for other subprojects with their own section sets.</span>
-          <div class="legend-statuses">
-            <span class="status-pill status-idea"><span class="dot"></span>Idea</span>
-            <span class="status-pill status-draft"><span class="dot"></span>Draft</span>
-            <span class="status-pill status-active"><span class="dot"></span>Active</span>
-            <span class="status-pill status-review"><span class="dot"></span>Review</span>
-            <span class="status-pill status-archive"><span class="dot"></span>Parked</span>
-          </div>
-        </div>
-        <div class="legend-path">
-          /internal/plan-docket <span>•</span> Template status lives here.
-        </div>
-      </footer>
-
+      <div class="footer-row">
+        <span>Additional tracks can be added as new sub-projects appear under this Vigil section.</span>
+        <a href="/internal/plan-docket">/internal/plan-docket</a>
+      </div>
     </div>
   </main>
 </body>
 </html>
-
