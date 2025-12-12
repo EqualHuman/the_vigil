@@ -1131,32 +1131,51 @@ const closeModal = () => {
 
 
     // Save
-    saveItemBtn.addEventListener("click", () => {
-      const updated = {
-        id: (fId.value || "").trim(),
-        title: (fTitle.value || "").trim(),
-        href: (fHref.value || "").trim(),
-        parent: (fParent.value || "").trim() || null,
-        kind: (fKind.value || "").trim(),
-        notes: (fNotes.value || "").trim()
-      };
+   saveItemBtn.addEventListener("click", () => {
+  const id = (fId.value || "").trim();
+  const title = (fTitle.value || "").trim();
+  const href = (fHref.value || "").trim();
+  const parentRaw = (fParent.value || "").trim();
+  const parent = parentRaw ? parentRaw : null;
 
-      if (!updated.id) return alert("ID is required (unique).");
-      if (!updated.title) return alert("Title is required.");
-      if (!updated.href) return alert("Href is required.");
+  if (!id) return alert("ID is required (unique).");
+  if (!title) return alert("Title is required.");
+  if (!href) return alert("Href is required.");
 
-      upsertOverride(updated);
-      closeModal();
-    });
+  // ✅ Prevent orphan parent references
+  if (parent && parent !== id) {
+    const parentExists =
+      byId.has(parent) || NAV_ITEMS.some(x => x.id === parent);
 
-    // Delete (soft delete locally)
-    deleteItemBtn.addEventListener("click", () => {
-      const id = editingId;
-      if (!id) return;
-      if (!confirm("Delete this item (saved locally on this device)?")) return;
-      softDelete(id);
-      closeModal();
-    });
+    if (!parentExists) {
+      const ok = confirm(
+        `Parent ID "${parent}" doesn't exist.\n\n` +
+        `Click OK to add this item at the ROOT instead.\n` +
+        `Click Cancel to go fix the Parent ID.`
+      );
+      if (!ok) return;
+    }
+  }
+
+  const updated = {
+    id,
+    title,
+    href,
+    parent: (parent && (byId.has(parent) || NAV_ITEMS.some(x => x.id === parent))) ? parent : null,
+    kind: (fKind.value || "").trim(),
+    notes: (fNotes.value || "").trim()
+  };
+
+  upsertOverride(updated);
+
+  // ✅ Make sure the item is visible after saving
+  // (expand its parent if it has one)
+  if (updated.parent) expanded.add(updated.parent);
+
+  render();
+  closeModal();
+});
+
 
     // Export JSON (copy)
     exportBtn.addEventListener("click", async () => {
