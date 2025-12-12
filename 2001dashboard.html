@@ -7,11 +7,11 @@
 
 <style>
   :root {
-    --card-bg: rgba(15, 16, 35, 0.9);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --card-radius: 14px;
     --text-main: #f5f6ff;
     --text-soft: #b7bbe5;
+    --card-radius: 16px;
+    --card-bg: rgba(18, 20, 45, 0.85);
+    --card-border: rgba(255,255,255,0.12);
   }
 
   * {
@@ -22,158 +22,145 @@
 
   body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+    background: radial-gradient(circle at 50% -20%, #423a63 0%, #050712 60%);
     min-height: 100vh;
-    color: var(--text-main);
-    background:
-      radial-gradient(circle at top, #272449 0, #050612 55%);
+    padding: 30px 20px 40px;
     display: flex;
     justify-content: center;
+    color: var(--text-main);
+    overflow-x: hidden;
   }
 
-  /* STARFIELD BACKGROUND */
-  .starfield {
+  .wrap {
+    width: 100%;
+    max-width: 1100px;
+  }
+
+  /* NEBULA + STARS */
+  .nebula {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(120,80,255,0.22), transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(255,90,140,0.16), transparent 60%);
+    animation: nebula-drift 36s linear infinite alternate;
+  }
+  @keyframes nebula-drift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-40px); }
+  }
+
+  .stars {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
+    z-index: -2;
   }
-
-  .starfield::before,
-  .starfield::after {
+  .stars::before,
+  .stars::after {
     content: "";
     position: absolute;
     width: 2px;
     height: 2px;
     background: #ffffff;
     border-radius: 999px;
-    opacity: 0.7;
+    opacity: 0.8;
     box-shadow:
-      20vw 10vh 0 0 #ffffff,
-      60vw 20vh 0 0 #ffffff,
-      80vw 35vh 0 0 #ffffff,
-      30vw 50vh 0 0 #ffffff,
-      10vw 70vh 0 0 #ffffff,
-      55vw 80vh 0 0 #ffffff,
-      85vw 15vh 0 0 #ffffff,
-      45vw 30vh 0 0 #ffffff,
-      15vw 40vh 0 0 #ffffff,
-      70vw 65vh 0 0 #ffffff;
-    animation: twinkle 7s infinite ease-in-out alternate;
+      6vw 10vh 0 #fff,
+      20vw 16vh 0 #fff,
+      32vw 30vh 0 #fff,
+      48vw 52vh 0 #fff,
+      72vw 62vh 0 #fff,
+      86vw 36vh 0 #fff,
+      92vw 78vh 0 #fff,
+      15vw 82vh 0 #fff,
+      30vw 92vh 0 #fff;
+    animation: twinkle 7s ease-in-out infinite alternate;
   }
-
-  .starfield::after {
-    opacity: 0.5;
+  .stars::after {
+    opacity: 0.4;
     transform: scale(0.8);
-    box-shadow:
-      25vw 15vh 0 0 #ffffff,
-      40vw 25vh 0 0 #ffffff,
-      75vw 45vh 0 0 #ffffff,
-      20vw 60vh 0 0 #ffffff,
-      5vw 85vh 0 0 #ffffff,
-      65vw 10vh 0 0 #ffffff,
-      90vw 55vh 0 0 #ffffff,
-      50vw 70vh 0 0 #ffffff,
-      35vw 85vh 0 0 #ffffff,
-      88vw 30vh 0 0 #ffffff;
-    animation-duration: 10s;
+    animation-duration: 11s;
   }
-
   @keyframes twinkle {
-    0%   { opacity: 0.2; transform: translateY(0); }
-    50%  { opacity: 1;   transform: translateY(-4px); }
-    100% { opacity: 0.3; transform: translateY(3px); }
-  }
-
-  .wrap {
-    width: 100%;
-    max-width: 960px;
+    from { opacity: 0.25; transform: translateY(0); }
+    to   { opacity: 1;    transform: translateY(-4px); }
   }
 
   h1 {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 26px;
-    letter-spacing: 0.08em;
+    margin-bottom: 26px;
+    font-size: 30px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
-
   h1 span {
-    font-size: 1.3em;
+    font-size: 1.4em;
   }
+
+  .cluster {
+    margin-bottom: 32px;
+  }
+
+  .cluster-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    opacity: 0.75;
+    margin-bottom: 10px;
+  }
+
+  /* HIDDEN WORKSPACE CARDS */
 
   .grid {
     display: grid;
-    gap: 16px;
+    gap: 18px;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 
   .card {
-    padding: 18px;
+    position: relative;
+    padding: 18px 18px 20px;
     border-radius: var(--card-radius);
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    position: relative;
     overflow: hidden;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(11px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.6);
     transition:
-      transform 0.15s ease-out,
-      box-shadow 0.15s ease-out,
-      border-color 0.15s ease-out;
+      transform .18s ease,
+      box-shadow .18s ease,
+      border-color .18s ease;
   }
 
   .card::before {
     content: "";
     position: absolute;
     inset: 0;
-    opacity: 0.85;
+    background-size: 200% 200%;
+    opacity: 0.8;
     mix-blend-mode: screen;
-    pointer-events: none;
-    background-size: 150% 150%;
-    background-position: 0% 50%;
-    transition: background-position 0.8s ease-out;
+    transition: background-position 0.8s ease;
   }
 
   .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
-    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px) scale(1.01);
+    border-color: rgba(255,255,255,0.26);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.8);
   }
 
   .card:hover::before {
     background-position: 100% 50%;
   }
 
-  /* RAINBOW GLOW OVERLAY */
-  .red::before {
-    background-image: linear-gradient(135deg, #ff4d4d, #ff9a62);
-  }
-  .orange::before {
-    background-image: linear-gradient(135deg, #ff9a62, #ffd93b);
-  }
-  .yellow::before {
-    background-image: linear-gradient(135deg, #ffd93b, #8fe38a);
-  }
-  .green::before {
-    background-image: linear-gradient(135deg, #8fe38a, #4d9eff);
-  }
-  .blue::before {
-    background-image: linear-gradient(135deg, #4d9eff, #6a5acd);
-  }
-  .indigo::before {
-    background-image: linear-gradient(135deg, #6a5acd, #c87dff);
-  }
-  .violet::before {
-    background-image: linear-gradient(135deg, #c87dff, #ff4d9a);
-  }
+  .red::before    { background-image: linear-gradient(135deg, #ff4d4d, #ff9a62); }
+  .orange::before { background-image: linear-gradient(135deg, #ff9a62, #ffd93b); }
+  .yellow::before { background-image: linear-gradient(135deg, #ffd93b, #7af59d); }
 
-  /* inner card content */
-  .inner {
+  .card-inner {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .label {
@@ -187,150 +174,266 @@
   .title-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .title {
-    font-size: 18px;
-    font-weight: bold;
+    gap: 9px;
+    margin-bottom: 8px;
   }
 
   .icon {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 999px;
-    display: inline-flex;
+    background: rgba(5,6,18,0.75);
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
-    background: rgba(5, 6, 18, 0.7);
+    font-size: 16px;
   }
 
-  p {
+  .title {
+    font-size: 19px;
+    font-weight: bold;
+  }
+
+  .card p {
     font-size: 14px;
     color: var(--text-soft);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .card a {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-top: 4px;
-    padding: 6px 12px;
-    background: rgba(5, 6, 18, 0.85);
+    padding: 7px 14px;
     border-radius: 999px;
     text-decoration: none;
-    font-size: 13px;
-    color: #fdfdff;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
-    transition:
-      transform 0.12s ease-out,
-      box-shadow 0.12s ease-out,
-      background 0.12s ease-out;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.26);
+    font-size: 14px;
+    color: #ffffff;
+    transition: background .15s ease;
   }
 
   .card a:hover {
-    transform: translateY(-1px);
-    background: rgba(5, 6, 18, 0.97);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.9);
+    background: rgba(255,255,255,0.23);
   }
 
-  .card a span.arrow {
+  .card a .arrow {
     font-size: 14px;
   }
 
-  /* small “starry” chips if we add more cards later */
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
+  /* VIGIL LINK MAP */
+
+  .nav-map {
+    border-radius: 18px;
+    background: rgba(10, 11, 30, 0.9);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.7);
+    padding: 18px 16px 18px;
+    backdrop-filter: blur(10px);
   }
 
-  .chip {
-    font-size: 11px;
-    padding: 3px 7px;
+  .nav-map-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .nav-column {
+    padding: 4px 2px 2px;
+    position: relative;
+  }
+
+  .nav-column::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    bottom: 8px;
+    left: 12px;
+    border-left: 1px dashed rgba(255,255,255,0.18);
+  }
+
+  .nav-node {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
     border-radius: 999px;
-    background: rgba(5, 6, 18, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+    background: rgba(22,24,55,0.95);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #f7f7ff;
+    white-space: nowrap;
+  }
+
+  .nav-root {
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+    background: linear-gradient(135deg, #ff9a62, #ffd93b);
+    color: #19151f;
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  .nav-link {
+    margin-left: 24px;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #ffd93b;
+  }
+
+  .nav-dot.sub {
+    background: #9fdcfe;
+  }
+
+  @media (max-width: 640px) {
+    body {
+      padding: 22px 14px 30px;
+    }
   }
 </style>
 </head>
 <body>
 
-<div class="starfield"></div>
+<div class="nebula"></div>
+<div class="stars"></div>
 
 <div class="wrap">
-  <h1><span>⭐</span> Dashboard <span>⭐</span></h1>
+  <h1><span>✦</span> Dashboard <span>✦</span></h1>
 
-  <div class="grid">
+  <!-- HIDDEN WORKSPACE -->
+  <section class="cluster">
+    <div class="cluster-title">Hidden workspace</div>
 
-    <!-- TEMPLATE LIBRARY -->
-    <div class="card red">
-      <div class="inner">
-        <div class="label">Core Link</div>
-        <div class="title-row">
-          <div class="icon">📚</div>
-          <div class="title">Template Library</div>
-        </div>
-        <p>Access your full set of templates.</p>
-        <a href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
-          <span class="arrow">✦</span> Open
-        </a>
-      </div>
-    </div>
+    <div class="grid">
 
-    <!-- PLANS -->
-    <div class="card orange">
-      <div class="inner">
-        <div class="label">Core Link</div>
-        <div class="title-row">
-          <div class="icon">🗺️</div>
-          <div class="title">Plans + Roadmap</div>
-        </div>
-        <p>Your overview of goals + project structure.</p>
-        <a href="https://vigilproject.org/plans.html" target="_blank">
-          <span class="arrow">✦</span> Open
-        </a>
-      </div>
-    </div>
-
-    <!-- TEST PAGE -->
-<div class="card yellow">
-  <div class="inner">
-    <div class="label">Test</div>
-    <div class="title-row">
-      <div class="icon">⭐</div>
-      <div class="title">Test 101</div>
-    </div>
-    <p>Testing page for experiments, drafts, and layout checks.</p>
-    <a href="https://vigilproject.org/test101.html" target="_blank">
-      <span class="arrow">✦</span> Open
-    </a>
-  </div>
-</div>
-
-    <!-- OPTIONAL: add more star cards later like this
-    <div class="card blue">
-      <div class="inner">
-        <div class="label">Section</div>
-        <div class="title-row">
-          <div class="icon">🌠</div>
-          <div class="title">Ideas</div>
-        </div>
-        <p>Placeholder: link your idea bank / drafts.</p>
-        <div class="chips">
-          <div class="chip">[link] Ideas</div>
-          <div class="chip">[link] Drafts</div>
+      <!-- TEMPLATE LIBRARY -->
+      <div class="card red">
+        <div class="card-inner">
+          <div class="label">Core link</div>
+          <div class="title-row">
+            <div class="icon">📚</div>
+            <div class="title">Template Library</div>
+          </div>
+          <p>Access your full set of templates.</p>
+          <a href="https://vigilproject.org/2001LibraryofTemplates" target="_blank">
+            <span class="arrow">✦</span> Open
+          </a>
         </div>
       </div>
-    </div>
-    -->
 
-  </div>
+      <!-- PLANS -->
+      <div class="card orange">
+        <div class="card-inner">
+          <div class="label">Core link</div>
+          <div class="title-row">
+            <div class="icon">🗺️</div>
+            <div class="title">Plans + Roadmap</div>
+          </div>
+          <p>Overview of goals and project structure.</p>
+          <a href="https://vigilproject.org/plans.html" target="_blank">
+            <span class="arrow">✦</span> Open
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 101 -->
+      <div class="card yellow">
+        <div class="card-inner">
+          <div class="label">Test</div>
+          <div class="title-row">
+            <div class="icon">⭐</div>
+            <div class="title">Test 101</div>
+          </div>
+          <p>Sandbox for layout and component experiments.</p>
+          <a href="https://vigilproject.org/test101.html" target="_blank">
+            <span class="arrow">✦</span> Open
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VIGIL NAV MAP -->
+  <section class="cluster">
+    <div class="cluster-title">Vigil</div>
+
+    <div class="nav-map">
+      <div class="nav-map-grid">
+
+        <!-- COLUMN: MAIN ARCHIVE PATHS -->
+        <div class="nav-column">
+          <a class="nav-node nav-root" href="https://vigilproject.org/">
+            <span class="nav-dot"></span>
+            Vigil
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/humanity.html">
+            <span class="nav-dot sub"></span>
+            ↳ Humanity &amp; Society
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/endangered.html">
+            <span class="nav-dot sub"></span>
+            ↳ Endangered Life &amp; Ecosystems
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/science.html">
+            <span class="nav-dot sub"></span>
+            ↳ Science, Medicine &amp; Innovation
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/culture.html">
+            <span class="nav-dot sub"></span>
+            ↳ Culture &amp; Memory
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/paths.html">
+            <span class="nav-dot sub"></span>
+            ↳ Paths Forward
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/about.html">
+            <span class="nav-dot sub"></span>
+            ↳ About Vigil
+          </a>
+        </div>
+
+        <!-- COLUMN: PLANS → TEMPLATES -->
+        <div class="nav-column">
+          <a class="nav-node nav-root" href="https://vigilproject.org/plans.html">
+            <span class="nav-dot"></span>
+            Plan docket
+          </a>
+
+          <a class="nav-node nav-link" href="https://vigilproject.org/2001LibraryofTemplates">
+            <span class="nav-dot sub"></span>
+            ↳ Template library hub
+          </a>
+        </div>
+
+        <!-- COLUMN: WORKSPACE BRANCH -->
+        <div class="nav-column">
+          <a class="nav-node nav-root" href="https://vigilproject.org/test101.html">
+            <span class="nav-dot"></span>
+            Workspace sandbox
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </div>
 
 </body>
