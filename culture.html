@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vigil • Sentinel Logo</title>
+  <title>Vigil Candle Logo</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -12,7 +12,6 @@
       --bg: #0F0F0F;
       --text: #F7F4F0;
       --accent: #D7A451;
-      --accent-soft: #B98A4C;
       --highlight: #FCE6C2;
     }
 
@@ -28,202 +27,162 @@
       align-items: center;
       justify-content: center;
       background:
-        radial-gradient(circle at top, #26211b 0, #050505 55%, #000 100%);
+        radial-gradient(circle at top, #25211c 0, #050505 55%, #000 100%);
       font-family: "Inter", sans-serif;
       color: var(--text);
     }
 
-    /* -----------------------------------
-       SENTINEL LOGO WRAP (for preview)
-    ----------------------------------- */
+    /* ---------------- CANDLE LOGO ---------------- */
 
-    .logo-shell {
-      width: 320px;
-      height: 260px;
-      border-radius: 26px;
-      border: 1px solid rgba(215,164,81,0.45);
-      background:
-        radial-gradient(circle at top, rgba(252,230,194,0.08), transparent 60%),
-        linear-gradient(to bottom, #171310, #050505 60%);
-      box-shadow:
-        0 24px 80px rgba(0,0,0,0.9),
-        0 0 0 1px rgba(255,255,255,0.04);
+    .candle-logo {
       position: relative;
-      overflow: hidden;
+      width: 80px;
+      height: 150px;
     }
 
-    /* thin gold horizon line (optional, can remove) */
-    .logo-horizon {
+    /* soft halo behind the candle */
+    .candle-glow {
       position: absolute;
-      top: 54%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(
-        to right,
-        transparent,
-        rgba(215,164,81,0.9),
-        transparent
-      );
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    /* -----------------------------------
-       HANGING LANTERN GROUP
-    ----------------------------------- */
-
-    .sentinel-hang {
-      position: absolute;
-      top: 14%;
+      top: -40px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      /* swing animation origin at the string top */
-      transform-origin: top center;
-      animation: swing 9s ease-in-out infinite;
-    }
-
-    /* string the lantern hangs from */
-    .sentinel-string {
-      width: 1px;
-      height: 30px;
-      background: linear-gradient(
-        to bottom,
-        rgba(252,230,194,0.55),
-        rgba(120,100,70,0.7)
-      );
-      opacity: 0.8;
-    }
-
-    /* -----------------------------------
-       SENTINEL LOGO SHAPE
-    ----------------------------------- */
-
-    .sentinel-logo {
-      width: 76px;
-      height: 104px;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 30% 0%,
-          rgba(255,252,244,0.65),
-          transparent 60%),
-        linear-gradient(
-          to bottom,
-          #f2d49c 0%,
-          #d29b49 45%,
-          #8b5c24 100%
-        );
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.7),
-        0 16px 26px rgba(0,0,0,0.85);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    /* subtle outer edge highlight */
-    .sentinel-logo::before {
-      content: "";
-      position: absolute;
-      inset: 2px;
-      border-radius: inherit;
-      border: 1px solid rgba(255,244,225,0.18);
-      pointer-events: none;
-    }
-
-    /* inner arch “window” / keyhole */
-    .sentinel-arch {
-      width: 44px;
-      height: 70px;
-      border-radius: 22px 22px 20px 20px;
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(255,252,245,0.95) 0%,
-          rgba(240,220,190,0.8) 40%,
-          rgba(145,110,75,0.4) 70%,
-          rgba(40,27,20,0.95) 100%
-        );
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.42),
-        0 -6px 18px rgba(255,252,240,0.7);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-      animation: innerGlow 7s ease-in-out infinite;
-    }
-
-    /* darker lower inset to feel like depth */
-    .sentinel-arch::before {
-      content: "";
-      position: absolute;
-      inset: 45% 8% 6%;
-      border-radius: 18px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
       background: radial-gradient(circle at 50% 20%,
-        rgba(0,0,0,0.8),
-        rgba(0,0,0,0.98)
+        rgba(255, 244, 225, 0.9) 0%,
+        rgba(244, 209, 157, 0.5) 35%,
+        rgba(190, 145, 85, 0.18) 65%,
+        transparent 100%
       );
+      filter: blur(8px);
       opacity: 0.9;
+      pointer-events: none;
+      animation: glowPulse 6s ease-in-out infinite;
     }
 
-    /* optional small ember at the bottom */
-    .sentinel-ember {
-      width: 10px;
+    /* flame */
+    .candle-flame {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 34px;
+      border-radius: 999px 999px 55% 55%;
+      background: linear-gradient(to bottom,
+        #fffdf8 0%,
+        #f9f0dd 45%,
+        #f0d29c 100%
+      );
+      box-shadow:
+        0 0 26px rgba(255, 244, 225, 0.95),
+        0 0 70px rgba(245, 215, 170, 0.85);
+      animation: flameFlicker 2.8s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    /* wick */
+    .candle-wick {
+      position: absolute;
+      top: 42px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
       height: 12px;
       border-radius: 999px;
-      background: radial-gradient(circle,
-        rgba(255,230,185,0.95),
-        rgba(160,110,55,0.2)
+      background: #242424;
+      z-index: 2;
+    }
+
+    /* candle body – slim outlined pill */
+    .candle-body {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 70px;
+      border-radius: 999px;
+      border: 2px solid rgba(244, 228, 204, 0.9);
+      background: radial-gradient(circle at 50% 15%,
+        rgba(65, 65, 65, 0.9),
+        rgba(10, 10, 10, 0.98)
       );
       box-shadow:
-        0 0 10px rgba(255,230,185,0.75);
-      margin-bottom: 10px;
+        0 0 0 1px rgba(0, 0, 0, 0.75),
+        0 12px 22px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* subtle inner panel for depth */
+    .candle-body::before {
+      content: "";
+      position: absolute;
+      inset: 10px 6px 8px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.97)
+      );
       opacity: 0.85;
     }
 
-    /* -----------------------------------
-       ANIMATIONS
-    ----------------------------------- */
-
-    @keyframes swing {
-      0%, 100% { transform: translateX(-50%) rotate(0deg); }
-      25%      { transform: translateX(-50%) rotate(-1.2deg); }
-      50%      { transform: translateX(-50%) rotate(0.8deg); }
-      75%      { transform: translateX(-50%) rotate(-0.6deg); }
+    /* soft shadow on the table */
+    .candle-shadow {
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center,
+        rgba(0, 0, 0, 0.6),
+        transparent
+      );
+      filter: blur(4px);
+      opacity: 0.75;
     }
 
-    @keyframes innerGlow {
-      0%, 100% { box-shadow:
-        0 0 0 1px rgba(0,0,0,0.42),
-        0 -6px 18px rgba(255,252,240,0.6); }
-      50%      { box-shadow:
-        0 0 0 1px rgba(0,0,0,0.42),
-        0 -10px 26px rgba(255,252,240,0.95); }
+    /* ---------------- ANIMATIONS ---------------- */
+
+    @keyframes flameFlicker {
+      0%, 100% {
+        transform: translateX(-50%) scaleY(1);
+        box-shadow:
+          0 0 24px rgba(255, 244, 225, 0.9),
+          0 0 60px rgba(245, 215, 170, 0.8);
+      }
+      40% {
+        transform: translateX(-51%) scaleY(1.02);
+        box-shadow:
+          0 0 28px rgba(255, 244, 225, 1),
+          0 0 70px rgba(245, 215, 170, 0.95);
+      }
+      70% {
+        transform: translateX(-49%) scaleY(0.98);
+        box-shadow:
+          0 0 22px rgba(255, 244, 225, 0.85),
+          0 0 55px rgba(245, 215, 170, 0.75);
+      }
     }
 
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.9; }
+      50%      { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="logo-shell">
-    <div class="logo-horizon"></div>
-
-    <div class="sentinel-hang">
-      <div class="sentinel-string"></div>
-      <div class="sentinel-logo">
-        <div class="sentinel-arch">
-          <div class="sentinel-ember"></div>
-        </div>
-      </div>
-    </div>
+  <div class="candle-logo" aria-label="Vigil candle logo">
+    <div class="candle-glow"></div>
+    <div class="candle-flame"></div>
+    <div class="candle-wick"></div>
+    <div class="candle-body"></div>
+    <div class="candle-shadow"></div>
   </div>
 
 </body>
