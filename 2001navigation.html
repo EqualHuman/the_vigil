@@ -462,20 +462,264 @@ h1{
   }
 }
 
+    .modalBackdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 50;
+}
+
+.modal{
+  width: min(820px, 96vw);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  box-shadow: 0 30px 120px rgba(0,0,0,.65);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.modalHead{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.modalTitle{
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.modalBody{
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.field{
+  display:grid;
+  gap:6px;
+}
+
+.field > span{
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 720px){
+  .grid2{ grid-template-columns: 1fr; }
+}
+
+.modalActions{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding-top: 6px;
+}
+    /* === Hero Banner === */
+.heroBanner{
+  position: relative;
+  margin: 10px 0 16px;
+  border-radius: calc(var(--radius) + 6px);
+  border: 1px solid rgba(255,255,255,.14);
+  overflow: hidden;
+  box-shadow: 0 22px 90px rgba(0,0,0,.55);
+  backdrop-filter: blur(14px);
+  isolation: isolate;
+}
+
+.heroInner{
+  position: relative;
+  padding: 18px 18px 18px;
+}
+
+.heroBg{
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(900px 320px at 10% 20%, color-mix(in oklab, var(--accentB), transparent 70%), transparent 62%),
+    radial-gradient(900px 340px at 85% 25%, color-mix(in oklab, var(--accentA), transparent 72%), transparent 60%),
+    radial-gradient(1100px 420px at 50% 120%, color-mix(in oklab, var(--accentC), transparent 78%), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  filter: saturate(1.12);
+  z-index: -2;
+}
+
+/* shimmer sweep */
+.heroBanner::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(110deg,
+    transparent 20%,
+    rgba(255,255,255,.10) 35%,
+    rgba(255,255,255,.04) 48%,
+    transparent 60%);
+  transform: translateX(-18%) rotate(8deg);
+  animation: heroSweep 9s var(--ease) infinite;
+  z-index: -1;
+  mix-blend-mode: screen;
+  opacity: .65;
+}
+@keyframes heroSweep{
+  0%{ transform: translateX(-22%) rotate(8deg); opacity:.55; }
+  55%{ opacity:.75; }
+  100%{ transform: translateX(22%) rotate(8deg); opacity:.55; }
+}
+
+/* scanline + soft noise */
+.heroBanner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,.06) 0px,
+      rgba(255,255,255,.06) 1px,
+      transparent 2px,
+      transparent 6px
+    );
+  opacity: .10;
+  pointer-events:none;
+  z-index: 0;
+}
+
+.heroTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.kickerPill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.22);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--muted), rgba(255,255,255,.12) 30%);
+}
+
+.kDot{
+  width:10px; height:10px;
+  border-radius:999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 40%),
+              color-mix(in oklab, var(--accentB), transparent 35%);
+  box-shadow:
+    0 0 0 2px rgba(34,211,238,.14),
+    0 0 18px rgba(34,211,238,.22);
+}
+
+.heroBadges{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.badgePill{
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  color: rgba(255,255,255,.78);
+}
+
+.heroTitle{
+  margin: 10px 0 6px;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,.96),
+    rgba(255,255,255,.78),
+    rgba(255,255,255,.92));
+  -webkit-background-clip: text;
+  background-clip:text;
+  color: transparent;
+  text-shadow: 0 12px 60px rgba(0,0,0,.35);
+}
+
+.heroSubtitle{
+  margin: 0;
+  max-width: 78ch;
+  color: rgba(255,255,255,.72);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.heroDivider{
+  margin-top: 14px;
+  height: 2px;
+  width: min(520px, 85vw);
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.55) 45%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.55) 45%),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.50) 40%),
+    rgba(255,255,255,0));
+  opacity: .95;
+}
+
+@media (max-width: 640px){
+  .heroInner{ padding: 16px 14px 16px; }
+  .heroBadges{ justify-content:flex-start; }
+}
+
+
      
   </style>
 </head>
 
 <body>
   <div class="wrap">
-   <header class="hero">
-  <div class="brand">
-    <div class="kicker">NAVIGATION CONSOLE</div>
-    <h1>Vigil — Navigation Hub</h1>
-    <div class="brandLine"></div>
-    <div class="subtitle">subtitle :))</div>
+  <header class="heroBanner" aria-label="Vigil header">
+  <div class="heroBg" aria-hidden="true"></div>
+
+  <div class="heroInner">
+    <div class="heroTop">
+      <div class="kickerPill">
+        <span class="kDot" aria-hidden="true"></span>
+        NAVIGATION CONSOLE
+      </div>
+
+      <div class="heroBadges">
+        <span class="badgePill">vigilia • watchfulness</span>
+        <span class="badgePill">links • notes • resources</span>
+      </div>
+    </div>
+
+    <h1 class="heroTitle">Vigil — Navigation Hub</h1>
+
+    <p class="heroSubtitle">
+      A living index for what we’re watching, learning, and acting on—kept clear, calm, and current.
+    </p>
+
+    <div class="heroDivider" aria-hidden="true"></div>
   </div>
 </header>
+
 
     <section class="card" aria-label="Navigation hub">
       <div class="toolbar">
@@ -483,6 +727,10 @@ h1{
          <button class="btn" id="expandAll" type="button">▾ Expand all</button>
 <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
 <button class="btn" id="checkLinks" type="button" title="Checks relative/same-origin links best">✓ Check links</button>
+          <button class="btn" id="addItem" type="button">＋ Add</button>
+<button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
+<button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
+
 
         </div>
         <div class="rightTools" style="flex:1">
@@ -499,8 +747,82 @@ h1{
       <div class="tree" id="tree"></div>
     </section>
   </div>
+
+<div class="modalBackdrop" id="modalBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modalHead">
+      <div>
+        <div class="kicker" id="modalKicker">EDIT ITEM</div>
+        <div id="modalTitle" class="modalTitle">Navigation Item</div>
+      </div>
+      <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <div class="modalBody">
+      <label class="field">
+        <span>Title</span>
+        <input class="input" id="fTitle" placeholder="Home" />
+      </label>
+
+      <label class="field">
+        <span>Href</span>
+        <input class="input" id="fHref" placeholder="/index.html or https://…" />
+      </label>
+
+      <div class="grid2">
+        <label class="field">
+          <span>ID</span>
+          <input class="input" id="fId" placeholder="home" />
+        </label>
+
+        <label class="field">
+          <span>Parent ID (blank = root)</span>
+          <input class="input" id="fParent" placeholder="home" />
+        </label>
+      </div>
+
+      <div class="grid2">
+        <label class="field">
+          <span>Kind</span>
+          <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+        </label>
+
+        <label class="field">
+          <span>Notes</span>
+          <input class="input" id="fNotes" placeholder="Optional description" />
+        </label>
+      </div>
+
+      <div class="modalActions">
+        <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
+        <div style="flex:1"></div>
+        <button class="btn" id="saveItem" type="button">💾 Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
  <script>
   let NAV_ITEMS = [];
+
+   const LS_KEY = "nav_overrides_v1";
+let editingId = null;
+
+function loadOverrides(){
+  try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+  catch { return []; }
+}
+function saveOverrides(items){
+  localStorage.setItem(LS_KEY, JSON.stringify(items, null, 2));
+}
+
+function mergedItems(base, overrides){
+  // overrides replace by id; also allow new items
+  const map = new Map(base.map(x => [x.id, x]));
+  for (const o of overrides) map.set(o.id, o);
+  return Array.from(map.values());
+}
 
   // UI refs
   const treeEl = document.getElementById("tree");
@@ -511,6 +833,7 @@ h1{
   const collapseAllBtn = document.getElementById("collapseAll");
   const checkLinksBtn = document.getElementById("checkLinks");
 
+   
   // State (built AFTER nav.json loads)
   let byId;
   let childrenByParent;
@@ -604,7 +927,7 @@ h1{
             onclick="window.__toggle('${item.id}')">${open ? "−" : "+"}</button>`
       : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
 
-    const target = isExternal(item.href) ? `target="_blank" rel="noreferrer"` : "";
+const target = `target="_blank" rel="noreferrer noopener"`;
 
     return `
       <div class="node" style="--indent:${Math.min(depth, 10) * 18}px">
@@ -624,9 +947,13 @@ h1{
           </div>
 
           <div class="actions">
-            <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
-              onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
-          </div>
+  <button class="iconBtn" type="button" aria-label="Edit" title="Edit"
+    onclick="window.__edit('${item.id}')">✎</button>
+
+  <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
+    onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
+</div>
+
         </div>
 
         ${hasKids && open ? `<div class="children">
@@ -709,6 +1036,7 @@ h1{
     const res = await fetch("./nav.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`nav.json load failed (HTTP ${res.status})`);
     NAV_ITEMS = await res.json();
+NAV_ITEMS = mergedItems(NAV_ITEMS, loadOverrides());
 
     const now = new Date();
     document.getElementById("metaRight").textContent =
@@ -741,6 +1069,128 @@ h1{
   expandAllBtn.addEventListener("click", () => setAllExpanded(true));
   collapseAllBtn.addEventListener("click", () => setAllExpanded(false));
   checkLinksBtn.addEventListener("click", checkLinks);
+
+
+   // Modal refs
+const modalBackdrop = document.getElementById("modalBackdrop");
+const closeModalBtn = document.getElementById("closeModal");
+const saveItemBtn = document.getElementById("saveItem");
+const deleteItemBtn = document.getElementById("deleteItem");
+
+const fTitle = document.getElementById("fTitle");
+const fHref = document.getElementById("fHref");
+const fId = document.getElementById("fId");
+const fParent = document.getElementById("fParent");
+const fKind = document.getElementById("fKind");
+const fNotes = document.getElementById("fNotes");
+
+const addItemBtn = document.getElementById("addItem");
+const exportBtn = document.getElementById("exportJson");
+const resetBtn = document.getElementById("resetEdits");
+
+function openModal(item, isNew=false){
+  modalBackdrop.hidden = false;
+  editingId = isNew ? null : item.id;
+
+  document.getElementById("modalKicker").textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
+  document.getElementById("modalTitle").textContent = isNew ? "New Navigation Item" : item.title;
+
+  fTitle.value = item.title || "";
+  fHref.value = item.href || "";
+  fId.value = item.id || "";
+  fParent.value = item.parent ?? "";
+  fKind.value = item.kind || "";
+  fNotes.value = item.notes || "";
+
+  deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
+  fId.disabled = !isNew; // id is the key; keep stable on edits
+  fTitle.focus();
+}
+
+function closeModal(){
+  modalBackdrop.hidden = true;
+  editingId = null;
+}
+
+function upsertOverride(updated){
+  const overrides = loadOverrides();
+  const idx = overrides.findIndex(x => x.id === updated.id);
+  if (idx >= 0) overrides[idx] = updated;
+  else overrides.push(updated);
+  saveOverrides(overrides);
+
+  // update in-memory list too
+  NAV_ITEMS = mergedItems(NAV_ITEMS, [updated]);
+  initNav();
+}
+
+function removeOverride(id){
+  const overrides = loadOverrides().filter(x => x.id !== id);
+  saveOverrides(overrides);
+
+  // Rebuild from base nav.json again by reloading page data
+  // simplest: hard refresh the data layer
+  location.reload();
+}
+
+window.__edit = (id) => {
+  const item = byId.get(id);
+  if (!item) return;
+  openModal(item, false);
+};
+
+saveItemBtn.addEventListener("click", () => {
+  const updated = {
+    id: (fId.value || "").trim(),
+    title: (fTitle.value || "").trim(),
+    href: (fHref.value || "").trim(),
+    parent: (fParent.value || "").trim() || null,
+    kind: (fKind.value || "").trim(),
+    notes: (fNotes.value || "").trim()
+  };
+
+  if (!updated.id) return alert("ID is required (unique).");
+  if (!updated.title) return alert("Title is required.");
+  if (!updated.href) return alert("Href is required.");
+
+  upsertOverride(updated);
+  closeModal();
+});
+
+deleteItemBtn.addEventListener("click", () => {
+  if (!editingId) return;
+  if (!confirm("Delete this item (local edits only)?")) return;
+  removeOverride(editingId);
+});
+
+closeModalBtn.addEventListener("click", closeModal);
+modalBackdrop.addEventListener("click", (e) => {
+  if (e.target === modalBackdrop) closeModal();
+});
+
+// Add new
+addItemBtn?.addEventListener("click", () => {
+  openModal({ id:"", title:"", href:"", parent:null, kind:"page", notes:"" }, true);
+});
+
+// Export
+exportBtn?.addEventListener("click", async () => {
+  const json = JSON.stringify(NAV_ITEMS, null, 2);
+  try{
+    await navigator.clipboard.writeText(json);
+    alert("Copied current nav JSON to clipboard.");
+  } catch {
+    alert("Could not copy automatically. Open console to copy.");
+    console.log(json);
+  }
+});
+
+// Reset local edits
+resetBtn?.addEventListener("click", () => {
+  if (!confirm("Clear saved edits on this device?")) return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+});
 
   loadNav();
 </script>
