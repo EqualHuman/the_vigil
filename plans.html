@@ -1,1447 +1,1477 @@
-Here’s a fully revamped, more interactive “Vigil plan docket” page:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Vigil plan docket • Template library roadmap</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <title>Task List with Subtasks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      --bg: #05070a;
-      --bg-soft: #11141a;
-      --bg-soft-alt: #151820;
-      --paper: #faf3e6;
-      --ink: #221b16;
-
-      --accent: #c9845c;     /* terracotta */
-      --accent-soft: rgba(201, 132, 92, 0.18);
-      --forest: #274133;
-      --sage: #9dac8f;
-      --lavender: #c5b4de;
-      --rose: #e3a3a3;
-      --gold: #d7b25a;
-
-      --chip-bg: rgba(250, 243, 230, 0.06);
-      --border-soft: rgba(250, 243, 230, 0.18);
-      --border-strong: rgba(250, 243, 230, 0.35);
-      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.65);
-      --radius-large: 26px;
-      --radius-medium: 999px;
-      --transition-fast: 200ms ease-out;
-      --transition-med: 260ms ease-out;
+      --bg: #050816;
+      --bg-card: rgba(15, 23, 42, 0.95);
+      --bg-card-soft: rgba(15, 23, 42, 0.8);
+      --accent: #6366f1;
+      --accent-soft: rgba(99, 102, 241, 0.2);
+      --accent-strong: #a855f7;
+      --text-main: #e5e7eb;
+      --text-subtle: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.4);
+      --danger: #f97373;
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.9);
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.25s ease-out;
     }
 
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
-    }
-
     body {
-      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      color: var(--text-main);
       background:
-        radial-gradient(circle at top left, rgba(222, 184, 135, 0.2), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(166, 190, 154, 0.18), transparent 55%),
-        radial-gradient(circle at top right, rgba(160, 177, 227, 0.18), transparent 55%),
-        linear-gradient(160deg, #05070a 0%, #07090f 40%, #030305 100%);
-      color: #f7f3ea;
-      -webkit-font-smoothing: antialiased;
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 55%),
+        radial-gradient(circle at top right, rgba(129, 140, 248, 0.16), transparent 60%),
+        radial-gradient(circle at bottom, rgba(244, 114, 182, 0.18), transparent 55%),
+        var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
     }
 
-    .page-shell {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 32px 16px 40px;
-    }
-
-    @media (min-width: 900px) {
-      .page-shell {
-        padding: 44px 24px 60px;
-      }
-    }
-
-    .plan-card {
-      background: radial-gradient(circle at top left, rgba(215, 178, 90, 0.12), transparent 60%),
-                  radial-gradient(circle at bottom right, rgba(157, 189, 149, 0.12), transparent 60%),
-                  linear-gradient(140deg, rgba(22, 24, 34, 0.97), rgba(9, 11, 20, 0.98));
-      border-radius: var(--radius-large);
-      border: 1px solid var(--border-soft);
+    .app-shell {
+      width: 100%;
+      max-width: 960px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.96));
+      border-radius: 32px;
+      padding: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
       box-shadow: var(--shadow-soft);
-      padding: 22px 20px 26px;
+      backdrop-filter: blur(22px);
       position: relative;
       overflow: hidden;
     }
 
-    @media (min-width: 900px) {
-      .plan-card {
-        padding: 30px 28px 32px;
-      }
-    }
-
-    .plan-card::before {
+    .app-shell::before {
       content: "";
       position: absolute;
-      inset: -40%;
-      background-image:
-        radial-gradient(circle at 10% 0%, rgba(255,255,255,0.05) 0, transparent 55%),
-        radial-gradient(circle at 90% 100%, rgba(255,255,255,0.04) 0, transparent 60%);
-      opacity: 0.75;
+      inset: 0;
       pointer-events: none;
-    }
-
-    .plan-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Header row */
-
-    .label-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(248, 242, 228, 0.7);
-      margin-bottom: 14px;
-    }
-
-    .label-sigil {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: conic-gradient(from 140deg, #f7f3ea, #f7f3ea 32%, #d7b25a 33%, #c9845c 55%, #9dac8f 78%, #c5b4de 100%);
-      box-shadow: 0 0 0 1px rgba(18, 14, 10, 0.8), 0 0 0 4px rgba(247, 243, 234, 0.07);
-      position: relative;
-    }
-
-    .label-sigil::after {
-      content: "";
-      position: absolute;
-      inset: 2px;
-      border-radius: inherit;
-      background: radial-gradient(circle at 30% 20%, #fdfcf7 0, #f7f3ea 22%, #c9845c 100%);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(96, 165, 250, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(244, 114, 182, 0.18), transparent 55%);
+      opacity: 0.6;
       mix-blend-mode: screen;
-      opacity: 0.9;
+      z-index: 0;
     }
 
-    .meta-divider {
-      width: 1px;
-      height: 12px;
-      background: linear-gradient(to bottom, transparent, rgba(249, 242, 229, 0.6), transparent);
-    }
-
-    .pill-inline {
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(247, 242, 231, 0.18);
-      background: radial-gradient(circle at 0 0, rgba(215, 178, 90, 0.26), transparent 55%);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(249, 243, 234, 0.9);
-    }
-
-    .pill-inline--sub {
-      background: radial-gradient(circle at 0 0, rgba(157, 189, 149, 0.18), transparent 55%);
-    }
-
-    /* Title block */
-
-    .title-row {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    @media (min-width: 780px) {
-      .title-row {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-      }
-    }
-
-    .title-main {
-      max-width: 560px;
-    }
-
-    .title-main h1 {
-      font-family: "Playfair Display", "Times New Roman", serif;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      font-size: clamp(28px, 4vw, 34px);
-      color: #fdf7ed;
-      margin-bottom: 6px;
-    }
-
-    .title-main p {
-      font-size: 14px;
-      color: rgba(248, 242, 230, 0.86);
-    }
-
-    .title-main p span {
-      color: var(--gold);
-      font-weight: 500;
-    }
-
-    .status-box {
-      align-self: flex-start;
-      border-radius: 18px;
-      padding: 10px 12px 10px 11px;
-      border: 1px solid var(--border-soft);
-      background: radial-gradient(circle at 0 0, rgba(215, 178, 90, 0.26), transparent 60%),
-                  linear-gradient(135deg, rgba(11, 13, 20, 0.9), rgba(8, 10, 18, 0.9));
-      font-size: 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 190px;
-    }
-
-    .status-tag-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
-      font-weight: 500;
-      color: #fdf7ed;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffe9b7, #d7b25a);
-      box-shadow: 0 0 0 1px rgba(9, 7, 5, 0.85);
-    }
-
-    .status-note {
-      color: rgba(248, 242, 230, 0.82);
-    }
-
-    .status-note span {
-      color: #fdf7ed;
-      font-weight: 500;
-    }
-
-    /* Intro layout */
-
-    .intro-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.4fr);
-      gap: 16px;
-      margin-bottom: 24px;
-      margin-top: 6px;
-    }
-
-    @media (max-width: 780px) {
-      .intro-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .intro-main {
-      font-size: 13px;
-      color: rgba(248, 242, 232, 0.92);
-      line-height: 1.7;
-      padding-right: 4px;
-    }
-
-    .intro-main p + p {
-      margin-top: 8px;
-    }
-
-    .intro-main em {
-      color: var(--sage);
-      font-style: normal;
-    }
-
-    .how-card {
-      border-radius: 18px;
-      border: 1px dashed rgba(249, 243, 233, 0.35);
-      background: radial-gradient(circle at 91% 0%, rgba(197, 180, 222, 0.55), transparent 58%),
-                  radial-gradient(circle at 0% 100%, rgba(157, 189, 149, 0.5), transparent 52%),
-                  linear-gradient(135deg, rgba(13, 15, 25, 0.92), rgba(10, 12, 20, 0.97));
-      padding: 12px 14px 12px;
-      font-size: 12px;
-      color: rgba(248, 243, 233, 0.96);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .how-card::before {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(248, 243, 233, 0.16), transparent 40%);
-      opacity: 0.45;
-      pointer-events: none;
-    }
-
-    .how-inner {
+    .app-inner {
       position: relative;
       z-index: 1;
     }
 
-    .how-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .how-title span {
-      padding: 2px 9px 3px;
-      border-radius: 999px;
-      border: 1px solid rgba(247, 243, 232, 0.6);
-      background: linear-gradient(135deg, #fdf7ed, #f3e1c0);
-      color: #1c1812;
-      font-weight: 600;
-    }
-
-    .how-title small {
-      opacity: 0.85;
-    }
-
-    .how-list {
-      list-style: none;
-      margin-top: 4px;
-    }
-
-    .how-list li {
+    .app-header {
       display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      margin-bottom: 3px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
     }
 
-    .how-bullet {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffe1f0, #e3a3a3);
-      margin-top: 4px;
+    .app-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f97316, #f97316 30%, #f97316 31%, #f97316 40%, #f97316 41%, #f97316 45%, #ef4444 70%, #4f46e5);
+      box-shadow:
+        0 0 25px rgba(248, 250, 252, 0.4),
+        0 0 40px rgba(129, 140, 248, 0.6);
+      position: relative;
       flex-shrink: 0;
     }
 
-    .how-list li span {
-      opacity: 0.96;
+    .app-logo::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: inherit;
+      border: 1px solid rgba(248, 250, 252, 0.5);
+      opacity: 0.55;
     }
 
-    /* Section filter row */
+    .app-title-block {
+      flex: 1;
+    }
 
-    .sections-row {
-      margin-top: 4px;
-      margin-bottom: 12px;
-      padding: 10px 12px;
+    .app-title {
+      font-size: 1.35rem;
+      font-weight: 650;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 3px 8px;
       border-radius: 999px;
-      background: radial-gradient(circle at 0 50%, rgba(215, 178, 90, 0.18), transparent 65%),
-                  radial-gradient(circle at 100% 50%, rgba(197, 180, 222, 0.24), transparent 65%),
-                  rgba(10, 12, 19, 0.9);
-      border: 1px solid rgba(248, 243, 233, 0.26);
+      border: 1px solid rgba(129, 140, 248, 0.6);
+      color: #c7d2fe;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.24), rgba(147, 51, 234, 0.24));
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .app-subtitle {
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    .pill-bar {
+      margin: 8px 0 18px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+      justify-content: space-between;
     }
 
-    .sections-label {
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(248, 243, 233, 0.78);
-      padding-right: 6px;
-      border-right: 1px solid rgba(248, 243, 233, 0.26);
-      margin-right: 4px;
-      white-space: nowrap;
+    .pill-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
-    .filter-pill {
+    .pill {
+      font-size: 0.78rem;
+      padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(248, 243, 233, 0.32);
-      padding: 5px 10px 6px;
-      font-size: 11px;
+      background: rgba(30, 64, 175, 0.45);
+      border: 1px solid rgba(129, 140, 248, 0.5);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(6, 8, 13, 0.5);
-      color: rgba(248, 243, 233, 0.9);
-      cursor: pointer;
+      gap: 4px;
+      color: #c7d2fe;
+    }
+
+    .pill span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.7);
+    }
+
+    .pill-subtle {
+      background: rgba(15, 23, 42, 0.8);
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--text-subtle);
+    }
+
+    .pill-subtle .dot {
+      background: #facc15;
+      box-shadow: 0 0 6px rgba(250, 204, 21, 0.7);
+    }
+
+    .task-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2.1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 800px) {
+      .task-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .app-shell {
+        padding: 18px;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.85));
+      padding: 14px 14px 16px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.85);
       position: relative;
       overflow: hidden;
-      transition: background var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), color var(--transition-med);
     }
 
-    .filter-pill span {
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    .filter-pill::before {
+    .card::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0 0, rgba(250, 243, 230, 0.32), transparent 60%);
-      opacity: 0;
-      transition: opacity var(--transition-med);
-      pointer-events: none;
-    }
-
-    .filter-pill[data-filter="layouts"] {
-      background: radial-gradient(circle at 0 0, rgba(215, 178, 90, 0.25), transparent 65%),
-                  rgba(6, 8, 13, 0.7);
-    }
-    .filter-pill[data-filter="content"] {
-      background: radial-gradient(circle at 0 0, rgba(227, 163, 163, 0.22), transparent 65%),
-                  rgba(6, 8, 13, 0.7);
-    }
-    .filter-pill[data-filter="interaction"] {
-      background: radial-gradient(circle at 0 0, rgba(197, 180, 222, 0.28), transparent 65%),
-                  rgba(6, 8, 13, 0.7);
-    }
-    .filter-pill[data-filter="types"] {
-      background: radial-gradient(circle at 0 0, rgba(157, 189, 149, 0.28), transparent 65%),
-                  rgba(6, 8, 13, 0.7);
-    }
-    .filter-pill[data-filter="support"] {
-      background: radial-gradient(circle at 0 0, rgba(199, 214, 192, 0.3), transparent 65%),
-                  rgba(6, 8, 13, 0.7);
-    }
-    .filter-pill[data-filter="system"] {
-      background: radial-gradient(circle at 0 0, rgba(180, 197, 214, 0.3), transparent 65%),
-                  rgba(6, 8, 13, 0.7);
-    }
-
-    .filter-pill:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
-      border-color: rgba(250, 243, 230, 0.7);
-    }
-
-    .filter-pill:hover::before {
-      opacity: 1;
-    }
-
-    .filter-pill.active {
-      color: #111015;
-      border-color: rgba(250, 243, 230, 0.95);
-      background: linear-gradient(135deg, #fdf7ed, #f0ddc0);
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.6);
-    }
-
-    .filter-pill.active::before {
-      opacity: 0;
-    }
-
-    .filter-pill-count {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    /* Track list */
-
-    .tracks-wrapper {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .track-card {
-      position: relative;
-      border-radius: 20px;
-      background: radial-gradient(circle at 0 0, rgba(215, 178, 90, 0.26), transparent 55%),
-                  radial-gradient(circle at 100% 100%, rgba(160, 177, 227, 0.22), transparent 55%),
-                  linear-gradient(135deg, rgba(13, 15, 22, 0.96), rgba(9, 10, 16, 0.98));
-      border: 1px solid rgba(249, 243, 231, 0.28);
-      padding: 10px 12px 10px 13px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background var(--transition-med);
-    }
-
-    .track-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0.45;
-      background-image:
-        radial-gradient(circle at 0 0, rgba(248, 243, 231, 0.1), transparent 55%),
-        radial-gradient(circle at 100% 0, rgba(199, 214, 192, 0.13), transparent 55%),
-        radial-gradient(circle at 0 100%, rgba(197, 180, 222, 0.13), transparent 55%);
+      inset: -40px;
+      opacity: 0.12;
+      background:
+        radial-gradient(circle at top, rgba(129, 140, 248, 0.8), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.7), transparent 60%);
       mix-blend-mode: soft-light;
       pointer-events: none;
     }
 
-    .track-inner {
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 14px minmax(0, 1fr) auto;
-      gap: 10px;
-      align-items: center;
     }
 
-    @media (max-width: 700px) {
-      .track-inner {
-        grid-template-columns: 12px minmax(0, 1fr);
-      }
-    }
-
-    .track-vine {
-      position: relative;
-      width: 6px;
-      border-radius: 999px;
-      height: 100%;
-      background: linear-gradient(180deg, #f3e1c0, #d7b25a, #9dac8f, #c5b4de);
-      box-shadow: 0 0 0 1px rgba(12, 9, 6, 0.7);
-      justify-self: center;
-    }
-
-    .track-vine::before,
-    .track-vine::after {
-      content: "";
-      position: absolute;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 1px solid rgba(0, 0, 0, 0.8);
-      background: radial-gradient(circle at 30% 20%, #fdf7ed, #f3e1c0);
-      box-shadow: 0 0 0 2px rgba(247, 243, 232, 0.18);
-    }
-
-    .track-vine::before {
-      top: 5px;
-    }
-
-    .track-vine::after {
-      bottom: 5px;
-    }
-
-    .track-main {
+    .card-header-left {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
 
-    .track-title-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 10px;
-      align-items: center;
-    }
-
-    .track-title {
-      font-size: 13px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(248, 243, 233, 0.88);
-    }
-
-    .track-subline {
-      font-size: 12px;
-      color: rgba(248, 243, 233, 0.72);
-      opacity: 0.96;
-    }
-
-    .track-subline span {
-      color: var(--gold);
-    }
-
-    .track-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .track-tag-pill {
-      border-radius: 999px;
-      padding: 4px 9px 5px;
-      font-size: 11px;
-      background: rgba(6, 8, 13, 0.6);
-      border: 1px solid rgba(248, 243, 233, 0.3);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: rgba(248, 243, 233, 0.92);
-    }
-
-    .track-tag-pill span {
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    .track-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
-      font-size: 11px;
-      color: rgba(248, 243, 233, 0.88);
-    }
-
-    .track-status-chip {
-      border-radius: 999px;
-      padding: 4px 10px 5px;
-      background: radial-gradient(circle at 0 0, rgba(247, 243, 233, 0.9), rgba(240, 221, 192, 0.9));
-      color: #15100b;
+    .card-title {
+      font-size: 0.95rem;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      display: inline-flex;
+      color: #e5e7eb;
+    }
+
+    .card-caption {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    .card-header-right {
+      display: flex;
+      gap: 6px;
       align-items: center;
-      gap: 8px;
     }
 
-    .status-dot-mini {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffdca0, #d7b25a);
-      box-shadow: 0 0 0 1px rgba(12, 9, 6, 0.85);
-    }
-
-    .track-count {
-      opacity: 0.85;
-    }
-
-    .track-toggle-indicator {
+    .stat-pill {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-subtle);
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 11px;
-      opacity: 0.88;
     }
 
-    .caret {
-      display: inline-block;
-      width: 9px;
-      height: 9px;
-      border-radius: 3px;
-      border: 1px solid rgba(248, 243, 233, 0.8);
-      position: relative;
+    .stat-pill strong {
+      color: #e5e7eb;
+      font-weight: 600;
     }
 
-    .caret::before {
-      content: "";
-      position: absolute;
-      inset: 2px 2px 3px;
-      border-radius: 2px;
-      border-left: 1.5px solid rgba(248, 243, 233, 0.9);
-      border-bottom: 1.5px solid rgba(248, 243, 233, 0.9);
-      transform: rotate(-45deg) translate(0, 0);
-      transform-origin: center;
-      transition: transform var(--transition-fast);
-    }
-
-    .track-body {
-      grid-column: 2 / -1;
-      margin-top: 8px;
-      border-radius: 14px;
-      background: rgba(6, 8, 13, 0.85);
-      border: 1px solid rgba(248, 243, 233, 0.1);
-      padding: 8px 10px 9px;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      transform-origin: top;
-      transition: max-height 260ms ease-out, opacity 220ms ease-out;
-    }
-
-    .track-templates {
-      list-style: none;
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr) minmax(0, 1.2fr);
-      gap: 6px 10px;
-      font-size: 12px;
-      align-items: center;
-    }
-
-    @media (max-width: 780px) {
-      .track-templates {
-        grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.8fr);
-      }
-    }
-
-    @media (max-width: 520px) {
-      .track-templates {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .tpl-name {
-      font-weight: 500;
-      color: rgba(250, 244, 233, 0.94);
-    }
-
-    .tpl-note {
-      color: rgba(248, 243, 233, 0.76);
-    }
-
-    .tpl-status-pill {
-      justify-self: flex-start;
+    .button {
       border-radius: 999px;
-      padding: 4px 9px;
-      border: 1px solid rgba(248, 243, 233, 0.46);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #f9fafb;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 8px 14px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      color: rgba(250, 244, 233, 0.96);
+      cursor: pointer;
+      box-shadow:
+        0 0 20px rgba(129, 140, 248, 0.5),
+        0 10px 20px rgba(15, 23, 42, 0.8);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        filter var(--transition-fast);
       white-space: nowrap;
     }
 
-    .tpl-status-pill--idea {
-      background: rgba(157, 189, 149, 0.12);
-      border-color: rgba(157, 189, 149, 0.6);
-      color: #dbe7d7;
+    .button:hover {
+      transform: translateY(-1px) scale(1.01);
+      filter: brightness(1.03);
+      box-shadow:
+        0 0 30px rgba(129, 140, 248, 0.7),
+        0 18px 35px rgba(15, 23, 42, 0.9);
     }
 
-    .tpl-status-pill--draft {
-      background: rgba(197, 180, 222, 0.12);
-      border-color: rgba(197, 180, 222, 0.6);
-      color: #e3daf3;
+    .button:active {
+      transform: translateY(0) scale(0.99);
+      box-shadow:
+        0 0 18px rgba(129, 140, 248, 0.55),
+        0 10px 25px rgba(15, 23, 42, 0.9);
     }
 
-    .tpl-status-pill--review {
-      background: rgba(215, 178, 90, 0.12);
-      border-color: rgba(215, 178, 90, 0.72);
-      color: #f6e2b3;
+    .button-ghost {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: rgba(148, 163, 184, 0.8);
+      color: var(--text-subtle);
+      box-shadow: 0 6px 15px rgba(15, 23, 42, 0.8);
+      padding-inline: 10px;
     }
 
-    .tpl-status-pill--live {
-      background: rgba(227, 163, 163, 0.14);
-      border-color: rgba(227, 163, 163, 0.8);
-      color: #ffe6e6;
+    .button-ghost:hover {
+      border-color: rgba(129, 140, 248, 0.8);
+      color: #e5e7eb;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.9);
     }
 
-    .tpl-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
+    .input-group {
+      position: relative;
+      margin-bottom: 8px;
     }
 
-    .track-card:hover {
-      transform: translateY(-1px);
-      border-color: rgba(250, 243, 233, 0.72);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-      background: radial-gradient(circle at 0 0, rgba(250, 243, 233, 0.22), transparent 55%),
-                  radial-gradient(circle at 100% 100%, rgba(157, 189, 149, 0.24), transparent 55%),
-                  linear-gradient(135deg, rgba(17, 20, 30, 0.97), rgba(10, 11, 20, 0.99));
+    .input-label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      margin-bottom: 4px;
     }
 
-    .track-card.open .track-body {
+    .input {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.95));
+      color: var(--text-main);
+      font-size: 0.84rem;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+        background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .input::placeholder {
+      color: rgba(148, 163, 184, 0.7);
+    }
+
+    .input:focus {
+      border-color: rgba(129, 140, 248, 0.95);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.9);
+      transform: translateY(-0.5px);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      margin-top: 6px;
+    }
+
+    .input-row .input-group {
+      margin-bottom: 0;
+    }
+
+    .input-small {
+      padding: 6px 8px;
+      font-size: 0.8rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      font-size: 0.76rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--text-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+    }
+
+    .chip[data-priority="low"] span.dot {
+      background: #22c55e;
+    }
+
+    .chip[data-priority="medium"] span.dot {
+      background: #facc15;
+    }
+
+    .chip[data-priority="high"] span.dot {
+      background: #f97316;
+    }
+
+    .chip[data-priority="urgent"] span.dot {
+      background: #ef4444;
+    }
+
+    .chip.active {
+      background: rgba(79, 70, 229, 0.28);
+      border-color: rgba(129, 140, 248, 0.95);
+      color: #e5e7eb;
+      transform: translateY(-0.5px);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.8);
+    }
+
+    .task-list {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
       max-height: 420px;
-      opacity: 1;
+      overflow-y: auto;
+      padding-right: 4px;
     }
 
-    .track-card.open .caret::before {
-      transform: rotate(135deg) translate(0, 0);
+    .task-card {
+      border-radius: 14px;
+      padding: 8px 9px 9px;
+      background: var(--bg-card);
+      border: 1px solid rgba(75, 85, 99, 0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+      transition: border-color var(--transition-fast), transform var(--transition-fast),
+        box-shadow var(--transition-fast), background var(--transition-fast);
     }
 
-    .track-card.is-hidden {
-      display: none;
+    .task-card:hover {
+      border-color: rgba(129, 140, 248, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 16px rgba(15, 23, 42, 0.9);
+      background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.25), transparent 55%),
+        var(--bg-card-soft);
     }
 
-    /* Footer */
+    .task-main-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .checkbox-wrap {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border-radius: 7px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: border-color var(--transition-fast), background var(--transition-fast),
+        box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .checkbox::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      transform: scale(0);
+      transition: transform var(--transition-fast);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .checkbox.completed {
+      border-color: rgba(34, 197, 94, 0.95);
+      background: radial-gradient(circle at 30% 20%, rgba(74, 222, 128, 0.3), rgba(15, 23, 42, 0.95));
+      box-shadow: 0 0 10px rgba(22, 163, 74, 0.9);
+      transform: translateY(-0.4px);
+    }
+
+    .checkbox.completed::after {
+      transform: scale(1);
+    }
+
+    .task-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .task-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .task-title {
+      font-size: 0.88rem;
+      font-weight: 520;
+      color: #e5e7eb;
+      word-break: break-word;
+    }
+
+    .task-title.completed {
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+      color: rgba(148, 163, 184, 0.85);
+    }
+
+    .task-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      align-items: center;
+    }
+
+    .meta-chip {
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .priority-indicator {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    .priority-low {
+      color: #22c55e;
+    }
+
+    .priority-medium {
+      color: #facc15;
+    }
+
+    .priority-high {
+      color: #f97316;
+    }
+
+    .priority-urgent {
+      color: #ef4444;
+    }
+
+    .task-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 4px;
+      justify-content: flex-end;
+    }
+
+    .icon-button {
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-subtle);
+      font-size: 0.76rem;
+      padding: 4px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        color var(--transition-fast), transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .icon-button:hover {
+      border-color: rgba(129, 140, 248, 0.95);
+      color: #e5e7eb;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.9);
+      transform: translateY(-0.5px);
+    }
+
+    .icon-button.danger {
+      border-color: rgba(248, 113, 113, 0.9);
+      color: #fecaca;
+    }
+
+    .icon-button.danger:hover {
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.3), rgba(15, 23, 42, 0.96));
+      box-shadow: 0 6px 14px rgba(127, 29, 29, 0.9);
+    }
+
+    .subtask-section {
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px dashed rgba(75, 85, 99, 0.9);
+      padding: 6px 7px;
+      margin-top: 4px;
+    }
+
+    .subtask-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+      margin-bottom: 4px;
+    }
+
+    .subtask-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 2px 7px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      font-size: 0.72rem;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .subtask-toggle:hover {
+      border-color: rgba(129, 140, 248, 0.9);
+      transform: translateY(-0.5px);
+    }
+
+    .subtask-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .subtask-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 2px 1px;
+    }
+
+    .subtask-title {
+      flex: 1;
+      word-break: break-word;
+      color: #d1d5db;
+    }
+
+    .subtask-title.completed {
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+      color: rgba(148, 163, 184, 0.85);
+    }
+
+    .subtask-controls {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .subtask-input-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .subtask-input-row .input-small {
+      flex: 1;
+    }
+
+    .tiny-button {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-subtle);
+      font-size: 0.72rem;
+      padding: 4px 7px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast),
+        border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .tiny-button:hover {
+      border-color: rgba(129, 140, 248, 0.95);
+      color: #e5e7eb;
+      transform: translateY(-0.4px);
+    }
+
+    .subtle-text {
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      margin-top: 6px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-button {
+      font-size: 0.76rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.95);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-subtle);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background var(--transition-fast), color var(--transition-fast),
+        border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .filter-button.active {
+      background: rgba(79, 70, 229, 0.25);
+      border-color: rgba(129, 140, 248, 0.95);
+      color: #e5e7eb;
+      transform: translateY(-0.5px);
+    }
+
+    .filter-button span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.8;
+    }
+
+    .empty-state {
+      border-radius: 12px;
+      padding: 14px 10px;
+      background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.12), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.1), transparent 55%),
+        rgba(15, 23, 42, 0.95);
+      border: 1px dashed rgba(75, 85, 99, 0.9);
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .empty-state strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
 
     .footer-note {
-      margin-top: 14px;
-      font-size: 11px;
-      color: rgba(248, 243, 233, 0.7);
+      margin-top: 12px;
+      font-size: 0.76rem;
+      color: var(--text-subtle);
       display: flex;
       justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
-      padding: 8px 4px 0;
-      border-top: 1px dashed rgba(248, 243, 233, 0.18);
     }
 
-    .footer-note strong {
-      color: rgba(250, 244, 233, 0.9);
-      font-weight: 500;
-    }
-
-    .footer-path {
-      opacity: 0.86;
-      font-family: "DM Sans", system-ui, sans-serif;
-    }
-
-    .footer-path span {
-      color: var(--sage);
-    }
-
-    .footer-path code {
-      font-family: "DM Sans", system-ui, sans-serif;
-      font-size: 11px;
-      background: rgba(6, 8, 13, 0.82);
+    .badge-mini {
+      font-size: 0.7rem;
+      padding: 2px 7px;
       border-radius: 999px;
-      padding: 3px 8px;
-      border: 1px solid rgba(248, 243, 233, 0.28);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(55, 65, 81, 0.9);
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(75, 85, 99, 0.95);
     }
   </style>
 </head>
 <body>
-  <div class="page-shell">
-    <main class="plan-card">
-      <div class="plan-inner">
-        <header>
-          <div class="label-row">
-            <div class="label-sigil" aria-hidden="true"></div>
-            <span>Internal roadmap</span>
-            <div class="meta-divider"></div>
-            <span>Project: Vigil</span>
-            <span>·</span>
-            <span>Track: Template library</span>
-            <div class="meta-divider"></div>
-            <span class="pill-inline">Hidden workspace</span>
-            <span class="pill-inline pill-inline--sub">Status labels live in code</span>
+  <div class="app-shell">
+    <div class="app-inner">
+      <header class="app-header">
+        <div class="app-logo"></div>
+        <div class="app-title-block">
+          <div class="app-title">
+            Aurora Tasks
+            <span class="badge">Shared link · Local view</span>
           </div>
+          <p class="app-subtitle">
+            Create tasks, break them into subtasks, and check things off in a calm, focused workspace.
+          </p>
+        </div>
+      </header>
 
-          <div class="title-row">
-            <div class="title-main">
-              <h1>Vigil plan docket</h1>
-              <p>
-                One place to keep the template library in sight. Each row is a planned
-                <span>template set</span> with its own notes, sections, and status.
-              </p>
-            </div>
-
-            <aside class="status-box">
-              <div class="status-tag-row">
-                <span class="status-dot"></span>
-                <span>Current snapshot</span>
-              </div>
-              <div class="status-note">
-                <span>24</span> templates mapped · <span>8</span> ready to ship · <span>6</span> in active drafting
-              </div>
-            </aside>
-          </div>
-        </header>
-
-        <section class="intro-grid" aria-label="Overview">
-          <div class="intro-main">
-            <p>
-              This page is the high-level outline for the template library. The aim is to keep
-              every moving part in one glanceable place: page layouts, reusable content blocks,
-              interaction systems, and quiet support templates that hold everything together.
-            </p>
-            <p>
-              When a template moves from <em>idea</em> to <em>draft</em> to <em>live</em>,
-              only this page needs to change. Sets can be archived without losing their story,
-              and new tracks can grow beneath this one for future sub-projects.
-            </p>
-          </div>
-
-          <aside class="how-card">
-            <div class="how-inner">
-              <div class="how-title">
-                <span>How to use</span>
-                <small>for future you</small>
-              </div>
-              <ul class="how-list">
-                <li>
-                  <div class="how-bullet"></div>
-                  <span>Click a set row to open the templates inside and update status chips.</span>
-                </li>
-                <li>
-                  <div class="how-bullet"></div>
-                  <span>Use the section filters to show only layouts, system pieces, or support patterns.</span>
-                </li>
-                <li>
-                  <div class="how-bullet"></div>
-                  <span>Add new tracks at the bottom when a fresh strand of work appears.</span>
-                </li>
-              </ul>
-            </div>
-          </aside>
-        </section>
-
-        <section class="sections-row" aria-label="Template sections">
-          <div class="sections-label">Sections</div>
-
-          <button class="filter-pill active" type="button" data-filter="all">
-            <span>All</span>
-            <span class="filter-pill-count">· 6 sets</span>
-          </button>
-
-          <button class="filter-pill" type="button" data-filter="layouts">
-            <span>Page layouts</span>
-            <span class="filter-pill-count">01</span>
-          </button>
-
-          <button class="filter-pill" type="button" data-filter="content">
-            <span>Content blocks</span>
-            <span class="filter-pill-count">02</span>
-          </button>
-
-          <button class="filter-pill" type="button" data-filter="interaction">
-            <span>Interaction &amp; utility</span>
-            <span class="filter-pill-count">03</span>
-          </button>
-
-          <button class="filter-pill" type="button" data-filter="types">
-            <span>Content types</span>
-            <span class="filter-pill-count">04</span>
-          </button>
-
-          <button class="filter-pill" type="button" data-filter="support">
-            <span>Support templates</span>
-            <span class="filter-pill-count">05</span>
-          </button>
-
-          <button class="filter-pill" type="button" data-filter="system">
-            <span>System &amp; style</span>
-            <span class="filter-pill-count">06</span>
-          </button>
-        </section>
-
-        <section class="tracks-wrapper" aria-label="Template sets">
-          <!-- Set 01 -->
-          <article class="track-card open"
-                   data-sections="layouts content"
-                   data-set="01">
-            <div class="track-inner">
-              <div class="track-vine" aria-hidden="true"></div>
-
-              <div class="track-main">
-                <div class="track-title-row">
-                  <div>
-                    <div class="track-title">Template library · Set 01</div>
-                    <div class="track-subline">
-                      Core <span>page layouts</span> for the first launch: home, article, and case dossier.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="track-tags">
-                  <div class="track-tag-pill">
-                    <span>Page layouts</span>
-                    <span>01</span>
-                  </div>
-                  <div class="track-tag-pill">
-                    <span>Content blocks</span>
-                    <span>02</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="track-meta">
-                <div class="track-status-chip">
-                  <span class="status-dot-mini"></span>
-                  <span>Active build</span>
-                </div>
-                <div class="track-toggle-indicator">
-                  <span>Tap to collapse</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </div>
-                <div class="track-count">4 templates mapped</div>
-              </div>
-
-              <div class="track-body">
-                <ul class="track-templates">
-                  <li class="tpl-name">HomeLayout.html</li>
-                  <li class="tpl-note">Hero strip, current focus block, featured cases row, and quiet footer.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--draft">
-                      <span class="tpl-dot"></span> Drafting
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">ArticleLayout.html</li>
-                  <li class="tpl-note">Longform reading view with pull quotes, margin notes, and sources.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--draft">
-                      <span class="tpl-dot"></span> Drafting
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">CaseDossierLayout.html</li>
-                  <li class="tpl-note">Timeline column, evidence grid, and status banner for individual cases.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">SeriesIndex.html</li>
-                  <li class="tpl-note">Filterable index for recurring strands (Signals, Quiet Ledgers, etc.).</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Set 02 -->
-          <article class="track-card"
-                   data-sections="content interaction"
-                   data-set="02">
-            <div class="track-inner">
-              <div class="track-vine" aria-hidden="true"></div>
-
-              <div class="track-main">
-                <div class="track-title-row">
-                  <div>
-                    <div class="track-title">Template library · Set 02</div>
-                    <div class="track-subline">
-                      Reusable <span>content blocks</span> for calls to action, disclaimers, and data notes.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="track-tags">
-                  <div class="track-tag-pill">
-                    <span>Content blocks</span>
-                    <span>02</span>
-                  </div>
-                  <div class="track-tag-pill">
-                    <span>Interaction</span>
-                    <span>03</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="track-meta">
-                <div class="track-status-chip">
-                  <span class="status-dot-mini"></span>
-                  <span>Draft queue</span>
-                </div>
-                <div class="track-toggle-indicator">
-                  <span>Tap to open</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </div>
-                <div class="track-count">5 templates mapped</div>
-              </div>
-
-              <div class="track-body">
-                <ul class="track-templates">
-                  <li class="tpl-name">SupportBanner.html</li>
-                  <li class="tpl-note">Non-pushy prompt to support featured organisations or research funds.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">FactCheckNote.html</li>
-                  <li class="tpl-note">Inline note clarifying sources, disputed figures, or methodological quirks.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--draft">
-                      <span class="tpl-dot"></span> Drafting
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">ResourceStrip.html</li>
-                  <li class="tpl-note">Compact row of links to external resources and primary documents.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">DisclosureBox.html</li>
-                  <li class="tpl-note">Consistent layout for conflicts of interest and editorial notes.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--review">
-                      <span class="tpl-dot"></span> In review
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">HighlightBlock.html</li>
-                  <li class="tpl-note">Soft, cottage-core card for key quotes or summary bullets.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Set 03 -->
-          <article class="track-card"
-                   data-sections="interaction types"
-                   data-set="03">
-            <div class="track-inner">
-              <div class="track-vine" aria-hidden="true"></div>
-
-              <div class="track-main">
-                <div class="track-title-row">
-                  <div>
-                    <div class="track-title">Template library · Set 03</div>
-                    <div class="track-subline">
-                      Light <span>interaction patterns</span> for timelines, filters, and reading views.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="track-tags">
-                  <div class="track-tag-pill">
-                    <span>Interaction</span>
-                    <span>03</span>
-                  </div>
-                  <div class="track-tag-pill">
-                    <span>Content types</span>
-                    <span>04</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="track-meta">
-                <div class="track-status-chip">
-                  <span class="status-dot-mini"></span>
-                  <span>Planned</span>
-                </div>
-                <div class="track-toggle-indicator">
-                  <span>Tap to open</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </div>
-                <div class="track-count">3 templates mapped</div>
-              </div>
-
-              <div class="track-body">
-                <ul class="track-templates">
-                  <li class="tpl-name">CaseTimeline.js</li>
-                  <li class="tpl-note">Scrollable story of key events, with anchors into supporting material.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">FilterChips.js</li>
-                  <li class="tpl-note">Reusable chip filters for topics, regions, and content strands.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">ReadingModeToggle.js</li>
-                  <li class="tpl-note">Switch between standard, focus, and high-contrast reading modes.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Set 04 -->
-          <article class="track-card"
-                   data-sections="types support"
-                   data-set="04">
-            <div class="track-inner">
-              <div class="track-vine" aria-hidden="true"></div>
-
-              <div class="track-main">
-                <div class="track-title-row">
-                  <div>
-                    <div class="track-title">Template library · Set 04</div>
-                    <div class="track-subline">
-                      Structured <span>content types</span> like case dossiers, context explainers, and glossaries.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="track-tags">
-                  <div class="track-tag-pill">
-                    <span>Content types</span>
-                    <span>04</span>
-                  </div>
-                  <div class="track-tag-pill">
-                    <span>Support</span>
-                    <span>05</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="track-meta">
-                <div class="track-status-chip">
-                  <span class="status-dot-mini"></span>
-                  <span>Discovery</span>
-                </div>
-                <div class="track-toggle-indicator">
-                  <span>Tap to open</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </div>
-                <div class="track-count">4 templates mapped</div>
-              </div>
-
-              <div class="track-body">
-                <ul class="track-templates">
-                  <li class="tpl-name">CaseFileType.md</li>
-                  <li class="tpl-note">Schema and layout rules for case-based stories.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">ExplainerType.md</li>
-                  <li class="tpl-note">Reusable frame for deep-dive explainers with diagrams and sidebars.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">SignalBriefType.md</li>
-                  <li class="tpl-note">Short “signal” format for small but important stories worth tracking.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">GlossaryType.md</li>
-                  <li class="tpl-note">Shared language and definitions for recurring terms and acronyms.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Set 05 -->
-          <article class="track-card"
-                   data-sections="support system"
-                   data-set="05">
-            <div class="track-inner">
-              <div class="track-vine" aria-hidden="true"></div>
-
-              <div class="track-main">
-                <div class="track-title-row">
-                  <div>
-                    <div class="track-title">Template library · Set 05</div>
-                    <div class="track-subline">
-                      Quiet <span>support templates</span>: footers, navigation, subscription, and housekeeping.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="track-tags">
-                  <div class="track-tag-pill">
-                    <span>Support</span>
-                    <span>05</span>
-                  </div>
-                  <div class="track-tag-pill">
-                    <span>System</span>
-                    <span>06</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="track-meta">
-                <div class="track-status-chip">
-                  <span class="status-dot-mini"></span>
-                  <span>In review</span>
-                </div>
-                <div class="track-toggle-indicator">
-                  <span>Tap to open</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </div>
-                <div class="track-count">4 templates mapped</div>
-              </div>
-
-              <div class="track-body">
-                <ul class="track-templates">
-                  <li class="tpl-name">GlobalFooter.html</li>
-                  <li class="tpl-note">Universal footer with support links, credits, and attribution language.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--review">
-                      <span class="tpl-dot"></span> In review
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">NavBar.html</li>
-                  <li class="tpl-note">Top navigation shared across strands with room for seasonal highlights.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--review">
-                      <span class="tpl-dot"></span> In review
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">MailingStrip.html</li>
-                  <li class="tpl-note">Gentle newsletter invite that stays in-tone with Vigil’s voice.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--live">
-                      <span class="tpl-dot"></span> Live
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">ErrorPage.html</li>
-                  <li class="tpl-note">Soft 404 / 500 pages that offer paths back into the project.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--draft">
-                      <span class="tpl-dot"></span> Drafting
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Set 06 -->
-          <article class="track-card"
-                   data-sections="system"
-                   data-set="06">
-            <div class="track-inner">
-              <div class="track-vine" aria-hidden="true"></div>
-
-              <div class="track-main">
-                <div class="track-title-row">
-                  <div>
-                    <div class="track-title">Template library · Set 06</div>
-                    <div class="track-subline">
-                      <span>System &amp; style</span> elements: tokens, typography, and reusable flourishes.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="track-tags">
-                  <div class="track-tag-pill">
-                    <span>System</span>
-                    <span>06</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="track-meta">
-                <div class="track-status-chip">
-                  <span class="status-dot-mini"></span>
-                  <span>Foundation</span>
-                </div>
-                <div class="track-toggle-indicator">
-                  <span>Tap to open</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </div>
-                <div class="track-count">4 templates mapped</div>
-              </div>
-
-              <div class="track-body">
-                <ul class="track-templates">
-                  <li class="tpl-name">ColorTokens.css</li>
-                  <li class="tpl-note">Design tokens for Vigil’s palette across light and dark contexts.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--live">
-                      <span class="tpl-dot"></span> Live
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">TypeScale.css</li>
-                  <li class="tpl-note">Type ramp and line-length rules tuned for long-form reading.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--live">
-                      <span class="tpl-dot"></span> Live
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">CardFrames.css</li>
-                  <li class="tpl-note">Shared card styles for cottage-core-leaning frames and borders.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--draft">
-                      <span class="tpl-dot"></span> Drafting
-                    </span>
-                  </li>
-
-                  <li class="tpl-name">Iconography.md</li>
-                  <li class="tpl-note">Notes on candles, hourglasses, and other recurring visual motifs.</li>
-                  <li class="tpl-status">
-                    <span class="tpl-status-pill tpl-status-pill--idea">
-                      <span class="tpl-dot"></span> Idea
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <footer class="footer-note">
-          <div>
-            <strong>Additional tracks</strong> can grow beneath this line for new sub-projects
-            (e.g. “Atlas”, “Signal Garden”, or future experiments).
-          </div>
-          <div class="footer-path">
-            <span>Path</span> · <code>/internal/plan-docket</code>
-          </div>
-        </footer>
+      <div class="pill-bar">
+        <div class="pill-group">
+          <span class="pill">
+            <span class="dot"></span>
+            Syncs to this browser
+          </span>
+          <span class="pill pill-subtle">
+            <span class="dot"></span>
+            Share the file · each person gets their own copy
+          </span>
+        </div>
       </div>
-    </main>
+
+      <main class="task-grid">
+        <section class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <h2 class="card-title">New task</h2>
+              <p class="card-caption">Name your task, pick a priority, and add it to the list.</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="input-group">
+              <label class="input-label" for="taskTitle">Task title</label>
+              <input
+                id="taskTitle"
+                class="input"
+                placeholder="Example: Plan weekend trip, Clean the kitchen, Study session..."
+              />
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="taskNotes">Notes (optional)</label>
+              <input
+                id="taskNotes"
+                class="input input-small"
+                placeholder="Short description or next step..."
+              />
+            </div>
+
+            <div class="input-row">
+              <div class="input-group">
+                <label class="input-label" for="taskDue">Due (optional)</label>
+                <input id="taskDue" type="date" class="input input-small" />
+              </div>
+
+              <div class="input-group" style="flex: 1.5;">
+                <span class="input-label">Priority</span>
+                <div class="chip-row" id="priorityChips">
+                  <button type="button" class="chip active" data-priority="medium">
+                    <span class="dot"></span>
+                    Medium
+                  </button>
+                  <button type="button" class="chip" data-priority="low">
+                    <span class="dot"></span>
+                    Low
+                  </button>
+                  <button type="button" class="chip" data-priority="high">
+                    <span class="dot"></span>
+                    High
+                  </button>
+                  <button type="button" class="chip" data-priority="urgent">
+                    <span class="dot"></span>
+                    Urgent
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 10px; display: flex; justify-content: space-between; gap: 8px;">
+              <button id="addTaskButton" class="button" type="button">
+                <span>＋</span>
+                Add task
+              </button>
+              <button id="clearAllButton" class="button button-ghost" type="button">
+                Clear all
+              </button>
+            </div>
+
+            <p class="subtle-text">
+              Tip: Each task can hold multiple subtasks. Use priorities to quickly scan what matters most.
+            </p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <h2 class="card-title">Your tasks</h2>
+              <p class="card-caption">Track progress, expand subtasks, and stay on top of the day.</p>
+            </div>
+            <div class="card-header-right">
+              <div class="stat-pill">
+                <span>Tasks:</span>
+                <strong id="taskCount">0</strong>
+              </div>
+              <div class="stat-pill">
+                <span>Done:</span>
+                <strong id="taskCompletedCount">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 6px;">
+            <div class="filters">
+              <button class="filter-button active" data-filter="all">
+                All
+              </button>
+              <button class="filter-button" data-filter="active">
+                Active
+              </button>
+              <button class="filter-button" data-filter="completed">
+                Completed
+              </button>
+              <button class="filter-button" data-filter="high">
+                <span class="dot"></span>
+                High & Urgent
+              </button>
+              <button class="filter-button" data-filter="today">
+                Today
+              </button>
+            </div>
+          </div>
+
+          <div id="taskList" class="task-list"></div>
+
+          <div id="emptyState" class="empty-state" style="display: none;">
+            <strong>No tasks yet.</strong> Create your first task on the left.  
+            You can share this page and each person will have their own local list.
+          </div>
+
+          <div class="footer-note">
+            <span>
+              Data is stored in your browser’s <code>localStorage</code>.
+            </span>
+            <span class="badge-mini">
+              Aurora layout · v1
+            </span>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
 
   <script>
-    // Toggle track open/closed
-    document.querySelectorAll(".track-card").forEach(function(card) {
-      card.addEventListener("click", function (event) {
-        // Ignore clicks on status pills and links
-        if (event.target.closest(".tpl-status-pill")) return;
-        if (event.target.tagName === "A") return;
+    const STORAGE_KEY = "aurora_task_list_v1";
 
-        card.classList.toggle("open");
-      });
-    });
+    const taskTitleInput = document.getElementById("taskTitle");
+    const taskNotesInput = document.getElementById("taskNotes");
+    const taskDueInput = document.getElementById("taskDue");
+    const addTaskButton = document.getElementById("addTaskButton");
+    const clearAllButton = document.getElementById("clearAllButton");
+    const priorityChips = document.getElementById("priorityChips");
+    const taskListEl = document.getElementById("taskList");
+    const taskCountEl = document.getElementById("taskCount");
+    const taskCompletedCountEl = document.getElementById("taskCompletedCount");
+    const emptyStateEl = document.getElementById("emptyState");
+    const filterButtons = document.querySelectorAll(".filter-button");
 
-    // Filter by section
-    const filterButtons = document.querySelectorAll(".filter-pill");
-    const tracks = document.querySelectorAll(".track-card");
+    let tasks = [];
+    let activeFilter = "all";
 
-    filterButtons.forEach(function(btn) {
-      btn.addEventListener("click", function () {
-        const filter = btn.getAttribute("data-filter");
+    function loadTasks() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        return parsed;
+      } catch (e) {
+        console.error("Failed to load tasks:", e);
+        return [];
+      }
+    }
 
-        filterButtons.forEach(function(b) { b.classList.remove("active"); });
-        btn.classList.add("active");
+    function saveTasks() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      } catch (e) {
+        console.error("Failed to save tasks:", e);
+      }
+    }
 
-        tracks.forEach(function(track) {
-          const sections = (track.getAttribute("data-sections") || "").split(" ");
-          if (filter === "all" || sections.includes(filter)) {
-            track.classList.remove("is-hidden");
-          } else {
-            track.classList.add("is-hidden");
+    function uid() {
+      return (
+        Date.now().toString(36) +
+        Math.random().toString(36).substring(2, 8)
+      );
+    }
+
+    function getSelectedPriority() {
+      const active = priorityChips.querySelector(".chip.active");
+      return active ? active.getAttribute("data-priority") : "medium";
+    }
+
+    function getPriorityLabel(priority) {
+      switch (priority) {
+        case "low": return "Low";
+        case "medium": return "Medium";
+        case "high": return "High";
+        case "urgent": return "Urgent";
+        default: return "Medium";
+      }
+    }
+
+    function getPriorityClass(priority) {
+      switch (priority) {
+        case "low": return "priority-low";
+        case "medium": return "priority-medium";
+        case "high": return "priority-high";
+        case "urgent": return "priority-urgent";
+        default: return "priority-medium";
+      }
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return "";
+      const d = new Date(dateStr + "T00:00:00");
+      if (isNaN(d.getTime())) return dateStr;
+      const options = { month: "short", day: "numeric" };
+      return d.toLocaleDateString(undefined, options);
+    }
+
+    function isToday(dateStr) {
+      if (!dateStr) return false;
+      const today = new Date();
+      const d = new Date(dateStr + "T00:00:00");
+      return (
+        d.getFullYear() === today.getFullYear() &&
+        d.getMonth() === today.getMonth() &&
+        d.getDate() === today.getDate()
+      );
+    }
+
+    function updateStats() {
+      const total = tasks.length;
+      const completed = tasks.filter(t => t.completed).length;
+      taskCountEl.textContent = total;
+      taskCompletedCountEl.textContent = completed;
+    }
+
+    function applyFilter(task) {
+      switch (activeFilter) {
+        case "active":
+          return !task.completed;
+        case "completed":
+          return task.completed;
+        case "high":
+          return task.priority === "high" || task.priority === "urgent";
+        case "today":
+          return isToday(task.dueDate);
+        default:
+          return true;
+      }
+    }
+
+    function renderTasks() {
+      taskListEl.innerHTML = "";
+
+      if (!tasks.length) {
+        emptyStateEl.style.display = "block";
+        updateStats();
+        return;
+      } else {
+        emptyStateEl.style.display = "none";
+      }
+
+      const filteredTasks = tasks.filter(applyFilter);
+
+      if (!filteredTasks.length) {
+        const info = document.createElement("div");
+        info.className = "empty-state";
+        info.innerHTML =
+          "<strong>No tasks match this filter.</strong> Try switching to 'All' or 'Active'.";
+        taskListEl.appendChild(info);
+        updateStats();
+        return;
+      }
+
+      filteredTasks.forEach(task => {
+        const taskCard = document.createElement("article");
+        taskCard.className = "task-card";
+        taskCard.dataset.id = task.id;
+
+        const mainRow = document.createElement("div");
+        mainRow.className = "task-main-row";
+
+        const checkboxWrap = document.createElement("div");
+        checkboxWrap.className = "checkbox-wrap";
+        const checkbox = document.createElement("button");
+        checkbox.className = "checkbox" + (task.completed ? " completed" : "");
+        checkbox.setAttribute("aria-label", "Toggle completed");
+        checkbox.addEventListener("click", () => toggleTaskCompleted(task.id));
+        checkboxWrap.appendChild(checkbox);
+
+        const taskContent = document.createElement("div");
+        taskContent.className = "task-content";
+
+        const titleRow = document.createElement("div");
+        titleRow.className = "task-title-row";
+
+        const title = document.createElement("div");
+        title.className = "task-title" + (task.completed ? " completed" : "");
+        title.textContent = task.title || "(Untitled task)";
+        titleRow.appendChild(title);
+
+        const actionsContainer = document.createElement("div");
+        actionsContainer.style.display = "flex";
+        actionsContainer.style.flexDirection = "column";
+        actionsContainer.style.gap = "4px";
+
+        const actionRowTop = document.createElement("div");
+        actionRowTop.className = "task-actions";
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "icon-button danger";
+        deleteBtn.innerHTML = "✕ Remove";
+        deleteBtn.addEventListener("click", () => deleteTask(task.id));
+
+        const quickCompleteBtn = document.createElement("button");
+        quickCompleteBtn.className = "icon-button";
+        quickCompleteBtn.innerHTML = task.completed ? "↺ Reset" : "✓ Done";
+        quickCompleteBtn.addEventListener("click", () => toggleTaskCompleted(task.id));
+
+        actionRowTop.appendChild(quickCompleteBtn);
+        actionRowTop.appendChild(deleteBtn);
+
+        actionsContainer.appendChild(actionRowTop);
+
+        titleRow.appendChild(actionsContainer);
+        taskContent.appendChild(titleRow);
+
+        const notesOrMeta = document.createElement("div");
+        notesOrMeta.className = "task-meta";
+
+        const priorityChip = document.createElement("span");
+        priorityChip.className = "meta-chip";
+        const priorityDot = document.createElement("span");
+        priorityDot.className = "priority-indicator " + getPriorityClass(task.priority);
+        priorityChip.appendChild(priorityDot);
+        const priorityText = document.createElement("span");
+        priorityText.textContent = getPriorityLabel(task.priority);
+        priorityChip.appendChild(priorityText);
+        notesOrMeta.appendChild(priorityChip);
+
+        if (task.dueDate) {
+          const dueChip = document.createElement("span");
+          dueChip.className = "meta-chip";
+          const dueLabel = document.createElement("span");
+          dueLabel.textContent = "Due";
+          const dueText = document.createElement("span");
+          dueText.textContent = formatDate(task.dueDate);
+          if (isToday(task.dueDate)) {
+            dueText.textContent += " · Today";
+          }
+          dueChip.appendChild(dueLabel);
+          dueChip.appendChild(dueText);
+          notesOrMeta.appendChild(dueChip);
+        }
+
+        if (task.notes) {
+          const notesChip = document.createElement("span");
+          notesChip.className = "meta-chip";
+          notesChip.textContent = task.notes;
+          notesOrMeta.appendChild(notesChip);
+        }
+
+        taskContent.appendChild(notesOrMeta);
+
+        const subtaskSection = document.createElement("div");
+        subtaskSection.className = "subtask-section";
+
+        const subHeader = document.createElement("div");
+        subHeader.className = "subtask-header";
+
+        const leftLabel = document.createElement("span");
+        const completedSubtasks = task.subtasks.filter(st => st.completed).length;
+        leftLabel.textContent = `Subtasks (${completedSubtasks}/${task.subtasks.length})`;
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "subtask-toggle";
+        toggle.innerHTML = "▾ Show subtasks";
+        let collapsed = true;
+
+        const subtaskList = document.createElement("div");
+        subtaskList.className = "subtask-list";
+        subtaskList.style.display = "none";
+
+        toggle.addEventListener("click", () => {
+          collapsed = !collapsed;
+          subtaskList.style.display = collapsed ? "none" : "flex";
+          toggle.innerHTML = collapsed ? "▾ Show subtasks" : "▴ Hide subtasks";
+        });
+
+        subHeader.appendChild(leftLabel);
+        subHeader.appendChild(toggle);
+        subtaskSection.appendChild(subHeader);
+
+        task.subtasks.forEach(sub => {
+          const subItem = document.createElement("div");
+          subItem.className = "subtask-item";
+
+          const subCheckboxWrap = document.createElement("div");
+          subCheckboxWrap.className = "checkbox-wrap";
+          const subCheckbox = document.createElement("button");
+          subCheckbox.className = "checkbox" + (sub.completed ? " completed" : "");
+          subCheckbox.addEventListener("click", () =>
+            toggleSubtaskCompleted(task.id, sub.id)
+          );
+          subCheckboxWrap.appendChild(subCheckbox);
+
+          const subTitle = document.createElement("div");
+          subTitle.className = "subtask-title" + (sub.completed ? " completed" : "");
+          subTitle.textContent = sub.title || "(Subtask)";
+
+          const subControls = document.createElement("div");
+          subControls.className = "subtask-controls";
+
+          const subDelete = document.createElement("button");
+          subDelete.type = "button";
+          subDelete.className = "tiny-button";
+          subDelete.textContent = "Remove";
+          subDelete.addEventListener("click", () =>
+            deleteSubtask(task.id, sub.id)
+          );
+
+          subControls.appendChild(subDelete);
+
+          const subTextWrap = document.createElement("div");
+          subTextWrap.style.flex = "1";
+          subTextWrap.appendChild(subTitle);
+          subTextWrap.appendChild(subControls);
+
+          subItem.appendChild(subCheckboxWrap);
+          subItem.appendChild(subTextWrap);
+
+          subtaskList.appendChild(subItem);
+        });
+
+        const subInputRow = document.createElement("div");
+        subInputRow.className = "subtask-input-row";
+
+        const subInput = document.createElement("input");
+        subInput.type = "text";
+        subInput.className = "input input-small";
+        subInput.placeholder = "Add a subtask...";
+
+        const subAddBtn = document.createElement("button");
+        subAddBtn.type = "button";
+        subAddBtn.className = "tiny-button";
+        subAddBtn.textContent = "＋ Add";
+
+        subAddBtn.addEventListener("click", () => {
+          const title = subInput.value.trim();
+          if (!title) return;
+          addSubtask(task.id, title);
+          subInput.value = "";
+        });
+
+        subInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            subAddBtn.click();
           }
         });
+
+        subInputRow.appendChild(subInput);
+        subInputRow.appendChild(subAddBtn);
+
+        subtaskList.appendChild(subInputRow);
+        subtaskSection.appendChild(subtaskList);
+
+        taskContent.appendChild(subtaskSection);
+
+        mainRow.appendChild(checkboxWrap);
+        mainRow.appendChild(taskContent);
+
+        taskCard.appendChild(mainRow);
+        taskListEl.appendChild(taskCard);
       });
-    });
+
+      updateStats();
+    }
+
+    function addTask() {
+      const title = taskTitleInput.value.trim();
+      const notes = taskNotesInput.value.trim();
+      const dueDate = taskDueInput.value || "";
+      const priority = getSelectedPriority();
+
+      if (!title) {
+        taskTitleInput.focus();
+        taskTitleInput.classList.add("shake");
+        setTimeout(() => taskTitleInput.classList.remove("shake"), 200);
+        return;
+      }
+
+      const newTask = {
+        id: uid(),
+        title,
+        notes,
+        dueDate,
+        priority,
+        completed: false,
+        subtasks: []
+      };
+
+      tasks.unshift(newTask);
+      saveTasks();
+      renderTasks();
+      taskTitleInput.value = "";
+      taskNotesInput.value = "";
+      taskDueInput.value = "";
+      taskTitleInput.focus();
+    }
+
+    function deleteTask(id) {
+      if (!confirm("Remove this task and all subtasks?")) return;
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleTaskCompleted(id) {
+      tasks = tasks.map(t => {
+        if (t.id === id) {
+          const completed = !t.completed;
+          return { ...t, completed };
+        }
+        return t;
+      });
+      saveTasks();
+      renderTasks();
+    }
+
+    function addSubtask(taskId, title) {
+      tasks = tasks.map(t => {
+        if (t.id === taskId) {
+          const newSub = { id: uid(), title, completed: false };
+          return {
+            ...t,
+            subtasks: [...t.subtasks, newSub]
+          };
+        }
+        return t;
+      });
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteSubtask(taskId, subtaskId) {
+      tasks = tasks.map(t => {
+        if (t.id === taskId) {
+          return {
+            ...t,
+            subtasks: t.subtasks.filter(st => st.id !== subtaskId)
+          };
+        }
+        return t;
+      });
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleSubtaskCompleted(taskId, subtaskId) {
+      tasks = tasks.map(t => {
+        if (t.id === taskId) {
+          return {
+            ...t,
+            subtasks: t.subtasks.map(st => {
+              if (st.id === subtaskId) {
+                return { ...st, completed: !st.completed };
+              }
+              return st;
+            })
+          };
+        }
+        return t;
+      });
+      saveTasks();
+      renderTasks();
+    }
+
+    function clearAllTasks() {
+      if (!tasks.length) return;
+      if (!confirm("Clear all tasks and subtasks for this browser?")) return;
+      tasks = [];
+      saveTasks();
+      renderTasks();
+    }
+
+    function setupPriorityChips() {
+      priorityChips.addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        priorityChips.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+    }
+
+    function setupFilters() {
+      filterButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          filterButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeFilter = btn.getAttribute("data-filter") || "all";
+          renderTasks();
+        });
+      });
+    }
+
+    function setupEvents() {
+      addTaskButton.addEventListener("click", addTask);
+      clearAllButton.addEventListener("click", clearAllTasks);
+
+      taskTitleInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addTask();
+        }
+      });
+
+      taskNotesInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.metaKey) {
+          e.preventDefault();
+          addTask();
+        }
+      });
+    }
+
+    function init() {
+      tasks = loadTasks();
+      setupPriorityChips();
+      setupFilters();
+      setupEvents();
+      renderTasks();
+    }
+
+    init();
   </script>
 </body>
 </html>
-```
