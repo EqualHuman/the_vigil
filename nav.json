@@ -1,0 +1,31 @@
+[
+  {
+    "id": "home",
+    "title": "Home",
+    "href": "/index.html",
+    "parent": null,
+    "kind": "page",
+    "notes": "Landing page"
+  },
+  {
+    "id": "animals",
+    "title": "Animals",
+    "href": "/animals/index.html",
+    "parent": "home",
+    "kind": "section"
+  },
+  {
+    "id": "endangered",
+    "title": "Endangered Animals",
+    "href": "/animals/endangered.html",
+    "parent": "animals",
+    "kind": "page"
+  },
+  {
+    "id": "donate-wwf",
+    "title": "Donate: WWF",
+    "href": "https://www.worldwildlife.org/",
+    "parent": "endangered",
+    "kind": "donate"
+  }
+]
