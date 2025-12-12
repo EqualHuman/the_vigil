@@ -17,8 +17,15 @@
       --muted-text: #9a9ca0;
       --accent: #D7A451;
       --accent-soft: rgba(215, 164, 81, 0.22);
-      --border-strong: rgba(215, 164, 81, 0.7);
       --border-soft: rgba(215, 164, 81, 0.35);
+
+      /* Rainbow section colors */
+      --sec-red: #ff6b6b;
+      --sec-orange: #ffb25c;
+      --sec-yellow: #ffe66d;
+      --sec-green: #64d5a1;
+      --sec-blue: #4dabf7;
+      --sec-violet: #c57dff;
     }
 
     * {
@@ -206,22 +213,84 @@
     }
 
     .nav-chip:hover {
-      background: rgba(215, 164, 81, 0.16);
+      transform: translateY(-1px);
+    }
+
+    /* Rainbow nav chips */
+
+    .nav-red {
+      border-color: rgba(255, 107, 107, 0.8);
+      background: rgba(255, 107, 107, 0.16);
+      color: #ffecec;
+    }
+
+    .nav-orange {
+      border-color: rgba(255, 178, 92, 0.8);
+      background: rgba(255, 178, 92, 0.16);
+      color: #fff2de;
+    }
+
+    .nav-yellow {
+      border-color: rgba(255, 230, 109, 0.85);
+      background: rgba(255, 230, 109, 0.18);
+      color: #fffbe3;
+    }
+
+    .nav-green {
+      border-color: rgba(100, 213, 161, 0.85);
+      background: rgba(100, 213, 161, 0.16);
+      color: #e4fff5;
+    }
+
+    .nav-blue {
+      border-color: rgba(77, 171, 247, 0.85);
+      background: rgba(77, 171, 247, 0.17);
+      color: #e4f3ff;
+    }
+
+    .nav-violet {
+      border-color: rgba(197, 125, 255, 0.85);
+      background: rgba(197, 125, 255, 0.18);
+      color: #f5e8ff;
     }
 
     /* Sections */
 
     section {
+      position: relative;
+      --sec-color: var(--accent);
       border-radius: 18px;
       border: 1px solid rgba(215, 164, 81, 0.22);
+      border-left-width: 4px;
+      border-left-color: var(--sec-color);
       background:
-        radial-gradient(circle at top left, rgba(215, 164, 81, 0.18), transparent 55%),
         linear-gradient(145deg, #101010, #050505);
       padding: 14px 14px 10px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      overflow: hidden;
+      isolation: isolate;
     }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle at top left, var(--sec-color) 0, transparent 55%);
+      opacity: 0.18;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .sec-red    { --sec-color: var(--sec-red); }
+    .sec-orange { --sec-color: var(--sec-orange); }
+    .sec-yellow { --sec-color: var(--sec-yellow); }
+    .sec-green  { --sec-color: var(--sec-green); }
+    .sec-blue   { --sec-color: var(--sec-blue); }
+    .sec-violet { --sec-color: var(--sec-violet); }
 
     .section-header {
       display: flex;
@@ -229,7 +298,7 @@
       align-items: flex-start;
       gap: 10px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(215, 164, 81, 0.22);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .section-title-block {
@@ -242,7 +311,7 @@
       font-size: 0.75rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted-text);
+      color: rgba(255, 255, 255, 0.65);
     }
 
     h2 {
@@ -250,6 +319,7 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       font-weight: 500;
+      color: var(--sec-color);
     }
 
     .section-desc {
@@ -260,12 +330,12 @@
     .section-tag {
       padding: 3px 8px;
       border-radius: 999px;
-      border: 1px solid rgba(215, 164, 81, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       font-size: 0.72rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(5, 5, 5, 0.9);
+      color: #050505;
+      background: var(--sec-color);
       white-space: nowrap;
     }
 
@@ -284,13 +354,13 @@
       align-items: start;
       padding: 6px 6px;
       border-radius: 10px;
-      background: rgba(3, 3, 3, 0.75);
+      background: rgba(3, 3, 3, 0.78);
     }
 
     .item-name {
       font-family: "Inter", monospace;
       font-size: 0.8rem;
-      color: var(--accent);
+      color: var(--sec-color);
       padding-right: 4px;
       word-break: break-all;
     }
@@ -441,16 +511,16 @@
 
   <nav class="section-nav">
     <div class="section-nav-label">Sections</div>
-    <a href="#page-layouts" class="nav-chip">Page layouts <span>01</span></a>
-    <a href="#content-blocks" class="nav-chip">Content blocks <span>02</span></a>
-    <a href="#interaction-utility" class="nav-chip">Interaction &amp; utility <span>03</span></a>
-    <a href="#content-types" class="nav-chip">Content types <span>04</span></a>
-    <a href="#support-donate" class="nav-chip">Support templates <span>05</span></a>
-    <a href="#system-style" class="nav-chip">System &amp; style <span>06</span></a>
+    <a href="#page-layouts" class="nav-chip nav-red">Page layouts <span>01</span></a>
+    <a href="#content-blocks" class="nav-chip nav-orange">Content blocks <span>02</span></a>
+    <a href="#interaction-utility" class="nav-chip nav-yellow">Interaction &amp; utility <span>03</span></a>
+    <a href="#content-types" class="nav-chip nav-green">Content types <span>04</span></a>
+    <a href="#support-donate" class="nav-chip nav-blue">Support templates <span>05</span></a>
+    <a href="#system-style" class="nav-chip nav-violet">System &amp; style <span>06</span></a>
   </nav>
 
-  <!-- 1. Page Layout Templates -->
-  <section id="page-layouts">
+  <!-- 1. Page Layout Templates (Red) -->
+  <section id="page-layouts" class="sec-red">
     <div class="section-header">
       <div class="section-title-block">
         <div class="section-eyebrow">Template library</div>
@@ -545,8 +615,8 @@
     </div>
   </section>
 
-  <!-- 2. Content Block / Section Templates -->
-  <section id="content-blocks">
+  <!-- 2. Content Block / Section Templates (Orange) -->
+  <section id="content-blocks" class="sec-orange">
     <div class="section-header">
       <div class="section-title-block">
         <div class="section-eyebrow">Template library</div>
@@ -639,8 +709,8 @@
     </div>
   </section>
 
-  <!-- 3. Interaction & Utility Templates -->
-  <section id="interaction-utility">
+  <!-- 3. Interaction & Utility Templates (Yellow) -->
+  <section id="interaction-utility" class="sec-yellow">
     <div class="section-header">
       <div class="section-title-block">
         <div class="section-eyebrow">Template library</div>
@@ -722,8 +792,8 @@
     </div>
   </section>
 
-  <!-- 4. Content-Type Specific Templates -->
-  <section id="content-types">
+  <!-- 4. Content-Type Specific Templates (Green) -->
+  <section id="content-types" class="sec-green">
     <div class="section-header">
       <div class="section-title-block">
         <div class="section-eyebrow">Template library</div>
@@ -795,8 +865,8 @@
     </div>
   </section>
 
-  <!-- 5. Donation & Support Templates -->
-  <section id="support-donate">
+  <!-- 5. Donation & Support Templates (Blue) -->
+  <section id="support-donate" class="sec-blue">
     <div class="section-header">
       <div class="section-title-block">
         <div class="section-eyebrow">Template library</div>
@@ -833,8 +903,8 @@
     </div>
   </section>
 
-  <!-- 6. System / Style Reference -->
-  <section id="system-style">
+  <!-- 6. System / Style Reference (Violet) -->
+  <section id="system-style" class="sec-violet">
     <div class="section-header">
       <div class="section-title-block">
         <div class="section-eyebrow">Template library</div>
