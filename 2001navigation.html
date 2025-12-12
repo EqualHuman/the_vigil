@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Vigil — Navigation Hub</title>
+  <meta name="color-scheme" content="dark light" />
+
+  <style>
+    :root{
+      --bg: #07080b;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(255,255,255,.04);
+      --border: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --muted2: rgba(255,255,255,.52);
+      --shadow: 0 16px 60px rgba(0,0,0,.45);
+      --ring: 0 0 0 3px rgba(255,255,255,.12);
+      --radius: 18px;
+
+      --ok: #33d17a;
+      --warn: #f6d32d;
+      --bad: #ff6b6b;
+      --chip: rgba(255,255,255,.08);
+      --chip2: rgba(255,255,255,.06);
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #f7f7fb;
+        --panel: rgba(0,0,0,.04);
+        --panel-2: rgba(0,0,0,.03);
+        --border: rgba(0,0,0,.10);
+        --text: rgba(0,0,0,.88);
+        --muted: rgba(0,0,0,.60);
+        --muted2: rgba(0,0,0,.48);
+        --shadow: 0 16px 60px rgba(0,0,0,.10);
+        --ring: 0 0 0 3px rgba(0,0,0,.10);
+        --chip: rgba(0,0,0,.06);
+        --chip2: rgba(0,0,0,.04);
+      }
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.07), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg));
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 18px 60px;
+    }
+
+    header{
+      display:flex;
+      gap:16px;
+      align-items:flex-end;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(24px, 3.2vw, 34px);
+      letter-spacing: -.02em;
+      line-height:1.1;
+    }
+    .subtitle{
+      margin-top:10px;
+      color:var(--muted);
+      max-width: 70ch;
+      font-size: 14.5px;
+      line-height:1.5;
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      padding: 14px 14px 12px;
+      background: linear-gradient(180deg, var(--panel), transparent);
+    }
+
+    .leftTools, .rightTools{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      background: var(--chip2);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-size: 13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ background: var(--chip); }
+    .btn:active{ transform: translateY(1px); }
+    .btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    .input{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.12);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      min-width: 260px;
+      max-width: 420px;
+      flex: 1 1 260px;
+    }
+    @media (prefers-color-scheme: light){
+      .input{ background: rgba(255,255,255,.60); }
+    }
+    .input:focus{ outline:none; box-shadow: var(--ring); }
+
+    .meta{
+      padding: 0 14px 14px;
+      color: var(--muted2);
+      font-size: 12.5px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .tree{
+      padding: 10px 12px 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .node{
+      margin: 8px 0;
+      padding-left: var(--indent, 0px);
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 10px;
+      border: 1px solid transparent;
+      border-radius: 16px;
+      background: var(--panel-2);
+      transition: border-color .15s ease, background .15s ease;
+      position: relative;
+    }
+    .row:hover{
+      border-color: var(--border);
+      background: rgba(255,255,255,.05);
+    }
+    @media (prefers-color-scheme: light){
+      .row:hover{ background: rgba(0,0,0,.03); }
+    }
+
+    .toggle{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background: var(--chip2);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+    .toggle:hover{ background: var(--chip); }
+    .toggle[aria-disabled="true"]{ opacity:.35; cursor:default; }
+
+    .content{
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .titleLine{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom: 4px;
+    }
+    .title{
+      font-weight: 620;
+      letter-spacing: -.01em;
+    }
+    .chip{
+      font-size: 11.5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--chip2);
+      color: var(--muted);
+    }
+    .url{
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+      word-break: break-all;
+      line-height: 1.35;
+    }
+    .notes{
+      margin-top: 6px;
+      font-size: 12.5px;
+      color: var(--muted2);
+      line-height: 1.45;
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex: 0 0 auto;
+      margin-left:auto;
+    }
+    .iconBtn{
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: var(--chip2);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+    }
+    .iconBtn:hover{ background: var(--chip); }
+    .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    a.link{
+      color: inherit;
+      text-decoration: none;
+    }
+    a.link:hover .title{ text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+    .children{
+      margin-top: 8px;
+      padding-left: 18px;
+      border-left: 1px dashed var(--border);
+    }
+
+    .statusDot{
+      width:10px; height:10px; border-radius:999px; display:inline-block; margin-right:6px;
+      background: rgba(255,255,255,.20);
+      border: 1px solid var(--border);
+      vertical-align: -1px;
+    }
+    .ok{ background: color-mix(in oklab, var(--ok), transparent 55%); border-color: color-mix(in oklab, var(--ok), var(--border) 70%); }
+    .bad{ background: color-mix(in oklab, var(--bad), transparent 55%); border-color: color-mix(in oklab, var(--bad), var(--border) 70%); }
+    .warn{ background: color-mix(in oklab, var(--warn), transparent 55%); border-color: color-mix(in oklab, var(--warn), var(--border) 70%); }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>The Vigil — Navigation Hub</h1>
+        <div class="subtitle">
+          A clean “map” of your pages and resources. Add items to the data list (below) and this page auto-organizes into a tree.
+        </div>
+      </div>
+    </header>
+
+    <section class="card" aria-label="Navigation hub">
+      <div class="toolbar">
+        <div class="leftTools">
+          <button class="btn" id="expandAll" type="button">Expand all</button>
+          <button class="btn" id="collapseAll" type="button">Collapse all</button>
+          <button class="btn" id="checkLinks" type="button" title="Checks relative/same-origin links best">Check links</button>
+        </div>
+        <div class="rightTools" style="flex:1">
+          <label class="sr-only" for="search">Search</label>
+          <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
+        </div>
+      </div>
+
+      <div class="meta">
+        <div id="metaLeft">Loading…</div>
+        <div id="metaRight">Tip: Use Tab/Enter to open/close sections.</div>
+      </div>
+
+      <div class="tree" id="tree"></div>
+    </section>
+  </div>
+
+<script>
+  /**
+   * ✅ EDIT HERE (simple + clean):
+   * - id: unique string
+   * - title: label
+   * - href: link (relative like "/index.html" or full "https://...")
+   * - parent: id of the parent item (null = top level)
+   * - kind: optional chip label (e.g., "page", "donate", "resource")
+   * - notes: optional description
+   */
+  const NAV_ITEMS = [
+    { id: "home", title: "Home", href: "/index.html", parent: null, kind: "page", notes: "Landing page" },
+
+    { id: "animals", title: "Animals", href: "/animals/index.html", parent: "home", kind: "section" },
+    { id: "endangered", title: "Endangered Animals", href: "/animals/endangered.html", parent: "animals", kind: "page" },
+    { id: "donate-wwf", title: "Donate: WWF", href: "https://www.worldwildlife.org/", parent: "endangered", kind: "donate" },
+
+    { id: "human", title: "Human Impact", href: "/human-impact/index.html", parent: "home", kind: "section" },
+    { id: "trafficking", title: "Trafficking Awareness", href: "/human-impact/trafficking.html", parent: "human", kind: "page" },
+    { id: "hotline", title: "National Human Trafficking Hotline", href: "https://humantraffickinghotline.org/", parent: "trafficking", kind: "resource" },
+
+    { id: "resources", title: "Resources", href: "/resources.html", parent: "home", kind: "page" }
+  ];
+
+  // ---------- Rendering logic (no need to edit) ----------
+  const treeEl = document.getElementById("tree");
+  const searchEl = document.getElementById("search");
+  const metaLeft = document.getElementById("metaLeft");
+
+  const expandAllBtn = document.getElementById("expandAll");
+  const collapseAllBtn = document.getElementById("collapseAll");
+  const checkLinksBtn = document.getElementById("checkLinks");
+
+  const byId = new Map(NAV_ITEMS.map(x => [x.id, x]));
+  const childrenByParent = new Map();
+  const expanded = new Set();
+
+  const linkStatus = new Map(); // id -> "ok"|"bad"|"warn"|""
+
+  let filter = "";
+
+  for (const item of NAV_ITEMS) {
+    const key = item.parent ?? "__root__";
+    if (!childrenByParent.has(key)) childrenByParent.set(key, []);
+    childrenByParent.get(key).push(item);
+  }
+  for (const [k, list] of childrenByParent.entries()) {
+    list.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
+  }
+
+  const isExternal = (href) => /^https?:\/\//i.test(href || "");
+  const isSameOriginOrRelative = (href) => {
+    if (!href) return false;
+    if (href.startsWith("/")) return true;
+    if (href.startsWith("./") || href.startsWith("../")) return true;
+    if (isExternal(href)) {
+      try { return new URL(href).origin === location.origin; } catch { return false; }
+    }
+    return false;
+  };
+
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function matches(item){
+    if (!filter) return true;
+    const hay = `${item.title||""} ${item.href||""} ${item.notes||""} ${(item.kind||"")}`.toLowerCase();
+    return hay.includes(filter);
+  }
+
+  function subtreeMatches(id){
+    const item = byId.get(id);
+    if (!item) return false;
+    if (matches(item)) return true;
+    const kids = childrenByParent.get(id) || [];
+    return kids.some(k => subtreeMatches(k.id));
+  }
+
+  function toggle(id){
+    if (expanded.has(id)) expanded.delete(id);
+    else expanded.add(id);
+    render();
+  }
+
+  function setAllExpanded(expand){
+    for (const item of NAV_ITEMS) {
+      const kids = childrenByParent.get(item.id) || [];
+      if (kids.length) {
+        if (expand) expanded.add(item.id);
+        else expanded.delete(item.id);
+      }
+    }
+    render();
+  }
+
+  async function copy(text){
+    try { await navigator.clipboard.writeText(text); } catch {}
+  }
+
+  function statusDot(id){
+    const st = linkStatus.get(id) || "";
+    const cls = st === "ok" ? "ok" : st === "bad" ? "bad" : st === "warn" ? "warn" : "";
+    return `<span class="statusDot ${cls}" aria-hidden="true"></span>`;
+  }
+
+  function nodeHTML(item, depth){
+    if (filter && !subtreeMatches(item.id)) return "";
+    const kids = childrenByParent.get(item.id) || [];
+    const hasKids = kids.length > 0;
+    const open = expanded.has(item.id);
+
+    const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
+    const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
+
+    const toggleBtn = hasKids
+      ? `<button class="toggle" type="button" aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(item.title)}" aria-expanded="${open}" onclick="window.__toggle('${item.id}')">
+          ${open ? "−" : "+"}
+        </button>`
+      : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
+
+    const target = isExternal(item.href) ? `target="_blank" rel="noreferrer"` : "";
+
+    return `
+      <div class="node" style="--indent:${Math.min(depth, 10) * 18}px">
+        <div class="row">
+          ${toggleBtn}
+
+          <div class="content">
+            <a class="link" href="${escapeHtml(item.href)}" ${target}>
+              <div class="titleLine">
+                ${statusDot(item.id)}
+                <span class="title">${escapeHtml(item.title)}</span>
+                ${chip}
+              </div>
+              <div class="url">${escapeHtml(item.href)}</div>
+            </a>
+            ${notes}
+          </div>
+
+          <div class="actions">
+            <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
+              onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">
+              ⧉
+            </button>
+          </div>
+        </div>
+
+        ${hasKids && open ? `<div class="children">
+          ${(kids.map(k => nodeHTML(k, depth + 1)).join(""))}
+        </div>` : ""}
+      </div>
+    `;
+  }
+
+  function render(){
+    const roots = childrenByParent.get("__root__") || [];
+    // auto-expand matching branches when searching
+    if (filter) {
+      for (const item of NAV_ITEMS) {
+        const kids = childrenByParent.get(item.id) || [];
+        if (kids.length && subtreeMatches(item.id)) expanded.add(item.id);
+      }
+    }
+
+    const shownCount = NAV_ITEMS.filter(i => !filter || subtreeMatches(i.id)).length;
+    metaLeft.textContent = `${shownCount} shown • ${NAV_ITEMS.length} total`;
+
+    const html = roots.map(r => nodeHTML(r, 0)).filter(Boolean).join("");
+    treeEl.innerHTML = html || `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
+  }
+
+  async function checkLinks(){
+    // Best effort: relative + same-origin links only (CORS can block external)
+    linkStatus.clear();
+    render();
+
+    const candidates = NAV_ITEMS.filter(i => isSameOriginOrRelative(i.href));
+    if (!candidates.length) return;
+
+    // Try HEAD first; fallback to GET if needed
+    for (const item of candidates) {
+      linkStatus.set(item.id, "warn"); // in-progress feel
+      render();
+
+      try{
+        const url = new URL(item.href, location.origin).toString();
+        let res = await fetch(url, { method:"HEAD", cache:"no-store" });
+        if (!res.ok && (res.status === 405 || res.status === 501)) {
+          res = await fetch(url, { method:"GET", cache:"no-store" });
+        }
+        linkStatus.set(item.id, res.ok ? "ok" : "bad");
+      } catch {
+        linkStatus.set(item.id, "bad");
+      }
+    }
+
+    render();
+  }
+
+  // Wire up
+  window.__toggle = toggle;
+  window.__copy = (href) => copy(href);
+
+  searchEl.addEventListener("input", (e) => {
+    filter = (e.target.value || "").trim().toLowerCase();
+    render();
+  });
+
+  expandAllBtn.addEventListener("click", () => setAllExpanded(true));
+  collapseAllBtn.addEventListener("click", () => setAllExpanded(false));
+  checkLinksBtn.addEventListener("click", checkLinks);
+
+  // Default: expand root level
+  for (const r of (childrenByParent.get("__root__") || [])) {
+    expanded.add(r.id);
+  }
+
+  render();
+</script>
+</body>
+</html>
