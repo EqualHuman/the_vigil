@@ -2,964 +2,1042 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Plan Docket • Vigil</title>
+  <title>Vigil • Plan docket</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #050505;
-      --bg-soft: #101010;
-      --bg-card: #111111;
-      --text: #F7F4F0;
-      --muted-text: #9a9ca0;
-      --accent: #D7A451;
-      --accent-soft: rgba(215, 164, 81, 0.22);
-      --border-soft: rgba(215, 164, 81, 0.35);
+      /* Base */
+      --bg: #050605;
+      --bg-alt: #0b0d0b;
+      --bg-card: #10120f;
+      --bg-soft: rgba(232, 221, 203, 0.03);
+      --border-soft: rgba(232, 221, 203, 0.18);
 
-      /* Rainbow section colors */
-      --sec-red: #ff6b6b;
-      --sec-orange: #ffb25c;
-      --sec-yellow: #ffe66d;
-      --sec-green: #64d5a1;
-      --sec-blue: #4dabf7;
-      --sec-violet: #c57dff;
+      /* Cottage-core leaning accents */
+      --accent: #e5c787;          /* warm gold */
+      --accent-soft: rgba(229, 199, 135, 0.30);
+      --fern: #8bb79b;            /* soft green */
+      --fern-soft: rgba(139, 183, 155, 0.25);
+      --rose: #d8a1a1;
+      --ink: #f7f4ef;
+      --muted: #94918a;
+
+      /* Status colors */
+      --status-idea: #9aa6ff;
+      --status-draft: #f8c36b;
+      --status-active: #8cd1b4;
+      --status-review: #e2a0ff;
+      --status-archive: #84889a;
+
+      --radius-card: 1.4rem;
+      --radius-pill: 999px;
+      --shadow-soft: 0 22px 40px rgba(0, 0, 0, 0.55);
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    html, body {
-      height: 100%;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: "Inter", sans-serif;
-      background: radial-gradient(circle at top, #191209 0, #050505 45%, #020202 100%);
-      color: var(--text);
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(213, 190, 145, 0.16), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(139, 183, 155, 0.16), transparent 55%),
+        linear-gradient(145deg, #050605, #050605 40%, #070808 100%);
+      color: var(--ink);
+      padding: 3rem 1.5rem 4rem;
       display: flex;
       justify-content: center;
-      align-items: stretch;
-      padding: 32px 16px;
     }
 
-    main {
+    .page {
       width: 100%;
       max-width: 1120px;
-      border-radius: 24px;
-      border: 1px solid var(--border-soft);
-      background:
-        radial-gradient(circle at 0% 0%, rgba(215, 164, 81, 0.09) 0, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(147, 110, 54, 0.12) 0, transparent 55%),
-        linear-gradient(135deg, rgba(10, 10, 10, 0.98), rgba(4, 4, 4, 0.99));
-      box-shadow:
-        0 26px 60px rgba(0, 0, 0, 0.75),
-        0 0 0 1px rgba(255, 255, 255, 0.02);
-      padding: 22px 22px 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      border-radius: 2rem;
+      background: linear-gradient(145deg, rgba(239, 229, 210, 0.09), rgba(7, 8, 7, 0.95));
+      padding: 1px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
 
-    header {
-      border-bottom: 1px solid rgba(215, 164, 81, 0.24);
-      padding-bottom: 16px;
+    .page-inner {
+      border-radius: 1.9rem;
+      background:
+        linear-gradient(145deg, rgba(232, 221, 203, 0.06), transparent 35%),
+        radial-gradient(circle at top right, rgba(213, 184, 117, 0.18), transparent 60%),
+        #050605;
+      padding: 2.2rem 2.4rem 2.1rem;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 1rem 2rem;
+      }
+      .page-inner {
+        padding: 1.6rem 1.4rem 1.8rem;
+      }
+    }
+
+    /* Header strip */
+    .page-meta {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
-    .header-left {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted-text);
-    }
-
-    h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(1.7rem, 2.5vw, 2.1rem);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-    }
-
-    .subline {
-      font-size: 0.9rem;
-      color: var(--muted-text);
-    }
-
-    .badge-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-end;
-      min-width: fit-content;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(215, 164, 81, 0.45);
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: linear-gradient(
-        135deg,
-        rgba(215, 164, 81, 0.16),
-        rgba(12, 8, 3, 0.2)
-      );
+    .page-meta span {
       white-space: nowrap;
     }
 
-    .meta-line {
-      font-size: 0.78rem;
-      color: var(--muted-text);
-      opacity: 0.95;
+    .page-meta-line {
+      flex-grow: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(149, 143, 132, 0.3), transparent);
     }
 
-    .meta-line span {
+    /* Hero header */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.6fr);
+      gap: 1.8rem;
+      margin-bottom: 1.8rem;
+    }
+
+    @media (max-width: 840px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-main h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 2.5vw, 2.3rem);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-tagline {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-breadcrumbs {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(232, 221, 203, 0.2);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      backdrop-filter: blur(14px);
+    }
+
+    .pill-amber {
+      background: radial-gradient(circle at top left, rgba(229, 199, 135, 0.18), transparent 55%);
+      border-color: rgba(229, 199, 135, 0.55);
+      color: #f7f2e8;
+    }
+
+    .pill-soft {
+      background: rgba(9, 11, 10, 0.65);
+      color: var(--muted);
+    }
+
+    .pill-dot {
+      width: 0.33rem;
+      height: 0.33rem;
+      border-radius: 999px;
+      background: currentColor;
       opacity: 0.8;
     }
 
-    .meta-line strong {
-      font-weight: 500;
-      color: var(--accent);
+    .hero-main p.explainer {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 32rem;
+      line-height: 1.7;
     }
 
-    .intro {
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
-      gap: 18px;
-      font-size: 0.9rem;
-      color: var(--muted-text);
+    /* How to use card */
+    .howto-card {
+      align-self: stretch;
+      border-radius: 1.3rem;
+      background:
+        radial-gradient(circle at top right, rgba(214, 190, 142, 0.25), transparent 60%),
+        rgba(6, 7, 6, 0.96);
+      border: 1px solid rgba(229, 199, 135, 0.5);
+      padding: 1.2rem 1.3rem 1.1rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .intro p {
-      line-height: 1.65;
+    .howto-card::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 1.15rem;
+      border: 1px dashed rgba(232, 221, 203, 0.28);
+      opacity: 0.7;
+      pointer-events: none;
     }
 
-    .note-box {
-      border-radius: 12px;
-      border: 1px dashed rgba(215, 164, 81, 0.5);
-      background: radial-gradient(circle at top left, rgba(215, 164, 81, 0.14), transparent 55%);
-      padding: 10px 12px;
-      font-size: 0.82rem;
+    .howto-heading {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
     }
 
-    .note-label {
-      font-size: 0.72rem;
+    .howto-heading h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 0.96rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent);
     }
 
-    /* Section nav */
+    .howto-heading span {
+      font-size: 0.7rem;
+      color: rgba(26, 17, 8, 0.85);
+      background: rgba(247, 239, 224, 0.8);
+      border-radius: var(--radius-pill);
+      padding: 0.12rem 0.5rem;
+    }
 
+    .howto-list {
+      font-size: 0.82rem;
+      color: rgba(247, 244, 239, 0.9);
+      padding-left: 0.9rem;
+      list-style: disc;
+    }
+
+    .howto-list li + li {
+      margin-top: 0.25rem;
+    }
+
+    /* Section navigation */
     .section-nav {
-      border-radius: 14px;
-      border: 1px solid rgba(215, 164, 81, 0.25);
-      background: radial-gradient(circle at top left, rgba(215, 164, 81, 0.16), transparent 60%);
-      padding: 10px 12px;
+      margin: 1.3rem 0 1.1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at left, rgba(139, 183, 155, 0.15), transparent 60%),
+                  rgba(9, 10, 9, 0.94);
+      border: 1px solid rgba(157, 176, 160, 0.5);
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
       align-items: center;
+      gap: 0.55rem;
+      font-size: 0.75rem;
     }
 
-    .section-nav-label {
-      font-size: 0.75rem;
+    .section-label {
+      font-size: 0.7rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted-text);
-      margin-right: 4px;
+      color: var(--muted);
+      margin-right: 0.25rem;
       white-space: nowrap;
     }
 
-    .nav-chip {
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(215, 164, 81, 0.4);
-      background: rgba(6, 6, 6, 0.9);
-      color: var(--text);
-      text-decoration: none;
+    .section-pill {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.42rem;
+      padding: 0.32rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(232, 221, 203, 0.35);
+      background: rgba(12, 14, 13, 0.95);
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
+      color: #f5f1ea;
+      text-decoration: none;
     }
 
-    .nav-chip span {
-      font-size: 0.65rem;
+    .section-pill span.index {
+      font-size: 0.7rem;
       opacity: 0.85;
     }
 
-    .nav-chip:hover {
-      transform: translateY(-1px);
+    .section-pill span.name {
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
-    /* Rainbow nav chips */
-
-    .nav-red {
-      border-color: rgba(255, 107, 107, 0.8);
-      background: rgba(255, 107, 107, 0.16);
-      color: #ffecec;
-    }
-
-    .nav-orange {
-      border-color: rgba(255, 178, 92, 0.8);
-      background: rgba(255, 178, 92, 0.16);
-      color: #fff2de;
-    }
-
-    .nav-yellow {
-      border-color: rgba(255, 230, 109, 0.85);
-      background: rgba(255, 230, 109, 0.18);
-      color: #fffbe3;
-    }
-
-    .nav-green {
-      border-color: rgba(100, 213, 161, 0.85);
-      background: rgba(100, 213, 161, 0.16);
-      color: #e4fff5;
-    }
-
-    .nav-blue {
-      border-color: rgba(77, 171, 247, 0.85);
-      background: rgba(77, 171, 247, 0.17);
-      color: #e4f3ff;
-    }
-
-    .nav-violet {
-      border-color: rgba(197, 125, 255, 0.85);
-      background: rgba(197, 125, 255, 0.18);
-      color: #f5e8ff;
-    }
-
-    /* Sections */
-
-    section {
-      position: relative;
-      --sec-color: var(--accent);
-      border-radius: 18px;
-      border: 1px solid rgba(215, 164, 81, 0.22);
-      border-left-width: 4px;
-      border-left-color: var(--sec-color);
+    .section-pill.highlight {
       background:
-        linear-gradient(145deg, #101010, #050505);
-      padding: 14px 14px 10px;
+        linear-gradient(120deg, rgba(232, 221, 203, 0.12), transparent),
+        rgba(18, 21, 18, 0.96);
+      border-color: rgba(229, 199, 135, 0.75);
+    }
+
+    .section-pill:hover {
+      transform: translateY(-1px);
+      border-color: rgba(229, 199, 135, 0.9);
+      background:
+        radial-gradient(circle at top left, rgba(229, 199, 135, 0.16), transparent 55%),
+        rgba(12, 13, 12, 0.98);
+    }
+
+    /* Track rows wrapper */
+    .tracks {
+      margin-top: 0.7rem;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      overflow: hidden;
-      isolation: isolate;
+      gap: 0.9rem;
     }
 
-    section::before {
+    .track {
+      border-radius: var(--radius-card);
+      background:
+        linear-gradient(120deg, rgba(232, 221, 203, 0.05), transparent 35%),
+        radial-gradient(circle at left, rgba(139, 183, 155, 0.12), transparent 55%),
+        rgba(7, 8, 7, 0.98);
+      border: 1px solid rgba(232, 221, 203, 0.16);
+      padding: 1.1rem 1.3rem 1.1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track::before {
       content: "";
       position: absolute;
-      inset: -30%;
-      background:
-        radial-gradient(circle at top left, var(--sec-color) 0, transparent 55%);
-      opacity: 0.18;
-      mix-blend-mode: screen;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .sec-red    { --sec-color: var(--sec-red); }
-    .sec-orange { --sec-color: var(--sec-orange); }
-    .sec-yellow { --sec-color: var(--sec-yellow); }
-    .sec-green  { --sec-color: var(--sec-green); }
-    .sec-blue   { --sec-color: var(--sec-blue); }
-    .sec-violet { --sec-color: var(--sec-violet); }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .section-title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .section-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.65);
-    }
-
-    h2 {
-      font-size: 1rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 500;
-      color: var(--sec-color);
-    }
-
-    .section-desc {
-      font-size: 0.82rem;
-      color: var(--muted-text);
-    }
-
-    .section-tag {
-      padding: 3px 8px;
+      inset-inline-start: 0.7rem;
+      inset-block-start: 0.9rem;
+      inset-block-end: 0.9rem;
+      width: 3px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #050505;
-      background: var(--sec-color);
-      white-space: nowrap;
+      background: linear-gradient(180deg,
+        rgba(229, 199, 135, 0.7),
+        rgba(216, 154, 141, 0.75),
+        rgba(139, 183, 155, 0.8)
+      );
+      opacity: 0.7;
     }
 
-    /* Item list */
-
-    .item-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .item-row {
+    .track-inner {
+      margin-left: 1.3rem;
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 2.4fr) minmax(0, 0.9fr);
-      gap: 8px;
-      align-items: start;
-      padding: 6px 6px;
-      border-radius: 10px;
-      background: rgba(3, 3, 3, 0.78);
+      grid-template-columns: minmax(0, 2.6fr) auto;
+      gap: 0.75rem 1rem;
+      align-items: flex-start;
     }
 
-    .item-name {
-      font-family: "Inter", monospace;
-      font-size: 0.8rem;
-      color: var(--sec-color);
-      padding-right: 4px;
-      word-break: break-all;
+    @media (max-width: 720px) {
+      .track-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
-    .item-desc {
-      font-size: 0.82rem;
-      color: var(--text);
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    .item-notes {
-      font-size: 0.75rem;
-      color: var(--muted-text);
+    .track-header {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 0.15rem;
+    }
+
+    .track-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .track-title {
+      font-size: 0.98rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f6f1e8;
+    }
+
+    .track-subtitle {
+      font-size: 0.84rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .track-meta {
+      display: flex;
+      flex-direction: column;
       align-items: flex-end;
-      text-align: right;
+      gap: 0.4rem;
+    }
+
+    .set-pill {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.9rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(232,221,203,0.14), transparent 60%),
+                  rgba(13, 14, 12, 0.98);
+      border: 1px solid rgba(232, 221, 203, 0.65);
+    }
+
+    .set-pill span.index {
+      opacity: 0.8;
+    }
+
+    .track-meta-note {
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    /* Template rows inside each track */
+    .template-grid {
+      margin-top: 0.7rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(232, 221, 203, 0.12);
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2.4fr) auto;
+      column-gap: 1rem;
+      row-gap: 0.45rem;
+      font-size: 0.8rem;
+      align-items: center;
+    }
+
+    @media (max-width: 720px) {
+      .template-grid {
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 2.6fr);
+        grid-template-rows: auto;
+      }
+      .template-grid .template-status {
+        grid-column: 1 / -1;
+        justify-self: flex-start;
+      }
+    }
+
+    .template-name {
+      font-weight: 500;
+      color: #f6f2ea;
+    }
+
+    .template-desc {
+      color: var(--muted);
+    }
+
+    .template-status {
+      justify-self: flex-end;
     }
 
     .status-pill {
-      align-self: flex-start;
-      padding: 2px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.18rem 0.7rem;
       border-radius: 999px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      border: 1px solid rgba(215, 164, 81, 0.5);
+      border: 1px solid rgba(232, 221, 203, 0.3);
+      background: rgba(9, 10, 9, 0.9);
+      white-space: nowrap;
     }
 
-    .status-todo {
-      background: rgba(5, 5, 5, 0.96);
-      color: var(--muted-text);
+    .status-pill span.dot {
+      width: 0.36rem;
+      height: 0.36rem;
+      border-radius: 999px;
+      background: currentColor;
     }
 
-    .status-wip {
-      background: rgba(215, 164, 81, 0.16);
-      color: var(--accent);
+    .status-idea {
+      color: var(--status-idea);
+      border-color: rgba(154, 166, 255, 0.5);
+      background: rgba(22, 28, 54, 0.9);
     }
 
-    .status-live {
-      background: rgba(43, 132, 96, 0.25);
-      color: #a2f0c8;
-      border-color: rgba(129, 217, 173, 0.7);
+    .status-draft {
+      color: var(--status-draft);
+      border-color: rgba(248, 195, 107, 0.5);
+      background: rgba(53, 38, 14, 0.92);
     }
 
-    .note-muted {
+    .status-active {
+      color: var(--status-active);
+      border-color: rgba(140, 209, 180, 0.55);
+      background: rgba(10, 36, 26, 0.95);
+    }
+
+    .status-review {
+      color: var(--status-review);
+      border-color: rgba(226, 160, 255, 0.5);
+      background: rgba(40, 14, 51, 0.94);
+    }
+
+    .status-archive {
+      color: var(--status-archive);
+      border-color: rgba(132, 136, 154, 0.5);
+      background: rgba(20, 21, 27, 0.96);
+    }
+
+    /* Legend + footer */
+    .legend {
+      margin-top: 1.3rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(232, 221, 203, 0.16);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.2rem;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .legend-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .legend-set {
+      opacity: 0.8;
+    }
+
+    .legend-statuses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .legend-statuses .status-pill {
+      font-size: 0.66rem;
+      padding-inline: 0.5rem;
+    }
+
+    .legend-path {
       font-size: 0.72rem;
       opacity: 0.8;
     }
 
-    /* Footer */
-
-    footer {
-      margin-top: 2px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(215, 164, 81, 0.22);
-      font-size: 0.75rem;
-      color: var(--muted-text);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    footer .path {
-      font-family: "Inter", monospace;
-      font-size: 0.72rem;
+    .legend-path span {
       color: var(--accent);
     }
 
-    @media (max-width: 820px) {
-      body {
-        padding: 18px 12px;
-      }
-
-      main {
-        border-radius: 18px;
-        padding: 18px 14px 20px;
-      }
-
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .badge-row {
-        align-items: flex-start;
-      }
-
-      .intro {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .item-row {
-        grid-template-columns: minmax(0, 1.4fr) minmax(0, 2.6fr);
-        grid-template-rows: auto auto;
-      }
-
-      .item-notes {
-        grid-column: 1 / -1;
-        align-items: flex-start;
-        text-align: left;
-        padding-top: 4px;
-      }
-    }
   </style>
 </head>
 <body>
-<main>
-  <header>
-    <div class="header-left">
-      <div class="eyebrow">Internal roadmap</div>
-      <h1>Vigil plan docket</h1>
-      <p class="subline">
-        One page to park active tracks, templates, and next steps so previous threads stay visible.
-      </p>
-      <p class="meta-line">
-        <span>Main project:</span> <strong>Vigil</strong>
-        &nbsp;·&nbsp;
-        <span>Current track:</span> <strong>Template library</strong>
-      </p>
+  <main class="page">
+    <div class="page-inner">
+
+      <!-- Top meta strip -->
+      <div class="page-meta">
+        <span>Internal roadmap</span>
+        <div class="page-meta-line"></div>
+        <span>Vigil plan docket</span>
+      </div>
+
+      <!-- Hero area -->
+      <section class="hero">
+        <div class="hero-main">
+          <h1>Vigil plan docket</h1>
+          <p class="hero-tagline">
+            One page to keep active tracks, template sets, and next steps stitched together.
+          </p>
+
+          <div class="hero-breadcrumbs">
+            Main project: <strong>Vigil</strong>
+            <span style="opacity:0.5;">·</span>
+            Current track: <strong>Template library</strong>
+          </div>
+
+          <div class="hero-badges">
+            <div class="pill pill-amber">
+              <span class="pill-dot"></span>
+              <span>Hidden workspace</span>
+            </div>
+            <div class="pill pill-soft">
+              <span class="pill-dot"></span>
+              <span>Status labels can be edited directly in the code.</span>
+            </div>
+          </div>
+
+          <p class="explainer">
+            This page gathers the high-level outline for the template library. Each section groups related files.
+            Every row is a planned template set with a short description and a status tag. When a template moves from
+            idea to in use, only this page needs to be touched to keep the track in view.
+          </p>
+        </div>
+
+        <aside class="howto-card" aria-label="How to use this page">
+          <div class="howto-heading">
+            <h2>How to use</h2>
+            <span>Quick notes</span>
+          </div>
+          <ul class="howto-list">
+            <li>Change the status pill text and class when work begins, pauses, or ships.</li>
+            <li>Drop links or dates into the notes column once a template lives in the repo.</li>
+            <li>Duplicate full sections when new subprojects or collections appear.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- Section navigation -->
+      <nav class="section-nav" aria-label="Template sections">
+        <span class="section-label">Sections</span>
+
+        <button class="section-pill highlight" type="button">
+          <span class="index">01</span>
+          <span class="name">Page layouts</span>
+        </button>
+
+        <button class="section-pill" type="button">
+          <span class="index">02</span>
+          <span class="name">Content blocks</span>
+        </button>
+
+        <button class="section-pill" type="button">
+          <span class="index">03</span>
+          <span class="name">Interaction &amp; utility</span>
+        </button>
+
+        <button class="section-pill" type="button">
+          <span class="index">04</span>
+          <span class="name">Content types</span>
+        </button>
+
+        <button class="section-pill" type="button">
+          <span class="index">05</span>
+          <span class="name">Support templates</span>
+        </button>
+
+        <button class="section-pill" type="button">
+          <span class="index">06</span>
+          <span class="name">System &amp; style</span>
+        </button>
+      </nav>
+
+      <!-- Track rows -->
+      <section class="tracks">
+
+        <!-- Track 1 -->
+        <article class="track" id="track-page-layouts">
+          <div class="track-inner">
+            <div>
+              <header class="track-header">
+                <div class="track-eyebrow">Template library</div>
+                <div class="track-title">Page layout design sets</div>
+                <p class="track-subtitle">
+                  Full-page skeletons for core Vigil pages: landing, case dossiers, archives, resource directories.
+                </p>
+              </header>
+
+              <div class="template-grid">
+                <div class="template-name">Home layout</div>
+                <div class="template-desc">Hero + current focus strip, featured threads, and newsletter band.</div>
+                <div class="template-status">
+                  <span class="status-pill status-active">
+                    <span class="dot"></span>
+                    Active build
+                  </span>
+                </div>
+
+                <div class="template-name">Case dossier layout</div>
+                <div class="template-desc">Timeline sidebar, key facts grid, and evidence links block.</div>
+                <div class="template-status">
+                  <span class="status-pill status-draft">
+                    <span class="dot"></span>
+                    Drafting
+                  </span>
+                </div>
+
+                <div class="template-name">Series index layout</div>
+                <div class="template-desc">Filterable index for ongoing series and recurring themes.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Library archive layout</div>
+                <div class="template-desc">Chronological + faceted archive of cases, essays, and signals.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="track-meta">
+              <div class="set-pill">
+                <span class="index">Set 01 ·</span> Layouts
+              </div>
+              <div class="track-meta-note">
+                Anchor pages for Vigil’s main navigation.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Track 2 -->
+        <article class="track" id="track-content-blocks">
+          <div class="track-inner">
+            <div>
+              <header class="track-header">
+                <div class="track-eyebrow">Template library</div>
+                <div class="track-title">Content block kit</div>
+                <p class="track-subtitle">
+                  Reusable components: cards, meta rows, pull quotes, callouts, and evidence notes.
+                </p>
+              </header>
+
+              <div class="template-grid">
+                <div class="template-name">Case summary card</div>
+                <div class="template-desc">Compact overview with tags, region, and last updated stamp.</div>
+                <div class="template-status">
+                  <span class="status-pill status-active">
+                    <span class="dot"></span>
+                    Active build
+                  </span>
+                </div>
+
+                <div class="template-name">Pull quote block</div>
+                <div class="template-desc">Highlight for key lines or sourced quotes within essays.</div>
+                <div class="template-status">
+                  <span class="status-pill status-draft">
+                    <span class="dot"></span>
+                    Drafting
+                  </span>
+                </div>
+
+                <div class="template-name">Source note strip</div>
+                <div class="template-desc">Slim row to log source count, trust markers, and last review date.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Action footer</div>
+                <div class="template-desc">Space for suggested reading, donation links, and practical steps.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="track-meta">
+              <div class="set-pill">
+                <span class="index">Set 02 ·</span> Blocks
+              </div>
+              <div class="track-meta-note">
+                Mix-and-match pieces for every layout.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Track 3 -->
+        <article class="track" id="track-interaction">
+          <div class="track-inner">
+            <div>
+              <header class="track-header">
+                <div class="track-eyebrow">Template library</div>
+                <div class="track-title">Interaction &amp; utility</div>
+                <p class="track-subtitle">
+                  Navigation patterns, search and filter shells, small forms, and newsletter capture.
+                </p>
+              </header>
+
+              <div class="template-grid">
+                <div class="template-name">Search + filter bar</div>
+                <div class="template-desc">Combined search field, filters, and topic chips.</div>
+                <div class="template-status">
+                  <span class="status-pill status-draft">
+                    <span class="dot"></span>
+                    Drafting
+                  </span>
+                </div>
+
+                <div class="template-name">Newsletter panel</div>
+                <div class="template-desc">Small, low-friction sign-up block for monthly dispatch.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Reading progress</div>
+                <div class="template-desc">Slim progress indicator for long-form pieces.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Bookmark toggle</div>
+                <div class="template-desc">Lightweight way to mark cases for later review.</div>
+                <div class="template-status">
+                  <span class="status-pill status-archive">
+                    <span class="dot"></span>
+                    Parked
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="track-meta">
+              <div class="set-pill">
+                <span class="index">Set 03 ·</span> Interaction
+              </div>
+              <div class="track-meta-note">
+                Utility pieces for navigation and discovery.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Track 4 -->
+        <article class="track" id="track-content-types">
+          <div class="track-inner">
+            <div>
+              <header class="track-header">
+                <div class="track-eyebrow">Template library</div>
+                <div class="track-title">Content type frames</div>
+                <p class="track-subtitle">
+                  Frames for essays, signals, dispatches, case briefs, and long investigations.
+                </p>
+              </header>
+
+              <div class="template-grid">
+                <div class="template-name">Signal note</div>
+                <div class="template-desc">Short-form signal layout with context and link set.</div>
+                <div class="template-status">
+                  <span class="status-pill status-active">
+                    <span class="dot"></span>
+                    Active build
+                  </span>
+                </div>
+
+                <div class="template-name">Long investigation</div>
+                <div class="template-desc">Chaptered layout with inline references and summary rail.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Quiet ledger</div>
+                <div class="template-desc">Data-forward view for finance or resource trails.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Reading list</div>
+                <div class="template-desc">Curated references, books, and reports in one place.</div>
+                <div class="template-status">
+                  <span class="status-pill status-draft">
+                    <span class="dot"></span>
+                    Drafting
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="track-meta">
+              <div class="set-pill">
+                <span class="index">Set 04 ·</span> Content
+              </div>
+              <div class="track-meta-note">
+                Shapes for each recurring content style.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Track 5 -->
+        <article class="track" id="track-support">
+          <div class="track-inner">
+            <div>
+              <header class="track-header">
+                <div class="track-eyebrow">Template library</div>
+                <div class="track-title">Support templates</div>
+                <p class="track-subtitle">
+                  Utility pages and behind-the-scenes layouts that keep everything running quietly.
+                </p>
+              </header>
+
+              <div class="template-grid">
+                <div class="template-name">In-progress screen</div>
+                <div class="template-desc">Gentle placeholder for unfinished sections or drafts.</div>
+                <div class="template-status">
+                  <span class="status-pill status-active">
+                    <span class="dot"></span>
+                    Active build
+                  </span>
+                </div>
+
+                <div class="template-name">Error / 404</div>
+                <div class="template-desc">Soft, cottage-core styled error page with simple navigation home.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Internal notes index</div>
+                <div class="template-desc">Index for internal-only planning pages like this docket.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Changelog</div>
+                <div class="template-desc">Timeline of shipped templates and structural changes.</div>
+                <div class="template-status">
+                  <span class="status-pill status-review">
+                    <span class="dot"></span>
+                    Ready to ship
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="track-meta">
+              <div class="set-pill">
+                <span class="index">Set 05 ·</span> Support
+              </div>
+              <div class="track-meta-note">
+                Quiet helpers that keep Vigil tidy.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Track 6 -->
+        <article class="track" id="track-system-style">
+          <div class="track-inner">
+            <div>
+              <header class="track-header">
+                <div class="track-eyebrow">Template library</div>
+                <div class="track-title">System &amp; style</div>
+                <p class="track-subtitle">
+                  Tokens, grids, typographic scales, and reusable patterns that keep the project consistent.
+                </p>
+              </header>
+
+              <div class="template-grid">
+                <div class="template-name">Design tokens</div>
+                <div class="template-desc">Color, type, spacing, and elevation variables.</div>
+                <div class="template-status">
+                  <span class="status-pill status-active">
+                    <span class="dot"></span>
+                    Active build
+                  </span>
+                </div>
+
+                <div class="template-name">Grid &amp; rhythm guide</div>
+                <div class="template-desc">Documentation for column widths and vertical rhythm.</div>
+                <div class="template-status">
+                  <span class="status-pill status-draft">
+                    <span class="dot"></span>
+                    Drafting
+                  </span>
+                </div>
+
+                <div class="template-name">Component index</div>
+                <div class="template-desc">Reference list for all shared components and where they live.</div>
+                <div class="template-status">
+                  <span class="status-pill status-idea">
+                    <span class="dot"></span>
+                    Idea bank
+                  </span>
+                </div>
+
+                <div class="template-name">Accessibility checks</div>
+                <div class="template-desc">Checklist layout for color contrast, semantics, and keyboard paths.</div>
+                <div class="template-status">
+                  <span class="status-pill status-archive">
+                    <span class="dot"></span>
+                    Parked
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="track-meta">
+              <div class="set-pill">
+                <span class="index">Set 06 ·</span> System
+              </div>
+              <div class="track-meta-note">
+                Under-the-surface rules for Vigil.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Legend + footer -->
+      <footer class="legend">
+        <div class="legend-left">
+          <span class="legend-set">Additional tracks can sit below this line for other subprojects with their own section sets.</span>
+          <div class="legend-statuses">
+            <span class="status-pill status-idea"><span class="dot"></span>Idea</span>
+            <span class="status-pill status-draft"><span class="dot"></span>Draft</span>
+            <span class="status-pill status-active"><span class="dot"></span>Active</span>
+            <span class="status-pill status-review"><span class="dot"></span>Review</span>
+            <span class="status-pill status-archive"><span class="dot"></span>Parked</span>
+          </div>
+        </div>
+        <div class="legend-path">
+          /internal/plan-docket <span>•</span> Template status lives here.
+        </div>
+      </footer>
+
     </div>
-    <div class="badge-row">
-      <div class="badge">Hidden workspace</div>
-      <div class="meta-line">
-        Status labels can be edited directly in the code.
-      </div>
-    </div>
-  </header>
-
-  <div class="intro">
-    <p>
-      This page holds the high level outline for the template library. Each section groups related files. Each row is a
-      single planned template with a short description and a status tag. When a template moves from idea to in use, only
-      this page needs to be updated to keep the whole track in view.
-    </p>
-    <div class="note-box">
-      <div class="note-label">How to use</div>
-      <div>
-        • Change the status pill text and class when work begins or ships.<br />
-        • Add notes like links or dates in the notes column.<br />
-        • Duplicate whole sections when new sub projects appear.
-      </div>
-    </div>
-  </div>
-
-  <nav class="section-nav">
-    <div class="section-nav-label">Sections</div>
-    <a href="#page-layouts" class="nav-chip nav-red">Page layouts <span>01</span></a>
-    <a href="#content-blocks" class="nav-chip nav-orange">Content blocks <span>02</span></a>
-    <a href="#interaction-utility" class="nav-chip nav-yellow">Interaction &amp; utility <span>03</span></a>
-    <a href="#content-types" class="nav-chip nav-green">Content types <span>04</span></a>
-    <a href="#support-donate" class="nav-chip nav-blue">Support templates <span>05</span></a>
-    <a href="#system-style" class="nav-chip nav-violet">System &amp; style <span>06</span></a>
-  </nav>
-
-  <!-- 1. Page Layout Templates (Red) -->
-  <section id="page-layouts" class="sec-red">
-    <div class="section-header">
-      <div class="section-title-block">
-        <div class="section-eyebrow">Template library</div>
-        <h2>Page layout templates</h2>
-        <p class="section-desc">
-          Full page skeletons to reuse across Vigil. Each file is a starting point for new public pages.
-        </p>
-      </div>
-      <div class="section-tag">Set 01</div>
-    </div>
-
-    <div class="item-list">
-      <div class="item-row">
-        <div class="item-name">HomeLayout.html</div>
-        <div class="item-desc">
-          Home layout with hero header, two or three featured cases, an intro block, a current focus strip,
-          newsletter slot, and a compact “how Vigil works” section.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Base for homepage rebuild.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">ArticleLayout.html</div>
-        <div class="item-desc">
-          Long form article layout with title, dek, meta row, scrollable body, inline pull quotes,
-          and space for references or footnotes.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">CaseDossierLayout.html</div>
-        <div class="item-desc">
-          Dossier layout for a single case. Status bar for open, stalled, archived, a side timeline column,
-          key facts grid, and evidence links block.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Important for first case launch.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">SeriesIndex.html</div>
-        <div class="item-desc">
-          Index page for a series or theme for example Signals or Quiet Ledgers. Header, filter tabs or chips,
-          and a grid or list of cards for each entry.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">LibraryArchive.html</div>
-        <div class="item-desc">
-          Chronological and filterable archive of all pieces. Search bar, topic and region and type filters,
-          and list layout with concise meta rows.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">AboutLayout.html</div>
-        <div class="item-desc">
-          About layout for future edits and variants. Holds mission, methodology, notes, and any reference sections
-          while staying consistent with current About.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-wip">In progress</span>
-          <span class="note-muted">Current About can be refactored into this.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">ResourcesDirectory.html</div>
-        <div class="item-desc">
-          Curated resources directory for organizations, reading, and tools. Grouped sections with compact cards and tags
-          such as Beginner friendly, In depth, and Urgent.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. Content Block / Section Templates (Orange) -->
-  <section id="content-blocks" class="sec-orange">
-    <div class="section-header">
-      <div class="section-title-block">
-        <div class="section-eyebrow">Template library</div>
-        <h2>Content block templates</h2>
-        <p class="section-desc">
-          Reusable sections that can drop into any page. Built once, copied everywhere.
-        </p>
-      </div>
-      <div class="section-tag">Set 02</div>
-    </div>
-
-    <div class="item-list">
-      <div class="item-row">
-        <div class="item-name">HeroSection.html</div>
-        <div class="item-desc">
-          General purpose hero section. Swap in different vh headers as needed. Optional call to action row for
-          subscribe, view latest case, or open dossier.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">CardsGrid.html</div>
-        <div class="item-desc">
-          Card patterns for cases, articles, signals, and resources. Includes compact, feature, and timeline card variants
-          so pages stay visually consistent.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Will be reused across many layouts.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">TimelineSection.html</div>
-        <div class="item-desc">
-          Vertical timeline component with events, years, and short blurbs plus an optional zoom in card that highlights
-          one event in more detail.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">StatsPanel.html</div>
-        <div class="item-desc">
-          Stats section based on the current stats styling. Header, three to six stat blocks,
-          and a micro footnote area for source notes.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">QuoteBlock.html</div>
-        <div class="item-desc">
-          Large typographic quote component with a source line and optional tag that marks quotes as on record
-          or anonymous.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">MethodologyBlock.html</div>
-        <div class="item-desc">
-          Structured methodology section for any case or article. Columns for sources, limitations,
-          verification, and updates to keep process visible.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">CalloutBanner.html</div>
-        <div class="item-desc">
-          Wide banner for important notices, new series, or major updates. Can echo alert band or ribbon styling
-          and drop into multiple layouts.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Interaction & Utility Templates (Yellow) -->
-  <section id="interaction-utility" class="sec-yellow">
-    <div class="section-header">
-      <div class="section-title-block">
-        <div class="section-eyebrow">Template library</div>
-        <h2>Interaction and utility</h2>
-        <p class="section-desc">
-          Navigation, forms, and utility screens that support the main experience.
-        </p>
-      </div>
-      <div class="section-tag">Set 03</div>
-    </div>
-
-    <div class="item-list">
-      <div class="item-row">
-        <div class="item-name">NavHeaderFooter.html</div>
-        <div class="item-desc">
-          Shared header, navigation, and footer skeleton. Clean space for wordmark, subtle hover on nav,
-          and a small tagline line.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-wip">In progress</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">EmailSubscribeBlock.html</div>
-        <div class="item-desc">
-          Mailing list subscribe block in Vigil style. Input, button, and a one line reassurance about how email
-          is used.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">ContactNote.html</div>
-        <div class="item-desc">
-          Small neutral note block for contact information when it is needed, so contact text does not spread
-          across multiple sections.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Use sparingly near disclaimers.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">SearchResults.html</div>
-        <div class="item-desc">
-          Layout for search results with a query label, count, and a list of result cards that align with
-          LibraryArchive styling.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">404Page.html</div>
-        <div class="item-desc">
-          On brand not found page with gentle copy and links back to main areas such as current cases,
-          archive, and About.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">InProgressPlaceholder.html</div>
-        <div class="item-desc">
-          Reusable placeholder pattern for unfinished sections. Can drop into any layout as a temporary stand in
-          while content is built.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-wip">In progress</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Content-Type Specific Templates (Green) -->
-  <section id="content-types" class="sec-green">
-    <div class="section-header">
-      <div class="section-title-block">
-        <div class="section-eyebrow">Template library</div>
-        <h2>Content type templates</h2>
-        <p class="section-desc">
-          Opinionated formats for different kinds of Vigil content so similar pieces feel consistent.
-        </p>
-      </div>
-      <div class="section-tag">Set 04</div>
-    </div>
-
-    <div class="item-list">
-      <div class="item-row">
-        <div class="item-name">CaseBriefTemplate.html</div>
-        <div class="item-desc">
-          Compact case brief format. Sections for summary, who is affected, what changed, what is missing,
-          and outbound links.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Useful for quick dispatch style posts.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">SignalReportTemplate.html</div>
-        <div class="item-desc">
-          Short signal entry format with status tag such as emerging, escalating, or stabilizing, last verified time,
-          and a concise description.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">FieldNotesTemplate.html</div>
-        <div class="item-desc">
-          Layout for field notes and smaller observations. Tag row, date, location, and short vignettes for fragments
-          that are not full cases yet.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">BookReviewTemplate.html</div>
-        <div class="item-desc">
-          Structure for book reviews. Sections for context, why it matters, where it fits, and key cautions
-          or limitations.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Pairs with ResourcesDirectory.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">OrgSpotlightTemplate.html</div>
-        <div class="item-desc">
-          Organization spotlight format. Who they are, what they do, how to support, and any caveats,
-          with a consistent area for external links.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Donation & Support Templates (Blue) -->
-  <section id="support-donate" class="sec-blue">
-    <div class="section-header">
-      <div class="section-title-block">
-        <div class="section-eyebrow">Template library</div>
-        <h2>Donation and support</h2>
-        <p class="section-desc">
-          Patterns for routing attention and support outward in a consistent way.
-        </p>
-      </div>
-      <div class="section-tag">Set 05</div>
-    </div>
-
-    <div class="item-list">
-      <div class="item-row">
-        <div class="item-name">SupportStrip.html</div>
-        <div class="item-desc">
-          Narrow strip that can sit under an article or case. Holds a short list of relevant organizations
-          with buttons or links.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">SupportDirectoryBlock.html</div>
-        <div class="item-desc">
-          Block that lists multiple organizations with short blurbs, tags, and visit links,
-          styled to align with OrgSpotlight.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. System / Style Reference (Violet) -->
-  <section id="system-style" class="sec-violet">
-    <div class="section-header">
-      <div class="section-title-block">
-        <div class="section-eyebrow">Template library</div>
-        <h2>System and style reference</h2>
-        <p class="section-desc">
-          Internal helper pages to keep typography, buttons, and colors consistent while new layouts are built.
-        </p>
-      </div>
-      <div class="section-tag">Set 06</div>
-    </div>
-
-    <div class="item-list">
-      <div class="item-row">
-        <div class="item-name">TypeScaleReference.html</div>
-        <div class="item-desc">
-          Page that shows heading levels, body text, captions, and spacing. Used as a quick reference
-          when composing new components.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-          <span class="note-muted">Helpful while refining hierarchy.</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">ButtonsAndChips.html</div>
-        <div class="item-desc">
-          Gallery of buttons, tags, pills, and badges in one place for easy copy and paste into other templates.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-
-      <div class="item-row">
-        <div class="item-name">ColorTokensShowcase.html</div>
-        <div class="item-desc">
-          Visual swatches for background, accent, highlight, and related tokens. A quick board for testing
-          new components against the Vigil palette.
-        </div>
-        <div class="item-notes">
-          <span class="status-pill status-todo">Todo</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div>
-      Additional tracks can be added below this line for other sub projects with their own section sets.
-    </div>
-    <div class="path">
-      /internal/plan-docket
-    </div>
-  </footer>
-</main>
+  </main>
 </body>
 </html>
+
