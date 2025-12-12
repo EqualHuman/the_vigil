@@ -15,249 +15,212 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, #1a1a2e 0%, #050509 60%, #000000 100%);
+      background: radial-gradient(circle at top, #151628 0%, #050510 55%, #020208 100%);
       overflow: hidden;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    /* Ceiling bar */
     .ceiling {
       position: absolute;
       top: 0;
       width: 100%;
       height: 40px;
-      background: linear-gradient(to right, #111, #222, #111);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(to right, #050508, #15151f, #050508);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
     }
 
-    /* Rope that lantern hangs from */
-    .rope {
-      position: relative;
-      width: 2px;
-      height: 140px;
-      background: repeating-linear-gradient(
-        to bottom,
-        #d9d9d9 0,
-        #d9d9d9 6px,
-        #b3b3b3 6px,
-        #b3b3b3 12px
-      );
-      margin-top: 40px;
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
-    }
-
-    /* Container that swings (rope + lantern together) */
     .lantern-wrapper {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       transform-origin: top center;
-      animation: swing 3.5s ease-in-out infinite;
+      animation: swing 4.5s ease-in-out infinite;
     }
 
-    /* Lantern body */
+    .rope {
+      width: 2px;
+      height: 130px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(180,180,180,0.5));
+      margin-top: 40px;
+      box-shadow: 0 0 6px rgba(255,255,255,0.35);
+    }
+
     .lantern {
       position: relative;
-      width: 130px;
-      height: 180px;
-      background: radial-gradient(circle at 30% 20%, #ffdca8 0%, #ffb347 30%, #ff7b25 65%, #b8351b 100%);
-      border-radius: 60px;
+      width: 120px;
+      height: 185px;
+      margin-top: 6px;
+      border-radius: 58px;
+      background:
+        radial-gradient(circle at 50% 30%, #ffe7c4 0%, #ffd39c 24%, #ffa64f 55%, #e26b21 90%);
       box-shadow:
-        0 0 25px rgba(255, 194, 120, 0.8),
-        0 0 55px rgba(255, 140, 56, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: visible;
-      border: 3px solid rgba(120, 35, 15, 0.8);
-      animation: glow 2.8s ease-in-out infinite;
+        0 0 38px rgba(255, 198, 130, 0.95),
+        0 0 80px rgba(255, 183, 90, 0.7);
+      overflow: hidden;
+      border: 2px solid rgba(130, 45, 16, 0.8);
     }
 
-    /* Lantern ribs */
+    /* soft inner shading & ribs */
     .lantern::before {
       content: "";
       position: absolute;
-      inset: 10px 16px;
+      inset: 10px 14px;
       border-radius: 50px;
       background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.25), transparent 45%),
         linear-gradient(
+          to right,
+          rgba(0,0,0,0.25),
+          transparent 35%,
+          transparent 65%,
+          rgba(0,0,0,0.25)
+        ),
+        repeating-linear-gradient(
           to bottom,
-          rgba(160, 38, 18, 0.35) 0,
-          rgba(160, 38, 18, 0.35) 7%,
-          transparent 7%,
-          transparent 13%,
-          rgba(160, 38, 18, 0.35) 13%,
-          rgba(160, 38, 18, 0.35) 20%,
-          transparent 20%,
-          transparent 27%,
-          rgba(160, 38, 18, 0.35) 27%,
-          rgba(160, 38, 18, 0.35) 34%,
-          transparent 34%,
-          transparent 41%,
-          rgba(160, 38, 18, 0.35) 41%,
-          rgba(160, 38, 18, 0.35) 48%,
-          transparent 48%,
-          transparent 55%,
-          rgba(160, 38, 18, 0.35) 55%,
-          rgba(160, 38, 18, 0.35) 62%,
-          transparent 62%
+          rgba(160, 80, 28, 0.45) 0,
+          rgba(160, 80, 28, 0.45) 6px,
+          rgba(0, 0, 0, 0) 6px,
+          rgba(0, 0, 0, 0) 13px
         );
-      opacity: 0.9;
+      opacity: 0.85;
+      box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.45);
     }
 
-    /* Top and bottom metal rings */
+    /* extra outer glow halo */
+    .lantern::after {
+      content: "";
+      position: absolute;
+      inset: -25px;
+      border-radius: inherit;
+      background: radial-gradient(circle, rgba(255, 204, 140, 0.75), transparent 65%);
+      z-index: -1;
+      filter: blur(10px);
+    }
+
     .lantern-ring {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      width: 90px;
-      height: 12px;
-      background: linear-gradient(to right, #3b1e14, #6b3b25, #3b1e14);
+      width: 92px;
+      height: 14px;
+      background: linear-gradient(to right, #3b1e14, #6c3b26, #3b1e14);
       border-radius: 999px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+      box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.7),
+        0 0 10px rgba(0,0,0,0.6);
     }
 
     .lantern-ring.top {
-      top: -10px;
+      top: -12px;
     }
 
     .lantern-ring.bottom {
-      bottom: -10px;
+      bottom: -12px;
     }
 
-    /* Simple kanji-style character (just decorative) */
-    .lantern-character {
+    /* pull handle instead of tassel string */
+    .handle {
       position: relative;
-      z-index: 1;
-      font-size: 46px;
-      color: #4b0c05;
-      text-shadow: 0 0 10px rgba(255, 224, 156, 0.9);
-      filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
-    }
-
-    /* Tassel */
-    .tassel {
-      position: relative;
-      margin-top: 12px;
-      width: 6px;
-      height: 55px;
-      background: linear-gradient(to bottom, #ffc57a, #ff9933, #b64811);
+      margin-top: 20px;
+      width: 10px;
+      height: 60px;
       border-radius: 999px;
-      box-shadow: 0 0 12px rgba(255, 153, 51, 0.7);
-      animation: tassel-swing 3.5s ease-in-out infinite;
+      background: linear-gradient(to bottom, #ffcd80, #f89b38, #c75b16);
+      box-shadow:
+        0 0 12px rgba(255, 165, 70, 0.8),
+        0 6px 10px rgba(0,0,0,0.7);
       transform-origin: top center;
+      animation: handle-swing 4.5s ease-in-out infinite;
     }
 
-    .tassel::before {
+    .handle::before {
       content: "";
       position: absolute;
-      top: -6px;
+      top: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 16px;
-      height: 8px;
-      background: linear-gradient(to right, #b64811, #ffb347, #b64811);
+      width: 18px;
+      height: 10px;
       border-radius: 999px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(to right, #a94a18, #f1aa52, #a94a18);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
-    .tassel::after {
+    .handle::after {
       content: "";
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
       width: 22px;
-      height: 12px;
-      background: radial-gradient(circle at 50% 0%, #ffcc80, #b64811 70%);
+      height: 14px;
       border-radius: 999px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+      background: radial-gradient(circle at 50% 0%, #ffd28b, #c75b16 80%);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.8);
     }
 
-    /* Tiny floating particles for atmosphere */
+    /* small firefly-like particles */
     .particle {
       position: absolute;
       width: 3px;
       height: 3px;
       border-radius: 50%;
-      background: rgba(255, 230, 180, 0.8);
-      box-shadow: 0 0 8px rgba(255, 230, 180, 0.9);
-      animation: float-up 10s linear infinite;
-      opacity: 0.6;
+      background: rgba(255, 230, 180, 0.85);
+      box-shadow: 0 0 10px rgba(255, 230, 180, 0.95);
+      animation: float-up 12s linear infinite;
+      opacity: 0.0;
     }
 
-    .particle:nth-child(1) { left: 20%; animation-duration: 12s; animation-delay: -2s; }
-    .particle:nth-child(2) { left: 35%; animation-duration: 9s;  animation-delay: -4s; }
-    .particle:nth-child(3) { left: 50%; animation-duration: 11s; animation-delay: -1s; }
-    .particle:nth-child(4) { left: 65%; animation-duration: 8s;  animation-delay: -6s; }
-    .particle:nth-child(5) { left: 80%; animation-duration: 10s; animation-delay: -3s; }
+    .particle:nth-child(1) { left: 18%; animation-duration: 13s; animation-delay: -2s; }
+    .particle:nth-child(2) { left: 36%; animation-duration: 10s; animation-delay: -5s; }
+    .particle:nth-child(3) { left: 55%; animation-duration: 11s; animation-delay: -1s; }
+    .particle:nth-child(4) { left: 71%; animation-duration: 9s;  animation-delay: -7s; }
+    .particle:nth-child(5) { left: 85%; animation-duration: 12s; animation-delay: -4s; }
 
-    /* Animations */
     @keyframes swing {
-      0%   { transform: rotate(4deg) translateY(0); }
-      25%  { transform: rotate(-4deg) translateY(1px); }
-      50%  { transform: rotate(3deg) translateY(0); }
-      75%  { transform: rotate(-3deg) translateY(-1px); }
-      100% { transform: rotate(4deg) translateY(0); }
+      0%   { transform: rotate(2.5deg); }
+      25%  { transform: rotate(-2.5deg); }
+      50%  { transform: rotate(2deg); }
+      75%  { transform: rotate(-2deg); }
+      100% { transform: rotate(2.5deg); }
     }
 
-    @keyframes glow {
-      0%   { box-shadow: 0 0 22px rgba(255, 194, 120, 0.75), 0 0 52px rgba(255, 140, 56, 0.45); }
-      50%  { box-shadow: 0 0 30px rgba(255, 219, 157, 1),     0 0 70px rgba(255, 173, 90, 0.8); }
-      100% { box-shadow: 0 0 22px rgba(255, 194, 120, 0.75),  0 0 52px rgba(255, 140, 56, 0.45); }
-    }
-
-    @keyframes tassel-swing {
-      0%   { transform: rotate(7deg); }
-      25%  { transform: rotate(-9deg); }
-      50%  { transform: rotate(6deg); }
-      75%  { transform: rotate(-7deg); }
-      100% { transform: rotate(7deg); }
+    @keyframes handle-swing {
+      0%   { transform: rotate(4deg); }
+      25%  { transform: rotate(-5deg); }
+      50%  { transform: rotate(3deg); }
+      75%  { transform: rotate(-4deg); }
+      100% { transform: rotate(4deg); }
     }
 
     @keyframes float-up {
-      0% {
-        bottom: -10px;
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.7;
-      }
-      85% {
-        opacity: 0.7;
-      }
-      100% {
-        bottom: 105vh;
-        opacity: 0;
-      }
+      0%   { bottom: -10px; opacity: 0; }
+      15%  { opacity: 0.7; }
+      85%  { opacity: 0.7; }
+      100% { bottom: 105vh; opacity: 0; }
     }
   </style>
 </head>
 <body>
   <div class="ceiling"></div>
 
-  <!-- Decorative particles -->
+  <!-- fireflies -->
   <div class="particle"></div>
   <div class="particle"></div>
   <div class="particle"></div>
   <div class="particle"></div>
   <div class="particle"></div>
 
-  <!-- Swinging lantern -->
+  <!-- swinging lantern -->
   <div class="lantern-wrapper">
     <div class="rope"></div>
 
     <div class="lantern">
       <div class="lantern-ring top"></div>
       <div class="lantern-ring bottom"></div>
-
-      <!-- You can replace this character with any kanji you like -->
-      <div class="lantern-character">灯</div>
     </div>
 
-    <div class="tassel"></div>
+    <div class="handle"></div>
   </div>
 </body>
 </html>
