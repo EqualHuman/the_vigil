@@ -3,9 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Vigil — Navigation Hub</title>
+  <title> Vigil — Navigation Hub</title>
   <meta name="color-scheme" content="dark light" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
+
+  
   <style>
     :root{
       --bg: #07080b;
@@ -33,33 +38,70 @@
     }
 
     @media (prefers-color-scheme: light){
-      :root{
-        --bg: #f7f7fb;
-        --panel: rgba(0,0,0,.04);
-        --panel-2: rgba(0,0,0,.03);
-        --border: rgba(0,0,0,.10);
-        --text: rgba(0,0,0,.88);
-        --muted: rgba(0,0,0,.60);
-        --muted2: rgba(0,0,0,.48);
-        --shadow: 0 16px 60px rgba(0,0,0,.10);
-        --ring: 0 0 0 3px rgba(0,0,0,.10);
-        --chip: rgba(0,0,0,.06);
-        --chip2: rgba(0,0,0,.04);
-      }
-    }
+     :root{
+  /* Neon Aurora theme (no orange/yellow) */
+  --bg0: #050510;
+  --bg1: #070a1c;
+  --panel: rgba(255,255,255,.06);
+  --panel-2: rgba(255,255,255,.045);
+  --border: rgba(255,255,255,.14);
+  --text: rgba(255,255,255,.93);
+  --muted: rgba(255,255,255,.68);
+  --muted2: rgba(255,255,255,.55);
+
+  --accentA: #6d5efc;   /* violet */
+  --accentB: #22d3ee;   /* cyan */
+  --accentC: #ff4fd8;   /* pink */
+  --danger: #ff5a7a;
+  --ok: #33d17a;
+
+  --shadow: 0 18px 70px rgba(0,0,0,.55);
+  --ring: 0 0 0 3px rgba(34,211,238,.22);
+  --radius: 20px;
+
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+  --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+
 
     *{ box-sizing:border-box; }
- body{
+body{
   margin:0;
   font-family: var(--sans);
   color:var(--text);
-  background:
-    var(--glow),
-    radial-gradient(900px 520px at 90% 20%, rgba(255,255,255,.07), transparent 60%),
-    radial-gradient(900px 520px at 10% 80%, rgba(255,255,255,.05), transparent 60%),
-    linear-gradient(180deg, var(--bg), var(--bg));
   min-height:100vh;
+
+  background:
+    radial-gradient(900px 520px at 15% 10%, color-mix(in oklab, var(--accentB), transparent 78%), transparent 65%),
+    radial-gradient(900px 520px at 90% 20%, color-mix(in oklab, var(--accentA), transparent 80%), transparent 60%),
+    radial-gradient(1100px 650px at 50% 110%, color-mix(in oklab, var(--accentC), transparent 82%), transparent 60%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+  position: relative;
+  overflow-x:hidden;
 }
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:-40px;
+  pointer-events:none;
+  background:
+    radial-gradient(closest-side at 25% 25%, rgba(34,211,238,.18), transparent 60%),
+    radial-gradient(closest-side at 75% 35%, rgba(109,94,252,.16), transparent 62%),
+    radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
+  filter: blur(22px);
+  opacity:.9;
+  animation: drift 14s var(--ease) infinite alternate;
+  z-index: -1;
+}
+
+@keyframes drift{
+  from{ transform: translate3d(-10px,-10px,0) scale(1.02); }
+  to  { transform: translate3d(14px,10px,0)  scale(1.05); }
+}
+
 
 
     .wrap{
@@ -332,7 +374,167 @@
 .btn:active{
   transform: translateY(1px) scale(.99);
 }
+/* Better headline presence */
+h1{
+  font-weight: 750;
+  letter-spacing: -.03em;
+  background: linear-gradient(90deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
+/* Subtle animated underline “energy” */
+header .subtitle code{
+  font-family: var(--mono);
+  font-size: .95em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+}
+
+/* Card becomes glassy + alive */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  backdrop-filter: blur(14px);
+  transform: translateZ(0);
+}
+
+/* Toolbar gradient bar */
+.toolbar{
+  background:
+    linear-gradient(90deg,
+      color-mix(in oklab, var(--accentB), transparent 88%),
+      transparent 30%,
+      color-mix(in oklab, var(--accentA), transparent 88%) 60%,
+      color-mix(in oklab, var(--accentC), transparent 90%));
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+/* Buttons: neon edge + motion */
+.btn{
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+}
+.btn:hover{
+  background: rgba(255,255,255,.09);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.30);
+}
+.btn:active{ transform: translateY(0px) scale(.99); }
+.btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+/* Search input: nicer focus */
+.input{
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.20);
+  transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.input:focus{
+  border-color: color-mix(in oklab, var(--accentB), rgba(255,255,255,.16) 40%);
+  box-shadow: 0 0 0 3px rgba(34,211,238,.18);
+}
+
+/* Row hover = pop + glow */
+.row{
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+  transition: transform .14s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.row:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.18);
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+}
+
+/* Toggle + copy button glow on hover */
+.toggle, .iconBtn{
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+}
+.toggle:hover, .iconBtn:hover{
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 0 0 3px rgba(109,94,252,.12);
+}
+.toggle:active, .iconBtn:active{ transform: translateY(1px); }
+
+/* Chips get a neon edge */
+.chip{
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+
+/* URL text uses mono font */
+.url{ font-family: var(--mono); }
+
+/* Animated “connector” line for children */
+.children{
+  border-left: 1px dashed rgba(255,255,255,.18);
+  position: relative;
+}
+.children::before{
+  content:"";
+  position:absolute;
+  left:-1px;
+  top:0;
+  bottom:0;
+  width:2px;
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--accentB), transparent 65%),
+    color-mix(in oklab, var(--accentA), transparent 70%),
+    color-mix(in oklab, var(--accentC), transparent 75%));
+  opacity:.55;
+  filter: blur(.2px);
+}
+
+/* Smooth appearance (fade/slide in) */
+.tree .node{
+  animation: rise .22s var(--ease) both;
+}
+@keyframes rise{
+  from{ opacity:0; transform: translateY(4px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  body::before, .tree .node{ animation: none !important; }
+  .btn, .row, .toggle, .iconBtn{ transition: none !important; }
+}
+/* Kind-based dot coloring */
+.dot-k{ background: rgba(255,255,255,.20); }
+
+.dot-page{
+  background: color-mix(in oklab, var(--accentB), transparent 55%);
+  border-color: rgba(34,211,238,.35);
+}
+
+.dot-section{
+  background: color-mix(in oklab, var(--accentA), transparent 55%);
+  border-color: rgba(109,94,252,.35);
+}
+
+.dot-donate{
+  background: color-mix(in oklab, var(--accentC), transparent 55%);
+  border-color: rgba(255,79,216,.35);
+}
+
+.dot-resource{
+  background: color-mix(in oklab, var(--ok), transparent 60%);
+  border-color: rgba(51,209,122,.35);
+}
+
+
+      
   </style>
 </head>
 
@@ -442,11 +644,23 @@ subtitle :))  </div>
     try { await navigator.clipboard.writeText(text); } catch {}
   }
 
-  function statusDot(id){
-    const st = linkStatus.get(id) || "";
-    const cls = st === "ok" ? "ok" : st === "bad" ? "bad" : st === "warn" ? "warn" : "";
-    return `<span class="statusDot ${cls}" aria-hidden="true"></span>`;
-  }
+ function statusDot(id){
+  const item = byId.get(id);
+  const kind = (item?.kind || "").toLowerCase();
+
+  const kindClass =
+    kind === "page" ? "dot-page" :
+    kind === "section" ? "dot-section" :
+    kind === "donate" ? "dot-donate" :
+    kind === "resource" ? "dot-resource" :
+    "dot-k";
+
+  const st = linkStatus.get(id) || "";
+  const cls = st === "ok" ? "ok" : st === "bad" ? "bad" : st === "warn" ? "warn" : "";
+
+  return `<span class="statusDot ${cls} ${kindClass}" aria-hidden="true"></span>`;
+}
+
 
   function nodeHTML(item, depth){
     if (filter && !subtreeMatches(item.id)) return "";
