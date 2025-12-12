@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cherry Blossom Path Ambience</title>
+  <title>Lantern Desktop – Cherry Blossom Lounge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     * {
@@ -16,9 +16,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #020512;
-      overflow: hidden;
+      background: radial-gradient(circle at top, #11152e 0, #040614 60%);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #f9f4ff;
+      overflow: hidden;
     }
 
     .scene {
@@ -28,165 +29,442 @@
       aspect-ratio: 16 / 9;
       border-radius: 26px;
       overflow: hidden;
-      box-shadow:
-        0 24px 50px rgba(0, 0, 0, 0.85),
-        0 0 40px rgba(110, 90, 255, 0.25);
-      isolation: isolate;
       background:
-        radial-gradient(circle at top, rgba(255, 192, 255, 0.25), transparent 60%),
-        #000;
+        radial-gradient(circle at 10% 0, rgba(255, 189, 236, 0.26), transparent 60%),
+        radial-gradient(circle at 90% 0, rgba(186, 204, 255, 0.2), transparent 60%),
+        linear-gradient(to top, #262b3a 0, #11152b 55%, #1c1f38 100%);
+      box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.85),
+        0 0 42px rgba(120, 96, 255, 0.25);
+      isolation: isolate;
     }
 
-    /* Background photo */
-    .bg-image {
+    /* faint “monitor glass” shine */
+    .scene::before {
+      content: "";
       position: absolute;
       inset: 0;
-      background-image: url("cherry-path.jpg"); /* <-- put your image here */
-      background-size: cover;
-      background-position: center;
-      filter: saturate(1.12) contrast(1.02);
-      transform-origin: center;
-      animation: slowDrift 40s ease-in-out infinite alternate;
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.12),
+        transparent 35%,
+        transparent 65%,
+        rgba(255, 255, 255, 0.03));
+      mix-blend-mode: soft-light;
+      pointer-events: none;
       z-index: 0;
     }
 
-    /* Soft atmospheric overlay */
-    .overlay {
+    .top-bar {
       position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 25%, rgba(255, 210, 240, 0.35), transparent 55%),
-        radial-gradient(circle at 80% 10%, rgba(255, 190, 230, 0.35), transparent 55%),
-        linear-gradient(to top, rgba(10, 10, 30, 0.65), rgba(40, 20, 70, 0.25));
-      mix-blend-mode: soft-light;
-      z-index: 1;
+      inset: 0 0 auto 0;
+      height: 52px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 5;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(to bottom,
+        rgba(5, 6, 15, 0.6),
+        rgba(5, 6, 15, 0.1));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .fog {
-      position: absolute;
-      left: -10%;
-      right: -10%;
-      bottom: -5%;
-      height: 35%;
-      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.25), transparent 60%);
-      mix-blend-mode: screen;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    /* Title (optional – matches your “Shrine Lounge” text) */
-    .title-wrap {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      z-index: 4;
-      color: rgba(255, 245, 255, 0.9);
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-      letter-spacing: 0.18em;
+    .logo {
+      font-size: 14px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
+      opacity: 0.85;
     }
 
-    .title {
-      font-size: 15px;
-    }
-
-    .subtitle {
-      margin-top: 4px;
+    .top-right {
+      display: flex;
+      gap: 10px;
       font-size: 11px;
-      letter-spacing: 0.15em;
       opacity: 0.8;
     }
 
-    /* Lanterns */
-    .lantern {
+    .top-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, rgba(255, 209, 244, 0.35), rgba(35, 40, 70, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .desktop {
       position: absolute;
-      width: 60px;
-      height: 90px;
-      transform-origin: top center;
-      z-index: 3;
-      animation: lanternSwing 5s ease-in-out infinite;
+      inset: 52px 18px 18px 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(260px, 1.6fr);
+      gap: 18px;
+      padding: 16px;
+      z-index: 1;
     }
 
-    /* Each lantern will have different size/position/timing */
-    .lantern.small { width: 38px; height: 60px; }
-    .lantern.medium { width: 48px; height: 75px; }
-    .lantern.large { width: 64px; height: 96px; }
-
-    /* Positioning along the path – tweak these if you want */
-    .lantern.l1 { top: 24%; left: 63%; animation-duration: 4.4s; }
-    .lantern.l2 { top: 31%; left: 53%; animation-duration: 5.2s; }
-    .lantern.l3 { top: 38%; left: 44%; animation-duration: 5.7s; }
-    .lantern.l4 { top: 46%; left: 36%; animation-duration: 4.9s; }
-    .lantern.l5 { top: 55%; left: 29%; animation-duration: 5.6s; }
-    .lantern.l6 { top: 63%; left: 22%; animation-duration: 4.7s; }
-
-    .lantern-rope {
-      width: 2px;
-      height: 30px;
-      margin: 0 auto;
-      background: linear-gradient(to bottom, rgba(230, 220, 200, 0.9), rgba(110, 90, 60, 0.9));
-    }
-
-    .lantern-body {
-      position: relative;
-      margin: 0 auto;
-      width: 100%;
-      height: calc(100% - 16px);
-      background: radial-gradient(circle at 50% 10%, #fff9dd, #fcd38d);
-      border-radius: 10px 10px 14px 14px;
-      box-shadow:
-        0 0 18px rgba(255, 210, 140, 0.95),
-        0 0 40px rgba(255, 190, 120, 0.75);
-      overflow: hidden;
-      transform: perspective(80px) rotateX(6deg);
-    }
-
-    /* Shape it more like the reference lanterns (slightly trapezoid) */
-    .lantern-body::before {
-      content: "";
+    /* Sakura “trees” at the edges for ambience */
+    .tree {
       position: absolute;
-      inset: 6% 16%;
-      border-radius: 4px;
-      border: 2px solid rgba(180, 110, 40, 0.85);
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+      bottom: 0;
+      width: 32%;
+      height: 70%;
+      z-index: 0;
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.7));
     }
 
-    .lantern-body::after {
-      /* vertical ribs */
-      content: "";
-      position: absolute;
-      inset: 8% 32%;
-      border-left: 2px solid rgba(210, 130, 45, 0.85);
-      border-right: 2px solid rgba(210, 130, 45, 0.85);
-      opacity: 0.7;
-    }
+    .tree.left { left: -6%; transform: scaleX(-1); }
+    .tree.right { right: -6%; }
 
-    .lantern-cap {
+    .tree-trunk {
       position: absolute;
-      bottom: -10px;
+      bottom: 6%;
       left: 50%;
       transform: translateX(-50%);
-      width: 60%;
-      height: 14px;
+      width: 32px;
+      height: 40%;
+      background: linear-gradient(to right, #3b2313, #221308, #3b2313);
       border-radius: 999px;
-      background: linear-gradient(to bottom, #d4a65a, #845a29);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.75);
     }
 
-    /* Extra glow halo behind the lantern */
-    .lantern-glow {
+    .tree-canopy {
       position: absolute;
-      inset: -40%;
+      bottom: 32%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 200, 140, 0.55), transparent 70%);
-      mix-blend-mode: screen;
-      z-index: -1;
-      animation: lanternPulse 3.4s ease-in-out infinite alternate;
+      background:
+        radial-gradient(circle at 20% 20%, #ffe5f0, transparent 55%),
+        radial-gradient(circle at 70% 30%, #ffd1e3, transparent 60%),
+        radial-gradient(circle at 40% 80%, #f9c5d1, transparent 55%);
+      box-shadow:
+        0 0 24px rgba(249, 197, 209, 0.55),
+        0 0 60px rgba(249, 197, 209, 0.3);
+      opacity: 0.96;
     }
 
-    /* Petals */
+    /* “Dock” at bottom */
+    .dock {
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      width: 60%;
+      max-width: 520px;
+      height: 36px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.16), transparent 70%);
+      box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 14px;
+    }
+
+    .dock-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fffdd4, #ffc96f);
+      box-shadow: 0 0 6px rgba(255, 205, 130, 0.9);
+      opacity: 0.85;
+    }
+
+    /* Generic glass window style */
+    .window {
+      position: relative;
+      border-radius: 18px;
+      padding: 12px 14px 14px;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 213, 235, 0.14), transparent 70%),
+        rgba(10, 9, 18, 0.87);
+      box-shadow:
+        0 16px 28px rgba(0, 0, 0, 0.75),
+        0 0 24px rgba(110, 96, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
+
+    .window-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.85;
+    }
+
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+    }
+
+    .win-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffe0f0, #f58cff);
+      opacity: 0.8;
+    }
+
+    .window-sub {
+      font-size: 11px;
+      opacity: 0.55;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Music window */
+    .music-window {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .music-inner {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+      box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.8),
+        0 0 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .music-inner iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+    }
+
+    .music-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+
+    .pill-link {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-decoration: none;
+      color: inherit;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: radial-gradient(circle at 20% 0, rgba(255, 241, 210, 0.25), rgba(25, 21, 40, 0.95));
+    }
+
+    .pill-link span {
+      font-size: 13px;
+      transform: translateY(1px);
+    }
+
+    /* Side column window */
+    .side-window {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .note-list {
+      font-size: 12px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .note-list li {
+      margin-bottom: 4px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: radial-gradient(circle at 30% 0, rgba(255, 210, 244, 0.3), rgba(25, 24, 46, 0.95));
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      opacity: 0.9;
+    }
+
+    /* Desktop buddy */
+    .buddy-zone {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    .buddy {
+      position: relative;
+      width: 90px;
+      height: 110px;
+      transform-origin: 50% 100%;
+      animation: buddyFloat 4.2s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    .buddy-glow {
+      position: absolute;
+      inset: 20% 5% 5% 5%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0, rgba(255, 238, 200, 0.95), rgba(255, 194, 120, 0.4));
+      filter: blur(2px);
+      box-shadow:
+        0 0 22px rgba(255, 216, 150, 0.95),
+        0 0 40px rgba(255, 194, 120, 0.9);
+    }
+
+    .buddy-body {
+      position: absolute;
+      inset: 10% 14% 18% 14%;
+      border-radius: 50% 50% 45% 45%;
+      background: radial-gradient(circle at 50% 0, #fff9da, #ffd28a);
+      box-shadow:
+        inset 0 -4px 10px rgba(209, 121, 50, 0.5);
+    }
+
+    .buddy-flame {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 40px;
+      border-radius: 50% 50% 60% 60%;
+      background: radial-gradient(circle at 50% 20%, #fffbe4, #ffc56a);
+      clip-path: polygon(50% 0, 90% 40%, 70% 100%, 30% 100%, 10% 40%);
+      box-shadow:
+        0 0 18px rgba(255, 212, 138, 0.9),
+        0 0 30px rgba(255, 189, 120, 0.9);
+      animation: flameFlicker 1.6s ease-in-out infinite alternate;
+    }
+
+    .buddy-face {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+    }
+
+    .eye {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #352016;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+      animation: blink 6s infinite;
+      transform-origin: center;
+    }
+
+    .mouth {
+      width: 16px;
+      height: 8px;
+      border-radius: 0 0 12px 12px;
+      border-bottom: 2px solid #3a2314;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+
+    .buddy-shadow {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0, rgba(0, 0, 0, 0.68), transparent 70%);
+      filter: blur(1px);
+      opacity: 0.85;
+    }
+
+    @keyframes buddyFloat {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes flameFlicker {
+      0%   { transform: translateX(-50%) scale(0.96); opacity: 0.9; }
+      100% { transform: translateX(-50%) scale(1.04); opacity: 1; }
+    }
+
+    @keyframes blink {
+      0%, 46%, 48%, 100% { transform: scaleY(1); }
+      47% { transform: scaleY(0.1); }
+    }
+
+    .buddy-bubble {
+      position: absolute;
+      bottom: 105px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 230px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(9, 10, 24, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.75),
+        0 0 18px rgba(120, 96, 255, 0.25);
+      font-size: 12px;
+      text-align: center;
+      opacity: 0.95;
+    }
+
+    .buddy-bubble::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 10px;
+      background: inherit;
+      border-radius: 0 0 10px 10px;
+      border-right: 1px solid rgba(255, 255, 255, 0.18);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+    }
+
+    .buddy-hint {
+      margin-top: 4px;
+      font-size: 10px;
+      opacity: 0.6;
+      text-align: center;
+    }
+
+    /* floating petals */
     .petal {
       position: absolute;
       width: 16px;
@@ -197,7 +475,7 @@
       filter: drop-shadow(0 0 4px rgba(249, 197, 209, 0.9));
       pointer-events: none;
       animation: petalFloat linear infinite;
-      z-index: 3;
+      z-index: 0;
     }
 
     .petal::before {
@@ -207,18 +485,6 @@
       height: 38%;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.5);
-    }
-
-    /* Keyframes */
-    @keyframes lanternSwing {
-      0%   { transform: rotate(3deg); }
-      50%  { transform: rotate(-3deg); }
-      100% { transform: rotate(3deg); }
-    }
-
-    @keyframes lanternPulse {
-      0%   { opacity: 0.6; transform: scale(0.9); }
-      100% { opacity: 1;   transform: scale(1.05); }
     }
 
     @keyframes petalFloat {
@@ -233,95 +499,147 @@
       }
     }
 
-    @keyframes slowDrift {
-      0%   { transform: scale(1.03) translate3d(0, 0, 0); }
-      50%  { transform: scale(1.06) translate3d(8px, -6px, 0); }
-      100% { transform: scale(1.05) translate3d(-8px, 4px, 0); }
+    @media (max-width: 900px) {
+      .desktop {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+      }
+
+      .buddy-zone {
+        margin-top: 12px;
+      }
+
+      .tree { width: 40%; }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
       .scene { border-radius: 18px; }
-      .lantern { width: 42px; height: 70px; }
-      .lantern.small { width: 30px; height: 52px; }
-      .lantern.large { width: 50px; height: 80px; }
+      .dock { width: 80%; }
     }
   </style>
 </head>
 <body>
   <div class="scene">
-    <div class="bg-image"></div>
-    <div class="overlay"></div>
-    <div class="fog"></div>
-
-    <div class="title-wrap">
-      <div class="title">Cherry Path Lounge</div>
-      <div class="subtitle">Lantern & Blossom Ambience</div>
-    </div>
-
-    <!-- Lanterns along the path -->
-    <div class="lantern medium l1">
-      <div class="lantern-rope"></div>
-      <div class="lantern-body">
-        <div class="lantern-glow"></div>
-        <div class="lantern-cap"></div>
+    <div class="top-bar">
+      <div class="logo">THE VIGIL · LANTERN DESKTOP</div>
+      <div class="top-right">
+        <div class="top-pill">Cherry Blossom Mode</div>
       </div>
     </div>
 
-    <div class="lantern small l2">
-      <div class="lantern-rope"></div>
-      <div class="lantern-body">
-        <div class="lantern-glow"></div>
-        <div class="lantern-cap"></div>
-      </div>
+    <!-- Sakura trees -->
+    <div class="tree left">
+      <div class="tree-trunk"></div>
+      <div class="tree-canopy"></div>
+    </div>
+    <div class="tree right">
+      <div class="tree-trunk"></div>
+      <div class="tree-canopy"></div>
     </div>
 
-    <div class="lantern small l3">
-      <div class="lantern-rope"></div>
-      <div class="lantern-body">
-        <div class="lantern-glow"></div>
-        <div class="lantern-cap"></div>
-      </div>
+    <div class="desktop">
+      <!-- Main music window -->
+      <section class="window music-window">
+        <div class="window-header">
+          <div>Music Hub</div>
+          <div class="window-buttons">
+            <div class="win-dot"></div>
+            <div class="win-dot"></div>
+            <div class="win-dot"></div>
+          </div>
+        </div>
+        <div class="window-sub">Pick a cozy track & let the petals fall</div>
+
+        <div class="music-inner">
+          <!-- Replace VIDEO_ID below with your chosen YouTube video ID -->
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID?autoplay=0&loop=1&playlist=VIDEO_ID"
+            title="YouTube music"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="music-footer">
+          <span>Now playing: your chosen YouTube ambience mix</span>
+          <a
+            href="https://www.youtube.com/watch?v=VIDEO_ID"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="pill-link">
+            <span>▶</span> Open on YouTube
+          </a>
+        </div>
+      </section>
+
+      <!-- Side window: notes + desktop buddy -->
+      <section class="window side-window">
+        <div class="window-header">
+          <div>Desk Notes</div>
+          <div class="window-buttons">
+            <div class="win-dot"></div>
+            <div class="win-dot"></div>
+          </div>
+        </div>
+        <div class="window-sub">Little reminders while you vibe</div>
+
+        <ul class="note-list">
+          <li>✧ This is your lantern lounge. No productivity required.</li>
+          <li>✧ Breathe, stretch your shoulders, unclench your jaw.</li>
+          <li>✧ You are allowed to rest and still be worthy.</li>
+        </ul>
+
+        <div class="chip-row">
+          <div class="chip">Rainy Lo-fi</div>
+          <div class="chip">Forest Wind</div>
+          <div class="chip">Slow Piano</div>
+          <div class="chip">Lantern Glow</div>
+        </div>
+
+        <div class="buddy-zone">
+          <div class="buddy">
+            <div class="buddy-glow"></div>
+            <div class="buddy-body"></div>
+            <div class="buddy-flame"></div>
+            <div class="buddy-face">
+              <div class="eye"></div>
+              <div class="eye"></div>
+              <div class="mouth"></div>
+            </div>
+            <div class="buddy-shadow"></div>
+          </div>
+
+          <div class="buddy-bubble" id="buddyBubble">
+            Hi! I’m your lantern buddy. Click me if your brain needs a soft pep talk.
+          </div>
+        </div>
+        <div class="buddy-hint">click the lantern buddy to cycle messages ✧</div>
+      </section>
     </div>
 
-    <div class="lantern small l4">
-      <div class="lantern-rope"></div>
-      <div class="lantern-body">
-        <div class="lantern-glow"></div>
-        <div class="lantern-cap"></div>
-      </div>
-    </div>
-
-    <div class="lantern small l5">
-      <div class="lantern-rope"></div>
-      <div class="lantern-body">
-        <div class="lantern-glow"></div>
-        <div class="lantern-cap"></div>
-      </div>
-    </div>
-
-    <div class="lantern small l6">
-      <div class="lantern-rope"></div>
-      <div class="lantern-body">
-        <div class="lantern-glow"></div>
-        <div class="lantern-cap"></div>
-      </div>
+    <!-- Dock -->
+    <div class="dock">
+      <div class="dock-dot"></div>
+      <div class="dock-dot"></div>
+      <div class="dock-dot"></div>
+      <div class="dock-dot"></div>
     </div>
   </div>
 
   <script>
-    // Generate falling petals
+    // Floating petals
     (function () {
       const scene = document.querySelector(".scene");
-      const PETAL_COUNT = 55;
+      const PETAL_COUNT = 60;
 
       for (let i = 0; i < PETAL_COUNT; i++) {
         const petal = document.createElement("span");
         petal.className = "petal";
 
-        const startLeft = Math.random() * 100;    // 0–100vw-ish
-        const delay = Math.random() * 18;         // seconds
-        const duration = 14 + Math.random() * 10; // 14–24s
-        const scale = 0.5 + Math.random() * 1.2;  // size variation
+        const startLeft = Math.random() * 100;    // in vw-ish units
+        const delay = Math.random() * 20;         // seconds
+        const duration = 14 + Math.random() * 12; // 14–26s
+        const scale = 0.5 + Math.random() * 1.4;  // vary size
 
         petal.style.left = startLeft + "vw";
         petal.style.animationDelay = delay + "s";
@@ -329,6 +647,23 @@
         petal.style.transform = "scale(" + scale + ")";
         scene.appendChild(petal);
       }
+    })();
+
+    // Desktop buddy messages
+    (function () {
+      const buddy = document.querySelector(".buddy");
+      const bubble = document.getElementById("buddyBubble");
+
+      const messages = [
+        BONK
+      ];
+
+      let index = 0;
+
+      buddy.addEventListener("click", () => {
+        index = (index + 1) % messages.length;
+        bubble.textContent = messages[index];
+      });
     })();
   </script>
 </body>
