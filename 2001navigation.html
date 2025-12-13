@@ -765,20 +765,19 @@
   <!-- Embedded data (tree nodes) -->
   <script id="navData" type="application/json">
 [
-  { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1, "notes":"Root essentials" },
-  { "type":"tile",  "id":"home", "title":"Home", "href":"/index.html", "kind":"page", "notes":"Landing page", "parentId":"core", "order":1 },
+  { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1 },
+  { "type":"tile",  "id":"home", "title":"Home", "href":"/index.html", "parentId":"core", "order":1 },
 
-  { "type":"group", "id":"topics", "title":"Topics", "parentId":null, "order":2, "notes":"" },
-  { "type":"group", "id":"animals", "title":"Animals", "parentId":"topics", "order":1, "notes":"" },
-  { "type":"tile",  "id":"animals-index", "title":"Animals", "href":"/animals/index.html", "kind":"section", "notes":"", "parentId":"animals", "order":1 },
-  { "type":"tile",  "id":"endangered", "title":"Endangered Animals", "href":"/animals/endangered.html", "kind":"page", "notes":"", "parentId":"animals", "order":2 },
+  { "type":"group", "id":"topics", "title":"Topics", "parentId":null, "order":2 },
+  { "type":"group", "id":"animals", "title":"Animals", "parentId":"topics", "order":1, "color":"#22d3ee" },
+  { "type":"tile",  "id":"animals-index", "title":"Animals", "href":"/animals/index.html", "parentId":"animals", "order":1 },
+  { "type":"tile",  "id":"endangered", "title":"Endangered Animals", "href":"/animals/endangered.html", "parentId":"animals", "order":2 },
 
-  { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3, "notes":"Do something constructive" },
-  { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "kind":"donate", "notes":"", "parentId":"action", "order":1 }
+  { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3 },
+  { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "parentId":"action", "order":1 }
 ]
-    { "type":"group", "id":"animals", "title":"Animals", "parentId":"topics", "order":1, "notes":"", "color":"#22d3ee" }
+</script>
 
-  </script>
 
   <!-- Modal -->
   <div class="modalBackdrop" id="modalBackdrop" hidden>
@@ -870,11 +869,13 @@
     const fHref = $("#fHref");
     const fColor = $("#fColor");
 const groupColorField = $("#groupColorField");
-    const accent = g.color ? `style="border-left: 6px solid ${escapeHtml(g.color)};"` : "";
 
 
     let filter = "";
     let editingId = null;
+    let draftParentId = null;
+let draftOrder = 9999;
+
 
     let NODES = [];
     let collapsedGroups = new Set();
@@ -977,15 +978,9 @@ const groupColorField = $("#groupColorField");
 
 const setTypeUI = () => {
   const isGroup = fType.value === "group";
-  const isTile  = fType.value === "tile";
-
-  // Keep your href/kind fields visible if you want them for both.
-  // If you ONLY want hyperlink for both, keep tileFields visible.
-  tileFields.style.display = "grid";
-
-  // Color only for groups
   groupColorField.style.display = isGroup ? "grid" : "none";
 };
+
 
 
     const fillParentOptions = (currentId) => {
@@ -1017,11 +1012,14 @@ const setTypeUI = () => {
    const openModal = (node, isNew, forceType=null) => {
   showModal();
   editingId = isNew ? null : node.id;
+draftParentId = isNew ? (node.parentId ?? null) : null;
+draftOrder = isNew ? (node.order ?? 9999) : 9999;
 
   modalKicker.textContent = isNew ? "ADD" : "EDIT";
   modalTitle.textContent = isNew ? "New item" : (node.title || node.id || "Item");
 
   fType.value  = forceType ?? (node.type || "tile");
+     setTypeUI();
   fTitle.value = node.title || "";
   fHref.value  = node.href  || "";
      fColor.value = node.color || "#6d5efc";
@@ -1128,10 +1126,14 @@ const chip = `<span class="chip">Link</span>`;
         : `<div class="dropHint">Drop items here…</div>`
       );
 
-      const indentClass = depth > 0 ? "indent" : "";
+const indentClass = depth > 0 ? "indent" : "";
+
+const accentStyle = g.color
+  ? `style="border-left:6px solid ${escapeHtml(g.color)};"`
+  : "";
 
       return `
-<div class="node treeItem ${indentClass}" ${accent} ...
+<div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group" ${accentStyle}>
           <div class="nodeHeader">
             <div class="nodeHeaderLeft">
               <button class="twisty" type="button" aria-label="Toggle group"
@@ -1329,20 +1331,14 @@ const chip = `<span class="chip">Link</span>`;
 
     fType.addEventListener("change", () => setTypeUI());
 
-    saveItemBtn.addEventListener("click", () => {
+   saveItemBtn.addEventListener("click", () => {
   const type  = (fType.value || "tile").trim();   // group or tile
   const title = (fTitle.value || "").trim();
   const href  = (fHref.value || "").trim();
-      const color = (fColor?.value || "").trim();
-
+  const color = (fColor?.value || "").trim();
 
   if (!title) return alert("Title is required.");
   if (!href)  return alert("Hyperlink is required.");
-      if (type === "group") {
-  if (color) updated.color = color;
-  else delete updated.color;
-}
-
 
   const slugify = (s) => s
     .toLowerCase()
@@ -1350,15 +1346,13 @@ const chip = `<span class="chip">Link</span>`;
     .replace(/(^-|-$)/g, "");
 
   // If editing, keep the existing id
-  let id = editingId ? editingId : slugify(title);
+  let id = editingId ? editingId : (slugify(title) || "item");
 
   // If creating new and there's a collision, add -2, -3, ...
   if (!editingId) {
-    let base = id || "item";
+    const base = id;
     let n = 2;
-    while (NODES.some(x => x.id === id)) {
-      id = `${base}-${n++}`;
-    }
+    while (NODES.some(x => x.id === id)) id = `${base}-${n++}`;
   }
 
   const existing = nodeById(id);
@@ -1368,14 +1362,17 @@ const chip = `<span class="chip">Link</span>`;
     type,
     title,
     href,
-    // keep nesting + order if editing an existing node
-    parentId: existing?.parentId ?? null,
-    order: existing?.order ?? 9999,
+    parentId: existing?.parentId ?? draftParentId ?? null,
+order: existing?.order ?? draftOrder ?? 9999,
   };
+
+  if (type === "group") updated.color = color || "#6d5efc";
+  else delete updated.color;
 
   upsert(updated);
   closeModal();
 });
+
 
 
     deleteItemBtn.addEventListener("click", () => {
