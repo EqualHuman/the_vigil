@@ -712,6 +712,13 @@
   border-color: rgba(34,211,238,.40);
   box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 0 0 3px rgba(34,211,238,.14);
 }
+    .menuSep{
+  height:1px;
+  background: rgba(255,255,255,.10);
+  margin:6px 2px;
+  border-radius:999px;
+}
+
 
   </style>
 </head>
@@ -746,27 +753,29 @@
 
     <section class="card" aria-label="Navigation hub">
      <div class="toolbar" id="top">
-  <div class="leftTools">
-    <button class="btn" id="expandAll" type="button">▾ Expand all</button>
-    <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
+<div class="leftTools">
+  <details class="menu" id="moreMenu">
+    <summary class="btn" aria-label="More tools">⋯ More</summary>
 
-    <!-- Dropdown: Export + Reset -->
-    <details class="menu" id="moreMenu">
-      <summary class="btn" aria-label="More tools">⋯ More</summary>
+    <div class="menuList" role="menu" aria-label="Tools menu">
+      <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
+      <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
 
-      <div class="menuList" role="menu">
-        <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
-        <button class="btn menuItem" id="resetEdits" type="button" role="menuitem" title="Clears saved edits on this device">↺ Reset edits</button>
-      </div>
-    </details>
-  </div>
+      <div class="menuSep" aria-hidden="true"></div>
 
-  <div class="rightTools">
-    <label class="sr-only" for="search">Search</label>
-    <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
-    <button class="btn btnPrimary" id="addItem" type="button">＋ Add</button>
-  </div>
+      <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
+      <button class="btn menuItem" id="resetEdits" type="button" role="menuitem"
+              title="Clears saved edits on this device">↺ Reset edits</button>
+    </div>
+  </details>
 </div>
+
+<div class="rightTools">
+  <label class="sr-only" for="search">Search</label>
+  <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
+  <button class="btn btnPrimary" id="addItem" type="button">＋ Add</button>
+</div>
+
 
 
       <div class="meta">
@@ -904,6 +913,11 @@ let draftOrder = 9999;
       const el = document.getElementById("navData");
       return JSON.parse(el?.textContent || "[]");
     };
+const closeMoreMenu = () => document.getElementById("moreMenu")?.removeAttribute("open");
+
+["expandAll","collapseAll","exportJson","resetEdits"].forEach((id) => {
+  document.getElementById(id)?.addEventListener("click", closeMoreMenu);
+});
 
     const loadNodes = () => {
       const raw = localStorage.getItem(LS_NODES);
