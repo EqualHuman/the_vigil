@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lab Buddy Blog — Lab stuff, explained like you’re human.</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Poppins (headings) + Inter (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* ===== Theme (Option A: cozy science) ===== */
+      --bg: #FFF7ED;          /* warm cream */
+      --surface: #FFFFFF;     /* cards */
+      --ink: #1F2937;         /* text */
+      --muted: #6B7280;       /* secondary text */
+      --primary: #2563EB;     /* links/buttons */
+      --accent: #F97316;      /* fun pop */
+      --mint: #ECFDF5;        /* soft callout */
+      --ring: rgba(37, 99, 235, 0.22);
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.10);
+
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1100px;
+
+      --hfont: "Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
+      --bfont: "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: var(--bfont);
+      color: var(--ink);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(249,115,22,0.12), transparent 55%),
+                  radial-gradient(1200px 600px at 90% 10%, rgba(37,99,235,0.14), transparent 55%),
+                  var(--bg);
+      line-height: 1.55;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 26px 18px 60px; }
+
+    /* Header */
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding: 14px 16px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(31,41,55,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position: sticky; top: 12px; z-index: 50;
+    }
+    .brand{
+      display:flex; gap:12px; align-items:center;
+      min-width: 220px;
+    }
+    .logo{
+      width:42px; height:42px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display:grid; place-items:center;
+      color:white; font-weight:800; font-family: var(--hfont);
+      letter-spacing: -0.5px;
+      box-shadow: 0 10px 22px rgba(37,99,235,0.20);
+      user-select:none;
+    }
+    .brand h1{
+      font-family: var(--hfont);
+      font-size: 18px; margin: 0;
+      line-height: 1.1;
+    }
+    .brand p{ margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+
+    nav{
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end;
+    }
+    .chip{
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(31,41,55,0.10);
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip:hover { box-shadow: 0 0 0 4px var(--ring); }
+    .chip.active{
+      background: rgba(37,99,235,0.10);
+      border-color: rgba(37,99,235,0.22);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .card{
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(31,41,55,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .hero h2{
+      font-family: var(--hfont);
+      font-size: 34px;
+      line-height: 1.08;
+      margin: 0 0 10px;
+      letter-spacing: -0.6px;
+    }
+    .sub{
+      color: var(--muted);
+      margin: 0 0 14px;
+      font-size: 15px;
+    }
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+    .btn{
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-family: var(--bfont);
+      cursor:pointer;
+    }
+    .btn.primary{
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 12px 22px rgba(37,99,235,0.25);
+    }
+    .btn.secondary{
+      background: rgba(249,115,22,0.14);
+      color: var(--ink);
+      border: 1px solid rgba(249,115,22,0.25);
+    }
+    .btn:hover{ box-shadow: 0 0 0 4px var(--ring); }
+
+    /* Search */
+    .search{
+      display:flex; gap:10px; align-items:center;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(31,41,55,0.10);
+      background: rgba(255,255,255,0.95);
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline: none;
+      font-size: 14px;
+      padding: 8px 6px;
+      background: transparent;
+      color: var(--ink);
+    }
+    .kbtn{
+      background: rgba(31,41,55,0.05);
+      border: 1px solid rgba(31,41,55,0.08);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Path selector */
+    .paths{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      height: 100%;
+    }
+    .path{
+      border-radius: var(--radius);
+      padding: 14px;
+      border: 1px solid rgba(31,41,55,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.84));
+      cursor:pointer;
+      transition: transform .08s ease;
+    }
+    .path:hover{ transform: translateY(-2px); box-shadow: 0 0 0 4px var(--ring); }
+    .path h3{
+      font-family: var(--hfont);
+      margin: 0 0 4px;
+      font-size: 16px;
+      letter-spacing: -0.2px;
+    }
+    .path p{ margin: 0; color: var(--muted); font-size: 13px; }
+
+    /* Sections */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      margin-top: 24px;
+      gap: 12px;
+    }
+    .sectionTitle h3{
+      font-family: var(--hfont);
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: -0.4px;
+    }
+    .sectionTitle small{ color: var(--muted); }
+
+    /* Content cards */
+    .post{
+      border-radius: var(--radius);
+      padding: 14px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(31,41,55,0.08);
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column; gap: 10px;
+      min-height: 170px;
+    }
+    .badgeRow{ display:flex; gap:8px; flex-wrap:wrap; }
+    .badge{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,41,55,0.10);
+      background: rgba(31,41,55,0.03);
+      color: var(--muted);
+      width: fit-content;
+    }
+    .badge.accent{
+      background: rgba(249,115,22,0.12);
+      border-color: rgba(249,115,22,0.24);
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .post h4{
+      margin: 0;
+      font-family: var(--hfont);
+      font-size: 16px;
+      letter-spacing: -0.2px;
+    }
+    .post p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .meta{
+      margin-top:auto;
+      display:flex; justify-content:space-between; align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .linkBtn{
+      border: 1px solid rgba(37,99,235,0.20);
+      background: rgba(37,99,235,0.08);
+      color: var(--ink);
+      padding: 7px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor:pointer;
+    }
+    .linkBtn:hover{ box-shadow: 0 0 0 4px var(--ring); }
+
+    /* Bench Cards (interactive) */
+    .benchCard{
+      padding: 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(37,99,235,0.10), rgba(249,115,22,0.10));
+      border: 1px solid rgba(31,41,55,0.08);
+      box-shadow: var(--shadow);
+    }
+    .benchCard h4{
+      font-family: var(--hfont);
+      margin: 0 0 8px;
+    }
+    .benchCard .mini{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .callout{
+      background: var(--mint);
+      border: 1px solid rgba(34,197,94,0.18);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-size: 13px;
+    }
+    .callout b{ font-family: var(--hfont); }
+
+    /* Quiz */
+    .quiz{
+      border-radius: var(--radius);
+      padding: 16px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(31,41,55,0.08);
+      box-shadow: var(--shadow);
+    }
+    .quiz h4{
+      font-family: var(--hfont);
+      margin: 0 0 10px;
+    }
+    .q{
+      padding: 12px;
+      border: 1px solid rgba(31,41,55,0.10);
+      border-radius: var(--radius-sm);
+      background: rgba(31,41,55,0.02);
+      margin-bottom: 10px;
+    }
+    .q p{ margin: 0 0 8px; font-weight: 600; }
+    .opt{ display:block; margin: 6px 0; font-size: 13px; color: var(--ink); cursor:pointer; }
+    .opt input{ margin-right: 8px; }
+    .result{
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; }
+      .paths{ grid-template-columns: 1fr 1fr; }
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px){
+      header{ position: static; }
+      .paths{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .hero h2{ font-size: 28px; }
+      nav{ justify-content:flex-start; }
+      .brand{ min-width: unset; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- Header -->
+    <header>
+      <div class="brand" role="banner" aria-label="Site header">
+        <div class="logo" aria-hidden="true">LB</div>
+        <div>
+          <h1>Lab Buddy Blog</h1>
+          <p>Lab stuff, explained like you’re human.</p>
+        </div>
+      </div>
+
+      <nav aria-label="Top navigation">
+        <span class="chip active" data-filter="all">Home</span>
+        <span class="chip" data-filter="student">Students/BOC</span>
+        <span class="chip" data-filter="newtech">New Tech</span>
+        <span class="chip" data-filter="phleb">Phlebotomy</span>
+        <span class="chip" data-filter="career">Career</span>
+        <span class="chip" data-filter="lead">Lead/Director</span>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero">
+      <div class="card">
+        <h2>What are you stuck on today?</h2>
+        <p class="sub">
+          Bench tips, BOC help, and real-life lab survival… with fewer lectures and more
+          “ohhhh that makes sense.”
+        </p>
+
+        <div class="search" role="search" aria-label="Search posts">
+          <input id="searchInput" type="search" placeholder="Search: hemolysis, order of draw, QC, PT/aPTT…"/>
+          <span class="kbtn">⌘/Ctrl K</span>
+        </div>
+
+        <div class="ctaRow">
+          <button class="btn primary" id="btnFreebie">Grab the free cheat sheet</button>
+          <button class="btn secondary" id="btnTrending">Show me the trending tools</button>
+        </div>
+
+        <div class="callout" style="margin-top:14px;">
+          <b>Bench Brief:</b> If you only remember one thing… your preceptor isn’t mad, the analyzer just is.
+          <span style="opacity:.85"> (We’ll fix it together.)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle" style="margin-top:0;">
+          <h3>Choose your path</h3>
+          <small>Start where you are</small>
+        </div>
+
+        <div class="paths" aria-label="Audience paths">
+          <div class="path" data-filter="student">
+            <h3>Student / BOC</h3>
+            <p>Study plans, simplified concepts, practice questions.</p>
+          </div>
+          <div class="path" data-filter="newtech">
+            <h3>New Tech</h3>
+            <p>Onboarding, troubleshooting, “what do I do next?”</p>
+          </div>
+          <div class="path" data-filter="phleb">
+            <h3>Phlebotomy</h3>
+            <p>Order of draw, difficult sticks, error-proofing.</p>
+          </div>
+          <div class="path" data-filter="career">
+            <h3>Career</h3>
+            <p>Resumes, interviews, pay, shifts, sanity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trending Tools -->
+    <div class="sectionTitle" id="tools">
+      <h3>Trending tools</h3>
+      <small>Bookmarkable = shareable</small>
+    </div>
+
+    <section class="grid" aria-label="Tools grid">
+      <div class="benchCard">
+        <h4>Bench Card: Hemolysis</h4>
+        <div class="mini">
+          <div class="callout"><b>Causes:</b> small needle, hard pull, shaking tubes, delays.</div>
+          <div class="callout"><b>What it messes up:</b> K⁺, LDH, AST, some coag tests.</div>
+          <div class="callout"><b>Prevent:</b> gentle inversion, correct gauge, no syringe yanking.</div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <button class="linkBtn" onclick="copyShareLink('bench-hemolysis')">Share</button>
+          <button class="linkBtn" onclick="downloadText('Hemolysis Bench Card', hemolysisText())">Download</button>
+        </div>
+        <small style="display:block; margin-top:10px; color:var(--muted);">ID: bench-hemolysis</small>
+      </div>
+
+      <div class="benchCard">
+        <h4>Bench Card: PT / aPTT</h4>
+        <div class="mini">
+          <div class="callout"><b>PT:</b> extrinsic + common (VII, X, V, II, fibrinogen)</div>
+          <div class="callout"><b>aPTT:</b> intrinsic + common (XII, XI, IX, VIII + common)</div>
+          <div class="callout"><b>Quick rule:</b> Warfarin → PT; Heparin → aPTT (often).</div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <button class="linkBtn" onclick="copyShareLink('bench-pt-aptt')">Share</button>
+          <button class="linkBtn" onclick="downloadText('PT-aPTT Bench Card', ptaPttText())">Download</button>
+        </div>
+        <small style="display:block; margin-top:10px; color:var(--muted);">ID: bench-pt-aptt</small>
+      </div>
+
+      <div class="quiz">
+        <h4>Mini Quiz: Order of Draw</h4>
+        <div class="q" data-answer="c">
+          <p>Which tube is typically drawn first?</p>
+          <label class="opt"><input type="radio" name="q1" value="a"> Lavender (EDTA)</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> Green (Heparin)</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Blood culture / sterile</label>
+          <label class="opt"><input type="radio" name="q1" value="d"> Gray (Fluoride)</label>
+          <button class="linkBtn" onclick="gradeQuiz()">Check</button>
+          <div class="result" id="quizResult">Score shows here 👀</div>
+        </div>
+        <small style="color:var(--muted);">We’ll add a full question bank later (free + paid tiers).</small>
+      </div>
+    </section>
+
+    <!-- Latest / Featured Posts -->
+    <div class="sectionTitle">
+      <h3>Latest posts</h3>
+      <small>Clear + practical + a little funny</small>
+    </div>
+
+    <section class="grid" aria-label="Posts grid" id="postsGrid">
+      <!-- Post cards (filterable + searchable) -->
+      <article class="post" data-tags="student newtech coag pt aptt" data-cat="student">
+        <div class="badgeRow">
+          <span class="badge accent">BOC</span>
+          <span class="badge">Coag</span>
+        </div>
+        <h4>PT / INR / aPTT explained (without the panic)</h4>
+        <p>What each test measures, common patterns, and how to talk yourself down at 2am.</p>
+        <div class="meta">
+          <span>6 min read</span>
+          <button class="linkBtn" onclick="openPlaceholder('PT/INR/aPTT Post')">Read</button>
+        </div>
+      </article>
+
+      <article class="post" data-tags="phleb order of draw tubes additives" data-cat="phleb">
+        <div class="badgeRow">
+          <span class="badge accent">Phleb</span>
+          <span class="badge">Basics</span>
+        </div>
+        <h4>Order of draw: the “I will not mess this up” version</h4>
+        <p>Easy memory tricks + why it matters (contamination is a menace).</p>
+        <div class="meta">
+          <span>5 min read</span>
+          <button class="linkBtn" onclick="openPlaceholder('Order of Draw Post')">Read</button>
+        </div>
+      </article>
+
+      <article class="post" data-tags="newtech chemistry hemolysis lipemia icterus specimen" data-cat="newtech">
+        <div class="badgeRow">
+          <span class="badge accent">New Tech</span>
+          <span class="badge">Specimens</span>
+        </div>
+        <h4>Hemolysis, lipemia, icterus: what to do (and what NOT to do)</h4>
+        <p>How to assess interference, when to recollect, and how to document like a pro.</p>
+        <div class="meta">
+          <span>7 min read</span>
+          <button class="linkBtn" onclick="openPlaceholder('HLI Post')">Read</button>
+        </div>
+      </article>
+
+      <article class="post" data-tags="career resume interview pay negotiation" data-cat="career">
+        <div class="badgeRow">
+          <span class="badge accent">Career</span>
+          <span class="badge">Templates</span>
+        </div>
+        <h4>MLS resume template (with bullet examples that don’t sound cringe)</h4>
+        <p>Copy-paste bullets for chemistry, heme, blood bank, micro, and generalist roles.</p>
+        <div class="meta">
+          <span>8 min read</span>
+          <button class="linkBtn" onclick="openPlaceholder('Resume Post')">Read</button>
+        </div>
+      </article>
+
+      <article class="post" data-tags="lead director cap competency qc qa audit" data-cat="lead">
+        <div class="badgeRow">
+          <span class="badge accent">Lead</span>
+          <span class="badge">QA/QC</span>
+        </div>
+        <h4>Competency assessments: the “don’t reinvent the wheel” starter pack</h4>
+        <p>Simple structure, examples, and a checklist you can actually use.</p>
+        <div class="meta">
+          <span>6 min read</span>
+          <button class="linkBtn" onclick="openPlaceholder('Competency Post')">Read</button>
+        </div>
+      </article>
+
+      <article class="post" data-tags="student study plan boc schedule adhd" data-cat="student">
+        <div class="badgeRow">
+          <span class="badge accent">BOC</span>
+          <span class="badge">Study</span>
+        </div>
+        <h4>4-week BOC study plan (for people with a job and a life)</h4>
+        <p>Daily bite-size goals + “if you miss a day, here’s how to recover” rules.</p>
+        <div class="meta">
+          <span>9 min read</span>
+          <button class="linkBtn" onclick="openPlaceholder('Study Plan Post')">Read</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- Email / Freebie (placeholder) -->
+    <div class="sectionTitle" id="freebie">
+      <h3>Free cheat sheet</h3>
+      <small>Start the email list engine</small>
+    </div>
+
+    <section class="card" aria-label="Freebie signup">
+      <h3 style="font-family:var(--hfont); margin:0 0 6px;">Get the “Lab Values + Specimen Rejection” mini-pack</h3>
+      <p class="sub" style="margin-top:0;">
+        No spam. Just practical downloads and new posts. If you hate it, unsub with one click.
+      </p>
+
+      <form onsubmit="fakeSignup(event)" style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input
+          type="email"
+          id="email"
+          required
+          placeholder="your.email@example.com"
+          style="flex:1; min-width:240px; padding:12px 12px; border-radius:14px; border:1px solid rgba(31,41,55,0.12); outline:none;"
+        />
+        <button class="btn primary" type="submit">Send it</button>
+        <button class="btn secondary" type="button" onclick="alert('Later we’ll connect this to a real email service (ConvertKit/Mailchimp/etc.).')">
+          How it works
+        </button>
+      </form>
+
+      <p id="signupMsg" class="result" style="margin-top:10px;"></p>
+    </section>
+
+    <footer>
+      <p>
+        © <span id="year"></span> Lab Buddy Blog •
+        <a href="#" onclick="openPlaceholder('Disclaimer')">Disclaimer</a> •
+        <a href="#" onclick="openPlaceholder('Contact')">Contact</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // ===== Keyboard shortcut focus (Ctrl/Cmd+K) =====
+    const searchInput = document.getElementById("searchInput");
+    document.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    // ===== Filter chips + path cards =====
+    const chips = document.querySelectorAll(".chip");
+    const pathCards = document.querySelectorAll(".path");
+    const posts = document.querySelectorAll(".post");
+
+    function setActiveChip(cat){
+      chips.forEach(c => c.classList.toggle("active", c.dataset.filter === cat));
+    }
+
+    function applyFilter(cat){
+      setActiveChip(cat);
+      const q = (searchInput.value || "").trim().toLowerCase();
+
+      posts.forEach(post => {
+        const postCat = post.dataset.cat; // student/newtech/phleb/career/lead
+        const tags = (post.dataset.tags || "").toLowerCase();
+        const matchesCat = (cat === "all") || (postCat === cat);
+        const matchesSearch = !q || tags.includes(q) || post.innerText.toLowerCase().includes(q);
+
+        post.style.display = (matchesCat && matchesSearch) ? "flex" : "none";
+      });
+    }
+
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => applyFilter(chip.dataset.filter));
+    });
+    pathCards.forEach(card => {
+      card.addEventListener("click", () => applyFilter(card.dataset.filter));
+    });
+
+    // ===== Search =====
+    searchInput.addEventListener("input", () => {
+      const active = document.querySelector(".chip.active")?.dataset.filter || "all";
+      applyFilter(active);
+    });
+
+    // ===== CTA buttons =====
+    document.getElementById("btnFreebie").addEventListener("click", () => {
+      document.getElementById("freebie").scrollIntoView({behavior:"smooth", block:"start"});
+      document.getElementById("email").focus();
+    });
+
+    document.getElementById("btnTrending").addEventListener("click", () => {
+      document.getElementById("tools").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    // ===== Bench card share + download =====
+    function copyShareLink(id){
+      const url = `${location.origin}${location.pathname}#${id}`;
+      navigator.clipboard.writeText(url).then(() => {
+        alert("Link copied! Paste it to your lab bestie 😈");
+      }).catch(() => {
+        // fallback
+        prompt("Copy this link:", url);
+      });
+    }
+
+    function downloadText(filename, content){
+      const blob = new Blob([content], {type:"text/plain;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename.replace(/\s+/g, "_") + ".txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function hemolysisText(){
+      return [
+        "HEMOLYSIS BENCH CARD",
+        "====================",
+        "",
+        "Causes: small needle, hard pull, shaking tubes, delays, drawing above IV site.",
+        "Impacts: falsely increases K+, LDH, AST; may interfere with some assays.",
+        "Prevention: correct gauge, gentle inversion, avoid vigorous mixing, timely processing.",
+        "",
+        "If in doubt: document and follow your lab's specimen rejection policy."
+      ].join("\n");
+    }
+
+    function ptaPttText(){
+      return [
+        "PT / aPTT BENCH CARD",
+        "====================",
+        "",
+        "PT: Extrinsic + Common (VII, X, V, II, fibrinogen).",
+        "aPTT: Intrinsic + Common (XII, XI, IX, VIII + common).",
+        "Quick rule: Warfarin often affects PT/INR; Heparin often affects aPTT.",
+        "",
+        "Always interpret with clinical context + reagent ranges."
+      ].join("\n");
+    }
+
+    // ===== Quiz grading =====
+    function gradeQuiz(){
+      const q = document.querySelector(".q");
+      const answer = q.dataset.answer;
+      const chosen = document.querySelector("input[name='q1']:checked")?.value || "";
+      const res = document.getElementById("quizResult");
+
+      if(!chosen){
+        res.textContent = "Pick an answer first 🙂";
+        return;
+      }
+      if(chosen === answer){
+        res.textContent = "✅ Correct. Sterile/blood cultures first (when ordered).";
+      } else {
+        res.textContent = "❌ Not quite. Think sterile first: blood cultures/tubes with special handling.";
+      }
+    }
+
+    // ===== Placeholder links for now =====
+    function openPlaceholder(title){
+      alert(`"${title}" will become its own page next.\n\nNext step: we’ll split posts into pages + add a real blog system.`);
+    }
+
+    // ===== Fake email signup for now =====
+    function fakeSignup(e){
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      document.getElementById("signupMsg").textContent =
+        `✅ You’re in (demo). Next we’ll connect this to a real email tool and deliver the freebie to: ${email}`;
+      e.target.reset();
+    }
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Initial state
+    applyFilter("all");
+  </script>
+</body>
+</html>
