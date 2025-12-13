@@ -910,7 +910,52 @@
   padding:6px 2px 2px;
 }
 
-  
+  /* ===== 2-column layout ===== */
+.layout2{
+  display:grid;
+  grid-template-columns: 1.35fr .85fr;
+  gap:16px;
+  align-items:start;
+}
+
+@media (max-width: 980px){
+  .layout2{ grid-template-columns: 1fr; }
+}
+
+/* ===== Task notebook ===== */
+.notebook{ position: sticky; top: 18px; }
+@media (max-width: 980px){
+  .notebook{ position: static; }
+}
+
+.notebookHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+
+.notebookTitle{
+  font-weight:700;
+  letter-spacing:-.02em;
+  margin-top:2px;
+}
+
+.notebookTabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.notebookBody{
+  padding:12px;
+  display:grid;
+  gap:12px;
+}
+
 </style>
 
 
@@ -959,7 +1004,31 @@
 <!-- =========================================================
   MAIN CARD: TOOLBAR + TREE
 ========================================================== -->
-<section class="card" aria-label="Navigation hub">
+<div class="layout2">
+  <!-- LEFT: your existing navigation card -->
+  <section class="card" aria-label="Navigation hub">
+    ...
+  </section>
+
+  <!-- RIGHT: Task Notebook -->
+  <aside class="card notebook" aria-label="Task notebook">
+    <div class="notebookHead">
+      <div>
+        <div class="kicker">TASK NOTEBOOK</div>
+        <div class="notebookTitle" id="nbTitle">Select a page to view tasks</div>
+      </div>
+
+      <div class="notebookTabs" role="tablist" aria-label="Notebook views">
+        <button class="btn" id="nbTabSelected" type="button" aria-selected="true">Selected</button>
+        <button class="btn" id="nbTabAll" type="button" aria-selected="false">All</button>
+      </div>
+    </div>
+
+    <div class="notebookBody" id="nbBody">
+      <div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>
+    </div>
+  </aside>
+</div>
 
   <!-- Toolbar -->
 <div class="toolbar" id="top">
@@ -1185,12 +1254,18 @@ const fHref = $("#fHref");
 const fColor = $("#fColor");
 const groupColorField = $("#groupColorField");
 
+const nbTitle = $("#nbTitle");
+const nbBody = $("#nbBody");
+const nbTabSelected = $("#nbTabSelected");
+const nbTabAll = $("#nbTabAll");
 
 /* =========================================================
   3) APP STATE
 ========================================================== */
 let filter = "";
 let editingId = null;
+let notebookMode = "selected";      // "selected" | "all"
+let pinnedTaskNodeId = null;        // currently selected node for notebook
 
 // Used to preserve default insert location when adding from “Add here”
 let draftParentId = null;
@@ -1242,18 +1317,59 @@ const textareaToTasks = (value) => {
   }).filter(t => t.text);
 };
 window.__openTasks = (id) => {
-  const n = nodeById(id);
+  pinnedTaskNodeId = id;
+  notebookMode = "selected";
+  renderNotebook();
+};
+
+
+const renderTasks = (node) => {
+  const renderNotebookSelected = () => {
+  if (!pinnedTaskNodeId) {
+    nbTitle.textContent = "Select a page to view tasks";
+    nbBody.innerHTML = `<div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>`;
+    return;
+  }
+  const n = nodeById(pinnedTaskNodeId);
   if (!n) return;
 
   normalizeTasks(n);
-
-  tasksTitle.textContent = n.title || "(untitled)";
-  tasksBody.innerHTML = renderTasks(n);
-
-  tasksBackdrop.removeAttribute("hidden");
+  nbTitle.textContent = n.title || "(untitled)";
+  nbBody.innerHTML = renderTasks(n);
 };
 
-const renderTasks = (node) => {
+const renderNotebookAll = () => {
+  const nodesWithTasks = NODES
+    .map(n => (normalizeTasks(n), n))
+    .filter(n => Array.isArray(n.tasks) && n.tasks.length);
+
+  nbTitle.textContent = "All tasks (across site)";
+
+  if (!nodesWithTasks.length) {
+    nbBody.innerHTML = `<div class="taskEmpty">No tasks found yet.</div>`;
+    return;
+  }
+
+  nbBody.innerHTML = nodesWithTasks.map(n => `
+    <div class="tasks">
+      <div class="tasksHead">
+        <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
+        <button class="tasksAdd" type="button" onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
+      </div>
+      ${renderTasks(n).replace(/^<div class="tasks"[\s\S]*?<div class="tasksHead">[\s\S]*?<\/div>/, "")}
+    </div>
+  `).join("");
+};
+
+const renderNotebook = () => {
+  // update tab aria-selected
+  nbTabSelected.setAttribute("aria-selected", notebookMode === "selected");
+  nbTabAll.setAttribute("aria-selected", notebookMode === "all");
+
+  if (notebookMode === "all") renderNotebookAll();
+  else renderNotebookSelected();
+};
+
   const tasks = Array.isArray(node.tasks) ? node.tasks : [];
   const rows = tasks.length
     ? `<div class="taskList">${
@@ -1759,7 +1875,9 @@ const initSortables = () => {
 const render = () => {
   renderRoot();
   initSortables();
+  renderNotebook();
 };
+
 
 
 /* =========================================================
@@ -1795,6 +1913,16 @@ const setAllCollapsed = (collapsed) => {
 /* =========================================================
   15) EVENTS
 ========================================================== */
+  nbTabSelected.addEventListener("click", () => {
+  notebookMode = "selected";
+  renderNotebook();
+});
+
+nbTabAll.addEventListener("click", () => {
+  notebookMode = "all";
+  renderNotebook();
+});
+
 // Search
 searchEl.addEventListener("input", (e) => {
   filter = (e.target.value || "").trim().toLowerCase();
