@@ -996,6 +996,170 @@ select.input{ appearance:none; }
   .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
   .heroBanner::after, .heroDivider::after{ animation:none !important; }
 }
+
+/* =========================================================
+  99) LAYOUT TIGHTENING + COHESIVE SECTION HEADERS + LASERS
+  (Paste at very bottom of <style>)
+========================================================== */
+
+/* Narrow the whole canvas a bit (less “stretched across screen”) */
+.wrap{
+  max-width: 980px !important;
+}
+
+/* Keep the hero from feeling oversized on ultrawide screens */
+.heroBanner{
+  max-width: 980px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Make sure the hero title area is truly centered and balanced */
+.heroInner{
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-content: center;
+  padding: 18px 22px 18px !important;
+  text-align: center;
+}
+
+.heroTop{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px !important;
+}
+
+.heroCenter{
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Laser line used for hero + section headers */
+.heroLaser{
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  border-radius: 999px;
+  opacity: .95;
+  pointer-events: none;
+
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.70) 40%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.70) 40%),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.70) 35%),
+    rgba(255,255,255,0)
+  );
+
+  box-shadow:
+    0 0 10px rgba(255,79,216,.18),
+    0 0 18px rgba(109,94,252,.14),
+    0 0 22px rgba(34,211,238,.10);
+}
+
+.heroLaserTop{ top: 14px; }
+.heroLaserBottom{ bottom: 14px; }
+
+/* Remove the old “divider under title” vibe if it still exists in your CSS */
+.heroDivider{ display:none !important; }
+
+/* ------------------------------------------------------------------
+   Cohesive section header styling (Toolbar + Notebook Head)
+   - subtle pinks
+   - framed with lasers (top + bottom)
+------------------------------------------------------------------ */
+
+/* Shared visual language */
+.toolbar,
+.notebookHead{
+  position: relative;
+  border-bottom: none !important;
+  background:
+    radial-gradient(900px 240px at 15% 0%, rgba(34,211,238,.10), transparent 60%),
+    radial-gradient(900px 240px at 85% 0%, rgba(109,94,252,.10), transparent 60%),
+    radial-gradient(700px 220px at 50% 0%, rgba(255,79,216,.10), transparent 62%),
+    rgba(255,255,255,.03) !important;
+}
+
+/* Laser frames: top + bottom for section headers */
+.toolbar::before,
+.toolbar::after,
+.notebookHead::before,
+.notebookHead::after{
+  content:"";
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  border-radius: 999px;
+  opacity: .9;
+  pointer-events:none;
+
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.60) 45%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.60) 45%),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.55) 40%),
+    rgba(255,255,255,0)
+  );
+}
+
+.toolbar::before,
+.notebookHead::before{ top: 10px; }
+
+.toolbar::after,
+.notebookHead::after{ bottom: 10px; }
+
+/* Pull the actual content away from the laser lines */
+.toolbar{
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+.notebookHead{
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+/* Section label text: unify tone + add subtle pink */
+.toolbarTitle{
+  opacity: .78 !important;
+  color: color-mix(in oklab, var(--accentC), rgba(255,255,255,.90) 82%) !important;
+  letter-spacing: .30em !important;
+}
+
+/* Notebook kicker: match the same “section label” vibe */
+.notebookHead .kicker{
+  color: color-mix(in oklab, var(--accentC), rgba(255,255,255,.80) 78%) !important;
+  opacity: .85 !important;
+  letter-spacing: .26em !important;
+}
+
+/* Optional: make the notebook title feel more cohesive with nav header */
+.notebookTitle{
+  color: rgba(255,255,255,.90);
+}
+
+/* ------------------------------------------------------------------
+   Layout balance: keep columns feeling less “wide”
+------------------------------------------------------------------ */
+.layout2{
+  grid-template-columns: minmax(360px, 470px) minmax(420px, 1fr) !important;
+  gap: 14px !important;
+}
+
+@media (max-width: 980px){
+  .layout2{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+  
 </style>
 
   
@@ -1016,26 +1180,24 @@ select.input{ appearance:none; }
   HERO / HEADER
 ========================================================== -->
 <header class="heroBanner" aria-label="Navigation Hub banner">
+  <div class="heroLaser heroLaserTop" aria-hidden="true"></div>
+
   <div class="heroInner">
-
-    <!-- Top row: kicker + badges -->
-  <div class="heroTop heroDots">
-  <a href="#section-home" class="navDot" aria-label="Home"></a>
-  <a href="#section-1" class="navDot" aria-label="Section 1"></a>
-  <a href="#section-2" class="navDot" aria-label="Section 2"></a>
-</div>
-
-
+    <div class="heroTop">
+      <div class="heroDots" aria-label="Hero navigation">
+        <a href="#section-home" class="navDot" aria-label="Home"></a>
+        <a href="#section-1" class="navDot" aria-label="Section 1"></a>
+        <a href="#section-2" class="navDot" aria-label="Section 2"></a>
+      </div>
     </div>
 
-    <!-- Center title -->
     <div class="heroCenter">
       <h1 class="heroTitle">Vigil</h1>
       <p class="heroSubtitle">Webpage Hub</p>
-      <div class="heroDivider" aria-hidden="true"></div>
     </div>
-
   </div>
+
+  <div class="heroLaser heroLaserBottom" aria-hidden="true"></div>
 </header>
 
 <!-- =========================================================
