@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -11,10 +12,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
-    <!-- ==================================================================================================================
-    =========================================================START OF STYLE=========================================================
-  =================================================================================================================== -->
-  
+```
+<!-- ==================================================================================================================
+=========================================================START OF STYLE=========================================================
+```
+
+=================================================================================================================== -->
+
  <style>
   /* =========================================================
     0) GLOBAL RESET / UTILITIES
@@ -347,11 +351,11 @@
 
   .toolbar{
     display:flex;
-    gap:10px;
+    gap:12px;
     align-items:center;
     justify-content:space-between;
     flex-wrap:wrap;
-    padding:14px 14px 12px;
+    padding:14px;
 
     background:
       radial-gradient(900px 220px at 15% 0%, rgba(34,211,238,.12), transparent 60%),
@@ -799,9 +803,11 @@
     .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
   }
 </style>
+
   <!-- ==================================================================================================================
     =========================================================END OF STYLE=========================================================
   =================================================================================================================== -->
+
 </head>
   <!-- ==================================================================================================================
     =========================================================START OF BODY=========================================================
@@ -812,79 +818,82 @@
   ========================================================== -->
   <div class="wrap">
 
-    <!-- =========================================================
-      HERO / HEADER
-    ========================================================== -->
-    <header class="heroBanner" aria-label="Navigation Hub banner">
-      <div class="heroInner">
+```
+<!-- =========================================================
+  HERO / HEADER
+========================================================== -->
+<header class="heroBanner" aria-label="Navigation Hub banner">
+  <div class="heroInner">
 
-        <!-- Top row: kicker + badges -->
-        <div class="heroTop">
-          <div class="kickerPill">
-            <span class="kDot" aria-hidden="true"></span>
-            NAVIGATION
-          </div>
-
-          <div class="heroBadges" aria-label="Status badges">
-            <span class="badgePill">1</span>
-            <span class="badgePill">2</span>
-          </div>
-        </div>
-
-        <!-- Center title -->
-        <div class="heroCenter">
-          <h1 class="heroTitle">Navigation Hub</h1>
-          <p class="heroSubtitle">Webpage navigation tracking</p>
-          <div class="heroDivider" aria-hidden="true"></div>
-        </div>
-
-      </div>
-    </header>
-
-    <!-- =========================================================
-      MAIN CARD: TOOLBAR + TREE
-    ========================================================== -->
-    <section class="card" aria-label="Navigation hub">
-
-      <!-- Toolbar -->
-      <div class="toolbar" id="top">
-        <!-- Left controls -->
-        <div class="leftTools">
-  <details class="menu" id="actionsMenu">
-    <summary class="btn" aria-label="Actions">☰ Actions</summary>
-
-    <div class="menuList" role="menu" aria-label="Toolbar actions">
-      <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
-      <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
-      <div class="menuSep" aria-hidden="true"></div>
-      <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
-      <button class="btn menuItem" id="resetEdits" type="button" role="menuitem" title="Clears saved edits on this device">
-        ↺ Reset edits
-          </button>
-        </div>
-
-        <!-- Right controls -->
-        <div class="rightTools">
-          <label class="sr-only" for="search">Search</label>
-          <input
-            class="input"
-            id="search"
-            type="search"
-            placeholder="Search titles, URLs, notes…"
-          />
-          <button class="btn" id="addItem" type="button">＋ Add</button>
-        </div>
+    <!-- Top row: kicker + badges -->
+    <div class="heroTop">
+      <div class="kickerPill">
+        <span class="kDot" aria-hidden="true"></span>
+        NAVIGATION
       </div>
 
-      <!-- Tree mount point -->
-      <div class="tree" id="treeRoot"></div>
-    </section>
+      <div class="heroBadges" aria-label="Status badges">
+        <span class="badgePill">1</span>
+        <span class="badgePill">2</span>
+      </div>
+    </div>
+
+    <!-- Center title -->
+    <div class="heroCenter">
+      <h1 class="heroTitle">Navigation Hub</h1>
+      <p class="heroSubtitle">Webpage navigation tracking</p>
+      <div class="heroDivider" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</header>
+
+<!-- =========================================================
+  MAIN CARD: TOOLBAR + TREE
+========================================================== -->
+<section class="card" aria-label="Navigation hub">
+
+  <!-- Toolbar -->
+<div class="toolbar" id="top">
+
+  <!-- Actions bar (left) -->
+  <div class="leftTools">
+    <details class="menu" id="actionsMenu">
+      <summary class="btn" aria-label="Actions">☰ Actions</summary>
+
+      <div class="menuList" role="menu" aria-label="Toolbar actions">
+        <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
+        <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
+        <div class="menuSep" aria-hidden="true"></div>
+        <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
+        <button class="btn menuItem" id="resetEdits" type="button" role="menuitem" title="Clears saved edits on this device">
+          ↺ Reset edits
+        </button>
+      </div>
+    </details>
+  </div>
+
+  <!-- Right controls (stay OUTSIDE Actions) -->
+  <div class="rightTools">
+    <label class="sr-only" for="search">Search</label>
+    <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
+    <button class="btn" id="addItem" type="button">＋ Add</button>
+  </div>
+
+</div>
+
+
+  <!-- Tree mount point -->
+  <div class="tree" id="treeRoot"></div>
+</section>
+```
 
   </div>
 
   <!-- =========================================================
     EMBEDDED DATA (INITIAL TREE NODES)
   ========================================================== -->
+
   <script id="navData" type="application/json">
 [
   { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1 },
@@ -903,6 +912,7 @@
   <!-- =========================================================
     MODAL (ADD / EDIT)
   ========================================================== -->
+
   <div class="modalBackdrop" id="modalBackdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <!-- Modal header -->
@@ -912,61 +922,66 @@
           <div id="modalTitle" class="modalTitle">Item</div>
         </div>
 
-        <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
-      </div>
+```
+    <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
+  </div>
 
-      <!-- Modal body -->
-      <div class="modalBody">
+  <!-- Modal body -->
+  <div class="modalBody">
 
-        <div class="grid2">
-          <label class="field">
-            <span>Type</span>
-            <select class="input" id="fType">
-              <option value="group">Page (group)</option>
-              <option value="tile">Link (tile)</option>
-            </select>
-          </label>
+    <div class="grid2">
+      <label class="field">
+        <span>Type</span>
+        <select class="input" id="fType">
+          <option value="group">Page (group)</option>
+          <option value="tile">Link (tile)</option>
+        </select>
+      </label>
 
-          <label class="field">
-            <span>Title</span>
-            <input class="input" id="fTitle" placeholder="Title" />
-          </label>
-        </div>
-
-        <label class="field">
-          <span>Hyperlink</span>
-          <input class="input" id="fHref" placeholder="https://… or /path" />
-        </label>
-
-        <label class="field" id="groupColorField">
-          <span>Group color</span>
-          <input
-            class="input"
-            id="fColor"
-            type="color"
-            value="#6d5efc"
-            style="height:44px; padding:6px 10px;"
-          />
-        </label>
-
-        <div class="modalActions">
-          <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
-          <div style="flex:1"></div>
-          <button class="btn" id="saveItem" type="button">💾 Save</button>
-        </div>
-
-      </div>
+      <label class="field">
+        <span>Title</span>
+        <input class="input" id="fTitle" placeholder="Title" />
+      </label>
     </div>
+
+    <label class="field">
+      <span>Hyperlink</span>
+      <input class="input" id="fHref" placeholder="https://… or /path" />
+    </label>
+
+    <label class="field" id="groupColorField">
+      <span>Group color</span>
+      <input
+        class="input"
+        id="fColor"
+        type="color"
+        value="#6d5efc"
+        style="height:44px; padding:6px 10px;"
+      />
+    </label>
+
+    <div class="modalActions">
+      <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
+      <div style="flex:1"></div>
+      <button class="btn" id="saveItem" type="button">💾 Save</button>
+    </div>
+
+  </div>
+</div>
+```
+
   </div>
 
   <!-- =========================================================
     VENDOR SCRIPTS (LOAD BEFORE APP SCRIPT)
   ========================================================== -->
+
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
 <!-- ==================================================================================================================
     =========================================================START OF SCRIPT=========================================================
   =================================================================================================================== -->
+
 <script>
 /* =========================================================
   Vigil — Unlimited nesting tree
@@ -1647,6 +1662,7 @@ render();
   <!-- ==================================================================================================================
     =========================================================END OF SCRIPT=========================================================
   =================================================================================================================== -->
+
 </body>
  <!-- ==================================================================================================================
     =========================================================END OF BODY=========================================================
