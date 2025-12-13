@@ -857,6 +857,17 @@
       </div>
     </div>
   </div>
+<script id="navData" type="application/json">
+[
+  {
+    "id": "home",
+    "title": "Vigil Home",
+    "href": "https://vigilproject.org/",
+    "kind": "page",
+    "notes": "Landing page"
+  }
+]
+</script>
 
   <script>
     /* =========================================================
@@ -1192,29 +1203,27 @@
     // Data loading
     // ---------------------------
     const loadNav = async () => {
-      try{
-        const res = await fetch("./nav.json", { cache: "no-store" });
-        if (!res.ok) throw new Error(`nav.json load failed (HTTP ${res.status})`);
+  try {
+    const el = document.getElementById("navData");
+    if (!el) throw new Error("Missing <script id='navData' type='application/json'>…</script>");
 
-        const base = await res.json();
-        NAV_ITEMS = mergedItems(base, loadOverrides());
+    const base = JSON.parse(el.textContent || "[]");
+    NAV_ITEMS = mergedItems(base, loadOverrides());
 
-        const now = new Date();
-        metaRight.textContent = `Loaded ${now.toLocaleString()} • Tip: Use Tab/Enter to open/close sections.`;
+    const now = new Date();
+    metaRight.textContent = `Loaded ${now.toLocaleString()} • Tip: Use Tab/Enter to open/close sections.`;
 
-        initNav();
-      } catch (err){
-        metaLeft.textContent = "Could not load nav.json";
-        treeEl.innerHTML = `
-          <div style="color:var(--muted); padding:14px; line-height:1.5;">
-            <b>Load error:</b> ${escapeHtml(err.message || String(err))}<br/>
-            <span style="color:var(--muted2)">
-              Make sure <code>nav.json</code> is in the same folder as this HTML file and you're opening the page via <code>http://</code> (not <code>file://</code>).
-            </span>
-          </div>`;
-        console.error(err);
-      }
-    };
+    initNav(); // keep your existing renderer
+  } catch (err) {
+    metaLeft.textContent = "Could not load embedded nav data";
+    treeEl.innerHTML = `
+      <div style="color:var(--muted); padding:14px; line-height:1.5;">
+        <b>Load error:</b> ${escapeHtml(err.message || String(err))}
+      </div>`;
+    console.error(err);
+  }
+};
+
 
     // ---------------------------
     // Public hooks used by inline onclick
