@@ -12,7 +12,7 @@
 
   <style>
     /* Ensure "hidden" always wins */
-[hidden] { display: none !important; }
+    [hidden] { display: none !important; }
 
     :root{
       /* Neon Aurora theme (no orange/yellow) */
@@ -248,6 +248,50 @@
       .heroBadges{ justify-content:flex-start; }
     }
 
+    /* Hero link styles (no Tailwind needed) */
+    .heroLinks { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .heroNav   { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+
+    .heroLinks a,
+    .heroNav a{ color: inherit; text-decoration: none; }
+
+    .heroBtn{
+      display:inline-flex;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transition: transform .12s var(--ease), background .2s var(--ease);
+    }
+    .heroBtn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
+    .heroBtnPrimary{
+      background: rgba(255,255,255,.92);
+      color: #060613;
+      border-color: rgba(255,255,255,.18);
+    }
+    .heroBtnPrimary:hover{ background: rgba(255,255,255,.96); }
+
+    .heroPill{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-size:12px;
+      color: rgba(255,255,255,.82);
+    }
+    .heroPill:hover{ background: rgba(255,255,255,.09); }
+
+    .heroPillAccent{
+      border-color: rgba(255,79,216,.35);
+      background: color-mix(in oklab, var(--accentC), transparent 88%);
+      color: rgba(255,255,255,.90);
+    }
+    .heroPillAccent:hover{ background: color-mix(in oklab, var(--accentC), transparent 84%); }
+
     /* === Card / Toolbar === */
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
@@ -323,7 +367,7 @@
       box-shadow: 0 0 0 3px rgba(34,211,238,.18);
     }
 
-    /* === Meta row (spacing fix) === */
+    /* === Meta row === */
     .meta{
       padding:10px 14px 12px;
       color:var(--muted2);
@@ -623,138 +667,51 @@
       body::before, .node, .heroBanner::before{ animation:none !important; }
       .btn, .row, .toggle, .iconBtn{ transition:none !important; }
     }
-    .heroLinks { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-.heroNav   { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-
-.heroLinks a,
-.heroNav a{
-  color: inherit;
-  text-decoration: none;
-}
-
-.heroBtn{
-  display:inline-flex;
-  align-items:center;
-  padding:10px 14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.16);
-  background: rgba(255,255,255,.06);
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-  transition: transform .12s var(--ease), background .2s var(--ease);
-}
-.heroBtn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
-.heroBtnPrimary{
-  background: rgba(255,255,255,.92);
-  color: #060613;
-  border-color: rgba(255,255,255,.18);
-}
-.heroBtnPrimary:hover{ background: rgba(255,255,255,.96); }
-
-.heroPill{
-  display:inline-flex;
-  align-items:center;
-  padding:7px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-  font-size:12px;
-  color: rgba(255,255,255,.82);
-}
-.heroPill:hover{ background: rgba(255,255,255,.09); }
-
-.heroPillAccent{
-  border-color: rgba(255,79,216,.35);
-  background: color-mix(in oklab, var(--accentC), transparent 88%);
-  color: rgba(255,255,255,.90);
-}
- 
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header
-  class="font-inter relative overflow-hidden rounded-3xl border border-white/10 px-8 py-8 shadow-2xl
-         bg-gradient-to-r from-[#0a0615] via-[#120a28] to-[#071a2a]"
->
-  <style>
-    @media (prefers-reduced-motion: reduce) {
-      .twinkle, .twinkle2, .twinkle3,
-      .fade-slow, .fade-slow2, .fade-slow3,
-      .drift-slow, .drift-slower,
-      .moon-pulse {
-        animation: none !important;
-      }
-    }
-  </style>
 
-  <!-- BACKGROUND LAYERS -->
-  <div class="absolute inset-0 z-0">
-    <!-- keep your moon/planet/starfield/glows here -->
-    <!-- IMPORTANT: keep them pointer-events-none -->
-  </div>
-<style>
-  .hero a { color: inherit; text-decoration: none; }
-</style>
+    <!-- ✅ Banner you chose (custom CSS version; no Tailwind) -->
+    <header class="heroBanner" aria-label="Vigil banner">
+      <div class="heroBg" aria-hidden="true"></div>
 
-  <!-- CONTENT (always above) -->
-  <div class="relative z-20 flex flex-col gap-6">
-    <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-      <div class="flex flex-col gap-3">
-        <div
-          class="inline-flex items-center gap-2 self-start rounded-full border border-white/10
-                 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur"
-        >
-          <span
-            class="h-2 w-2 rounded-full bg-violet-300 shadow-[0_0_16px_rgba(168,85,247,0.75)]"
-            aria-hidden="true"
-          ></span>
-          <span>Vigilia • watchfulness</span>
-          <span class="ml-2 rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-white/70">
-            live index
-          </span>
+      <div class="heroInner">
+        <div class="heroTop">
+          <div class="kickerPill">
+            <span class="kDot" aria-hidden="true"></span>
+            Vigilia • watchfulness
+          </div>
+
+          <div class="heroBadges" aria-label="Status badges">
+            <span class="badgePill">live index</span>
+          </div>
         </div>
 
-        <h3 class="font-eb text-4xl font-normal tracking-[0.01em] sm:text-5xl">
-          Vigil <span class="text-white/60">—</span> Navigation Hub
-        </h3>
-
-        <p class="max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
+        <h1 class="heroTitle">Vigil — Navigation Hub</h1>
+        <p class="heroSubtitle">
           A living index of what we’re watching, learning, and doing—kept calm, clear, and current.
         </p>
-      </div>
 
-      <div class="flex flex-col items-start gap-3 lg:items-end">
-          <a
-            href="#topics"
-            class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 shadow hover:opacity-95"
-          >
-            Explore topics
-          </a>
-          <a
-            href="#search"
-            class="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium
-                   text-white/85 backdrop-blur hover:bg-white/10"
-          >
-            Search
-          </a>
+        <div class="heroLinks" role="navigation" aria-label="Primary actions">
+          <a href="#topics" class="heroBtn heroBtnPrimary">Explore topics</a>
+          <a href="#search" class="heroBtn">Search</a>
         </div>
 
-        <nav class="flex flex-wrap gap-2" aria-label="Vigil sections">
-          <a class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#links">Links</a>
-          <a class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#notes">Notes</a>
-          <a class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#resources">Resources</a>
-          <a class="rounded-full border border-violet-300/30 bg-violet-300/10 px-3 py-1 text-xs text-violet-100 hover:bg-violet-300/15" href="#action">
-            Take action
-          </a>
+        <nav class="heroNav" aria-label="Vigil sections">
+          <a class="heroPill" href="#links">Links</a>
+          <a class="heroPill" href="#notes">Notes</a>
+          <a class="heroPill" href="#resources">Resources</a>
+          <a class="heroPill heroPillAccent" href="#action">Take action</a>
         </nav>
+
+        <div class="heroDivider" aria-hidden="true"></div>
       </div>
-    </div>
+    </header>
 
-    <div class="h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
-  </div>
-</header>
-
+    <!-- Anchor targets for hero links (optional, but makes jumps feel intentional) -->
+    <div id="topics" style="height: 1px;"></div>
 
     <section class="card" aria-label="Navigation hub">
       <div class="toolbar">
@@ -773,35 +730,17 @@
           <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
         </div>
       </div>
-<div class="mt-4 flex flex-wrap gap-2">
-  <a
-    href="#topics"
-    class="inline-flex items-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 shadow
-           hover:opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
-  >
-    Explore topics
-  </a>
-
-  <a
-    href="#search"
-    class="inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/85
-           backdrop-blur hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
-  >
-    Search
-  </a>
-</div>
-
-<nav class="mt-2 flex flex-wrap gap-2" aria-label="Vigil sections">
-  <a class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#links">Links</a>
-  <a class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#notes">Notes</a>
-  <a class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#resources">Resources</a>
-  <a class="inline-flex items-center rounded-full border border-violet-300/30 bg-violet-300/10 px-3 py-1 text-xs text-violet-100 hover:bg-violet-300/15" href="#action">Take action</a>
-</nav>
 
       <div class="meta">
         <div id="metaLeft">Loading…</div>
         <div id="metaRight">Tip: Use Tab/Enter to open/close sections.</div>
       </div>
+
+      <!-- Section anchors for hero pills -->
+      <div id="links" style="height: 1px;"></div>
+      <div id="notes" style="height: 1px;"></div>
+      <div id="resources" style="height: 1px;"></div>
+      <div id="action" style="height: 1px;"></div>
 
       <div class="tree" id="tree"></div>
     </section>
@@ -1001,34 +940,33 @@
     // ---------------------------
     // Modal control
     // ---------------------------
-    
     const showModal = () => modalBackdrop.removeAttribute("hidden");
-const hideModal = () => modalBackdrop.setAttribute("hidden", "");
+    const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
-const openModal = (item, isNew = false) => {
-  showModal();
-  editingId = isNew ? null : item.id;
+    const openModal = (item, isNew = false) => {
+      showModal();
+      editingId = isNew ? null : item.id;
 
-  modalKicker.textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
-  modalTitle.textContent  = isNew ? "New Navigation Item" : (item.title || "Navigation Item");
+      modalKicker.textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
+      modalTitle.textContent  = isNew ? "New Navigation Item" : (item.title || "Navigation Item");
 
-  fTitle.value  = item.title || "";
-  fHref.value   = item.href || "";
-  fId.value     = item.id || "";
-  fParent.value = item.parent ?? "";
-  fKind.value   = item.kind || "";
-  fNotes.value  = item.notes || "";
+      fTitle.value  = item.title || "";
+      fHref.value   = item.href || "";
+      fId.value     = item.id || "";
+      fParent.value = item.parent ?? "";
+      fKind.value   = item.kind || "";
+      fNotes.value  = item.notes || "";
 
-  deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
-  fId.disabled = !isNew;
+      deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
+      fId.disabled = !isNew;
 
-  setTimeout(() => fTitle.focus(), 0);
-};
+      setTimeout(() => fTitle.focus(), 0);
+    };
 
-const closeModal = () => {
-  hideModal();
-  editingId = null;
-};
+    const closeModal = () => {
+      hideModal();
+      editingId = null;
+    };
 
     // ---------------------------
     // Rendering
@@ -1067,7 +1005,7 @@ const closeModal = () => {
               onclick="window.__toggle('${item.id}')">${open ? "−" : "+"}</button>`
         : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
 
-      // Always open links in a new tab (your request)
+      // Always open links in a new tab
       const target = `target="_blank" rel="noreferrer noopener"`;
 
       return `
@@ -1175,7 +1113,7 @@ const closeModal = () => {
       if (!candidates.length) return;
 
       for (const item of candidates) {
-        linkStatus.set(item.id, "warn"); // checking...
+        linkStatus.set(item.id, "warn");
         render();
 
         try{
@@ -1255,56 +1193,53 @@ const closeModal = () => {
       if (e.target === modalBackdrop) closeModal();
     });
     document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal();
-});
-
+      if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal();
+    });
 
     // Save
-   saveItemBtn.addEventListener("click", () => {
-  const id = (fId.value || "").trim();
-  const title = (fTitle.value || "").trim();
-  const href = (fHref.value || "").trim();
-  const parentRaw = (fParent.value || "").trim();
-  const parent = parentRaw ? parentRaw : null;
+    saveItemBtn.addEventListener("click", () => {
+      const id = (fId.value || "").trim();
+      const title = (fTitle.value || "").trim();
+      const href = (fHref.value || "").trim();
+      const parentRaw = (fParent.value || "").trim();
+      const parent = parentRaw ? parentRaw : null;
 
-  if (!id) return alert("ID is required (unique).");
-  if (!title) return alert("Title is required.");
-  if (!href) return alert("Href is required.");
+      if (!id) return alert("ID is required (unique).");
+      if (!title) return alert("Title is required.");
+      if (!href) return alert("Href is required.");
 
-  // ✅ Prevent orphan parent references
-  if (parent && parent !== id) {
-    const parentExists =
-      byId.has(parent) || NAV_ITEMS.some(x => x.id === parent);
+      // Prevent orphan parent references
+      if (parent && parent !== id) {
+        const parentExists =
+          byId.has(parent) || NAV_ITEMS.some(x => x.id === parent);
 
-    if (!parentExists) {
-      const ok = confirm(
-        `Parent ID "${parent}" doesn't exist.\n\n` +
-        `Click OK to add this item at the ROOT instead.\n` +
-        `Click Cancel to go fix the Parent ID.`
-      );
-      if (!ok) return;
-    }
-  }
+        if (!parentExists) {
+          const ok = confirm(
+            `Parent ID "${parent}" doesn't exist.\n\n` +
+            `Click OK to add this item at the ROOT instead.\n` +
+            `Click Cancel to go fix the Parent ID.`
+          );
+          if (!ok) return;
+        }
+      }
 
-  const updated = {
-    id,
-    title,
-    href,
-    parent: (parent && (byId.has(parent) || NAV_ITEMS.some(x => x.id === parent))) ? parent : null,
-    kind: (fKind.value || "").trim(),
-    notes: (fNotes.value || "").trim()
-  };
+      const updated = {
+        id,
+        title,
+        href,
+        parent: (parent && (byId.has(parent) || NAV_ITEMS.some(x => x.id === parent))) ? parent : null,
+        kind: (fKind.value || "").trim(),
+        notes: (fNotes.value || "").trim()
+      };
 
-  upsertOverride(updated);
+      upsertOverride(updated);
 
-  // ✅ Make sure the item is visible after saving
-  // (expand its parent if it has one)
-  if (updated.parent) expanded.add(updated.parent);
+      // Make sure the item is visible after saving
+      if (updated.parent) expanded.add(updated.parent);
 
-  render();
-  closeModal();
-});
-
+      render();
+      closeModal();
+    });
 
     // Export JSON (copy)
     exportBtn.addEventListener("click", async () => {
@@ -1325,11 +1260,8 @@ const closeModal = () => {
       location.reload();
     });
 
-    // ---------------------------
     // Boot
-    // ---------------------------
     loadNav();
   </script>
 </body>
 </html>
-```
