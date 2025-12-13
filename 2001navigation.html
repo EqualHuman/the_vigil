@@ -29,16 +29,13 @@
       --accentB:#22d3ee;
       --accentC:#ff4fd8;
 
-      --ok:#33d17a;
-      --warn:#a78bfa;
-      --bad:#ff6b6b;
-
       --shadow: 0 18px 70px rgba(0,0,0,.55);
       --ring: 0 0 0 3px rgba(34,211,238,.22);
       --radius: 20px;
 
       --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
       --ease: cubic-bezier(.2,.8,.2,1);
     }
 
@@ -97,6 +94,7 @@
     }
 
     .heroInner{ position:relative; padding:18px; z-index:1; }
+
     .heroBg{
       position:absolute; inset:-2px; z-index:0;
       background:
@@ -169,6 +167,7 @@
     }
 
     .heroBadges{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+
     .badgePill{
       font-size:12px; padding:7px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
@@ -222,6 +221,7 @@
       transition: transform .12s var(--ease), background .2s var(--ease);
     }
     .heroBtn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
+
     .heroBtnPrimary{
       background: rgba(255,255,255,.92);
       color:#060613;
@@ -237,6 +237,7 @@
       font-size:12px; color: rgba(255,255,255,.82);
     }
     .heroPill:hover{ background: rgba(255,255,255,.09); }
+
     .heroPillAccent{
       border-color: rgba(255,79,216,.35);
       background: color-mix(in oklab, var(--accentC), transparent 88%);
@@ -325,6 +326,7 @@
       background: rgba(255,255,255,.05);
       border-radius:999px;
     }
+
     #metaRight{ font-variant-numeric: tabular-nums; }
 
     /* === Board / Groups / Tiles === */
@@ -406,8 +408,17 @@
     .tile:active{ cursor:grabbing; }
 
     .tileMain{ flex:1 1 auto; min-width:0; }
-    .tileTitleLine{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+
+    .tileTitleLine{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:4px;
+    }
+
     .tileTitle{ font-weight:650; letter-spacing:-.01em; }
+
     .chip{
       font-size:11.5px;
       padding:3px 8px;
@@ -416,6 +427,7 @@
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       color:var(--muted);
     }
+
     .url{
       font-family:var(--mono);
       font-size:12.5px;
@@ -423,6 +435,7 @@
       word-break: break-all;
       line-height:1.35;
     }
+
     .notes{
       margin-top:6px;
       font-size:12.5px;
@@ -462,6 +475,7 @@
       padding:18px;
       z-index:50;
     }
+
     .modal{
       width:min(820px, 96vw);
       border-radius:22px;
@@ -471,6 +485,7 @@
       backdrop-filter: blur(14px);
       overflow:hidden;
     }
+
     .modalHead{
       display:flex;
       align-items:center;
@@ -479,6 +494,7 @@
       padding:14px 14px 10px;
       border-bottom:1px solid rgba(255,255,255,.10);
     }
+
     .kicker{
       font-size:11px;
       letter-spacing:.22em;
@@ -486,12 +502,17 @@
       color: color-mix(in oklab, var(--muted), transparent 12%);
       opacity:.95;
     }
+
     .modalTitle{ font-weight:700; letter-spacing:-.02em; }
+
     .modalBody{ padding:14px; display:grid; gap:12px; }
+
     .field{ display:grid; gap:6px; }
     .field > span{ font-size:12px; color:var(--muted2); }
+
     .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
     @media (max-width:720px){ .grid2{ grid-template-columns: 1fr; } }
+
     .modalActions{ display:flex; align-items:center; gap:10px; padding-top:6px; }
 
     .sr-only{
@@ -574,19 +595,37 @@
 [
   {
     "id": "home",
-    "title": "Vigil Home",
-    "href": "https://vigilproject.org/",
+    "title": "Home",
+    "href": "/index.html",
     "kind": "page",
     "notes": "Landing page",
     "group": "Core",
     "order": 1
   },
   {
-    "id": "donate-example",
-    "title": "Donate (example)",
-    "href": "https://example.org/donate",
+    "id": "animals",
+    "title": "Animals",
+    "href": "/animals/index.html",
+    "kind": "section",
+    "notes": "",
+    "group": "Topics",
+    "order": 1
+  },
+  {
+    "id": "endangered",
+    "title": "Endangered Animals",
+    "href": "/animals/endangered.html",
+    "kind": "page",
+    "notes": "",
+    "group": "Topics",
+    "order": 2
+  },
+  {
+    "id": "donate-wwf",
+    "title": "Donate: WWF",
+    "href": "https://www.worldwildlife.org/",
     "kind": "donate",
-    "notes": "Replace with a real org donation page",
+    "notes": "",
     "group": "Take action",
     "order": 1
   }
@@ -665,7 +704,6 @@
     const boardEl = $("#board");
     const searchEl = $("#search");
     const metaLeft = $("#metaLeft");
-    const metaRight = $("#metaRight");
 
     const expandAllBtn = $("#expandAll");
     const collapseAllBtn = $("#collapseAll");
@@ -705,9 +743,7 @@
 
     const loadItems = () => {
       const raw = localStorage.getItem(LS_ITEMS);
-      if (raw) {
-        try { return JSON.parse(raw); } catch {}
-      }
+      if (raw) { try { return JSON.parse(raw); } catch {} }
       return loadEmbedded();
     };
 
@@ -716,16 +752,12 @@
     const loadGroupState = () => {
       const raw = localStorage.getItem(LS_GROUPS);
       if (!raw) return new Set();
-      try {
-        const arr = JSON.parse(raw);
-        return new Set(arr);
-      } catch { return new Set(); }
+      try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
     };
 
     const saveGroupState = () => localStorage.setItem(LS_GROUPS, JSON.stringify([...collapsedGroups], null, 2));
 
     const normalize = () => {
-      // Ensure group/order exist and are consistent
       const byGroup = new Map();
       for (const it of ITEMS) {
         it.group = (it.group || "Ungrouped").trim() || "Ungrouped";
@@ -733,7 +765,6 @@
         if (!byGroup.has(it.group)) byGroup.set(it.group, []);
         byGroup.get(it.group).push(it);
       }
-
       for (const [g, list] of byGroup.entries()) {
         list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0) || (a.title||"").localeCompare(b.title||""));
         list.forEach((it, idx) => it.order = idx + 1);
@@ -754,10 +785,8 @@
         if (!map.has(g)) map.set(g, []);
         map.get(g).push(it);
       }
-      for (const [g, list] of map.entries()) {
-        list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
-      }
-      // Sort groups alphabetically but keep Core first if present
+      for (const [g, list] of map.entries()) list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+
       const entries = [...map.entries()].sort(([a],[b]) => a.localeCompare(b));
       const coreIdx = entries.findIndex(([g]) => g.toLowerCase() === "core");
       if (coreIdx > 0) {
@@ -811,10 +840,8 @@
       try { e.dataTransfer.setData("text/plain", dragId); } catch {}
     };
 
-    const onDragOverGroup = (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
-    };
+    const onDragOverGroup = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; };
+    const onDragOverTile  = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; };
 
     const onDropGroup = (e) => {
       e.preventDefault();
@@ -841,18 +868,17 @@
       const b = ITEMS.find(x => x.id === targetId);
       if (!a || !b) return;
 
-      // If dropped on a tile in another group, move into that group first
       a.group = b.group;
 
-      // Reorder within that group by inserting a before b
-      const g = a.group;
-      const groupItems = ITEMS.filter(x => (x.group||"Ungrouped") === g).sort((x,y)=>x.order-y.order);
+      const g = a.group || "Ungrouped";
+      const groupItems = ITEMS
+        .filter(x => (x.group || "Ungrouped") === g)
+        .sort((x,y)=> (x.order ?? 0) - (y.order ?? 0));
 
       const withoutA = groupItems.filter(x => x.id !== a.id);
       const idxB = withoutA.findIndex(x => x.id === b.id);
       withoutA.splice(Math.max(0, idxB), 0, a);
 
-      // Write back orders
       withoutA.forEach((it, idx) => it.order = idx + 1);
 
       normalize();
@@ -873,7 +899,7 @@
              ondragover="window.__dragOverTile(event)"
              ondrop="window.__dropTile(event)">
           <div class="tileMain">
-            <a class="link" href="${escapeHtml(item.href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
+            <a href="${escapeHtml(item.href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
               <div class="tileTitleLine">
                 <span class="tileTitle">${escapeHtml(item.title)}</span>
                 ${chip}
@@ -905,9 +931,7 @@
 
       boardEl.innerHTML = entries.map(([group, items]) => {
         const collapsed = collapsedGroups.has(group);
-        const body = collapsed
-          ? ""
-          : (items.length ? items.map(renderTile).join("") : `<div class="dropHint">Drop tiles here…</div>`);
+        const body = collapsed ? "" : (items.length ? items.map(renderTile).join("") : `<div class="dropHint">Drop tiles here…</div>`);
 
         return `
           <section class="group">
@@ -932,9 +956,7 @@
       }).join("");
     };
 
-    const copyToClipboard = async (text) => {
-      try { await navigator.clipboard.writeText(text); } catch {}
-    };
+    const copyToClipboard = async (text) => { try { await navigator.clipboard.writeText(text); } catch {} };
 
     const upsert = (updated) => {
       const idx = ITEMS.findIndex(x => x.id === updated.id);
@@ -953,12 +975,11 @@
       render();
     };
 
-    // Public hooks used by inline handlers
+    // Public hooks for inline handlers
     window.__dragStart = onDragStart;
     window.__dragOverGroup = onDragOverGroup;
     window.__dropGroup = onDropGroup;
-
-    window.__dragOverTile = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; };
+    window.__dragOverTile = onDragOverTile;
     window.__dropTile = onDropTile;
 
     window.__toggleGroup = (group) => {
@@ -1006,29 +1027,20 @@
       const group = ((fGroup.value || "Ungrouped").trim() || "Ungrouped");
       const notes = (fNotes.value || "").trim();
 
-      // prevent changing ID when editing
       const finalId = editingId ? editingId : id;
+
       if (editingId && id !== editingId) {
         alert("ID cannot be changed while editing. Create a new tile instead.");
         return;
       }
 
-      // If new ID collides with existing
       if (!editingId && ITEMS.some(x => x.id === finalId)) {
         alert("That ID already exists. Choose a unique ID.");
         return;
       }
 
       const existing = ITEMS.find(x => x.id === finalId);
-      const updated = {
-        id: finalId,
-        title,
-        href,
-        kind,
-        group,
-        notes,
-        order: existing?.order ?? 9999
-      };
+      const updated = { id: finalId, title, href, kind, group, notes, order: existing?.order ?? 9999 };
 
       upsert(updated);
       closeModal();
