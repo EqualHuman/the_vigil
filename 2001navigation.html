@@ -588,6 +588,7 @@
           <button class="btn" id="expandAll" type="button">▾ Expand all</button>
           <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
           <button class="btn" id="addItem" type="button">＋ Add</button>
+          <button class="btn" id="addGroup" type="button">＋ Add group</button>
           <button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
           <button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
         </div>
@@ -716,7 +717,8 @@
     ========================================================== */
 
     const LS_ITEMS  = "vigil_items_v1";
-    const LS_GROUPS = "vigil_group_state_v1";
+const LS_GROUPS = "vigil_group_state_v1";
+const LS_GROUP_LIST = "vigil_group_list_v1";
 
     const $ = (sel) => document.querySelector(sel);
 
@@ -727,6 +729,8 @@
     const expandAllBtn = $("#expandAll");
     const collapseAllBtn = $("#collapseAll");
     const addItemBtn = $("#addItem");
+    const addGroupBtn = $("#addGroup");
+
     const exportBtn = $("#exportJson");
     const resetBtn = $("#resetEdits");
 
@@ -796,24 +800,36 @@
       return hay.includes(filter);
     };
 
-    const groupMap = () => {
-      const map = new Map();
-      for (const it of ITEMS) {
-        if (!matches(it)) continue;
-        const g = it.group || "Ungrouped";
-        if (!map.has(g)) map.set(g, []);
-        map.get(g).push(it);
-      }
-      for (const [, list] of map.entries()) list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+  const groupMap = () => {
+  const map = new Map();
 
-      const entries = [...map.entries()].sort(([a],[b]) => a.localeCompare(b));
-      const coreIdx = entries.findIndex(([g]) => g.toLowerCase() === "core");
-      if (coreIdx > 0) {
-        const [core] = entries.splice(coreIdx, 1);
-        entries.unshift(core);
-      }
-      return entries;
-    };
+  // 1) seed map with explicit groups (so empty groups can exist)
+  for (const g of GROUPS) map.set(g, []);
+
+  // 2) add items (filtered)
+  for (const it of ITEMS) {
+    if (!matches(it)) continue;
+    const g = (it.group || "Ungrouped").trim() || "Ungrouped";
+    if (!map.has(g)) map.set(g, []);
+    map.get(g).push(it);
+  }
+
+  // 3) sort items inside each group
+  for (const [, list] of map.entries()) {
+    list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+  }
+
+  // 4) sort groups alphabetically, but keep Core first if present
+  const entries = [...map.entries()].sort(([a],[b]) => a.localeCompare(b));
+  const coreIdx = entries.findIndex(([g]) => g.toLowerCase() === "core");
+  if (coreIdx > 0) {
+    const [core] = entries.splice(coreIdx, 1);
+    entries.unshift(core);
+  }
+
+  return entries;
+};
+
 
     const showModal = () => modalBackdrop.removeAttribute("hidden");
     const hideModal = () => modalBackdrop.setAttribute("hidden", "");
@@ -849,6 +865,22 @@
       saveGroupState();
       render();
     };
+const loadGroupList = () => {
+  const raw = localStorage.getItem(LS_GROUP_LIST);
+  if (!raw) return [];
+  try {
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveGroupList = () => {
+  localStorage.setItem(LS_GROUP_LIST, JSON.stringify(GROUPS, null, 2));
+};
+
+let GROUPS = [];
 
     const copyToClipboard = async (text) => { try { await navigator.clipboard.writeText(text); } catch {} };
 
@@ -1008,6 +1040,24 @@
     modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal(); });
 
+    addGroupBtn.addEventListener("click", () => {
+  const name = prompt("Group name?");
+  if (!name) return;
+
+  const group = name.trim();
+  if (!group) return;
+
+  if (!GROUPS.includes(group)) GROUPS.push(group);
+
+  // keep it expanded by default
+  collapsedGroups.delete(group);
+
+  saveGroupList();
+  saveGroupState();
+  render();
+});
+
+
     saveItemBtn.addEventListener("click", () => {
       const id = (fId.value || "").trim();
       const title = (fTitle.value || "").trim();
@@ -1065,12 +1115,21 @@
       location.reload();
     });
 
-    // Boot
-    ITEMS = loadItems();
-    collapsedGroups = loadGroupState();
-    normalize();
-    saveItems();
-    render();
+  ITEMS = loadItems();
+GROUPS = loadGroupList();
+collapsedGroups = loadGroupState();
+
+// Ensure groups mentioned by items are in GROUPS (so they persist)
+for (const it of ITEMS) {
+  const g = (it.group || "Ungrouped").trim() || "Ungrouped";
+  if (!GROUPS.includes(g)) GROUPS.push(g);
+}
+
+normalize();
+saveItems();
+saveGroupList();
+render();
+
   </script>
 </body>
 </html>
