@@ -1005,9 +1005,51 @@
   MAIN CARD: TOOLBAR + TREE
 ========================================================== -->
 <div class="layout2">
-  <!-- LEFT: your existing navigation card -->
+
+  <!-- LEFT: Navigation card (toolbar + tree live INSIDE this card) -->
   <section class="card" aria-label="Navigation hub">
-    ...
+
+    <!-- Toolbar -->
+    <div class="toolbar" id="top">
+
+      <!-- Left: section title -->
+      <div class="toolbarTitle">
+        Webpage Navigation
+      </div>
+
+      <!-- Center: search -->
+      <div class="toolbarCenter">
+        <label class="sr-only" for="search">Search</label>
+        <input
+          class="input"
+          id="search"
+          type="search"
+          placeholder="Search titles, URLs, notes…"
+        />
+      </div>
+
+      <!-- Right: Add + Actions -->
+      <div class="toolbarRight">
+        <button class="btn" id="addItem" type="button">＋ Add</button>
+
+        <details class="menu" id="actionsMenu">
+          <summary class="btn" aria-label="Actions">☰ Actions</summary>
+
+          <div class="menuList" role="menu" aria-label="Toolbar actions">
+            <button class="btn menuItem" id="expandAll">▾ Expand all</button>
+            <button class="btn menuItem" id="collapseAll">▸ Collapse all</button>
+            <div class="menuSep"></div>
+            <button class="btn menuItem" id="exportJson">⇪ Export JSON</button>
+            <button class="btn menuItem" id="resetEdits">↺ Reset edits</button>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Tree mount point -->
+    <div class="tree" id="treeRoot"></div>
+
   </section>
 
   <!-- RIGHT: Task Notebook -->
@@ -1028,54 +1070,9 @@
       <div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>
     </div>
   </aside>
-</div>
-
-  <!-- Toolbar -->
-<div class="toolbar" id="top">
-
-  <!-- Left: section title -->
-  <div class="toolbarTitle">
-    Webpage Navigation
-  </div>
-
-  <!-- Center: search -->
-  <div class="toolbarCenter">
-    <label class="sr-only" for="search">Search</label>
-    <input
-      class="input"
-      id="search"
-      type="search"
-      placeholder="Search titles, URLs, notes…"
-    />
-  </div>
-
-  <!-- Right: Add + Actions -->
-  <div class="toolbarRight">
-    <button class="btn" id="addItem" type="button">＋ Add</button>
-
-    <details class="menu" id="actionsMenu">
-      <summary class="btn" aria-label="Actions">☰ Actions</summary>
-
-      <div class="menuList" role="menu" aria-label="Toolbar actions">
-        <button class="btn menuItem" id="expandAll">▾ Expand all</button>
-        <button class="btn menuItem" id="collapseAll">▸ Collapse all</button>
-        <div class="menuSep"></div>
-        <button class="btn menuItem" id="exportJson">⇪ Export JSON</button>
-        <button class="btn menuItem" id="resetEdits">↺ Reset edits</button>
-      </div>
-    </details>
-  </div>
 
 </div>
 
-
-
-  <!-- Tree mount point -->
-  <div class="tree" id="treeRoot"></div>
-</section>
-
-
-  </div>
 
   <!-- =========================================================
     EMBEDDED DATA (INITIAL TREE NODES)
@@ -1319,57 +1316,12 @@ const textareaToTasks = (value) => {
 window.__openTasks = (id) => {
   pinnedTaskNodeId = id;
   notebookMode = "selected";
-  renderNotebook();
+  render(); // refresh tree + notebook so checkboxes/buttons stay in sync
 };
+
 
 
 const renderTasks = (node) => {
-  const renderNotebookSelected = () => {
-  if (!pinnedTaskNodeId) {
-    nbTitle.textContent = "Select a page to view tasks";
-    nbBody.innerHTML = `<div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>`;
-    return;
-  }
-  const n = nodeById(pinnedTaskNodeId);
-  if (!n) return;
-
-  normalizeTasks(n);
-  nbTitle.textContent = n.title || "(untitled)";
-  nbBody.innerHTML = renderTasks(n);
-};
-
-const renderNotebookAll = () => {
-  const nodesWithTasks = NODES
-    .map(n => (normalizeTasks(n), n))
-    .filter(n => Array.isArray(n.tasks) && n.tasks.length);
-
-  nbTitle.textContent = "All tasks (across site)";
-
-  if (!nodesWithTasks.length) {
-    nbBody.innerHTML = `<div class="taskEmpty">No tasks found yet.</div>`;
-    return;
-  }
-
-  nbBody.innerHTML = nodesWithTasks.map(n => `
-    <div class="tasks">
-      <div class="tasksHead">
-        <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
-        <button class="tasksAdd" type="button" onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
-      </div>
-      ${renderTasks(n).replace(/^<div class="tasks"[\s\S]*?<div class="tasksHead">[\s\S]*?<\/div>/, "")}
-    </div>
-  `).join("");
-};
-
-const renderNotebook = () => {
-  // update tab aria-selected
-  nbTabSelected.setAttribute("aria-selected", notebookMode === "selected");
-  nbTabAll.setAttribute("aria-selected", notebookMode === "all");
-
-  if (notebookMode === "all") renderNotebookAll();
-  else renderNotebookSelected();
-};
-
   const tasks = Array.isArray(node.tasks) ? node.tasks : [];
   const rows = tasks.length
     ? `<div class="taskList">${
@@ -1399,6 +1351,74 @@ const renderNotebook = () => {
     </div>
   `;
 };
+
+const renderNotebookSelected = () => {
+  if (!pinnedTaskNodeId) {
+    nbTitle.textContent = "Select a page to view tasks";
+    nbBody.innerHTML = `<div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>`;
+    return;
+  }
+  const n = nodeById(pinnedTaskNodeId);
+  if (!n) return;
+
+  normalizeTasks(n);
+  nbTitle.textContent = n.title || "(untitled)";
+  nbBody.innerHTML = renderTasks(n);
+};
+
+const renderNotebookAll = () => {
+  const nodesWithTasks = NODES
+    .map(n => (normalizeTasks(n), n))
+    .filter(n => Array.isArray(n.tasks) && n.tasks.length);
+
+  nbTitle.textContent = "All tasks (across site)";
+
+  if (!nodesWithTasks.length) {
+    nbBody.innerHTML = `<div class="taskEmpty">No tasks found yet.</div>`;
+    return;
+  }
+
+  nbBody.innerHTML = nodesWithTasks.map(n => `
+    <div class="tasks" aria-label="Webpage tasks">
+      <div class="tasksHead">
+        <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
+        <button class="tasksAdd" type="button"
+          onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
+      </div>
+      ${
+        (() => {
+          const tasks = Array.isArray(n.tasks) ? n.tasks : [];
+          const rows = tasks.length
+            ? `<div class="taskList">${
+                tasks.map((t, idx) => `
+                  <div class="taskRow">
+                    <input class="taskCheck" type="checkbox"
+                      ${t.done ? "checked" : ""}
+                      onclick="window.__taskToggle('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+                      aria-label="Mark task done" />
+                    <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
+                    <button class="taskDel" type="button"
+                      onclick="window.__taskDelete('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+                      aria-label="Delete task">✕</button>
+                  </div>
+                `).join("")
+              }</div>`
+            : `<div class="taskEmpty">No tasks yet.</div>`;
+          return rows;
+        })()
+      }
+    </div>
+  `).join("");
+};
+
+const renderNotebook = () => {
+  nbTabSelected.setAttribute("aria-selected", notebookMode === "selected");
+  nbTabAll.setAttribute("aria-selected", notebookMode === "all");
+
+  if (notebookMode === "all") renderNotebookAll();
+  else renderNotebookSelected();
+};
+
 
 // Inline hooks
 window.__taskAdd = (id) => {
@@ -1878,8 +1898,6 @@ const render = () => {
   renderNotebook();
 };
 
-
-
 /* =========================================================
   13) PUBLIC HOOKS (USED BY INLINE onclick)
 ========================================================== */
@@ -1913,15 +1931,16 @@ const setAllCollapsed = (collapsed) => {
 /* =========================================================
   15) EVENTS
 ========================================================== */
-  nbTabSelected.addEventListener("click", () => {
+nbTabSelected.addEventListener("click", () => {
   notebookMode = "selected";
-  renderNotebook();
+  render();
 });
 
 nbTabAll.addEventListener("click", () => {
   notebookMode = "all";
-  renderNotebook();
+  render();
 });
+
 
 // Search
 searchEl.addEventListener("input", (e) => {
