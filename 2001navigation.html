@@ -648,6 +648,9 @@
     <!-- keep your moon/planet/starfield/glows here -->
     <!-- IMPORTANT: keep them pointer-events-none -->
   </div>
+<style>
+  .hero a { color: inherit; text-decoration: none; }
+</style>
 
   <!-- CONTENT (always above) -->
   <div class="relative z-20 flex flex-col gap-6">
@@ -726,6 +729,30 @@
           <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
         </div>
       </div>
+<div class="mt-4 flex flex-wrap gap-2">
+  <a
+    href="#topics"
+    class="inline-flex items-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 shadow
+           hover:opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+  >
+    Explore topics
+  </a>
+
+  <a
+    href="#search"
+    class="inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/85
+           backdrop-blur hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+  >
+    Search
+  </a>
+</div>
+
+<nav class="mt-2 flex flex-wrap gap-2" aria-label="Vigil sections">
+  <a class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#links">Links</a>
+  <a class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#notes">Notes</a>
+  <a class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#resources">Resources</a>
+  <a class="inline-flex items-center rounded-full border border-violet-300/30 bg-violet-300/10 px-3 py-1 text-xs text-violet-100 hover:bg-violet-300/15" href="#action">Take action</a>
+</nav>
 
       <div class="meta">
         <div id="metaLeft">Loading…</div>
