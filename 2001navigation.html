@@ -1087,6 +1087,72 @@ grid-template-columns: .85fr 1.45fr;
   font-weight:600;
   opacity:.92;
 }
+  /* ===== Unified hero navigation dots ===== */
+.heroDots{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+}
+
+.navDot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-block;
+  cursor:pointer;
+  position:relative;
+
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,.95),
+      rgba(255,255,255,.35) 35%,
+      transparent 65%
+    ),
+    linear-gradient(135deg, var(--accentB), var(--accentA));
+
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.22),
+    0 0 20px rgba(34,211,238,.55),
+    0 0 44px rgba(109,94,252,.45);
+
+  transition:
+    transform .15s var(--ease),
+    box-shadow .2s var(--ease),
+    opacity .2s var(--ease);
+}
+
+.navDot:hover{
+  transform: scale(1.25);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.35),
+    0 0 30px rgba(34,211,238,.75),
+    0 0 60px rgba(109,94,252,.55);
+}
+
+.navDot:focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 3px rgba(34,211,238,.7),
+    0 0 30px rgba(34,211,238,.8);
+}
+
+/* Active / current */
+.navDot.active{
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,1),
+      rgba(255,255,255,.5) 40%,
+      transparent 70%
+    ),
+    linear-gradient(135deg, var(--accentC), var(--accentA));
+
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.4),
+    0 0 32px rgba(255,79,216,.65),
+    0 0 70px rgba(109,94,252,.55);
+}
+
 
 </style>
 
@@ -1111,16 +1177,12 @@ grid-template-columns: .85fr 1.45fr;
   <div class="heroInner">
 
     <!-- Top row: kicker + badges -->
-    <div class="heroTop">
-      <div class="kickerPill">
-        <span class="kDot" aria-hidden="true"></span>
-        NAVIGATION
-      </div>
-
-     <div class="heroBadges" aria-label="Navigation dots">
-  <a href="#section-1" class="navDot" aria-label="Go to section 1"></a>
-  <a href="#section-2" class="navDot" aria-label="Go to section 2"></a>
+  <div class="heroTop heroDots">
+  <a href="#section-home" class="navDot" aria-label="Home"></a>
+  <a href="#section-1" class="navDot" aria-label="Section 1"></a>
+  <a href="#section-2" class="navDot" aria-label="Section 2"></a>
 </div>
+
 
     </div>
 
