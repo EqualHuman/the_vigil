@@ -14,14 +14,9 @@
 
 <!-- ==================================================================================================================
 =========================================================START OF STYLE=========================================================
-```
-
 =================================================================================================================== -->
 
-```html
-<script>
-(() => {
-  const css = `
+<style>
 /* =========================================================
   0) RESET / ACCESSIBILITY
 ========================================================== */
@@ -92,7 +87,6 @@ body{
     linear-gradient(180deg, var(--bg0), var(--bg1));
 }
 
-/* Ambient glow layer (static by default) */
 body::before{
   content:"";
   position:fixed;
@@ -105,6 +99,9 @@ body::before{
     radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
   filter: blur(22px);
   opacity:.9;
+
+  /* (kept) your final preference: NO pulsing/drift */
+  animation:none !important;
 }
 
 .wrap{
@@ -172,12 +169,17 @@ body::before{
     linear-gradient(120deg, transparent 35%, rgba(255,255,255,.10), transparent 65%),
     radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,.08), transparent 55%),
     linear-gradient(90deg, rgba(0,0,0,.28), transparent 26%, transparent 74%, rgba(0,0,0,.28));
-  opacity:.25;
-  mix-blend-mode: normal;
+  background-size: 240% 100%, 100% 100%, 100% 100%;
+  background-position: -40% 0, 0 0, 0 0;
+
+  /* (kept) final preference: stop shimmer */
+  animation:none !important;
+  opacity:.25 !important;
+  mix-blend-mode: normal !important;
 }
 
 /* Disable old hero layers if leftover markup exists */
-.heroStars, .heroAurora, .heroNoise, .heroBg,
+.heroStars, .heroAurora, .heroNoise, .heroBg{ display:none; }
 .heroBrandRow{ display:none; }
 
 .heroInner{
@@ -216,15 +218,6 @@ body::before{
     radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 45%),
     color-mix(in oklab, var(--accentB), transparent 20%);
   box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.18);
-}
-
-/* Kept flexible so it works for pills OR dots */
-.heroBadges{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
 }
 
 .badgePill{
@@ -296,97 +289,18 @@ body::before{
   content:"";
   position:absolute;
   inset:0;
-  opacity:.18;
-  mix-blend-mode: normal;
   background:
     linear-gradient(110deg, transparent 20%, rgba(255,255,255,.55), transparent 60%),
     radial-gradient(30px 14px at 50% 50%, rgba(34,211,238,.14), transparent 70%),
     radial-gradient(30px 14px at 50% 50%, rgba(109,94,252,.12), transparent 70%),
     radial-gradient(10px 10px at 50% 50%, rgba(255,255,255,.20), transparent 70%);
-}
+  background-size: 220% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: -120% 0, 0 0, 0 0, 0 0;
 
-/* =========================================================
-  3.1) HERO NAV DOTS (final version)
-========================================================== */
-.heroDots{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-}
-
-.navDot{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  display:inline-block;
-  cursor:pointer;
-  position:relative;
-
-  background:
-    radial-gradient(circle at 35% 35%,
-      rgba(255,255,255,1),
-      rgba(255,255,255,.6) 18%,
-      rgba(255,79,216,.8) 35%,
-      rgba(109,94,252,.9) 55%,
-      rgba(34,211,238,.9) 70%,
-      transparent 100%
-    );
-
-  box-shadow:
-    0 0 6px rgba(255,255,255,.9),
-    0 0 16px rgba(255,79,216,.85),
-    0 0 28px rgba(109,94,252,.85),
-    0 0 48px rgba(34,211,238,.65);
-
-  transition:
-    transform .18s var(--ease),
-    box-shadow .25s var(--ease),
-    opacity .25s var(--ease);
-}
-
-.navDot::after{
-  content:"";
-  position:absolute;
-  inset:-6px;
-  border-radius:50%;
-  background: radial-gradient(circle, rgba(255,255,255,.9), transparent 65%);
-  opacity:.35;
-  filter: blur(6px);
-  pointer-events:none;
-}
-
-.navDot:hover{
-  transform: scale(1.35);
-  box-shadow:
-    0 0 8px rgba(255,255,255,1),
-    0 0 22px rgba(255,79,216,1),
-    0 0 40px rgba(109,94,252,1),
-    0 0 70px rgba(34,211,238,.85);
-}
-
-.navDot:focus-visible{
-  outline:none;
-  box-shadow:
-    0 0 0 3px rgba(34,211,238,.7),
-    0 0 30px rgba(34,211,238,.8);
-}
-
-.navDot.active{
-  background:
-    radial-gradient(circle at 30% 30%,
-      rgba(255,255,255,1),
-      rgba(255,79,216,1) 30%,
-      rgba(109,94,252,1) 55%,
-      rgba(34,211,238,1) 75%,
-      transparent 100%
-    );
-
-  box-shadow:
-    0 0 10px rgba(255,255,255,1),
-    0 0 30px rgba(255,79,216,1),
-    0 0 60px rgba(109,94,252,1),
-    0 0 90px rgba(34,211,238,1);
+  /* (kept) final preference: stop shimmer */
+  animation:none !important;
+  opacity:.18 !important;
+  mix-blend-mode: normal !important;
 }
 
 /* =========================================================
@@ -426,7 +340,6 @@ body::before{
   flex-wrap:wrap;
 }
 
-.rightTools,
 .toolbarRight{
   display:flex;
   align-items:center;
@@ -436,6 +349,8 @@ body::before{
   flex-wrap:wrap;
   flex:1;
 }
+.toolbarRight > *{ flex:0 0 auto; }
+.toolbarRight details{ display:flex; align-items:center; }
 
 .toolbarTitle{
   font-size:11px;
@@ -449,9 +364,6 @@ body::before{
   padding-right:14px;
   border-right: 1px solid rgba(255,255,255,.12);
 }
-
-.toolbarRight > *{ flex:0 0 auto; }
-.toolbarRight details{ display:flex; align-items:center; }
 
 /* =========================================================
   5) BUTTONS + INPUTS
@@ -558,7 +470,7 @@ select.input{ appearance:none; }
   overflow:hidden;
 }
 
-/* Header: grid so title never pushes actions */
+/* Header alignment (final version) */
 .nodeHeader{
   display:grid;
   grid-template-columns: 1fr auto;
@@ -576,6 +488,21 @@ select.input{ appearance:none; }
   min-width:0;
 }
 
+/* nested nodes spacing */
+.nodeBody > .node{ margin-top:6px; }
+
+.twisty{
+  width:28px;height:28px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  flex:0 0 auto;
+}
+.twisty:hover{ background: rgba(255,255,255,.10); }
+
 .nodeTitle{
   font-weight:750;
   letter-spacing:-.01em;
@@ -590,37 +517,6 @@ select.input{ appearance:none; }
   display:grid;
   gap:14px;
 }
-
-/* nested nodes spacing */
-.nodeBody > .node{ margin-top:6px; }
-
-/* Softer styling for nested nodes */
-.node.indent{
-  margin-left:14px;
-  border-left:1px solid rgba(255,255,255,.10);
-  padding-left:12px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.045),
-    rgba(255,255,255,.025)
-  );
-}
-
-.node.indent .nodeHeader{ padding:10px 14px; }
-.node.indent .nodeTitle{ font-weight:600; opacity:.92; }
-
-.twisty{
-  width:28px;height:28px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  flex:0 0 auto;
-}
-.twisty:hover{ background: rgba(255,255,255,.10); }
 
 .tile{
   display:flex;
@@ -705,15 +601,30 @@ select.input{ appearance:none; }
 }
 .iconBtn:active{ transform: translateY(1px); }
 .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
-
 .iconBtn.active{
   border-color: rgba(34,211,238,.35);
   box-shadow: 0 0 0 3px rgba(34,211,238,.12);
   background: rgba(34,211,238,.08);
 }
 
+.indent{
+  margin-left:14px;
+  border-left:1px solid rgba(255,255,255,.10);
+  padding-left:12px;
+}
+
+/* Softer styling for nested nodes */
+.node.indent{
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
+}
+.node.indent .nodeHeader{ padding:10px 14px; }
+.node.indent .nodeTitle{ font-weight:600; opacity:.92; }
+
 /* spacing between sibling groups (root + nested) */
-[data-container="children"]{ display:grid; gap:14px; }
+[data-container="children"]{
+  display:grid;
+  gap:14px;
+}
 .tree > [data-container="children"]{ gap:18px; }
 
 /* Drag handle (handle-only dragging) */
@@ -948,7 +859,7 @@ select.input{ appearance:none; }
 }
 
 /* =========================================================
-  11) LAYOUT2 + NOTEBOOK
+  11) 2-COLUMN LAYOUT + NOTEBOOK
 ========================================================== */
 .layout2{
   display:grid;
@@ -960,7 +871,6 @@ select.input{ appearance:none; }
   .layout2{ grid-template-columns: 1fr; }
 }
 
-/* Task notebook */
 .notebook{ position: sticky; top: 18px; }
 @media (max-width: 980px){
   .notebook{ position: static; }
@@ -995,27 +905,100 @@ select.input{ appearance:none; }
 }
 
 /* =========================================================
-  12) MOTION / PERFORMANCE
+  12) HERO NAVIGATION DOTS (final: neon star version)
+========================================================== */
+.heroDots{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+}
+
+.navDot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-block;
+  cursor:pointer;
+  position:relative;
+
+  background:
+    radial-gradient(circle at 35% 35%,
+      rgba(255,255,255,1),
+      rgba(255,255,255,.6) 18%,
+      rgba(255,79,216,.8) 35%,
+      rgba(109,94,252,.9) 55%,
+      rgba(34,211,238,.9) 70%,
+      transparent 100%
+    );
+
+  box-shadow:
+    0 0 6px rgba(255,255,255,.9),
+    0 0 16px rgba(255,79,216,.85),
+    0 0 28px rgba(109,94,252,.85),
+    0 0 48px rgba(34,211,238,.65);
+
+  transition:
+    transform .18s var(--ease),
+    box-shadow .25s var(--ease),
+    opacity .25s var(--ease);
+}
+
+.navDot::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,255,255,.9), transparent 65%);
+  opacity:.35;
+  filter: blur(6px);
+  pointer-events:none;
+}
+
+.navDot:hover{
+  transform: scale(1.35);
+  box-shadow:
+    0 0 8px rgba(255,255,255,1),
+    0 0 22px rgba(255,79,216,1),
+    0 0 40px rgba(109,94,252,1),
+    0 0 70px rgba(34,211,238,.85);
+}
+
+.navDot:focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 3px rgba(34,211,238,.7),
+    0 0 30px rgba(34,211,238,.8);
+}
+
+.navDot.active{
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,1),
+      rgba(255,79,216,1) 30%,
+      rgba(109,94,252,1) 55%,
+      rgba(34,211,238,1) 75%,
+      transparent 100%
+    );
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,1),
+    0 0 30px rgba(255,79,216,1),
+    0 0 60px rgba(109,94,252,1),
+    0 0 90px rgba(34,211,238,1);
+}
+
+/* =========================================================
+  13) MOTION / PERFORMANCE (final)
 ========================================================== */
 @media (prefers-reduced-motion: reduce){
+  body::before{ animation:none !important; }
   .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
+  .heroBanner::after, .heroDivider::after{ animation:none !important; }
 }
-`;
+</style>
 
-  // Replace any previous injection from this script (optional safety)
-  const existing = document.querySelector('style[data-clean-vigil="true"]');
-  if (existing) existing.remove();
-
-  const style = document.createElement('style');
-  style.setAttribute('data-clean-vigil', 'true');
-  style.textContent = css;
-  document.head.appendChild(style);
-})();
-</script>
-```
-
-
-
+  
   <!-- ==================================================================================================================
     =========================================================END OF STYLE=========================================================
   =================================================================================================================== -->
