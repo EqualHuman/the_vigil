@@ -1001,6 +1001,121 @@ select.input{ appearance:none; }
   padding-top: 22px !important;
   padding-bottom: 22px !important;
 }
+/* =========================================================
+  CLEAN TOP ROUNDED CORNERS (cards, headers, hero)
+========================================================== */
+
+/* --- Define a single rounding system --- */
+:root{
+  --radius-card: 22px;
+  --radius-inner: 18px;
+}
+
+/* --- Cards: one authoritative radius --- */
+.card{
+  border-radius: var(--radius-card);
+  overflow: hidden; /* prevents inner layers from poking through */
+}
+
+/* --- Section headers should match card curvature --- */
+.toolbar,
+.notebookHead{
+  border-top-left-radius: var(--radius-card);
+  border-top-right-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+/* Remove any accidental rounding from children */
+.toolbar > *,
+.notebookHead > *{
+  border-radius: 0 !important;
+}
+
+/* --- Laser bars should sit FLUSH to the edge --- */
+.toolbar::before,
+.toolbar::after,
+.notebookHead::before,
+.notebookHead::after{
+  left: 0 !important;
+  right: 0 !important;
+  border-radius: 0 !important; /* critical */
+}
+
+/* --- Inner content spacing (prevents visual clipping) --- */
+.toolbar{
+  padding-top: 16px !important;
+  padding-bottom: 14px !important;
+}
+
+.notebookHead{
+  padding-top: 16px !important;
+  padding-bottom: 14px !important;
+}
+
+/* =========================================================
+  HERO BANNER CORNER CLEANUP
+========================================================== */
+
+/* Hero uses the SAME radius logic as cards */
+.heroBanner{
+  border-radius: calc(var(--radius-card) + 6px);
+  overflow: hidden;
+}
+
+/* Hero lasers should touch edges, not float */
+.heroLaser{
+  left: 0 !important;
+  right: 0 !important;
+  border-radius: 0 !important;
+}
+
+.heroLaserTop{ top: 0 !important; }
+.heroLaserBottom{ bottom: 0 !important; }
+
+/* Prevent pseudo-elements from rounding independently */
+.heroBanner::before,
+.heroBanner::after{
+  border-radius: inherit;
+}
+
+/* =========================================================
+  TREE NODES (prevents double-rounded headers)
+========================================================== */
+
+/* Nodes get ONE radius */
+.node{
+  border-radius: var(--radius-inner);
+  overflow: hidden;
+}
+
+/* Node headers should NOT re-round */
+.nodeHeader{
+  border-radius: 0;
+}
+
+/* Accent strips stay crisp at corners */
+.node[data-accent="1"]::before,
+.node[data-accent="1"]::after,
+.tasks[data-accent="1"]::before,
+.tasks[data-accent="1"]::after{
+  border-radius: 0 !important;
+}
+
+/* =========================================================
+  SEARCH BAR + INPUTS (soft but not pill-y)
+========================================================== */
+
+.input{
+  border-radius: 14px;
+}
+
+/* =========================================================
+  ICON BUTTONS (consistent roundness)
+========================================================== */
+.iconBtn,
+.dragHandle{
+  border-radius: 14px;
+}
 
   
 </style>
