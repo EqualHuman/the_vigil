@@ -705,6 +705,7 @@
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
   <script>
     /* =========================================================
@@ -904,20 +905,15 @@ const onDropTile = (e) => {
 };
 
 
-   const renderTile = (item) => {
+const renderTile = (item) => {
   const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
   const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
   const target = `target="_blank" rel="noreferrer noopener"`;
 
   return `
-    <div class="tileDropLine" data-before="${escapeHtml(item.id)}"></div>
-
     <div class="tile"
-      draggable="true"
       data-id="${escapeHtml(item.id)}"
-      ondragstart="window.__dragStart(event)"
-      ondragover="window.__dragOverTile(event)"
-      ondrop="window.__dropTile(event)">
+      data-group="${escapeHtml(item.group || 'Ungrouped')}">
 
       <div class="tileMain">
         <a href="${escapeHtml(item.href)}" ${target}
@@ -932,12 +928,13 @@ const onDropTile = (e) => {
       </div>
 
       <div class="tileActions">
-        <button class="iconBtn" onclick="window.__edit('${item.id}')">✎</button>
-        <button class="iconBtn" onclick="window.__copy('${item.href}')">⧉</button>
+        <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(item.id).replaceAll("'","&#039;")}')">✎</button>
+        <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
       </div>
     </div>
   `;
 };
+
 
 
     const render = () => {
@@ -976,7 +973,8 @@ const onDropTile = (e) => {
         `;
       }).join("");
     };
-
+ initSortables(); // ✅ add this line
+};
     const copyToClipboard = async (text) => { try { await navigator.clipboard.writeText(text); } catch {} };
 
     const upsert = (updated) => {
@@ -1098,6 +1096,48 @@ const onDropTile = (e) => {
     normalize();
     saveItems();
     render();
+    let _sortables = [];
+
+const initSortables = () => {
+  // destroy old instances
+  _sortables.forEach(s => s.destroy());
+  _sortables = [];
+
+  document.querySelectorAll(".groupBody").forEach((bodyEl) => {
+    const groupName = bodyEl.dataset.group;
+
+    const s = new Sortable(bodyEl, {
+      group: "vigil-groups",
+      animation: 150,
+      draggable: ".tile",
+      filter: ".tileActions, a, button", // clicking links/buttons won't start drag
+      preventOnFilter: true,
+      fallbackOnBody: true, // helps on mobile
+      onEnd: () => {
+        // Rebuild order + group from the DOM
+        document.querySelectorAll(".groupBody").forEach((gEl) => {
+          const g = gEl.dataset.group;
+          const ids = [...gEl.querySelectorAll(".tile")].map(t => t.dataset.id);
+
+          ids.forEach((id, idx) => {
+            const it = ITEMS.find(x => x.id === id);
+            if (!it) return;
+            it.group = g;
+            it.order = idx + 1;
+          });
+        });
+
+        normalize();
+        saveItems();
+        render();
+      }
+    });
+
+    _sortables.push(s);
+  });
+};
+
+
   </script>
 </body>
 </html>
