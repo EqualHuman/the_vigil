@@ -201,20 +201,31 @@
   color: rgba(255,255,255,.75);
 }
 
-.heroBrandRow{
+.heroInner{ text-align:center; }
+
+.heroTop{
   display:flex;
-  justify-content:center; /* center the title block */
-  align-items:center;
-  margin-top:6px;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
 }
+
+.heroCenter{
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.heroBrandRow{ display:none; } /* IMPORTANT: if old markup/css still exists */
+
 
 .heroTitle{
   margin:0 0 6px;
   font-family: var(--serif);
   font-weight: 650;
-  font-size: clamp(40px, 5.2vw, 62px);
+  font-size: clamp(38px, 5vw, 58px);
   line-height: .98;
-  letter-spacing: .06em;
+  letter-spacing: .04em;   /* was too wide */
   text-transform: uppercase;
 
   color: rgba(255,255,255,.92);
@@ -223,10 +234,12 @@
 
 .heroSubtitle{
   margin:0;
-  font-size: 12.5px;
-  letter-spacing: .34em;
+  font-size: 12px;
+  letter-spacing: .28em;
   text-transform: uppercase;
   color: rgba(255,255,255,.62);
+    opacity: .9;
+
 }
 
 /* New divider: “ornamental corners” instead of a plain line */
@@ -629,50 +642,57 @@
     /* Since dragging is handle-only, tiles shouldn't look draggable everywhere */
     .tile{ cursor:default; }
     .tile:active{ cursor:default; }
+    .leftTools{
+  background: rgba(0,0,0,.16);
+  border:1px solid rgba(255,255,255,.10);
+  padding:8px;
+  border-radius:999px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.btnPrimary{
+  border-color: rgba(34,211,238,.28);
+  background: linear-gradient(180deg, rgba(34,211,238,.18), rgba(109,94,252,.10));
+  box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
+}
+.btnPrimary:hover{
+  border-color: rgba(34,211,238,.40);
+  box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 0 0 3px rgba(34,211,238,.14);
+}
+
   </style>
 </head>
 
 <body>
   <div class="wrap">
 
-    <header class="heroBanner" aria-label="Vigil banner">
-      <div class="heroBg" aria-hidden="true"></div>
-      <div class="heroAurora" aria-hidden="true"></div>
-      <div class="heroStars" aria-hidden="true"></div>
-      <div class="heroNoise" aria-hidden="true"></div>
+<header class="heroBanner" aria-label="Navigation Hub banner">
+  <div class="heroInner">
 
-      <div class="heroInner">
-        <div class="heroTop">
-          <div class="kickerPill">
-            <span class="kDot" aria-hidden="true"></span>
-            <3
-          </div>
-          <div class="heroBadges" aria-label="Status badges">
-            <span class="badgePill">1</span>
-            <span class="badgePill">2</span>
-          </div>
-        </div>
-
-        <div class="heroBrandRow">
-        <div class="heroBrandRow">
-  <div class="heroTextBlock">
-    <h1 class="heroTitle">Navigation Hub</h1>
-    <p class="heroSubtitle">Webpage navigation tracking</p>
-  </div>
-</div>
-
-
-          <div class="heroTextBlock">
-            <h1 class="heroTitle">Navigation Hub</h1>
-            <p class="heroSubtitle">
-              Webpage navigation tracking
-            </p>
-          </div>
-        </div>
-
-        <div class="heroDivider" aria-hidden="true"></div>
+    <div class="heroTop">
+      <div class="kickerPill">
+        <span class="kDot" aria-hidden="true"></span>
+        NAVIGATION
       </div>
-    </header>
+
+      <div class="heroBadges" aria-label="Status badges">
+        <span class="badgePill">1</span>
+        <span class="badgePill">2</span>
+      </div>
+    </div>
+
+    <div class="heroCenter">
+      <h1 class="heroTitle">Navigation Hub</h1>
+      <p class="heroSubtitle">Webpage navigation tracking</p>
+      <div class="heroDivider" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</header>
+
 
     <section class="card" aria-label="Navigation hub">
       <div class="toolbar" id="top">
@@ -686,7 +706,7 @@
      <div class="rightTools" style="flex:1">
   <label class="sr-only" for="search">Search</label>
   <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
-  <button class="btn" id="addItem" type="button">＋ Add</button>
+<button class="btn btnPrimary" id="addItem" type="button">＋ Add</button>
 </div>
 
       </div>
