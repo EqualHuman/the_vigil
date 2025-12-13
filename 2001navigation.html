@@ -634,6 +634,16 @@
     border-left:1px solid rgba(255,255,255,.10);
     padding-left:12px;
   }
+/* Add spacing between siblings in ALL containers (root + nested) */
+[data-container="children"]{
+  display: grid;
+  gap: 14px;          /* adjust to taste */
+}
+   /* Extra space between top-level groups */
+.tree > [data-container="children"]{
+  gap: 18px;
+}
+
 
   /* Drag handle (handle-only dragging) */
   .dragHandle{
