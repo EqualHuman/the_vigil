@@ -11,11 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* Ensure "hidden" always wins */
-    [hidden] { display: none !important; }
+    [hidden]{ display:none !important; }
 
     :root{
-      /* Neon Aurora theme (no orange/yellow) */
       --bg0:#050510;
       --bg1:#070a1c;
 
@@ -27,12 +25,12 @@
       --muted: rgba(255,255,255,.68);
       --muted2: rgba(255,255,255,.55);
 
-      --accentA:#6d5efc; /* violet */
-      --accentB:#22d3ee; /* cyan */
-      --accentC:#ff4fd8; /* pink */
+      --accentA:#6d5efc;
+      --accentB:#22d3ee;
+      --accentC:#ff4fd8;
 
       --ok:#33d17a;
-      --warn:#a78bfa; /* lavender “checking…” */
+      --warn:#a78bfa;
       --bad:#ff6b6b;
 
       --shadow: 0 18px 70px rgba(0,0,0,.55);
@@ -41,7 +39,6 @@
 
       --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-
       --ease: cubic-bezier(.2,.8,.2,1);
     }
 
@@ -99,28 +96,20 @@
       isolation:isolate;
     }
 
-    .heroInner{
-      position:relative;
-      padding:18px;
-      z-index:1;
-    }
-
+    .heroInner{ position:relative; padding:18px; z-index:1; }
     .heroBg{
-      position:absolute;
-      inset:-2px;
+      position:absolute; inset:-2px; z-index:0;
       background:
         radial-gradient(900px 320px at 10% 20%, color-mix(in oklab, var(--accentB), transparent 70%), transparent 62%),
         radial-gradient(900px 340px at 85% 25%, color-mix(in oklab, var(--accentA), transparent 72%), transparent 60%),
         radial-gradient(1100px 420px at 50% 120%, color-mix(in oklab, var(--accentC), transparent 78%), transparent 62%),
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       filter:saturate(1.12);
-      z-index:0;
     }
 
     .heroBanner::before{
       content:"";
-      position:absolute;
-      inset:-40%;
+      position:absolute; inset:-40%;
       background: linear-gradient(110deg,
         transparent 20%,
         rgba(255,255,255,.10) 35%,
@@ -142,8 +131,7 @@
 
     .heroBanner::after{
       content:"";
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       background:
         repeating-linear-gradient(
           180deg,
@@ -158,49 +146,31 @@
     }
 
     .heroTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
     }
 
     .kickerPill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 12px;
-      border-radius:999px;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.22);
-      font-size:11px;
-      letter-spacing:.22em;
+      font-size:11px; letter-spacing:.22em;
       text-transform:uppercase;
       color: color-mix(in oklab, var(--muted), rgba(255,255,255,.12) 30%);
     }
 
     .kDot{
-      width:10px; height:10px;
-      border-radius:999px;
+      width:10px; height:10px; border-radius:999px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 40%),
         color-mix(in oklab, var(--accentB), transparent 35%);
-      box-shadow:
-        0 0 0 2px rgba(34,211,238,.14),
-        0 0 18px rgba(34,211,238,.22);
+      box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.22);
     }
 
-    .heroBadges{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
+    .heroBadges{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
     .badgePill{
-      font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
+      font-size:12px; padding:7px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
       color: rgba(255,255,255,.78);
@@ -209,8 +179,7 @@
     .heroTitle{
       margin:10px 0 6px;
       font-size: clamp(30px, 4vw, 46px);
-      line-height:1.02;
-      letter-spacing:-.035em;
+      line-height:1.02; letter-spacing:-.035em;
       background: linear-gradient(90deg,
         rgba(255,255,255,.96),
         rgba(255,255,255,.78),
@@ -222,16 +191,13 @@
     }
 
     .heroSubtitle{
-      margin:0;
-      max-width:78ch;
+      margin:0; max-width:78ch;
       color: rgba(255,255,255,.72);
-      font-size:14.5px;
-      line-height:1.55;
+      font-size:14.5px; line-height:1.55;
     }
 
     .heroDivider{
-      margin-top:14px;
-      height:2px;
+      margin-top:14px; height:2px;
       width:min(520px, 85vw);
       border-radius:999px;
       background: linear-gradient(90deg,
@@ -243,23 +209,13 @@
       opacity:.95;
     }
 
-    @media (max-width:640px){
-      .heroInner{ padding:16px 14px; }
-      .heroBadges{ justify-content:flex-start; }
-    }
-
-    /* Hero link styles (no Tailwind needed) */
-    .heroLinks { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .heroNav   { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-
-    .heroLinks a,
-    .heroNav a{ color: inherit; text-decoration: none; }
+    .heroLinks{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .heroNav{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .heroLinks a, .heroNav a{ color:inherit; text-decoration:none; }
 
     .heroBtn{
-      display:inline-flex;
-      align-items:center;
-      padding:10px 14px;
-      border-radius:14px;
+      display:inline-flex; align-items:center;
+      padding:10px 14px; border-radius:14px;
       border:1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.06);
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
@@ -268,23 +224,19 @@
     .heroBtn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
     .heroBtnPrimary{
       background: rgba(255,255,255,.92);
-      color: #060613;
+      color:#060613;
       border-color: rgba(255,255,255,.18);
     }
     .heroBtnPrimary:hover{ background: rgba(255,255,255,.96); }
 
     .heroPill{
-      display:inline-flex;
-      align-items:center;
-      padding:7px 10px;
-      border-radius:999px;
+      display:inline-flex; align-items:center;
+      padding:7px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.05);
-      font-size:12px;
-      color: rgba(255,255,255,.82);
+      font-size:12px; color: rgba(255,255,255,.82);
     }
     .heroPill:hover{ background: rgba(255,255,255,.09); }
-
     .heroPillAccent{
       border-color: rgba(255,79,216,.35);
       background: color-mix(in oklab, var(--accentC), transparent 88%);
@@ -300,14 +252,10 @@
       box-shadow:var(--shadow);
       overflow:hidden;
       backdrop-filter: blur(14px);
-      transform: translateZ(0);
     }
 
     .toolbar{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
       flex-wrap:wrap;
       padding:14px 14px 12px;
       background:
@@ -319,12 +267,7 @@
       border-bottom:1px solid rgba(255,255,255,.12);
     }
 
-    .leftTools, .rightTools{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
+    .leftTools, .rightTools{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 
     .btn{
       border:1px solid rgba(255,255,255,.16);
@@ -341,11 +284,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
       transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
     }
-    .btn:hover{
-      background: rgba(255,255,255,.09);
-      transform: translateY(-1px);
-      box-shadow: 0 14px 40px rgba(0,0,0,.30);
-    }
+    .btn:hover{ background: rgba(255,255,255,.09); transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.30); }
     .btn:active{ transform: translateY(0) scale(.99); }
     .btn:focus-visible{ outline:none; box-shadow: var(--ring); }
 
@@ -367,15 +306,14 @@
       box-shadow: 0 0 0 3px rgba(34,211,238,.18);
     }
 
-    /* === Meta row === */
     .meta{
       padding:10px 14px 12px;
       color:var(--muted2);
       font-size:12.5px;
-      display:grid;
-      grid-template-columns: max-content 1fr;
-      align-items:center;
-      gap:10px 14px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     #metaLeft{
@@ -387,105 +325,89 @@
       background: rgba(255,255,255,.05);
       border-radius:999px;
     }
+    #metaRight{ font-variant-numeric: tabular-nums; }
 
-    #metaRight{
-      font-variant-numeric: tabular-nums;
-      text-align:right;
-      min-width:0;
+    /* === Board / Groups / Tiles === */
+    .board{
+      padding:12px;
+      display:grid;
+      gap:14px;
+    }
+
+    .group{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
       overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
     }
 
-    @media (max-width:640px){
-      .meta{ grid-template-columns: 1fr; }
-      #metaRight{ text-align:left; white-space:normal; }
+    .groupHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      cursor:pointer;
+      user-select:none;
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
 
-    /* === Tree === */
-    .tree{
-      padding:10px 12px 16px;
-      border-top:1px solid rgba(255,255,255,.10);
+    .groupTitle{
+      font-weight:700;
+      letter-spacing:-.01em;
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
 
-    .node{
-      margin:8px 0;
-      padding-left: var(--indent, 0px);
-      animation: rise .22s var(--ease) both;
+    .groupCount{
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.78);
+      font-variant-numeric: tabular-nums;
     }
 
-    @keyframes rise{
-      from{ opacity:0; transform: translateY(4px); }
-      to  { opacity:1; transform: translateY(0); }
+    .groupBody{
+      padding:12px;
+      display:grid;
+      gap:10px;
+      min-height: 12px;
     }
 
-    .row{
+    .dropHint{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.65);
+      font-size:12.5px;
+    }
+
+    .tile{
       display:flex;
       gap:10px;
       align-items:flex-start;
       padding:12px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      transition: transform .14s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
-      position:relative;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      cursor:grab;
+      transition: transform .14s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
     }
-    .row:hover{
-      transform: translateY(-2px);
+    .tile:hover{
+      transform: translateY(-1px);
       border-color: rgba(255,255,255,.18);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      background: rgba(255,255,255,.07);
     }
+    .tile:active{ cursor:grabbing; }
 
-    .toggle{
-      width:34px;
-      height:34px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      flex: 0 0 auto;
-      margin-top:1px;
-      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-    }
-    .toggle:hover{
-      background: rgba(255,255,255,.10);
-      box-shadow: 0 0 0 3px rgba(109,94,252,.12);
-    }
-    .toggle:active{ transform: translateY(1px); }
-    .toggle[aria-disabled="true"]{ opacity:.35; cursor:default; }
-
-    .content{
-      flex:1 1 auto;
-      min-width:0;
-    }
-
-    a.link{
-      color:inherit;
-      text-decoration:none;
-      display:block;
-    }
-
-    .titleLine{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:4px;
-    }
-
-    .title{
-      font-weight:650;
-      letter-spacing:-.01em;
-    }
-
-    a.link:hover .title{
-      text-decoration: underline;
-      text-decoration-thickness:2px;
-      text-underline-offset:3px;
-    }
-
+    .tileMain{ flex:1 1 auto; min-width:0; }
+    .tileTitleLine{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+    .tileTitle{ font-weight:650; letter-spacing:-.01em; }
     .chip{
       font-size:11.5px;
       padding:3px 8px;
@@ -494,7 +416,6 @@
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       color:var(--muted);
     }
-
     .url{
       font-family:var(--mono);
       font-size:12.5px;
@@ -502,7 +423,6 @@
       word-break: break-all;
       line-height:1.35;
     }
-
     .notes{
       margin-top:6px;
       font-size:12.5px;
@@ -510,10 +430,9 @@
       line-height:1.45;
     }
 
-    .actions{
+    .tileActions{
       display:flex;
       gap:8px;
-      align-items:center;
       flex:0 0 auto;
       margin-left:auto;
     }
@@ -529,63 +448,9 @@
       place-items:center;
       transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
     }
-    .iconBtn:hover{
-      background: rgba(255,255,255,.10);
-      box-shadow: 0 0 0 3px rgba(109,94,252,.12);
-    }
+    .iconBtn:hover{ background: rgba(255,255,255,.10); box-shadow: 0 0 0 3px rgba(109,94,252,.12); }
     .iconBtn:active{ transform: translateY(1px); }
     .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
-
-    .children{
-      margin-top:8px;
-      padding-left:18px;
-      border-left:1px dashed rgba(255,255,255,.18);
-      position:relative;
-    }
-    .children::before{
-      content:"";
-      position:absolute;
-      left:-1px;
-      top:0;
-      bottom:0;
-      width:2px;
-      background: linear-gradient(180deg,
-        color-mix(in oklab, var(--accentB), transparent 65%),
-        color-mix(in oklab, var(--accentA), transparent 70%),
-        color-mix(in oklab, var(--accentC), transparent 75%));
-      opacity:.55;
-      filter: blur(.2px);
-    }
-
-    /* Status dot + kind colors */
-    .statusDot{
-      width:10px; height:10px;
-      border-radius:999px;
-      display:inline-block;
-      margin-right:6px;
-      border:1px solid rgba(255,255,255,.14);
-      vertical-align:-1px;
-      background: rgba(255,255,255,.20);
-    }
-
-    .ok{ background: color-mix(in oklab, var(--ok), transparent 55%); border-color: color-mix(in oklab, var(--ok), rgba(255,255,255,.14) 60%); }
-    .bad{ background: color-mix(in oklab, var(--bad), transparent 55%); border-color: color-mix(in oklab, var(--bad), rgba(255,255,255,.14) 60%); }
-    .warn{ background: color-mix(in oklab, var(--warn), transparent 55%); border-color: color-mix(in oklab, var(--warn), rgba(255,255,255,.14) 60%); }
-
-    .dot-k{ background: rgba(255,255,255,.20); }
-    .dot-page{ background: color-mix(in oklab, var(--accentB), transparent 55%); border-color: rgba(34,211,238,.35); }
-    .dot-section{ background: color-mix(in oklab, var(--accentA), transparent 55%); border-color: rgba(109,94,252,.35); }
-    .dot-donate{ background: color-mix(in oklab, var(--accentC), transparent 55%); border-color: rgba(255,79,216,.35); }
-    .dot-resource{ background: color-mix(in oklab, var(--ok), transparent 60%); border-color: rgba(51,209,122,.35); }
-
-    .sr-only{
-      position:absolute;
-      width:1px; height:1px;
-      padding:0; margin:-1px;
-      overflow:hidden;
-      clip:rect(0,0,0,0);
-      border:0;
-    }
 
     /* === Modal === */
     .modalBackdrop{
@@ -597,7 +462,6 @@
       padding:18px;
       z-index:50;
     }
-
     .modal{
       width:min(820px, 96vw);
       border-radius:22px;
@@ -607,7 +471,6 @@
       backdrop-filter: blur(14px);
       overflow:hidden;
     }
-
     .modalHead{
       display:flex;
       align-items:center;
@@ -616,7 +479,6 @@
       padding:14px 14px 10px;
       border-bottom:1px solid rgba(255,255,255,.10);
     }
-
     .kicker{
       font-size:11px;
       letter-spacing:.22em;
@@ -624,122 +486,38 @@
       color: color-mix(in oklab, var(--muted), transparent 12%);
       opacity:.95;
     }
+    .modalTitle{ font-weight:700; letter-spacing:-.02em; }
+    .modalBody{ padding:14px; display:grid; gap:12px; }
+    .field{ display:grid; gap:6px; }
+    .field > span{ font-size:12px; color:var(--muted2); }
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    @media (max-width:720px){ .grid2{ grid-template-columns: 1fr; } }
+    .modalActions{ display:flex; align-items:center; gap:10px; padding-top:6px; }
 
-    .modalTitle{
-      font-weight:700;
-      letter-spacing:-.02em;
-    }
-
-    .modalBody{
-      padding:14px;
-      display:grid;
-      gap:12px;
-    }
-
-    .field{
-      display:grid;
-      gap:6px;
-    }
-
-    .field > span{
-      font-size:12px;
-      color:var(--muted2);
-    }
-
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-
-    @media (max-width:720px){
-      .grid2{ grid-template-columns: 1fr; }
-    }
-
-    .modalActions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding-top:6px;
+    .sr-only{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px; overflow:hidden;
+      clip:rect(0,0,0,0); border:0;
     }
 
     @media (prefers-reduced-motion: reduce){
-      body::before, .node, .heroBanner::before{ animation:none !important; }
-      .btn, .row, .toggle, .iconBtn{ transition:none !important; }
+      body::before, .heroBanner::before{ animation:none !important; }
+      .btn, .tile, .iconBtn{ transition:none !important; }
     }
-
-    {
-  id: "tile-1",
-  title: "Vigil Home",
-  href: "https://vigilproject.org/",
-  notes: "Landing page",
-  kind: "page",
-  group: "core",     // ← grouping key
-  order: 3           // ← position inside group
-}
-.board{
-  display:grid;
-  gap:18px;
-}
-
-.group{
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:18px;
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  box-shadow: var(--shadow);
-  overflow:hidden;
-}
-
-.groupHeader{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 14px;
-  cursor:pointer;
-  user-select:none;
-}
-
-.groupTitle{
-  font-weight:600;
-  letter-spacing:-.01em;
-}
-
-.groupBody{
-  padding:12px;
-  display:grid;
-  gap:10px;
-}
-
-.groupBody[hidden]{ display:none; }
-
-.tile{
-  padding:12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-  cursor:grab;
-}
-
-.tile:active{ cursor:grabbing; }
-
-    
   </style>
 </head>
 
 <body>
   <div class="wrap">
 
-    <!-- ✅ Banner you chose (custom CSS version; no Tailwind) -->
     <header class="heroBanner" aria-label="Vigil banner">
       <div class="heroBg" aria-hidden="true"></div>
-
       <div class="heroInner">
         <div class="heroTop">
           <div class="kickerPill">
             <span class="kDot" aria-hidden="true"></span>
             Vigilia • watchfulness
           </div>
-
           <div class="heroBadges" aria-label="Status badges">
             <span class="badgePill">live index</span>
           </div>
@@ -751,31 +529,26 @@
         </p>
 
         <div class="heroLinks" role="navigation" aria-label="Primary actions">
-          <a href="#topics" class="heroBtn heroBtnPrimary">Explore topics</a>
+          <a href="#boardTop" class="heroBtn heroBtnPrimary">Explore topics</a>
           <a href="#search" class="heroBtn">Search</a>
         </div>
 
         <nav class="heroNav" aria-label="Vigil sections">
-          <a class="heroPill" href="#links">Links</a>
-          <a class="heroPill" href="#notes">Notes</a>
-          <a class="heroPill" href="#resources">Resources</a>
-          <a class="heroPill heroPillAccent" href="#action">Take action</a>
+          <a class="heroPill" href="#boardTop">Links</a>
+          <a class="heroPill" href="#boardTop">Notes</a>
+          <a class="heroPill" href="#boardTop">Resources</a>
+          <a class="heroPill heroPillAccent" href="#boardTop">Take action</a>
         </nav>
 
         <div class="heroDivider" aria-hidden="true"></div>
       </div>
     </header>
 
-    <!-- Anchor targets for hero links (optional, but makes jumps feel intentional) -->
-    <div id="topics" style="height: 1px;"></div>
-
     <section class="card" aria-label="Navigation hub">
-      <div class="toolbar">
+      <div class="toolbar" id="boardTop">
         <div class="leftTools">
           <button class="btn" id="expandAll" type="button">▾ Expand all</button>
           <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
-          <button class="btn" id="checkLinks" type="button" title="Checks relative/same-origin links best">✓ Check links</button>
-
           <button class="btn" id="addItem" type="button">＋ Add</button>
           <button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
           <button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
@@ -789,21 +562,38 @@
 
       <div class="meta">
         <div id="metaLeft">Loading…</div>
-        <div id="metaRight">Tip: Use Tab/Enter to open/close sections.</div>
+        <div id="metaRight">Tip: Drag tiles to reorder or move between groups.</div>
       </div>
 
-      <!-- Section anchors for hero pills -->
-      <div id="links" style="height: 1px;"></div>
-      <div id="notes" style="height: 1px;"></div>
-      <div id="resources" style="height: 1px;"></div>
-      <div id="action" style="height: 1px;"></div>
-
       <div class="board" id="board"></div>
-
     </section>
   </div>
 
-  <!-- Modal (hidden by default) -->
+  <!-- Embedded data (no fetch / no nav.json needed) -->
+  <script id="navData" type="application/json">
+[
+  {
+    "id": "home",
+    "title": "Vigil Home",
+    "href": "https://vigilproject.org/",
+    "kind": "page",
+    "notes": "Landing page",
+    "group": "Core",
+    "order": 1
+  },
+  {
+    "id": "donate-example",
+    "title": "Donate (example)",
+    "href": "https://example.org/donate",
+    "kind": "donate",
+    "notes": "Replace with a real org donation page",
+    "group": "Take action",
+    "order": 1
+  }
+]
+  </script>
+
+  <!-- Modal -->
   <div class="modalBackdrop" id="modalBackdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modalHead">
@@ -817,30 +607,30 @@
       <div class="modalBody">
         <label class="field">
           <span>Title</span>
-          <input class="input" id="fTitle" placeholder="Home" />
+          <input class="input" id="fTitle" placeholder="Vigil Home" />
         </label>
 
         <label class="field">
           <span>Href</span>
-          <input class="input" id="fHref" placeholder="/index.html or https://…" />
+          <input class="input" id="fHref" placeholder="https://…" />
         </label>
 
         <div class="grid2">
           <label class="field">
-            <span>ID</span>
+            <span>ID (unique)</span>
             <input class="input" id="fId" placeholder="home" />
           </label>
 
           <label class="field">
-            <span>Parent ID (blank = root)</span>
-            <input class="input" id="fParent" placeholder="home" />
+            <span>Kind</span>
+            <input class="input" id="fKind" placeholder="page / section / donate / resource" />
           </label>
         </div>
 
         <div class="grid2">
           <label class="field">
-            <span>Kind</span>
-            <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+            <span>Group (collapsible section)</span>
+            <input class="input" id="fGroup" placeholder="Core" />
           </label>
 
           <label class="field">
@@ -857,90 +647,32 @@
       </div>
     </div>
   </div>
-<script id="navData" type="application/json">
-[
-  {
-    "id": "home",
-    "title": "Vigil Home",
-    "href": "https://vigilproject.org/",
-    "kind": "page",
-    "notes": "Landing page"
-  }
-]
-</script>
 
   <script>
     /* =========================================================
-      Vigil Nav Hub
-      - Modal opens ONLY via Add or Edit buttons (no auto-open)
-      - Modal closes via X, backdrop, or ESC
-      - Links open in a new tab
-      - Local edits stored in localStorage (overrides + soft deletes)
+      Vigil — Grouped draggable tiles
+      - No parent/root tree
+      - Groups are collapsible
+      - Drag tiles within/between groups
+      - Persists to localStorage
     ========================================================== */
 
-    // ---------------------------
-    // Config / Local Storage
-    // ---------------------------
-    const LS_KEY = "nav_overrides_v2";
+    const LS_ITEMS = "vigil_items_v1";
+    const LS_GROUPS = "vigil_group_state_v1";
 
-    const loadOverrides = () => {
-      try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
-      catch { return []; }
-    };
-
-    const saveOverrides = (items) => {
-      localStorage.setItem(LS_KEY, JSON.stringify(items, null, 2));
-    };
-
-    const mergedItems = (base, overrides) => {
-      // overrides replace by id; allow {id, _deleted:true} to hide base items
-      const map = new Map(base.map(x => [x.id, x]));
-      for (const o of overrides) map.set(o.id, o);
-
-      const out = [];
-      for (const v of map.values()){
-        if (v && v._deleted) continue;
-        out.push(v);
-      }
-      return out;
-    };
-
-    const upsertOverride = (updated) => {
-      const overrides = loadOverrides();
-      const idx = overrides.findIndex(x => x.id === updated.id);
-      if (idx >= 0) overrides[idx] = updated;
-      else overrides.push(updated);
-      saveOverrides(overrides);
-      NAV_ITEMS = mergedItems(NAV_ITEMS, [updated]);
-      initNav();
-    };
-
-    const softDelete = (id) => {
-      const overrides = loadOverrides().filter(x => x.id !== id);
-      overrides.push({ id, _deleted: true });
-      saveOverrides(overrides);
-      NAV_ITEMS = NAV_ITEMS.filter(x => x.id !== id);
-      initNav();
-    };
-
-    // ---------------------------
-    // DOM helpers / refs
-    // ---------------------------
     const $ = (sel) => document.querySelector(sel);
 
-    const treeEl = $("#tree");
+    const boardEl = $("#board");
     const searchEl = $("#search");
     const metaLeft = $("#metaLeft");
     const metaRight = $("#metaRight");
 
     const expandAllBtn = $("#expandAll");
     const collapseAllBtn = $("#collapseAll");
-    const checkLinksBtn = $("#checkLinks");
     const addItemBtn = $("#addItem");
     const exportBtn = $("#exportJson");
     const resetBtn = $("#resetEdits");
 
-    // Modal refs
     const modalBackdrop = $("#modalBackdrop");
     const closeModalBtn = $("#closeModal");
     const saveItemBtn = $("#saveItem");
@@ -952,78 +684,105 @@
     const fTitle = $("#fTitle");
     const fHref  = $("#fHref");
     const fId    = $("#fId");
-    const fParent= $("#fParent");
     const fKind  = $("#fKind");
+    const fGroup = $("#fGroup");
     const fNotes = $("#fNotes");
 
-    // ---------------------------
-    // App state
-    // ---------------------------
-    let NAV_ITEMS = [];
-    let byId = new Map();
-    let childrenByParent = new Map();
-    let expanded = new Set();
-    let linkStatus = new Map();
     let filter = "";
+    let editingId = null;
 
-    let editingId = null; // set only when editing (not adding)
-
-    // ---------------------------
-    // URL / string helpers
-    // ---------------------------
-    const isExternal = (href) => /^https?:\/\//i.test(href || "");
-
-    const isSameOriginOrRelative = (href) => {
-      if (!href) return false;
-      if (href.startsWith("/")) return true;
-      if (href.startsWith("./") || href.startsWith("../")) return true;
-      if (isExternal(href)) {
-        try { return new URL(href).origin === location.origin; } catch { return false; }
-      }
-      return false;
-    };
+    let ITEMS = [];
+    let collapsedGroups = new Set();
 
     const escapeHtml = (s) => (s ?? "").toString()
       .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
       .replaceAll('"',"&quot;").replaceAll("'","&#039;");
 
+    const loadEmbedded = () => {
+      const el = document.getElementById("navData");
+      return JSON.parse(el?.textContent || "[]");
+    };
+
+    const loadItems = () => {
+      const raw = localStorage.getItem(LS_ITEMS);
+      if (raw) {
+        try { return JSON.parse(raw); } catch {}
+      }
+      return loadEmbedded();
+    };
+
+    const saveItems = () => localStorage.setItem(LS_ITEMS, JSON.stringify(ITEMS, null, 2));
+
+    const loadGroupState = () => {
+      const raw = localStorage.getItem(LS_GROUPS);
+      if (!raw) return new Set();
+      try {
+        const arr = JSON.parse(raw);
+        return new Set(arr);
+      } catch { return new Set(); }
+    };
+
+    const saveGroupState = () => localStorage.setItem(LS_GROUPS, JSON.stringify([...collapsedGroups], null, 2));
+
+    const normalize = () => {
+      // Ensure group/order exist and are consistent
+      const byGroup = new Map();
+      for (const it of ITEMS) {
+        it.group = (it.group || "Ungrouped").trim() || "Ungrouped";
+        if (typeof it.order !== "number") it.order = 0;
+        if (!byGroup.has(it.group)) byGroup.set(it.group, []);
+        byGroup.get(it.group).push(it);
+      }
+
+      for (const [g, list] of byGroup.entries()) {
+        list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0) || (a.title||"").localeCompare(b.title||""));
+        list.forEach((it, idx) => it.order = idx + 1);
+      }
+    };
+
     const matches = (item) => {
       if (!filter) return true;
-      const hay = `${item.title||""} ${item.href||""} ${item.notes||""} ${(item.kind||"")}`.toLowerCase();
+      const hay = `${item.title||""} ${item.href||""} ${item.notes||""} ${item.kind||""} ${item.group||""}`.toLowerCase();
       return hay.includes(filter);
     };
 
-    const subtreeMatches = (id) => {
-      const item = byId.get(id);
-      if (!item) return false;
-      if (matches(item)) return true;
-      const kids = childrenByParent.get(id) || [];
-      return kids.some(k => subtreeMatches(k.id));
+    const groupMap = () => {
+      const map = new Map();
+      for (const it of ITEMS) {
+        if (!matches(it)) continue;
+        const g = it.group || "Ungrouped";
+        if (!map.has(g)) map.set(g, []);
+        map.get(g).push(it);
+      }
+      for (const [g, list] of map.entries()) {
+        list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+      }
+      // Sort groups alphabetically but keep Core first if present
+      const entries = [...map.entries()].sort(([a],[b]) => a.localeCompare(b));
+      const coreIdx = entries.findIndex(([g]) => g.toLowerCase() === "core");
+      if (coreIdx > 0) {
+        const [core] = entries.splice(coreIdx, 1);
+        entries.unshift(core);
+      }
+      return entries;
     };
 
-    const copyToClipboard = async (text) => {
-      try { await navigator.clipboard.writeText(text); } catch {}
-    };
-
-    // ---------------------------
-    // Modal control
-    // ---------------------------
     const showModal = () => modalBackdrop.removeAttribute("hidden");
     const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
-    const openModal = (item, isNew = false) => {
+    const openModal = (item, isNew) => {
       showModal();
       editingId = isNew ? null : item.id;
 
       modalKicker.textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
-      modalTitle.textContent  = isNew ? "New Navigation Item" : (item.title || "Navigation Item");
+      modalTitle.textContent = isNew ? "New Tile" : (item.title || "Tile");
 
-      fTitle.value  = item.title || "";
-      fHref.value   = item.href || "";
-      fId.value     = item.id || "";
-      fParent.value = item.parent ?? "";
-      fKind.value   = item.kind || "";
-      fNotes.value  = item.notes || "";
+      fTitle.value = item.title || "";
+      fHref.value  = item.href || "";
+      fId.value    = item.id || "";
+      fKind.value  = item.kind || "";
+      fGroup.value = item.group || "Ungrouped";
+      fNotes.value = item.notes || "";
 
       deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
       fId.disabled = !isNew;
@@ -1036,342 +795,276 @@
       editingId = null;
     };
 
-    // ---------------------------
-    // Rendering
-    // ---------------------------
-    const statusDot = (id) => {
-      const item = byId.get(id);
-      const kind = (item?.kind || "").toLowerCase();
-
-      const kindClass =
-        kind === "page" ? "dot-page" :
-        kind === "section" ? "dot-section" :
-        kind === "donate" ? "dot-donate" :
-        kind === "resource" ? "dot-resource" :
-        "dot-k";
-
-      const st = linkStatus.get(id) || "";
-      const cls = st === "ok" ? "ok" : st === "bad" ? "bad" : st === "warn" ? "warn" : "";
-
-      return `<span class="statusDot ${cls} ${kindClass}" aria-hidden="true"></span>`;
+    const setAllGroupsCollapsed = (collapsed) => {
+      const groups = new Set(ITEMS.map(i => i.group || "Ungrouped"));
+      collapsedGroups = new Set(collapsed ? [...groups] : []);
+      saveGroupState();
+      render();
     };
 
-    const nodeHTML = (item, depth) => {
-      if (filter && !subtreeMatches(item.id)) return "";
+    // --- Drag state ---
+    let dragId = null;
 
-      const kids = childrenByParent.get(item.id) || [];
-      const hasKids = kids.length > 0;
-      const open = expanded.has(item.id);
+    const onDragStart = (e) => {
+      dragId = e.currentTarget?.dataset?.id || null;
+      e.dataTransfer.effectAllowed = "move";
+      try { e.dataTransfer.setData("text/plain", dragId); } catch {}
+    };
 
+    const onDragOverGroup = (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+    };
+
+    const onDropGroup = (e) => {
+      e.preventDefault();
+      const targetGroup = e.currentTarget.dataset.group;
+      const id = (dragId || "").toString();
+      if (!id) return;
+
+      const item = ITEMS.find(x => x.id === id);
+      if (!item) return;
+
+      item.group = targetGroup;
+      normalize();
+      saveItems();
+      render();
+    };
+
+    const onDropTile = (e) => {
+      e.preventDefault();
+      const targetId = e.currentTarget.dataset.id;
+      const id = (dragId || "").toString();
+      if (!id || id === targetId) return;
+
+      const a = ITEMS.find(x => x.id === id);
+      const b = ITEMS.find(x => x.id === targetId);
+      if (!a || !b) return;
+
+      // If dropped on a tile in another group, move into that group first
+      a.group = b.group;
+
+      // Reorder within that group by inserting a before b
+      const g = a.group;
+      const groupItems = ITEMS.filter(x => (x.group||"Ungrouped") === g).sort((x,y)=>x.order-y.order);
+
+      const withoutA = groupItems.filter(x => x.id !== a.id);
+      const idxB = withoutA.findIndex(x => x.id === b.id);
+      withoutA.splice(Math.max(0, idxB), 0, a);
+
+      // Write back orders
+      withoutA.forEach((it, idx) => it.order = idx + 1);
+
+      normalize();
+      saveItems();
+      render();
+    };
+
+    const renderTile = (item) => {
       const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
       const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
-
-      const toggleBtn = hasKids
-        ? `<button class="toggle" type="button"
-              aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(item.title)}"
-              aria-expanded="${open}"
-              onclick="window.__toggle('${item.id}')">${open ? "−" : "+"}</button>`
-        : `<button class="toggle" type="button" aria-disabled="true" tabindex="-1">•</button>`;
-
-      // Always open links in a new tab
       const target = `target="_blank" rel="noreferrer noopener"`;
 
       return `
-        <div class="node" style="--indent:${Math.min(depth, 10) * 18}px">
-          <div class="row">
-            ${toggleBtn}
-
-            <div class="content">
-              <a class="link" href="${escapeHtml(item.href)}" ${target}>
-                <div class="titleLine">
-                  ${statusDot(item.id)}
-                  <span class="title">${escapeHtml(item.title)}</span>
-                  ${chip}
-                </div>
-                <div class="url">${escapeHtml(item.href)}</div>
-              </a>
-              ${notes}
-            </div>
-
-            <div class="actions">
-              <button class="iconBtn" type="button" aria-label="Edit" title="Edit"
-                onclick="window.__edit('${item.id}')">✎</button>
-
-              <button class="iconBtn" type="button" aria-label="Copy link" title="Copy link"
-                onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
-            </div>
+        <div class="tile"
+             draggable="true"
+             data-id="${escapeHtml(item.id)}"
+             ondragstart="window.__dragStart(event)"
+             ondragover="window.__dragOverTile(event)"
+             ondrop="window.__dropTile(event)">
+          <div class="tileMain">
+            <a class="link" href="${escapeHtml(item.href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
+              <div class="tileTitleLine">
+                <span class="tileTitle">${escapeHtml(item.title)}</span>
+                ${chip}
+              </div>
+              <div class="url">${escapeHtml(item.href)}</div>
+            </a>
+            ${notes}
           </div>
 
-          ${hasKids && open ? `<div class="children">
-            ${(kids.map(k => nodeHTML(k, depth + 1)).join(""))}
-          </div>` : ""}
+          <div class="tileActions">
+            <button class="iconBtn" type="button" title="Edit" aria-label="Edit"
+              onclick="window.__edit('${escapeHtml(item.id).replaceAll("'","&#039;")}')">✎</button>
+            <button class="iconBtn" type="button" title="Copy link" aria-label="Copy link"
+              onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
+          </div>
         </div>
       `;
     };
 
     const render = () => {
-      const roots = childrenByParent.get("__root__") || [];
+      const entries = groupMap();
+      const shownCount = entries.reduce((acc, [,items]) => acc + items.length, 0);
+      metaLeft.textContent = `${shownCount} shown • ${ITEMS.length} total`;
 
-      // Auto-expand matching branches when searching
-      if (filter) {
-        for (const item of NAV_ITEMS) {
-          const kids = childrenByParent.get(item.id) || [];
-          if (kids.length && subtreeMatches(item.id)) expanded.add(item.id);
-        }
+      if (!entries.length) {
+        boardEl.innerHTML = `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
+        return;
       }
 
-      const shownCount = NAV_ITEMS.filter(i => !filter || subtreeMatches(i.id)).length;
-      metaLeft.textContent = `${shownCount} shown • ${NAV_ITEMS.length} total`;
+      boardEl.innerHTML = entries.map(([group, items]) => {
+        const collapsed = collapsedGroups.has(group);
+        const body = collapsed
+          ? ""
+          : (items.length ? items.map(renderTile).join("") : `<div class="dropHint">Drop tiles here…</div>`);
 
-      const html = roots.map(r => nodeHTML(r, 0)).filter(Boolean).join("");
-      treeEl.innerHTML = html || `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
+        return `
+          <section class="group">
+            <header class="groupHeader" onclick="window.__toggleGroup('${escapeHtml(group).replaceAll("'","&#039;")}')">
+              <div class="groupTitle">
+                <span>${escapeHtml(group)}</span>
+                <span class="groupCount">${items.length}</span>
+              </div>
+              <div aria-hidden="true">${collapsed ? "▸" : "▾"}</div>
+            </header>
+
+            <div class="groupBody"
+                 ${collapsed ? "hidden" : ""}
+                 data-group="${escapeHtml(group)}"
+                 ondragover="window.__dragOverGroup(event)"
+                 ondrop="window.__dropGroup(event)">
+              ${body}
+              ${!collapsed && items.length ? `<div class="dropHint">Tip: drop on a tile to place it precisely • drop in empty space to move into this group</div>` : ""}
+            </div>
+          </section>
+        `;
+      }).join("");
     };
 
-    // ---------------------------
-    // Tree building
-    // ---------------------------
-    const initNav = () => {
-      byId = new Map(NAV_ITEMS.map(x => [x.id, x]));
-      childrenByParent = new Map();
-      expanded = new Set();
-      linkStatus = new Map();
+    const copyToClipboard = async (text) => {
+      try { await navigator.clipboard.writeText(text); } catch {}
+    };
 
-      for (const item of NAV_ITEMS) {
-        const key = item.parent ?? "__root__";
-        if (!childrenByParent.has(key)) childrenByParent.set(key, []);
-        childrenByParent.get(key).push(item);
-      }
+    const upsert = (updated) => {
+      const idx = ITEMS.findIndex(x => x.id === updated.id);
+      if (idx >= 0) ITEMS[idx] = { ...ITEMS[idx], ...updated };
+      else ITEMS.push(updated);
 
-      for (const [, list] of childrenByParent.entries()) {
-        list.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
-      }
-
-      // Default: expand root level
-      for (const r of (childrenByParent.get("__root__") || [])) {
-        expanded.add(r.id);
-      }
-
+      normalize();
+      saveItems();
       render();
     };
 
-    // ---------------------------
-    // Actions
-    // ---------------------------
-    const toggleNode = (id) => {
-      if (expanded.has(id)) expanded.delete(id);
-      else expanded.add(id);
+    const remove = (id) => {
+      ITEMS = ITEMS.filter(x => x.id !== id);
+      normalize();
+      saveItems();
       render();
     };
 
-    const setAllExpanded = (expand) => {
-      for (const item of NAV_ITEMS) {
-        const kids = childrenByParent.get(item.id) || [];
-        if (!kids.length) continue;
-        if (expand) expanded.add(item.id);
-        else expanded.delete(item.id);
-      }
+    // Public hooks used by inline handlers
+    window.__dragStart = onDragStart;
+    window.__dragOverGroup = onDragOverGroup;
+    window.__dropGroup = onDropGroup;
+
+    window.__dragOverTile = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; };
+    window.__dropTile = onDropTile;
+
+    window.__toggleGroup = (group) => {
+      if (collapsedGroups.has(group)) collapsedGroups.delete(group);
+      else collapsedGroups.add(group);
+      saveGroupState();
       render();
     };
 
-    const checkLinks = async () => {
-      linkStatus.clear();
-      render();
-
-      const candidates = NAV_ITEMS.filter(i => isSameOriginOrRelative(i.href));
-      if (!candidates.length) return;
-
-      for (const item of candidates) {
-        linkStatus.set(item.id, "warn");
-        render();
-
-        try{
-          const url = new URL(item.href, location.origin).toString();
-          let res = await fetch(url, { method:"HEAD", cache:"no-store" });
-          if (!res.ok && (res.status === 405 || res.status === 501)) {
-            res = await fetch(url, { method:"GET", cache:"no-store" });
-          }
-          linkStatus.set(item.id, res.ok ? "ok" : "bad");
-        } catch {
-          linkStatus.set(item.id, "bad");
-        }
-      }
-
-      render();
-    };
-
-    // ---------------------------
-    // Data loading
-    // ---------------------------
-    const loadNav = async () => {
-  try {
-    const el = document.getElementById("navData");
-    if (!el) throw new Error("Missing <script id='navData' type='application/json'>…</script>");
-
-    const base = JSON.parse(el.textContent || "[]");
-    NAV_ITEMS = mergedItems(base, loadOverrides());
-
-    const now = new Date();
-    metaRight.textContent = `Loaded ${now.toLocaleString()} • Tip: Use Tab/Enter to open/close sections.`;
-
-    initNav(); // keep your existing renderer
-  } catch (err) {
-    metaLeft.textContent = "Could not load embedded nav data";
-    treeEl.innerHTML = `
-      <div style="color:var(--muted); padding:14px; line-height:1.5;">
-        <b>Load error:</b> ${escapeHtml(err.message || String(err))}
-      </div>`;
-    console.error(err);
-  }
-};
-
-
-    // ---------------------------
-    // Public hooks used by inline onclick
-    // ---------------------------
-    window.__toggle = toggleNode;
     window.__copy = (href) => copyToClipboard(href);
+
     window.__edit = (id) => {
-      const item = byId.get(id);
+      const item = ITEMS.find(x => x.id === id);
       if (!item) return;
       openModal(item, false);
     };
 
-    // ---------------------------
-    // Event wiring
-    // ---------------------------
+    // Events
     searchEl.addEventListener("input", (e) => {
       filter = (e.target.value || "").trim().toLowerCase();
       render();
     });
 
-    expandAllBtn.addEventListener("click", () => setAllExpanded(true));
-    collapseAllBtn.addEventListener("click", () => setAllExpanded(false));
-    checkLinksBtn.addEventListener("click", checkLinks);
+    expandAllBtn.addEventListener("click", () => setAllGroupsCollapsed(false));
+    collapseAllBtn.addEventListener("click", () => setAllGroupsCollapsed(true));
 
-    // Modal: open ONLY via Add button (and via Edit icon inside rows)
     addItemBtn.addEventListener("click", () => {
-      openModal({ id:"", title:"", href:"", parent:null, kind:"page", notes:"" }, true);
+      openModal({ id:"", title:"", href:"", kind:"page", group:"Ungrouped", notes:"", order: 9999 }, true);
     });
 
-    // Modal: close via X, backdrop, or ESC
     closeModalBtn.addEventListener("click", closeModal);
-    modalBackdrop.addEventListener("click", (e) => {
-      if (e.target === modalBackdrop) closeModal();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal();
-    });
+    modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal(); });
 
-    // Save
     saveItemBtn.addEventListener("click", () => {
       const id = (fId.value || "").trim();
       const title = (fTitle.value || "").trim();
       const href = (fHref.value || "").trim();
-      const parentRaw = (fParent.value || "").trim();
-      const parent = parentRaw ? parentRaw : null;
 
       if (!id) return alert("ID is required (unique).");
       if (!title) return alert("Title is required.");
       if (!href) return alert("Href is required.");
 
-      // Prevent orphan parent references
-      if (parent && parent !== id) {
-        const parentExists =
-          byId.has(parent) || NAV_ITEMS.some(x => x.id === parent);
+      const kind = (fKind.value || "").trim();
+      const group = ((fGroup.value || "Ungrouped").trim() || "Ungrouped");
+      const notes = (fNotes.value || "").trim();
 
-        if (!parentExists) {
-          const ok = confirm(
-            `Parent ID "${parent}" doesn't exist.\n\n` +
-            `Click OK to add this item at the ROOT instead.\n` +
-            `Click Cancel to go fix the Parent ID.`
-          );
-          if (!ok) return;
-        }
+      // prevent changing ID when editing
+      const finalId = editingId ? editingId : id;
+      if (editingId && id !== editingId) {
+        alert("ID cannot be changed while editing. Create a new tile instead.");
+        return;
       }
-const boardEl = document.getElementById("board");
-let collapsedGroups = new Set();
 
-const renderBoard = () => {
-  const groups = {};
+      // If new ID collides with existing
+      if (!editingId && ITEMS.some(x => x.id === finalId)) {
+        alert("That ID already exists. Choose a unique ID.");
+        return;
+      }
 
-  for (const item of NAV_ITEMS) {
-    const g = item.group || "ungrouped";
-    groups[g] ??= [];
-    groups[g].push(item);
-  }
-
-  boardEl.innerHTML = Object.entries(groups).map(([group, items]) => {
-    const collapsed = collapsedGroups.has(group);
-
-    return `
-      <section class="group">
-        <header class="groupHeader" onclick="toggleGroup('${group}')">
-          <span class="groupTitle">${group}</span>
-          <span>${collapsed ? "▸" : "▾"}</span>
-        </header>
-
-        <div class="groupBody" ${collapsed ? "hidden" : ""}>
-          ${items.map(renderTile).join("")}
-        </div>
-      </section>
-    `;
-  }).join("");
-};
-
-const renderTile = (item) => `
-  <div class="tile" draggable="true">
-    <strong>${item.title}</strong><br/>
-    <small>${item.href}</small>
-    ${item.notes ? `<div class="notes">${item.notes}</div>` : ""}
-  </div>
-`;
-
-window.toggleGroup = (group) => {
-  if (collapsedGroups.has(group)) collapsedGroups.delete(group);
-  else collapsedGroups.add(group);
-  renderBoard();
-};
-
+      const existing = ITEMS.find(x => x.id === finalId);
       const updated = {
-        id,
+        id: finalId,
         title,
         href,
-        parent: (parent && (byId.has(parent) || NAV_ITEMS.some(x => x.id === parent))) ? parent : null,
-        kind: (fKind.value || "").trim(),
-        notes: (fNotes.value || "").trim()
+        kind,
+        group,
+        notes,
+        order: existing?.order ?? 9999
       };
 
-      upsertOverride(updated);
-
-      // Make sure the item is visible after saving
-      if (updated.parent) expanded.add(updated.parent);
-
-      renderBoard();
-
+      upsert(updated);
       closeModal();
     });
 
-    // Export JSON (copy)
+    deleteItemBtn.addEventListener("click", () => {
+      if (!editingId) return;
+      if (!confirm("Delete this tile?")) return;
+      remove(editingId);
+      closeModal();
+    });
+
     exportBtn.addEventListener("click", async () => {
-      const json = JSON.stringify(NAV_ITEMS, null, 2);
-      try{
+      const json = JSON.stringify(ITEMS, null, 2);
+      try {
         await navigator.clipboard.writeText(json);
-        alert("Copied current nav JSON to clipboard.\n\nPaste it into nav.json on GitHub to make edits permanent.");
+        alert("Copied tiles JSON to clipboard.");
       } catch {
-        alert("Could not copy automatically. Check console for JSON.");
         console.log(json);
+        alert("Could not copy automatically. Check console for JSON.");
       }
     });
 
-    // Reset local edits
     resetBtn.addEventListener("click", () => {
       if (!confirm("Clear saved edits on this device?")) return;
-      localStorage.removeItem(LS_KEY);
+      localStorage.removeItem(LS_ITEMS);
+      localStorage.removeItem(LS_GROUPS);
       location.reload();
     });
 
     // Boot
-    loadNav();
+    ITEMS = loadItems();
+    collapsedGroups = loadGroupState();
+    normalize();
+    saveItems();
+    render();
   </script>
 </body>
 </html>
