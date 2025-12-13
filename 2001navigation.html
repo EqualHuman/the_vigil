@@ -1473,9 +1473,14 @@ const renderNotebook = () => {
   nbTabSelected.setAttribute("aria-selected", notebookMode === "selected");
   nbTabAll.setAttribute("aria-selected", notebookMode === "all");
 
-  if (notebookMode === "all") renderNotebookAll();
-  else renderNotebookSelected();
+  // IMPORTANT: Selected mode renders ALL selectedTaskIds — never just the last one
+  if (notebookMode === "selected") {
+    renderNotebookSelected();
+  } else {
+    renderNotebookAll();
+  }
 };
+
 
 
 // Inline hooks
