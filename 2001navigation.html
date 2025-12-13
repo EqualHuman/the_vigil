@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
   
   <style>
@@ -83,47 +83,50 @@
       padding:28px 18px 60px;
     }
 
- /* === Hero Banner (Grand / Elegant) === */
+/* =======================HEADER BANNER START ================================= */
+/* === Hero Banner (Centered / Complementary) === */
 :root{
-  --serif: "Cinzel", ui-serif, Georgia, "Times New Roman", serif;
-  --goldA: #f3e7c9;
-  --goldB: #d7b86a;
-  --goldC: #a67c2f;
+  --serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* pulled toward your teal/purple background instead of gold */
+  --ornA: rgba(34,211,238,.55);   /* teal */
+  --ornB: rgba(109,94,252,.55);   /* violet */
+  --ink:  rgba(6,7,20,.88);       /* deep glass */
+  --ink2: rgba(10,12,28,.72);
 }
 
 .heroBanner{
   position:relative;
-  margin:12px 0 18px;
-  border-radius: calc(var(--radius) + 10px);
+  margin:14px 0 18px;
+  border-radius: calc(var(--radius) + 14px);
   overflow:hidden;
   isolation:isolate;
 
-  /* “ink” base with subtle vignette */
   background:
-    radial-gradient(1200px 420px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(1000px 520px at 10% 50%, rgba(215,184,106,.10), transparent 60%),
-    radial-gradient(900px 560px at 90% 55%, rgba(163,126,61,.10), transparent 60%),
-    linear-gradient(180deg, #060615, #04040f);
+    radial-gradient(900px 260px at 50% 0%, rgba(255,255,255,.09), transparent 62%),
+    radial-gradient(900px 380px at 15% 40%, rgba(34,211,238,.12), transparent 62%),
+    radial-gradient(900px 380px at 85% 40%, rgba(109,94,252,.12), transparent 62%),
+    linear-gradient(180deg, var(--ink), var(--ink2));
 
+  border: 1px solid rgba(255,255,255,.10);
   box-shadow:
-    0 30px 120px rgba(0,0,0,.72),
+    0 34px 130px rgba(0,0,0,.72),
     inset 0 1px 0 rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.10);
 }
 
-/* ornate “gilded” frame */
 .heroBanner::before{
+  /* elegant, complementary frame */
   content:"";
   position:absolute;
   inset:0;
-  padding:1px;               /* frame thickness */
+  padding:1px;
   border-radius: inherit;
   background: linear-gradient(135deg,
-    rgba(243,231,201,.0),
-    rgba(243,231,201,.35),
-    rgba(215,184,106,.22),
-    rgba(166,124,47,.18),
-    rgba(243,231,201,.0)
+    rgba(34,211,238,.0),
+    rgba(34,211,238,.22),
+    rgba(109,94,252,.18),
+    rgba(255,79,216,.10),
+    rgba(34,211,238,.0)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -134,37 +137,33 @@
   opacity:.95;
 }
 
-/* corner flourishes */
 .heroBanner::after{
+  /* subtle vertical “velvet” shading */
   content:"";
   position:absolute;
-  inset:-2px;
-  pointer-events:none;
-  opacity:.38;
+  inset:0;
   background:
-    radial-gradient(14px 14px at 28px 28px, rgba(215,184,106,.65), transparent 70%),
-    radial-gradient(14px 14px at calc(100% - 28px) 28px, rgba(215,184,106,.55), transparent 70%),
-    radial-gradient(14px 14px at 28px calc(100% - 28px), rgba(215,184,106,.45), transparent 70%),
-    radial-gradient(14px 14px at calc(100% - 28px) calc(100% - 28px), rgba(215,184,106,.40), transparent 70%);
+    radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,.08), transparent 55%),
+    linear-gradient(90deg, rgba(0,0,0,.28), transparent 26%, transparent 74%, rgba(0,0,0,.28));
+  pointer-events:none;
+  opacity:.65;
 }
 
-/* Replace your old layers with a subtler “dust + parchment grain” */
-.heroStars,
-.heroAurora,
-.heroNoise{ display:none; }
+/* disable old layers if still present */
+.heroStars, .heroAurora, .heroNoise, .heroBg{ display:none; }
 
 .heroInner{
   position:relative;
-  padding:22px 22px 18px;
+  padding:20px 22px 18px;
   z-index:1;
+  text-align:center;
 }
 
-/* top row */
 .heroTop{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:12px;
+  justify-content:center; /* center top row */
+  gap:10px;
   flex-wrap:wrap;
   margin-bottom:14px;
 }
@@ -175,108 +174,106 @@
   gap:10px;
   padding:8px 12px;
   border-radius:999px;
-  border:1px solid rgba(215,184,106,.28);
-  background: rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.22);
   font-size:11px;
   letter-spacing:.26em;
   text-transform:uppercase;
-  color: rgba(243,231,201,.72);
+  color: rgba(255,255,255,.70);
 }
 
 .kDot{
   width:10px; height:10px; border-radius:999px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 45%), rgba(215,184,106,.65);
-  box-shadow: 0 0 0 2px rgba(215,184,106,.18), 0 0 18px rgba(215,184,106,.16);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 45%),
+    color-mix(in oklab, var(--accentB), transparent 20%);
+  box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.18);
 }
+
+.heroBadges{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
 
 .badgePill{
   font-size:12px;
   padding:7px 10px;
   border-radius:999px;
-  border:1px solid rgba(215,184,106,.22);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  color: rgba(243,231,201,.78);
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.75);
 }
 
-/* crest */
 .heroBrandRow{
   display:flex;
+  justify-content:center; /* center the title block */
   align-items:center;
-  gap:16px;
+  margin-top:6px;
 }
-
-.sigil{
-  width:58px;
-  height:58px;
-  border-radius:18px;
-  border:1px solid rgba(215,184,106,.30);
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  box-shadow:
-    0 22px 70px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.08);
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-}
-.sigil::before{ display:none; }
 
 .heroTitle{
   margin:0 0 6px;
   font-family: var(--serif);
   font-weight: 650;
-  font-size: clamp(34px, 4.6vw, 54px);
-  line-height:1.02;
-  letter-spacing:.02em;
+  font-size: clamp(40px, 5.2vw, 62px);
+  line-height: .98;
+  letter-spacing: .06em;
   text-transform: uppercase;
 
-  color: rgba(243,231,201,.96);
-  text-shadow:
-    0 18px 80px rgba(0,0,0,.55),
-    0 1px 0 rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 22px 90px rgba(0,0,0,.65);
 }
 
 .heroSubtitle{
   margin:0;
-  color: rgba(243,231,201,.72);
-  font-size: 14.5px;
-  letter-spacing:.06em;
+  font-size: 12.5px;
+  letter-spacing: .34em;
   text-transform: uppercase;
+  color: rgba(255,255,255,.62);
 }
 
-/* elegant rule with a center “diamond” */
+/* New divider: “ornamental corners” instead of a plain line */
 .heroDivider{
-  margin-top:16px;
-  height:1px;
-  width:min(620px, 90vw);
-  border-radius:999px;
-  background: linear-gradient(90deg,
-    rgba(243,231,201,0),
-    rgba(215,184,106,.55),
-    rgba(243,231,201,.30),
-    rgba(215,184,106,.55),
-    rgba(243,231,201,0)
-  );
+  margin:16px auto 0;
+  width:min(640px, 92vw);
+  height:14px;
   position:relative;
   opacity:.95;
 }
+
+.heroDivider::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,
+      transparent,
+      rgba(34,211,238,.35),
+      rgba(109,94,252,.30),
+      rgba(255,79,216,.18),
+      transparent
+    );
+  height:1px;
+  top:50%;
+  transform: translateY(-50%);
+}
+
 .heroDivider::after{
   content:"";
   position:absolute;
   left:50%;
   top:50%;
-  width:8px;
-  height:8px;
-  transform: translate(-50%,-50%) rotate(45deg);
-  background: rgba(215,184,106,.65);
-  box-shadow: 0 0 0 2px rgba(0,0,0,.35);
+  width:56px;
+  height:18px;
+  transform: translate(-50%,-50%);
+  background:
+    radial-gradient(10px 10px at 50% 50%, rgba(255,255,255,.20), transparent 70%),
+    radial-gradient(30px 14px at 50% 50%, rgba(34,211,238,.14), transparent 70%),
+    radial-gradient(30px 14px at 50% 50%, rgba(109,94,252,.12), transparent 70%);
+  filter: blur(.2px);
 }
 
-@media (prefers-reduced-motion: reduce){
-  .heroBanner{ animation:none !important; }
-}
 
+/* =======================HEADER BANNER END ================================= */
+
+    .heroBanner{ min-height: 132px; }
 
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
@@ -287,39 +284,54 @@
       backdrop-filter: blur(14px);
     }
 
-    .toolbar{
-      display:flex; gap:10px; align-items:center; justify-content:space-between;
-      flex-wrap:wrap;
-      padding:14px 14px 12px;
-      background:
-        linear-gradient(90deg,
-          color-mix(in oklab, var(--accentB), transparent 88%),
-          transparent 30%,
-          color-mix(in oklab, var(--accentA), transparent 88%) 60%,
-          color-mix(in oklab, var(--accentC), transparent 90%));
-      border-bottom:1px solid rgba(255,255,255,.12);
-    }
+  .toolbar{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  padding:14px 14px 12px;
 
-    .leftTools, .rightTools{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  /* more cohesive with the hero */
+  background:
+    radial-gradient(900px 220px at 15% 0%, rgba(34,211,238,.12), transparent 60%),
+    radial-gradient(900px 220px at 85% 0%, rgba(109,94,252,.12), transparent 60%),
+    rgba(255,255,255,.03);
 
-    .btn{
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:9px 12px;
-      border-radius:14px;
-      cursor:pointer;
-      font-size:13px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      user-select:none;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-    }
-    .btn:hover{ background: rgba(255,255,255,.09); transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.30); }
-    .btn:active{ transform: translateY(0) scale(.99); }
-    .btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.btn{
+  border:1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  color: rgba(255,255,255,.86);
+  padding:9px 12px;
+  border-radius:999px; /* make them feel “designed” */
+  cursor:pointer;
+  font-size:12.5px;
+  letter-spacing:.04em;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  user-select:none;
+
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+
+.btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(34,211,238,.26);
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.35),
+    0 0 0 3px rgba(34,211,238,.10);
+}
+
+.btn:active{ transform: translateY(0) scale(.99); }
+
 
     .input{
       border:1px solid rgba(255,255,255,.14);
@@ -642,15 +654,13 @@
         </div>
 
         <div class="heroBrandRow">
-          <div class="sigil" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-          <path ... stroke="rgba(243,231,201,.86)" ... />
-<path ... stroke="rgba(215,184,106,.75)" ... />
-<path ... stroke="rgba(215,184,106,.65)" ... />
-<path ... stroke="rgba(215,184,106,.55)" ... />
+        <div class="heroBrandRow">
+  <div class="heroTextBlock">
+    <h1 class="heroTitle">Navigation Hub</h1>
+    <p class="heroSubtitle">Webpage navigation tracking</p>
+  </div>
+</div>
 
-            </svg>
-          </div>
 
           <div class="heroTextBlock">
             <h1 class="heroTitle">Navigation Hub</h1>
