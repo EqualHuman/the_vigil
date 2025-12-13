@@ -991,10 +991,11 @@
     const showModal = () => modalBackdrop.removeAttribute("hidden");
     const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
-    const setTypeUI = () => {
-      const isTile = fType.value === "tile";
-      tileFields.style.display = isTile ? "grid" : "none";
-    };
+  const setTypeUI = () => {
+  // Groups can have href/kind too
+  tileFields.style.display = "grid";
+};
+
 
     const fillParentOptions = (currentId) => {
       const opt = [];
@@ -1155,7 +1156,25 @@
                 ${collapsed ? "▸" : "▾"}
               </button>
               <div style="min-width:0">
-                <div class="nodeTitle">${escapeHtml(g.title || "(group)")}</div>
+                ${(() => {
+  const title = escapeHtml(g.title || "(group)");
+  const href = g.href;
+
+  if (!href) return `<div class="nodeTitle">${title}</div>`;
+
+  const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+
+  return `
+    <a class="nodeTitle"
+       href="${escapeHtml(href)}"
+       ${target}
+       style="text-decoration:none; color:inherit;">
+      ${title}
+    </a>
+    <div class="url" style="margin-top:4px">${escapeHtml(href)}</div>
+  `;
+})()}
+
                 ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
               </div>
               <span class="countPill">${childCount}</span>
@@ -1380,13 +1399,10 @@
         order: existing?.order ?? 9999,
       };
 
-      if (type === "tile") {
-        updated.href = href;
-        updated.kind = kind;
-      } else {
-        delete updated.href;
-        delete updated.kind;
-      }
+      // Tiles require href; groups may optionally have href/kind
+if (href) updated.href = href; else delete updated.href;
+if (kind) updated.kind = kind; else delete updated.kind;
+
 
       upsert(updated);
       closeModal();
