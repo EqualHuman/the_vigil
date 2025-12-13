@@ -11,836 +11,862 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
+    <!-- ==================================================================================================================
+    =========================================================START OF STYLE=========================================================
+  =================================================================================================================== -->
   
-  <style>
-    [hidden]{ display:none !important; }
+ <style>
+  /* =========================================================
+    0) GLOBAL RESET / UTILITIES
+  ========================================================== */
+  [hidden] { display: none !important; }
+  * { box-sizing: border-box; }
 
-    :root{
-      --bg0:#050510;
-      --bg1:#070a1c;
+  .sr-only{
+    position:absolute; width:1px; height:1px;
+    padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); border:0;
+  }
 
-      --panel: rgba(255,255,255,.07);
-      --panel-2: rgba(255,255,255,.045);
-      --border: rgba(255,255,255,.14);
+  /* =========================================================
+    1) THEME TOKENS (CSS VARIABLES)
+  ========================================================== */
+  :root{
+    /* Base */
+    --bg0:#050510;
+    --bg1:#070a1c;
 
-      --text: rgba(255,255,255,.93);
-      --muted: rgba(255,255,255,.68);
-      --muted2: rgba(255,255,255,.55);
+    /* Surfaces */
+    --panel: rgba(255,255,255,.07);
+    --panel-2: rgba(255,255,255,.045);
+    --border: rgba(255,255,255,.14);
 
-      --accentA:#6d5efc;
-      --accentB:#22d3ee;
-      --accentC:#ff4fd8;
+    /* Text */
+    --text: rgba(255,255,255,.93);
+    --muted: rgba(255,255,255,.68);
+    --muted2: rgba(255,255,255,.55);
 
-      --shadow: 0 18px 70px rgba(0,0,0,.55);
-      --ring: 0 0 0 3px rgba(34,211,238,.22);
-      --radius: 20px;
+    /* Accents */
+    --accentA:#6d5efc;
+    --accentB:#22d3ee;
+    --accentC:#ff4fd8;
 
-      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    /* UI */
+    --shadow: 0 18px 70px rgba(0,0,0,.55);
+    --ring: 0 0 0 3px rgba(34,211,238,.22);
+    --radius: 20px;
+    --ease: cubic-bezier(.2,.8,.2,1);
 
-      --ease: cubic-bezier(.2,.8,.2,1);
-    }
+    /* Fonts */
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+    --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    --serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
 
-    *{ box-sizing:border-box; }
+    /* Hero glass inks (banner) */
+    --ornA: rgba(34,211,238,.55);
+    --ornB: rgba(109,94,252,.55);
+    --ink:  rgba(6,7,20,.88);
+    --ink2: rgba(10,12,28,.72);
+  }
 
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--text);
-      min-height:100vh;
-      background:
-        radial-gradient(900px 520px at 15% 10%, color-mix(in oklab, var(--accentB), transparent 78%), transparent 65%),
-        radial-gradient(900px 520px at 90% 20%, color-mix(in oklab, var(--accentA), transparent 80%), transparent 60%),
-        radial-gradient(1100px 650px at 50% 110%, color-mix(in oklab, var(--accentC), transparent 82%), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      position:relative;
-      overflow-x:hidden;
-    }
+  /* =========================================================
+    2) PAGE / LAYOUT
+  ========================================================== */
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:-40px;
-      pointer-events:none;
-      background:
-        radial-gradient(closest-side at 25% 25%, rgba(34,211,238,.18), transparent 60%),
-        radial-gradient(closest-side at 75% 35%, rgba(109,94,252,.16), transparent 62%),
-        radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
-      filter: blur(22px);
-      opacity:.9;
-      animation: drift 14s var(--ease) infinite alternate;
-      z-index:-1;
-    }
+    background:
+      radial-gradient(900px 520px at 15% 10%, color-mix(in oklab, var(--accentB), transparent 78%), transparent 65%),
+      radial-gradient(900px 520px at 90% 20%, color-mix(in oklab, var(--accentA), transparent 80%), transparent 60%),
+      radial-gradient(1100px 650px at 50% 110%, color-mix(in oklab, var(--accentC), transparent 82%), transparent 60%),
+      linear-gradient(180deg, var(--bg0), var(--bg1));
+  }
 
-    @keyframes drift{
-      from{ transform: translate3d(-10px,-10px,0) scale(1.02); }
-      to  { transform: translate3d(14px,10px,0)  scale(1.05); }
-    }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:-40px;
+    pointer-events:none;
+    z-index:-1;
 
-    .wrap{
-      max-width:1080px;
-      margin:0 auto;
-      padding:28px 18px 60px;
-    }
+    background:
+      radial-gradient(closest-side at 25% 25%, rgba(34,211,238,.18), transparent 60%),
+      radial-gradient(closest-side at 75% 35%, rgba(109,94,252,.16), transparent 62%),
+      radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
 
-/* =======================HEADER BANNER START ================================= */
-/* === Hero Banner (Centered / Complementary) === */
-:root{
-  --serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
+    filter: blur(22px);
+    opacity:.9;
+    animation: drift 14s var(--ease) infinite alternate;
+  }
 
-  /* pulled toward your teal/purple background instead of gold */
-  --ornA: rgba(34,211,238,.55);   /* teal */
-  --ornB: rgba(109,94,252,.55);   /* violet */
-  --ink:  rgba(6,7,20,.88);       /* deep glass */
-  --ink2: rgba(10,12,28,.72);
-}
+  @keyframes drift{
+    from{ transform: translate3d(-10px,-10px,0) scale(1.02); }
+    to  { transform: translate3d(14px,10px,0)  scale(1.05); }
+  }
 
-.heroBanner{
-  position:relative;
-  margin:14px 0 18px;
-  border-radius: calc(var(--radius) + 14px);
-  overflow:hidden;
-  isolation:isolate;
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:28px 18px 60px;
+  }
 
-  background:
-    radial-gradient(900px 260px at 50% 0%, rgba(255,255,255,.09), transparent 62%),
-    radial-gradient(900px 380px at 15% 40%, rgba(34,211,238,.12), transparent 62%),
-    radial-gradient(900px 380px at 85% 40%, rgba(109,94,252,.12), transparent 62%),
-    linear-gradient(180deg, var(--ink), var(--ink2));
+  /* =========================================================
+    3) HERO BANNER
+  ========================================================== */
+  .heroBanner{
+    position:relative;
+    margin:14px 0 18px;
+    border-radius: calc(var(--radius) + 14px);
+    overflow:hidden;
+    isolation:isolate;
+    min-height:132px;
 
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow:
-    0 34px 130px rgba(0,0,0,.72),
-    inset 0 1px 0 rgba(255,255,255,.08);
+    background:
+      radial-gradient(900px 260px at 50% 0%, rgba(255,255,255,.09), transparent 62%),
+      radial-gradient(900px 380px at 15% 40%, rgba(34,211,238,.12), transparent 62%),
+      radial-gradient(900px 380px at 85% 40%, rgba(109,94,252,.12), transparent 62%),
+      linear-gradient(180deg, var(--ink), var(--ink2));
+
+    border: 1px solid rgba(255,255,255,.10);
     box-shadow:
-    0 22px 90px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(255,255,255,.06),
-    inset 0 0 60px rgba(109,94,252,.08),
-    inset 0 0 120px rgba(34,211,238,.06);
+      0 22px 90px rgba(0,0,0,.55),
+      inset 0 0 0 1px rgba(255,255,255,.06),
+      inset 0 0 60px rgba(109,94,252,.08),
+      inset 0 0 120px rgba(34,211,238,.06);
+  }
 
-}
-    .heroBanner::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  pointer-events:none;
-  background:
-    linear-gradient(
-      120deg,
-      transparent 35%,
-      rgba(255,255,255,.08),
-      transparent 65%
+  .heroBanner::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    padding:1px;
+    border-radius: inherit;
+    pointer-events:none;
+    opacity:.95;
+
+    background: linear-gradient(135deg,
+      rgba(34,211,238,.0),
+      rgba(34,211,238,.22),
+      rgba(109,94,252,.18),
+      rgba(255,79,216,.10),
+      rgba(34,211,238,.0)
     );
-  opacity:.25;
-  mix-blend-mode: overlay;
-  animation: bannerShine 12s ease-in-out infinite;
-}
 
-@keyframes bannerShine{
-  0%, 60% { transform: translateX(-40%); opacity:.18; }
-  100%    { transform: translateX(40%);  opacity:.28; }
-}
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
 
+  .heroBanner::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    pointer-events:none;
 
-.heroBanner::before{
-  /* elegant, complementary frame */
-  content:"";
-  position:absolute;
-  inset:0;
-  padding:1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg,
-    rgba(34,211,238,.0),
-    rgba(34,211,238,.22),
-    rgba(109,94,252,.18),
-    rgba(255,79,216,.10),
-    rgba(34,211,238,.0)
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events:none;
-  opacity:.95;
-}
+    background:
+      linear-gradient(120deg, transparent 35%, rgba(255,255,255,.10), transparent 65%),
+      radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,.08), transparent 55%),
+      linear-gradient(90deg, rgba(0,0,0,.28), transparent 26%, transparent 74%, rgba(0,0,0,.28));
 
-.heroBanner::after{
-  /* subtle vertical “velvet” shading */
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,.08), transparent 55%),
-    linear-gradient(90deg, rgba(0,0,0,.28), transparent 26%, transparent 74%, rgba(0,0,0,.28));
-  pointer-events:none;
-  opacity:.65;
-}
+    background-size: 240% 100%, 100% 100%, 100% 100%;
+    background-position: -40% 0, 0 0, 0 0;
 
-/* disable old layers if still present */
-.heroStars, .heroAurora, .heroNoise, .heroBg{ display:none; }
+    mix-blend-mode: overlay;
+    opacity:.55;
+    animation: bannerShine 12s ease-in-out infinite;
+  }
 
-.heroInner{
-  position:relative;
-  padding:20px 22px 18px;
-  z-index:1;
-  text-align:center;
-}
+  @keyframes bannerShine{
+    0%, 60% { background-position: -40% 0, 0 0, 0 0; }
+    100%    { background-position:  40% 0, 0 0, 0 0; }
+  }
 
-.heroTop{
-  display:flex;
-  align-items:center;
-  justify-content:center; /* center top row */
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-}
+  /* Disable old hero layers if leftover markup exists */
+  .heroStars, .heroAurora, .heroNoise, .heroBg{ display:none; }
 
-.kickerPill{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.22);
-  font-size:11px;
-  letter-spacing:.26em;
-  text-transform:uppercase;
-  color: rgba(255,255,255,.70);
-}
+  .heroInner{
+    position:relative;
+    z-index:1;
+    padding:20px 22px 18px;
+    text-align:center;
+  }
 
-.kDot{
-  width:10px; height:10px; border-radius:999px;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 45%),
-    color-mix(in oklab, var(--accentB), transparent 20%);
-  box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.18);
-}
+  .heroTop{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
 
-.heroBadges{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+  .kickerPill{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.22);
+    font-size:11px;
+    letter-spacing:.26em;
+    text-transform:uppercase;
+    color: rgba(255,255,255,.70);
+  }
 
-.badgePill{
-  font-size:12px;
-  padding:7px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-  color: rgba(255,255,255,.75);
-}
+  .kDot{
+    width:10px; height:10px; border-radius:999px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 45%),
+      color-mix(in oklab, var(--accentB), transparent 20%);
+    box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.18);
+  }
 
-.heroInner{ text-align:center; }
+  .heroBadges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
 
-.heroTop{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-}
+  .badgePill{
+    font-size:12px;
+    padding:7px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.75);
+  }
 
-.heroCenter{
-  max-width: 820px;
-  margin: 0 auto;
-}
+  .heroCenter{
+    max-width: 820px;
+    margin: 0 auto;
+  }
 
-.heroBrandRow{ display:none; } /* IMPORTANT: if old markup/css still exists */
+  .heroBrandRow{ display:none; } /* if old markup exists */
 
+  .heroTitle{
+    margin:0 0 6px;
+    font-family: var(--serif);
+    font-weight: 650;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: .98;
+    letter-spacing: .04em;
+    text-transform: uppercase;
 
-.heroTitle{
-  margin:0 0 6px;
-  font-family: var(--serif);
-  font-weight: 650;
-  font-size: clamp(38px, 5vw, 58px);
-  line-height: .98;
-  letter-spacing: .04em;   /* was too wide */
-  text-transform: uppercase;
+    color: rgba(255,255,255,.92);
+    text-shadow: 0 22px 90px rgba(0,0,0,.65);
+  }
 
-  color: rgba(255,255,255,.92);
-  text-shadow: 0 22px 90px rgba(0,0,0,.65);
-}
-
-.heroSubtitle{
-  margin:0;
-  font-size: 12px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.62);
+  .heroSubtitle{
+    margin:0;
+    font-size: 12px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.62);
     opacity: .9;
+  }
 
-}
+  .heroDivider{
+    position: relative;
+    margin-top:14px;
+    height:2px;
+    width:min(520px, 85vw);
+    border-radius:999px;
+    overflow:hidden;
+    opacity:.9;
 
-/* New divider: “ornamental corners” instead of a plain line */
-.heroDivider{
-  position: relative;
-  margin-top:14px;
-  height:2px;
-  width:min(520px, 85vw);
-  border-radius:999px;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0),
-    color-mix(in oklab, var(--accentB), rgba(255,255,255,.65) 45%),
-    color-mix(in oklab, var(--accentA), rgba(255,255,255,.65) 45%),
-    color-mix(in oklab, var(--accentC), rgba(255,255,255,.60) 40%),
-    rgba(255,255,255,0)
-  );
-  opacity:.9;
-  overflow:hidden;
-}
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0),
+      color-mix(in oklab, var(--accentB), rgba(255,255,255,.65) 45%),
+      color-mix(in oklab, var(--accentA), rgba(255,255,255,.65) 45%),
+      color-mix(in oklab, var(--accentC), rgba(255,255,255,.60) 40%),
+      rgba(255,255,255,0)
+    );
+  }
 
-/* subtle shine sweep */
-.heroDivider::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(
-    110deg,
-    transparent 20%,
-    rgba(255,255,255,.55),
-    transparent 60%
-  );
-  opacity:.25;
-  transform: translateX(-120%);
-  animation: dividerShine 6s ease-in-out infinite;
-}
-
-@keyframes dividerShine{
-  0%, 70% { transform: translateX(-120%); }
-  100%    { transform: translateX(120%); }
-}
-
-
-.heroDivider::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,
+  .heroDivider::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    height:1px;
+    top:50%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg,
       transparent,
       rgba(34,211,238,.35),
       rgba(109,94,252,.30),
       rgba(255,79,216,.18),
       transparent
     );
-  height:1px;
-  top:50%;
-  transform: translateY(-50%);
-}
+  }
 
-.heroDivider::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:56px;
-  height:18px;
-  transform: translate(-50%,-50%);
-  background:
-    radial-gradient(10px 10px at 50% 50%, rgba(255,255,255,.20), transparent 70%),
-    radial-gradient(30px 14px at 50% 50%, rgba(34,211,238,.14), transparent 70%),
-    radial-gradient(30px 14px at 50% 50%, rgba(109,94,252,.12), transparent 70%);
-  filter: blur(.2px);
-}
+  .heroDivider::after{
+    content:"";
+    position:absolute;
+    inset:0;
 
+    background:
+      linear-gradient(110deg, transparent 20%, rgba(255,255,255,.55), transparent 60%),
+      radial-gradient(30px 14px at 50% 50%, rgba(34,211,238,.14), transparent 70%),
+      radial-gradient(30px 14px at 50% 50%, rgba(109,94,252,.12), transparent 70%),
+      radial-gradient(10px 10px at 50% 50%, rgba(255,255,255,.20), transparent 70%);
 
-/* =======================HEADER BANNER END ================================= */
+    background-size: 220% 100%, 100% 100%, 100% 100%, 100% 100%;
+    background-position: -120% 0, 0 0, 0 0, 0 0;
 
-    .heroBanner{ min-height: 132px; }
+    opacity:.28;
+    mix-blend-mode: screen;
+    animation: dividerShine 6s ease-in-out infinite;
+  }
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      backdrop-filter: blur(14px);
-    }
+  @keyframes dividerShine{
+    0%, 70% { background-position: -120% 0, 0 0, 0 0, 0 0; }
+    100%    { background-position:  120% 0, 0 0, 0 0, 0 0; }
+  }
+
+  /* =========================================================
+    4) CARD + TOOLBAR
+  ========================================================== */
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:visible;
+    backdrop-filter: blur(14px);
+  }
 
   .toolbar{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  padding:14px 14px 12px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    padding:14px 14px 12px;
 
-  /* more cohesive with the hero */
-  background:
-    radial-gradient(900px 220px at 15% 0%, rgba(34,211,238,.12), transparent 60%),
-    radial-gradient(900px 220px at 85% 0%, rgba(109,94,252,.12), transparent 60%),
-    rgba(255,255,255,.03);
+    background:
+      radial-gradient(900px 220px at 15% 0%, rgba(34,211,238,.12), transparent 60%),
+      radial-gradient(900px 220px at 85% 0%, rgba(109,94,252,.12), transparent 60%),
+      rgba(255,255,255,.03);
 
-  border-bottom:1px solid rgba(255,255,255,.10);
-}
+    border-bottom:1px solid rgba(255,255,255,.10);
+  }
 
-    /* Right tools: actually align to the right */
-.rightTools{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex:1;
-  justify-content:flex-end;  /* <- this is the key */
-  flex-wrap:wrap;
-}
+  .leftTools{
+    background: rgba(0,0,0,.16);
+    border:1px solid rgba(255,255,255,.10);
+    padding:8px;
+    border-radius:999px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
 
-/* Dropdown menu */
-.menu{
-  position:relative;
-}
+  .rightTools{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex:1;
+    justify-content:flex-end;
+    flex-wrap:wrap;
+  }
 
-.menu > summary{
-  list-style:none;
-}
-.menu > summary::-webkit-details-marker{ display:none; }
+  /* =========================================================
+    5) BUTTONS + INPUTS
+  ========================================================== */
+  .btn{
+    border:1px solid rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+    color: rgba(255,255,255,.86);
+    padding:9px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:12.5px;
+    letter-spacing:.04em;
 
-/* Popover panel */
-.menuList{
-  position:absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  min-width: 190px;
-  padding:10px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(10,12,28,.85);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 22px 80px rgba(0,0,0,.55);
-  display:grid;
-  gap:8px;
-  z-index:20;
-}
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    user-select:none;
 
-/* Make menu items fill the panel nicely */
-.menuItem{
-  width:100%;
-  justify-content:flex-start;
-}
+    box-shadow:
+      0 14px 40px rgba(0,0,0,.30),
+      inset 0 1px 0 rgba(255,255,255,.08);
 
-/* Optional: close look */
-.menu[open] > summary{
-  border-color: rgba(34,211,238,.26);
-  box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
-}
+    transition:
+      transform .12s var(--ease),
+      background .2s var(--ease),
+      box-shadow .2s var(--ease),
+      border-color .2s var(--ease);
+  }
 
+  .btn:hover{
+    transform: translateY(-1px);
+    border-color: rgba(34,211,238,.26);
+    box-shadow:
+      0 18px 55px rgba(0,0,0,.35),
+      0 0 0 3px rgba(34,211,238,.10);
+  }
 
-.btn{
-  border:1px solid rgba(255,255,255,.14);
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-  color: rgba(255,255,255,.86);
-  padding:9px 12px;
-  border-radius:999px; /* make them feel “designed” */
-  cursor:pointer;
-  font-size:12.5px;
-  letter-spacing:.04em;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  user-select:none;
+  .btn:active{ transform: translateY(0) scale(.99); }
 
-  box-shadow:
-    0 14px 40px rgba(0,0,0,.30),
-    inset 0 1px 0 rgba(255,255,255,.08);
+  .btnPrimary{
+    border-color: rgba(34,211,238,.28);
+    background: linear-gradient(180deg, rgba(34,211,238,.18), rgba(109,94,252,.10));
+    box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
+  }
+  .btnPrimary:hover{
+    border-color: rgba(34,211,238,.40);
+    box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 0 0 3px rgba(34,211,238,.14);
+  }
 
-  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
-}
+  .input{
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(0,0,0,.20);
+    color:var(--text);
+    padding:10px 12px;
+    border-radius:14px;
+    font-size:13.5px;
+    min-width:260px;
+    max-width:520px;
+    flex: 1 1 260px;
 
-.btn:hover{
-  transform: translateY(-1px);
-  border-color: rgba(34,211,238,.26);
-  box-shadow:
-    0 18px 55px rgba(0,0,0,.35),
-    0 0 0 3px rgba(34,211,238,.10);
-}
+    transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
+  }
 
-.btn:active{ transform: translateY(0) scale(.99); }
+  .input:focus{
+    outline:none;
+    border-color: color-mix(in oklab, var(--accentB), rgba(255,255,255,.16) 40%);
+    box-shadow: 0 0 0 3px rgba(34,211,238,.18);
+  }
 
+  select.input{ appearance:none; }
 
-    .input{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      font-size:13.5px;
-      min-width:260px;
-      max-width:520px;
-      flex: 1 1 260px;
-      transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
-    }
-    .input:focus{
-      outline:none;
-      border-color: color-mix(in oklab, var(--accentB), rgba(255,255,255,.16) 40%);
-      box-shadow: 0 0 0 3px rgba(34,211,238,.18);
-    }
+  /* =========================================================
+    6) TREE / NODES / TILES
+  ========================================================== */
+  .tree{
+    padding:12px;
+    display:grid;
+    gap:12px;
+  }
 
-    .meta{
-      padding:10px 14px 12px;
-      color:var(--muted2);
-      font-size:12.5px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+  .dropHint{
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px dashed rgba(255,255,255,.22);
+    background: rgba(255,255,255,.03);
+    color: rgba(255,255,255,.65);
+    font-size:12.5px;
 
-    #metaLeft{
-      font-variant-numeric: tabular-nums;
-      letter-spacing:.01em;
-      white-space:nowrap;
-      padding:6px 10px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      border-radius:999px;
-    }
+    cursor:pointer;
+    text-align:left;
+  }
 
-    .tree{
-      padding:12px;
-      display:grid;
-      gap:12px;
-    }
+  .dropHint:hover{
+    background: rgba(255,255,255,.05);
+    border-color: rgba(255,255,255,.30);
+  }
 
-    .dropHint{
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px dashed rgba(255,255,255,.22);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.65);
-      font-size:12.5px;
-    }
-    .dropHint{
-  cursor:pointer;
-  text-align:left;
-}
-.dropHint:hover{
-  background: rgba(255,255,255,.05);
-  border-color: rgba(255,255,255,.30);
-}
-.dropHint:focus-visible{
-  outline:none;
-  box-shadow: var(--ring);
-}
+  .dropHint:focus-visible{
+    outline:none;
+    box-shadow: var(--ring);
+  }
 
+  .node{
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
 
-    .node{
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
+  .nodeHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 14px;
+    user-select:none;
+    border-bottom:1px solid rgba(255,255,255,.10);
+  }
 
-    .nodeHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 14px;
-      user-select:none;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
+  .nodeHeaderLeft{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+  }
 
-    .nodeHeaderLeft{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
+  .twisty{
+    width:28px; height:28px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+  .twisty:hover{ background: rgba(255,255,255,.10); }
 
-    .twisty{
-      width:28px; height:28px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      flex:0 0 auto;
-    }
-    .twisty:hover{ background: rgba(255,255,255,.10); }
+  .nodeTitle{
+    font-weight:750;
+    letter-spacing:-.01em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:62ch;
+  }
 
-    .nodeTitle{
-      font-weight:750;
-      letter-spacing:-.01em;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:62ch;
-    }
+  .nodeBody{
+    padding:12px;
+    display:grid;
+    gap:10px;
+  }
 
-    .countPill{
-  font-size:11.5px;
-  padding:4px 10px;
-  letter-spacing:.02em;
-  white-space:nowrap;
-  opacity:.92;
-}
+  .tile{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:12px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
 
+    cursor:default;
 
-    .nodeBody{
-      padding:12px;
-      display:grid;
-      gap:10px;
-    }
+    transition:
+      transform .14s var(--ease),
+      background .2s var(--ease),
+      border-color .2s var(--ease);
+  }
 
-    .tile{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      transition: transform .14s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
-    }
-    .tile:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.07);
-    }
+  .tile:hover{
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,.18);
+    background: rgba(255,255,255,.07);
+  }
 
-    .tileMain{ flex:1 1 auto; min-width:0; }
-    .tileTitleLine{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:4px;
-    }
-    .tileTitle{ font-weight:650; letter-spacing:-.01em; }
+  .tileMain{ flex:1 1 auto; min-width:0; }
 
-    .chip{
-      font-size:11.5px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      color:var(--muted);
-    }
+  .tileTitleLine{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:4px;
+  }
 
-    .url{
-      font-family:var(--mono);
-      font-size:12.5px;
-      color:var(--muted);
-      word-break: break-all;
-      line-height:1.35;
-    }
+  .tileTitle{ font-weight:650; letter-spacing:-.01em; }
 
-    .notes{
-      margin-top:6px;
-      font-size:12.5px;
-      color:var(--muted2);
-      line-height:1.45;
-    }
+  .chip{
+    font-size:11.5px;
+    padding:3px 8px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    color:var(--muted);
+  }
 
-    .actions{
-      display:flex;
-      gap:8px;
-      flex:0 0 auto;
-      margin-left:auto;
-      align-items:flex-start;
-    }
+  .url{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--muted);
+    word-break: break-all;
+    line-height:1.35;
+  }
 
-    .iconBtn{
-      width:36px;
-      height:36px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-    }
-    .iconBtn:hover{ background: rgba(255,255,255,.10); box-shadow: 0 0 0 3px rgba(109,94,252,.12); }
-    .iconBtn:active{ transform: translateY(1px); }
-    .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
+  .notes{
+    margin-top:6px;
+    font-size:12.5px;
+    color:var(--muted2);
+    line-height:1.45;
+  }
 
-    .indent{
-      margin-left:14px;
-      border-left:1px solid rgba(255,255,255,.10);
-      padding-left:12px;
-    }
+  .actions{
+    display:flex;
+    gap:8px;
+    flex:0 0 auto;
+    margin-left:auto;
+    align-items:flex-start;
+  }
 
-    .modalBackdrop{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.55);
-      display:grid;
-      place-items:center;
-      padding:18px;
-      z-index:50;
-    }
+  .iconBtn{
+    width:36px;
+    height:36px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    cursor:pointer;
+    display:grid;
+    place-items:center;
 
-    .modal{
-      width:min(860px, 96vw);
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      box-shadow:0 30px 120px rgba(0,0,0,.65);
-      backdrop-filter: blur(14px);
-      overflow:hidden;
-    }
+    transition:
+      transform .12s var(--ease),
+      background .2s var(--ease),
+      box-shadow .2s var(--ease);
+  }
 
-    .modalHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 14px 10px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
+  .iconBtn:hover{
+    background: rgba(255,255,255,.10);
+    box-shadow: 0 0 0 3px rgba(109,94,252,.12);
+  }
 
-    .kicker{
-      font-size:11px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: color-mix(in oklab, var(--muted), transparent 12%);
-      opacity:.95;
-    }
+  .iconBtn:active{ transform: translateY(1px); }
+  .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
 
-    .modalTitle{ font-weight:700; letter-spacing:-.02em; }
+  .indent{
+    margin-left:14px;
+    border-left:1px solid rgba(255,255,255,.10);
+    padding-left:12px;
+  }
 
-    .modalBody{ padding:14px; display:grid; gap:12px; }
+  /* Drag handle (handle-only dragging) */
+  .dragHandle{
+    width:36px;
+    height:36px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    display:grid;
+    place-items:center;
+    cursor:grab;
+    user-select:none;
 
-    .field{ display:grid; gap:6px; }
-    .field > span{ font-size:12px; color:var(--muted2); }
+    font-family: var(--mono);
+    font-size:16px;
+    line-height:1;
+    opacity:.9;
 
-    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    @media (max-width:720px){ .grid2{ grid-template-columns: 1fr; } }
+    transition:
+      transform .12s var(--ease),
+      background .2s var(--ease),
+      box-shadow .2s var(--ease);
+  }
 
-    .modalActions{ display:flex; align-items:center; gap:10px; padding-top:6px; }
+  .dragHandle:hover{
+    background: rgba(255,255,255,.10);
+    box-shadow: 0 0 0 3px rgba(34,211,238,.12);
+  }
 
-    select.input{ appearance:none; }
+  .dragHandle:active{ cursor:grabbing; transform: translateY(1px); }
 
-    .sr-only{
-      position:absolute; width:1px; height:1px;
-      padding:0; margin:-1px; overflow:hidden;
-      clip:rect(0,0,0,0); border:0;
-    }
+  /* =========================================================
+    7) MODAL
+  ========================================================== */
+  .modalBackdrop{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,.55);
+    display:grid;
+    place-items:center;
+    padding:18px;
+    z-index:50;
+  }
 
-    @media (prefers-reduced-motion: reduce){
-      body::before, .heroBanner::before{ animation:none !important; }
-      .btn, .tile, .iconBtn, .twisty{ transition:none !important; }
-    }
+  .modal{
+    width:min(860px, 96vw);
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    box-shadow:0 30px 120px rgba(0,0,0,.65);
+    backdrop-filter: blur(14px);
+    overflow:hidden;
+  }
 
-    /* Drag handle (the only place you can grab to move) */
-    .dragHandle{
-      width:36px;
-      height:36px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      display:grid;
-      place-items:center;
-      cursor:grab;
-      user-select:none;
-      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-      font-family: var(--mono);
-      font-size:16px;
-      line-height:1;
-      opacity:.9;
-    }
-    .dragHandle:hover{
-      background: rgba(255,255,255,.10);
-      box-shadow: 0 0 0 3px rgba(34,211,238,.12);
-    }
-    .dragHandle:active{ cursor:grabbing; transform: translateY(1px); }
+  .modalHead{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 14px 10px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+  }
 
-    /* Since dragging is handle-only, tiles shouldn't look draggable everywhere */
-    .tile{ cursor:default; }
-    .tile:active{ cursor:default; }
-    .leftTools{
-  background: rgba(0,0,0,.16);
-  border:1px solid rgba(255,255,255,.10);
-  padding:8px;
-  border-radius:999px;
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap;
-}
+  .kicker{
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color: color-mix(in oklab, var(--muted), transparent 12%);
+    opacity:.95;
+  }
 
-.btnPrimary{
-  border-color: rgba(34,211,238,.28);
-  background: linear-gradient(180deg, rgba(34,211,238,.18), rgba(109,94,252,.10));
-  box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
-}
-.btnPrimary:hover{
-  border-color: rgba(34,211,238,.40);
-  box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 0 0 3px rgba(34,211,238,.14);
-}
-    .menuSep{
-  height:1px;
-  background: rgba(255,255,255,.10);
-  margin:6px 2px;
-  border-radius:999px;
-}
+  .modalTitle{ font-weight:700; letter-spacing:-.02em; }
+  .modalBody{ padding:14px; display:grid; gap:12px; }
 
+  .field{ display:grid; gap:6px; }
+  .field > span{ font-size:12px; color:var(--muted2); }
 
-  </style>
+  .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  @media (max-width:720px){ .grid2{ grid-template-columns: 1fr; } }
+
+  .modalActions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-top:6px;
+  }
+
+  /* =========================================================
+    8) DROPDOWN MENU (if/when you add it)
+  ========================================================== */
+  .menu{ position:relative; }
+  .menu > summary{ list-style:none; }
+  .menu > summary::-webkit-details-marker{ display:none; }
+
+  .menuList{
+    position:absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 190px;
+    padding:10px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(10,12,28,.85);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 22px 80px rgba(0,0,0,.55);
+    display:grid;
+    gap:8px;
+    z-index:20;
+  }
+
+  .menuItem{ width:100%; justify-content:flex-start; }
+
+  .menu[open] > summary{
+    border-color: rgba(34,211,238,.26);
+    box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
+  }
+
+  .menuSep{
+    height:1px;
+    background: rgba(255,255,255,.10);
+    margin:6px 2px;
+    border-radius:999px;
+  }
+
+  /* =========================================================
+    9) OPTIONAL META STRIP (kept from your original)
+  ========================================================== */
+  .meta{
+    padding:10px 14px 12px;
+    color:var(--muted2);
+    font-size:12.5px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  #metaLeft{
+    font-variant-numeric: tabular-nums;
+    letter-spacing:.01em;
+    white-space:nowrap;
+    padding:6px 10px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    border-radius:999px;
+  }
+
+  /* =========================================================
+    10) ACCESSIBILITY / MOTION
+  ========================================================== */
+  @media (prefers-reduced-motion: reduce){
+    body::before{ animation:none !important; }
+    .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
+  }
+</style>
+  <!-- ==================================================================================================================
+    =========================================================END OF STYLE=========================================================
+  =================================================================================================================== -->
 </head>
-
+  <!-- ==================================================================================================================
+    =========================================================START OF BODY=========================================================
+  =================================================================================================================== -->
 <body>
+  <!-- =========================================================
+    PAGE WRAP
+  ========================================================== -->
   <div class="wrap">
 
-<header class="heroBanner" aria-label="Navigation Hub banner">
-  <div class="heroInner">
+    <!-- =========================================================
+      HERO / HEADER
+    ========================================================== -->
+    <header class="heroBanner" aria-label="Navigation Hub banner">
+      <div class="heroInner">
 
-    <div class="heroTop">
-      <div class="kickerPill">
-        <span class="kDot" aria-hidden="true"></span>
-        NAVIGATION
-      </div>
+        <!-- Top row: kicker + badges -->
+        <div class="heroTop">
+          <div class="kickerPill">
+            <span class="kDot" aria-hidden="true"></span>
+            NAVIGATION
+          </div>
 
-      <div class="heroBadges" aria-label="Status badges">
-        <span class="badgePill">1</span>
-        <span class="badgePill">2</span>
-      </div>
-    </div>
-
-    <div class="heroCenter">
-      <h1 class="heroTitle">Navigation Hub</h1>
-      <p class="heroSubtitle">Webpage navigation tracking</p>
-      <div class="heroDivider" aria-hidden="true"></div>
-    </div>
-
-  </div>
-</header>
-
-
-  <section class="card" aria-label="Navigation hub">
-  <div class="toolbar" id="top">
-    <div class="leftTools">
-      <details class="menu" id="moreMenu">
-        <summary class="btn" aria-label="More tools">⋯ More</summary>
-
-        <div class="menuList" role="menu" aria-label="Tools menu">
-          <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
-          <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
-
-          <div class="menuSep" aria-hidden="true"></div>
-
-          <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
-          <button class="btn menuItem" id="resetEdits" type="button" role="menuitem"
-                  title="Clears saved edits on this device">↺ Reset edits</button>
+          <div class="heroBadges" aria-label="Status badges">
+            <span class="badgePill">1</span>
+            <span class="badgePill">2</span>
+          </div>
         </div>
-      </details>
-    </div>
 
-    <div class="rightTools">
-      <label class="sr-only" for="search">Search</label>
-      <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
-      <button class="btn btnPrimary" id="addItem" type="button">＋ Add</button>
-    </div>
+        <!-- Center title -->
+        <div class="heroCenter">
+          <h1 class="heroTitle">Navigation Hub</h1>
+          <p class="heroSubtitle">Webpage navigation tracking</p>
+          <div class="heroDivider" aria-hidden="true"></div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- =========================================================
+      MAIN CARD: TOOLBAR + TREE
+    ========================================================== -->
+    <section class="card" aria-label="Navigation hub">
+
+      <!-- Toolbar -->
+      <div class="toolbar" id="top">
+        <!-- Left controls -->
+        <div class="leftTools">
+          <button class="btn" id="expandAll" type="button">▾ Expand all</button>
+          <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
+          <button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
+          <button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">
+            ↺ Reset edits
+          </button>
+        </div>
+
+        <!-- Right controls -->
+        <div class="rightTools">
+          <label class="sr-only" for="search">Search</label>
+          <input
+            class="input"
+            id="search"
+            type="search"
+            placeholder="Search titles, URLs, notes…"
+          />
+          <button class="btn" id="addItem" type="button">＋ Add</button>
+        </div>
+      </div>
+
+      <!-- Tree mount point -->
+      <div class="tree" id="treeRoot"></div>
+    </section>
+
   </div>
 
-  <div class="tree" id="treeRoot"></div>
-</section>
-
-  </div>
-
-  <!-- Embedded data (tree nodes) -->
+  <!-- =========================================================
+    EMBEDDED DATA (INITIAL TREE NODES)
+  ========================================================== -->
   <script id="navData" type="application/json">
 [
   { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1 },
@@ -854,314 +880,340 @@
   { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3 },
   { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "parentId":"action", "order":1 }
 ]
-</script>
+  </script>
 
-
-  <!-- Modal -->
+  <!-- =========================================================
+    MODAL (ADD / EDIT)
+  ========================================================== -->
   <div class="modalBackdrop" id="modalBackdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <!-- Modal header -->
       <div class="modalHead">
         <div>
           <div class="kicker" id="modalKicker">ADD</div>
           <div id="modalTitle" class="modalTitle">Item</div>
         </div>
+
         <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
       </div>
 
+      <!-- Modal body -->
       <div class="modalBody">
-  <div class="grid2">
-    <label class="field">
-      <span>Type</span>
-      <select class="input" id="fType">
-        <option value="group">Page (group)</option>
-        <option value="tile">Link (tile)</option>
-      </select>
-    </label>
 
-    <label class="field">
-      <span>Title</span>
-      <input class="input" id="fTitle" placeholder="Title" />
-    </label>
-  </div>
+        <div class="grid2">
+          <label class="field">
+            <span>Type</span>
+            <select class="input" id="fType">
+              <option value="group">Page (group)</option>
+              <option value="tile">Link (tile)</option>
+            </select>
+          </label>
 
-  <label class="field">
-    <span>Hyperlink</span>
-    <input class="input" id="fHref" placeholder="https://… or /path" />
-  </label>
+          <label class="field">
+            <span>Title</span>
+            <input class="input" id="fTitle" placeholder="Title" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Hyperlink</span>
+          <input class="input" id="fHref" placeholder="https://… or /path" />
+        </label>
 
         <label class="field" id="groupColorField">
-  <span>Group color</span>
-  <input class="input" id="fColor" type="color" value="#6d5efc" style="height:44px; padding:6px 10px;" />
-</label>
+          <span>Group color</span>
+          <input
+            class="input"
+            id="fColor"
+            type="color"
+            value="#6d5efc"
+            style="height:44px; padding:6px 10px;"
+          />
+        </label>
 
+        <div class="modalActions">
+          <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
+          <div style="flex:1"></div>
+          <button class="btn" id="saveItem" type="button">💾 Save</button>
+        </div>
 
-  <div class="modalActions">
-    <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
-    <div style="flex:1"></div>
-    <button class="btn" id="saveItem" type="button">💾 Save</button>
-  </div>
-</div>
-
+      </div>
     </div>
   </div>
 
-  <!-- Sortable must load BEFORE our app script -->
+  <!-- =========================================================
+    VENDOR SCRIPTS (LOAD BEFORE APP SCRIPT)
+  ========================================================== -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
-  <script>
-    /* =========================================================
-      Vigil — Unlimited nesting tree
-      - Nodes are either {type:"group"} or {type:"tile"}
-      - parentId builds a tree (null = root)
-      - Drag groups into/out of groups (infinite nesting)
-      - Prevent dropping a group into its own descendant
-      - Persist nodes + collapsed group state to localStorage
-    ========================================================== */
+<!-- ==================================================================================================================
+    =========================================================START OF SCRIPT=========================================================
+  =================================================================================================================== -->
+<script>
+/* =========================================================
+  Vigil — Unlimited nesting tree
+  - Nodes are either {type:"group"} or {type:"tile"}
+  - parentId builds a tree (null = root)
+  - Drag groups into/out of groups (infinite nesting)
+  - Prevent dropping a group into its own descendant
+  - Persist nodes + collapsed group state to localStorage
+========================================================== */
 
-    const LS_NODES = "vigil_nodes_tree_v1";
-    const LS_COLLAPSED = "vigil_collapsed_groups_v1";
 
-    const $ = (sel) => document.querySelector(sel);
+/* =========================================================
+  1) STORAGE KEYS
+========================================================== */
+const LS_NODES = "vigil_nodes_tree_v1";
+const LS_COLLAPSED = "vigil_collapsed_groups_v1";
 
+
+/* =========================================================
+  2) DOM HELPERS + DOM REFERENCES
+========================================================== */
+const $ = (sel) => document.querySelector(sel);
+
+// Mount points
 const treeRootEl = $("#treeRoot");
 const searchEl = $("#search");
 
+// Toolbar buttons
+const expandAllBtn = $("#expandAll");
+const collapseAllBtn = $("#collapseAll");
+const addItemBtn = $("#addItem");
+const exportBtn = $("#exportJson");
+const resetBtn = $("#resetEdits");
 
-    const expandAllBtn = $("#expandAll");
-    const collapseAllBtn = $("#collapseAll");
-   const addItemBtn = $("#addItem");
-    const exportBtn = $("#exportJson");
-    const resetBtn = $("#resetEdits");
+// Modal elements
+const modalBackdrop = $("#modalBackdrop");
+const closeModalBtn = $("#closeModal");
+const saveItemBtn = $("#saveItem");
+const deleteItemBtn = $("#deleteItem");
 
-    const modalBackdrop = $("#modalBackdrop");
-    const closeModalBtn = $("#closeModal");
-    const saveItemBtn = $("#saveItem");
-    const deleteItemBtn = $("#deleteItem");
+const modalKicker = $("#modalKicker");
+const modalTitle = $("#modalTitle");
 
-    const modalKicker = $("#modalKicker");
-    const modalTitle = $("#modalTitle");
-
-    const fType = $("#fType");
-    const fTitle = $("#fTitle");
-    const fHref = $("#fHref");
-    const fColor = $("#fColor");
+const fType = $("#fType");
+const fTitle = $("#fTitle");
+const fHref = $("#fHref");
+const fColor = $("#fColor");
 const groupColorField = $("#groupColorField");
 
 
-    let filter = "";
-    let editingId = null;
-    let draftParentId = null;
+/* =========================================================
+  3) APP STATE
+========================================================== */
+let filter = "";
+let editingId = null;
+
+// Used to preserve default insert location when adding from “Add here”
+let draftParentId = null;
 let draftOrder = 9999;
 
+let NODES = [];
+let collapsedGroups = new Set();
+let _sortables = [];
 
-    let NODES = [];
-    let collapsedGroups = new Set();
-    let _sortables = [];
 
-    const escapeHtml = (s) => (s ?? "").toString()
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+/* =========================================================
+  4) SMALL UTILITIES
+========================================================== */
+const escapeHtml = (s) => (s ?? "").toString()
+  .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;").replaceAll("'","&#039;");
 
-    const loadEmbedded = () => {
-      const el = document.getElementById("navData");
-      return JSON.parse(el?.textContent || "[]");
-    };
-const closeMoreMenu = () => document.getElementById("moreMenu")?.removeAttribute("open");
+const copyToClipboard = async (text) => {
+  try { await navigator.clipboard.writeText(text); } catch {}
+};
 
-["expandAll","collapseAll","exportJson","resetEdits"].forEach((id) => {
-  document.getElementById(id)?.addEventListener("click", closeMoreMenu);
-});
+const slugify = (s) => (s || "")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/(^-|-$)/g, "");
 
-    const loadNodes = () => {
-      const raw = localStorage.getItem(LS_NODES);
-      if (raw) { try { return JSON.parse(raw); } catch {} }
-      return loadEmbedded();
-    };
 
-    const saveNodes = () => localStorage.setItem(LS_NODES, JSON.stringify(NODES, null, 2));
+/* =========================================================
+  5) LOAD / SAVE
+========================================================== */
+const loadEmbedded = () => {
+  const el = document.getElementById("navData");
+  return JSON.parse(el?.textContent || "[]");
+};
 
-    const loadCollapsed = () => {
-      const raw = localStorage.getItem(LS_COLLAPSED);
-      if (!raw) return new Set();
-      try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
-    };
+const loadNodes = () => {
+  const raw = localStorage.getItem(LS_NODES);
+  if (raw) { try { return JSON.parse(raw); } catch {} }
+  return loadEmbedded();
+};
 
-    const saveCollapsed = () => localStorage.setItem(LS_COLLAPSED, JSON.stringify([...collapsedGroups], null, 2));
+const saveNodes = () => localStorage.setItem(LS_NODES, JSON.stringify(NODES, null, 2));
 
-    const nodeById = (id) => NODES.find(n => n.id === id);
+const loadCollapsed = () => {
+  const raw = localStorage.getItem(LS_COLLAPSED);
+  if (!raw) return new Set();
+  try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
+};
 
-    const childrenOf = (parentId) =>
-      NODES.filter(n => (n.parentId ?? null) === (parentId ?? null))
-           .sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+const saveCollapsed = () =>
+  localStorage.setItem(LS_COLLAPSED, JSON.stringify([...collapsedGroups], null, 2));
 
-    const buildDescendantsSet = (groupId) => {
-      const out = new Set();
-      const stack = [groupId];
-      while (stack.length) {
-        const cur = stack.pop();
-        for (const ch of childrenOf(cur)) {
-          out.add(ch.id);
-          if (ch.type === "group") stack.push(ch.id);
-        }
-      }
-      return out;
-    };
 
-    const normalizeOrders = () => {
-      const parents = new Set(NODES.map(n => n.parentId ?? null));
-      for (const p of parents) {
-        const kids = childrenOf(p);
-        kids.forEach((n, idx) => n.order = idx + 1);
-      }
-    };
+/* =========================================================
+  6) DATA ACCESSORS
+========================================================== */
+const nodeById = (id) => NODES.find(n => n.id === id);
 
-    const matchNode = (n) => {
-      if (!filter) return true;
-      const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""}`.toLowerCase();
-      return hay.includes(filter);
-    };
+const childrenOf = (parentId) =>
+  NODES
+    .filter(n => (n.parentId ?? null) === (parentId ?? null))
+    .sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
 
-    const visibleSetForFilter = () => {
-      if (!filter) return null;
-      const visible = new Set();
-      const byParent = new Map();
-      for (const n of NODES) {
-        const p = n.parentId ?? null;
-        if (!byParent.has(p)) byParent.set(p, []);
-        byParent.get(p).push(n);
-      }
+const buildDescendantsSet = (groupId) => {
+  const out = new Set();
+  const stack = [groupId];
 
-      const hasMatchInSubtree = (id) => {
-        const n = nodeById(id);
-        if (!n) return false;
-        if (matchNode(n)) return true;
-        if (n.type !== "group") return false;
-        const kids = byParent.get(id) || [];
-        return kids.some(k => hasMatchInSubtree(k.id));
-      };
+  while (stack.length) {
+    const cur = stack.pop();
+    for (const ch of childrenOf(cur)) {
+      out.add(ch.id);
+      if (ch.type === "group") stack.push(ch.id);
+    }
+  }
+  return out;
+};
 
-      const ensureAncestors = (id) => {
-        let cur = nodeById(id);
-        while (cur) {
-          visible.add(cur.id);
-          if (cur.parentId == null) break;
-          cur = nodeById(cur.parentId);
-        }
-      };
+const normalizeOrders = () => {
+  const parents = new Set(NODES.map(n => n.parentId ?? null));
+  for (const p of parents) {
+    const kids = childrenOf(p);
+    kids.forEach((n, idx) => (n.order = idx + 1));
+  }
+};
 
-      for (const n of NODES) {
-        if (hasMatchInSubtree(n.id)) ensureAncestors(n.id);
-      }
-      return visible;
-    };
 
-    const showModal = () => modalBackdrop.removeAttribute("hidden");
-    const hideModal = () => modalBackdrop.setAttribute("hidden", "");
+/* =========================================================
+  7) SEARCH / FILTER VISIBILITY
+========================================================== */
+const matchNode = (n) => {
+  if (!filter) return true;
+  const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""}`.toLowerCase();
+  return hay.includes(filter);
+};
+
+const visibleSetForFilter = () => {
+  if (!filter) return null;
+
+  const visible = new Set();
+  const byParent = new Map();
+
+  for (const n of NODES) {
+    const p = n.parentId ?? null;
+    if (!byParent.has(p)) byParent.set(p, []);
+    byParent.get(p).push(n);
+  }
+
+  const hasMatchInSubtree = (id) => {
+    const n = nodeById(id);
+    if (!n) return false;
+    if (matchNode(n)) return true;
+    if (n.type !== "group") return false;
+    const kids = byParent.get(id) || [];
+    return kids.some(k => hasMatchInSubtree(k.id));
+  };
+
+  const ensureAncestors = (id) => {
+    let cur = nodeById(id);
+    while (cur) {
+      visible.add(cur.id);
+      if (cur.parentId == null) break;
+      cur = nodeById(cur.parentId);
+    }
+  };
+
+  for (const n of NODES) {
+    if (hasMatchInSubtree(n.id)) ensureAncestors(n.id);
+  }
+
+  return visible;
+};
+
+
+/* =========================================================
+  8) MODAL: OPEN / CLOSE / UI
+========================================================== */
+const showModal = () => modalBackdrop.removeAttribute("hidden");
+const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
 const setTypeUI = () => {
   const isGroup = fType.value === "group";
   groupColorField.style.display = isGroup ? "grid" : "none";
 };
 
-
-
-    const fillParentOptions = (currentId) => {
-      const opt = [];
-      opt.push({ value:"__root__", label:"(root)" });
-
-      const groups = NODES.filter(n => n.type === "group")
-        .sort((a,b)=> (a.title||"").localeCompare(b.title||""));
-
-      let banned = new Set();
-      if (currentId) {
-        banned.add(currentId);
-        const n = nodeById(currentId);
-        if (n?.type === "group") {
-          for (const d of buildDescendantsSet(currentId)) banned.add(d);
-        }
-      }
-
-      for (const g of groups) {
-        if (banned.has(g.id)) continue;
-        opt.push({ value:g.id, label:`${g.title} (${g.id})` });
-      }
-
-      fParent.innerHTML = opt.map(o =>
-        `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`
-      ).join("");
-    };
-
-   const openModal = (node, isNew, forceType=null) => {
+const openModal = (node, isNew, forceType = null) => {
   showModal();
+
   editingId = isNew ? null : node.id;
-draftParentId = isNew ? (node.parentId ?? null) : null;
-draftOrder = isNew ? (node.order ?? 9999) : 9999;
+
+  // Preserve where the Add button was clicked
+  draftParentId = isNew ? (node.parentId ?? null) : null;
+  draftOrder = isNew ? (node.order ?? 9999) : 9999;
 
   modalKicker.textContent = isNew ? "ADD" : "EDIT";
   modalTitle.textContent = isNew ? "New item" : (node.title || node.id || "Item");
 
-  fType.value  = forceType ?? (node.type || "tile");
-     setTypeUI();
+  fType.value = forceType ?? (node.type || "tile");
+  setTypeUI();
+
   fTitle.value = node.title || "";
   fHref.value  = node.href  || "";
-     fColor.value = node.color || "#6d5efc";
-
+  fColor.value = node.color || "#6d5efc";
 
   deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
 
   setTimeout(() => fTitle.focus(), 0);
 };
 
+const closeModal = () => {
+  hideModal();
+  editingId = null;
+};
 
-    const closeModal = () => {
-      hideModal();
-      editingId = null;
-    };
 
-    const setAllCollapsed = (collapsed) => {
-      const allGroups = NODES.filter(n => n.type === "group").map(n => n.id);
-      collapsedGroups = new Set(collapsed ? allGroups : []);
-      saveCollapsed();
-      render();
-    };
+/* =========================================================
+  9) CRUD (UPSERT / DELETE)
+========================================================== */
+const upsert = (updated) => {
+  const idx = NODES.findIndex(x => x.id === updated.id);
+  if (idx >= 0) NODES[idx] = { ...NODES[idx], ...updated };
+  else NODES.push(updated);
 
-    const copyToClipboard = async (text) => { try { await navigator.clipboard.writeText(text); } catch {} };
+  normalizeOrders();
+  saveNodes();
+  render();
+};
 
-    const upsert = (updated) => {
-      const idx = NODES.findIndex(x => x.id === updated.id);
-      if (idx >= 0) NODES[idx] = { ...NODES[idx], ...updated };
-      else NODES.push(updated);
+const removeNode = (id) => {
+  const n = nodeById(id);
+  if (!n) return;
 
-      normalizeOrders();
-      saveNodes();
-      render();
-    };
+  const toDelete = new Set([id]);
+  if (n.type === "group") {
+    for (const d of buildDescendantsSet(id)) toDelete.add(d);
+  }
 
-    const removeNode = (id) => {
-      const n = nodeById(id);
-      if (!n) return;
+  for (const x of toDelete) collapsedGroups.delete(x);
 
-      const toDelete = new Set([id]);
-      if (n.type === "group") {
-        for (const d of buildDescendantsSet(id)) toDelete.add(d);
-      }
+  NODES = NODES.filter(x => !toDelete.has(x.id));
+  normalizeOrders();
+  saveCollapsed();
+  saveNodes();
+  render();
+};
 
-      for (const x of toDelete) collapsedGroups.delete(x);
 
-      NODES = NODES.filter(x => !toDelete.has(x.id));
-      normalizeOrders();
-      saveCollapsed();
-      saveNodes();
-      render();
-    };
-
-    /* =========================
-      FIXED TEMPLATES
-      - tile actions referenced g.id (undefined) before
-      - group actions referenced n.id/href (undefined) before
-      - removed duplicated nested .actions wrappers
-    ========================= */
-// One universal "Add" button (user can switch Type inside modal)
+/* =========================================================
+  10) RENDER TEMPLATES
+========================================================== */
+// Universal “Add here” button (user picks type in modal)
 const renderAddButton = (parentId) => {
   const pid = parentId ?? null;
   return `
@@ -1172,46 +1224,50 @@ const renderAddButton = (parentId) => {
   `;
 };
 
-// Hook used by the button above
+// Called by “Add here”
 window.__addAt = (parentRaw) => {
   const parentId = (parentRaw === "__root__") ? null : parentRaw;
   openModal(
     { type:"tile", id:"", title:"", href:"", parentId, notes:"", order:9999 },
     true,
-    null // let user pick group/tile in the modal
+    null // let user choose group/tile
   );
 };
 
-    const renderTile = (n) => {
-const chip = `<span class="chip">Link</span>`;
-      const notes = n.notes ? `<div class="notes">${escapeHtml(n.notes)}</div>` : "";
-      const href = n.href || "#";
-      const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+const renderTile = (n) => {
+  const chip = `<span class="chip">Link</span>`;
+  const notes = n.notes ? `<div class="notes">${escapeHtml(n.notes)}</div>` : "";
+  const href = n.href || "#";
+  const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
 
-      return `
-        <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
-          <div class="tileMain">
-            <a href="${escapeHtml(href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
-              <div class="tileTitleLine">
-                <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
-                ${chip}
-              </div>
-              <div class="url">${escapeHtml(href)}</div>
-            </a>
-            ${notes}
+  return `
+    <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
+      <div class="tileMain">
+        <a href="${escapeHtml(href)}" ${target}
+           style="text-decoration:none; color:inherit; display:block;">
+          <div class="tileTitleLine">
+            <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
+            ${chip}
           </div>
+          <div class="url">${escapeHtml(href)}</div>
+        </a>
+        ${notes}
+      </div>
 
-          <div class="actions">
-            <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
-            <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
+      <div class="actions">
+        <button class="iconBtn" type="button"
+          onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
 
-            <div class="dragHandle" role="button" tabindex="0"
-                 aria-label="Drag to move tile"
-                 title="Drag to move">⋮⋮</div>
-          </div>
-        </div>
-      `;
-    };
+        <button class="iconBtn" type="button"
+          onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
+
+        <div class="dragHandle" role="button" tabindex="0"
+             aria-label="Drag to move tile"
+             title="Drag to move">⋮⋮</div>
+      </div>
+    </div>
+  `;
+};
 
 const renderGroup = (g, visibleSet, depth) => {
   const kids = childrenOf(g.id)
@@ -1219,222 +1275,250 @@ const renderGroup = (g, visibleSet, depth) => {
 
   const collapsed = collapsedGroups.has(g.id) && !filter;
 
-  const totalCount = childrenOf(g.id).length;
-  const visibleCount = kids.length;
-  const countLabel = `${visibleCount} visible • ${totalCount} total`;
-
-  const body = collapsed ? "" : (kids.length
-    ? kids.map(n => n.type === "group"
-        ? renderGroup(n, visibleSet, depth + 1)
-        : renderTile(n)
-      ).join("")
-    : `${renderAddButton(g.id)}`
+  const body = collapsed ? "" : (
+    kids.length
+      ? kids.map(n => n.type === "group"
+          ? renderGroup(n, visibleSet, depth + 1)
+          : renderTile(n)
+        ).join("")
+      : `${renderAddButton(g.id)}`
   );
 
   const indentClass = depth > 0 ? "indent" : "";
-
   const accentStyle = g.color
     ? `style="border-left:6px solid ${escapeHtml(g.color)};"`
     : "";
 
   return `
-<div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group" ${accentStyle}>
-  <div class="nodeHeader">
-    <div class="nodeHeaderLeft">
-      <button class="twisty" type="button" aria-label="Toggle group"
-        onclick="window.__toggle('${escapeHtml(g.id).replaceAll("'","&#039;")}')">
-        ${collapsed ? "▸" : "▾"}
-      </button>
-      <div style="min-width:0">
-        ${(() => {
-          const title = escapeHtml(g.title || "(group)");
-          const href = g.href;
+    <div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group" ${accentStyle}>
+      <div class="nodeHeader">
+        <div class="nodeHeaderLeft">
+          <button class="twisty" type="button" aria-label="Toggle group"
+            onclick="window.__toggle('${escapeHtml(g.id).replaceAll("'","&#039;")}')">
+            ${collapsed ? "▸" : "▾"}
+          </button>
 
-          if (!href) return `<div class="nodeTitle">${title}</div>`;
+          <div style="min-width:0">
+            ${(() => {
+              const title = escapeHtml(g.title || "(group)");
+              const href = g.href;
 
-          const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+              if (!href) return `<div class="nodeTitle">${title}</div>`;
 
-          return `
-<a class="nodeTitle"
-   href="${escapeHtml(href)}"
-   ${target}
-   style="text-decoration:none; color:inherit;">
-  ${title}
-</a>
-<div class="url" style="margin-top:4px">${escapeHtml(href)}</div>
-          `;
-        })()}
-        ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
+              const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+              return `
+                <a class="nodeTitle" href="${escapeHtml(href)}" ${target}
+                   style="text-decoration:none; color:inherit;">
+                  ${title}
+                </a>
+                <div class="url" style="margin-top:4px">${escapeHtml(href)}</div>
+              `;
+            })()}
+
+            ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="iconBtn" type="button"
+            onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
+
+          <button class="iconBtn" type="button"
+            onclick="window.__copy('${escapeHtml(g.href || "").replaceAll("'","&#039;")}')">⧉</button>
+
+          <div class="dragHandle" role="button" tabindex="0"
+               aria-label="Drag to move group"
+               title="Drag to move">⋮⋮</div>
+        </div>
       </div>
-      <span class="countPill">${countLabel}</span>
+
+      <div class="nodeBody"
+           ${collapsed ? "hidden" : ""}
+           data-container="children"
+           data-parent-id="${escapeHtml(g.id)}">
+        ${body}
+        ${(!collapsed && kids.length) ? `${renderAddButton(g.id)}` : ``}
+      </div>
     </div>
-
-    <div class="actions">
-      <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
-      <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(g.href || "").replaceAll("'","&#039;")}')">⧉</button>
-
-      <div class="dragHandle" role="button" tabindex="0"
-           aria-label="Drag to move group"
-           title="Drag to move">⋮⋮</div>
-    </div>
-  </div>
-
-  <div class="nodeBody"
-       ${collapsed ? "hidden" : ""}
-       data-container="children"
-       data-parent-id="${escapeHtml(g.id)}">
-    ${body}
-    ${(!collapsed && kids.length) ? `${renderAddButton(g.id)}` : ``}
-  </div>
-</div>
   `;
 };
 
-    const renderRoot = () => {
-      const visibleSet = visibleSetForFilter();
+const renderRoot = () => {
+  const visibleSet = visibleSetForFilter();
 
-      const roots = childrenOf(null)
-        .filter(n => !visibleSet || visibleSet.has(n.id));
+  const roots = childrenOf(null)
+    .filter(n => !visibleSet || visibleSet.has(n.id));
 
-      if (!roots.length) {
-treeRootEl.innerHTML = `
-  <div class="dropHint">No matches. Try a different search.</div>
-  ${renderAddButton(null)}
-`;
-        return;
-      }
+  if (!roots.length) {
+    treeRootEl.innerHTML = `
+      <div class="dropHint">No matches. Try a different search.</div>
+      ${renderAddButton(null)}
+    `;
+    return;
+  }
 
-      treeRootEl.innerHTML = `
-        <div data-container="children" data-parent-id="__root__">
-          ${roots.map(n => n.type === "group" ? renderGroup(n, visibleSet, 0) : renderTile(n)).join("")}
-        </div>
-      `;
-    };
+  treeRootEl.innerHTML = `
+    <div data-container="children" data-parent-id="__root__">
+      ${roots.map(n => n.type === "group" ? renderGroup(n, visibleSet, 0) : renderTile(n)).join("")}
+    </div>
+  `;
+};
 
-    const destroySortables = () => {
-      _sortables.forEach(s => { try { s.destroy(); } catch {} });
-      _sortables = [];
-    };
 
-    const rebuildFromDOM = () => {
-      document.querySelectorAll('[data-container="children"]').forEach((containerEl) => {
-        const p = containerEl.dataset.parentId;
-        const parentId = (p === "__root__") ? null : p;
+/* =========================================================
+  11) SORTABLE (DRAG/DROP)
+========================================================== */
+const destroySortables = () => {
+  _sortables.forEach(s => { try { s.destroy(); } catch {} });
+  _sortables = [];
+};
 
-        const items = [...containerEl.children].filter(el => el.classList.contains("treeItem"));
-        items.forEach((el, idx) => {
-          const id = el.dataset.id;
-          const n = nodeById(id);
-          if (!n) return;
-          n.parentId = parentId;
-          n.order = idx + 1;
-        });
-      });
+const rebuildFromDOM = () => {
+  document.querySelectorAll('[data-container="children"]').forEach((containerEl) => {
+    const p = containerEl.dataset.parentId;
+    const parentId = (p === "__root__") ? null : p;
 
-      normalizeOrders();
-      saveNodes();
-    };
-
-    const isDescendant = (maybeChildId, maybeAncestorId) => {
-      const desc = buildDescendantsSet(maybeAncestorId);
-      return desc.has(maybeChildId);
-    };
-
-    const initSortables = () => {
-      destroySortables();
-
-      const containers = document.querySelectorAll('[data-container="children"]');
-      containers.forEach((containerEl) => {
-        const s = new Sortable(containerEl, {
-          group: "vigil-tree",
-          animation: 150,
-          draggable: ".treeItem",
-          handle: ".dragHandle",
-          filter: "a, button",
-          preventOnFilter: true,
-          fallbackOnBody: true,
-
-          onMove: (evt) => {
-            const draggedEl = evt.dragged;
-            const draggedId = draggedEl?.dataset?.id;
-            const draggedType = draggedEl?.dataset?.type;
-
-            const toContainer = evt.to;
-            const toParentRaw = toContainer?.dataset?.parentId;
-            const toParentId = (toParentRaw === "__root__") ? null : toParentRaw;
-
-            if (!draggedId) return true;
-
-            if (toParentId === draggedId) return false;
-
-            if (draggedType === "group" && toParentId) {
-              if (isDescendant(toParentId, draggedId)) return false;
-            }
-
-            return true;
-          },
-
-          onEnd: () => {
-            rebuildFromDOM();
-            render();
-          }
-        });
-
-        _sortables.push(s);
-      });
-    };
-
-    const render = () => {
-      renderRoot();
-      initSortables();
-    };
-
-    // Public hooks
-    window.__toggle = (groupId) => {
-      if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
-      else collapsedGroups.add(groupId);
-      saveCollapsed();
-      render();
-    };
-
-    window.__copy = (href) => copyToClipboard(href);
-
-    window.__edit = (id) => {
+    const items = [...containerEl.children].filter(el => el.classList.contains("treeItem"));
+    items.forEach((el, idx) => {
+      const id = el.dataset.id;
       const n = nodeById(id);
       if (!n) return;
-      openModal(n, false);
-    };
+      n.parentId = parentId;
+      n.order = idx + 1;
+    });
+  });
 
-    window.__addChildGroup = (parentId) => {
-      openModal({ type:"group", id:"", title:"", parentId, notes:"", order:9999 }, true, "group");
-    };
+  normalizeOrders();
+  saveNodes();
+};
 
-    // Events
-    searchEl.addEventListener("input", (e) => {
-      filter = (e.target.value || "").trim().toLowerCase();
-      render();
+const isDescendant = (maybeChildId, maybeAncestorId) => {
+  const desc = buildDescendantsSet(maybeAncestorId);
+  return desc.has(maybeChildId);
+};
+
+const initSortables = () => {
+  destroySortables();
+
+  const containers = document.querySelectorAll('[data-container="children"]');
+
+  containers.forEach((containerEl) => {
+    const s = new Sortable(containerEl, {
+      group: "vigil-tree",
+      animation: 150,
+      draggable: ".treeItem",
+      handle: ".dragHandle",
+      filter: "a, button",
+      preventOnFilter: true,
+      fallbackOnBody: true,
+
+      onMove: (evt) => {
+        const draggedEl = evt.dragged;
+        const draggedId = draggedEl?.dataset?.id;
+        const draggedType = draggedEl?.dataset?.type;
+
+        const toContainer = evt.to;
+        const toParentRaw = toContainer?.dataset?.parentId;
+        const toParentId = (toParentRaw === "__root__") ? null : toParentRaw;
+
+        if (!draggedId) return true;
+
+        // Block dropping into itself
+        if (toParentId === draggedId) return false;
+
+        // Block dropping a group into its own descendant
+        if (draggedType === "group" && toParentId) {
+          if (isDescendant(toParentId, draggedId)) return false;
+        }
+
+        return true;
+      },
+
+      onEnd: () => {
+        rebuildFromDOM();
+        render();
+      }
     });
 
-    expandAllBtn.addEventListener("click", () => setAllCollapsed(false));
-    collapseAllBtn.addEventListener("click", () => setAllCollapsed(true));
+    _sortables.push(s);
+  });
+};
 
-   addItemBtn.addEventListener("click", () => {
+
+/* =========================================================
+  12) RENDER PIPELINE
+========================================================== */
+const render = () => {
+  renderRoot();
+  initSortables();
+};
+
+
+/* =========================================================
+  13) PUBLIC HOOKS (USED BY INLINE onclick)
+========================================================== */
+window.__toggle = (groupId) => {
+  if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
+  else collapsedGroups.add(groupId);
+  saveCollapsed();
+  render();
+};
+
+window.__copy = (href) => copyToClipboard(href);
+
+window.__edit = (id) => {
+  const n = nodeById(id);
+  if (!n) return;
+  openModal(n, false);
+};
+
+
+/* =========================================================
+  14) UI ACTIONS
+========================================================== */
+const setAllCollapsed = (collapsed) => {
+  const allGroups = NODES.filter(n => n.type === "group").map(n => n.id);
+  collapsedGroups = new Set(collapsed ? allGroups : []);
+  saveCollapsed();
+  render();
+};
+
+
+/* =========================================================
+  15) EVENTS
+========================================================== */
+// Search
+searchEl.addEventListener("input", (e) => {
+  filter = (e.target.value || "").trim().toLowerCase();
+  render();
+});
+
+// Expand/collapse
+expandAllBtn.addEventListener("click", () => setAllCollapsed(false));
+collapseAllBtn.addEventListener("click", () => setAllCollapsed(true));
+
+// Global add button (top-right)
+addItemBtn.addEventListener("click", () => {
   openModal(
     { type:"tile", id:"", title:"", href:"", parentId:null, notes:"", order:9999 },
     true,
-    null // let user choose Type inside modal
+    null
   );
 });
 
+// Modal close
+closeModalBtn.addEventListener("click", closeModal);
+modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal();
+});
 
-    closeModalBtn.addEventListener("click", closeModal);
-    modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal(); });
+// Modal type UI toggle
+fType.addEventListener("change", setTypeUI);
 
-    fType.addEventListener("change", () => setTypeUI());
-
-   saveItemBtn.addEventListener("click", () => {
-  const type  = (fType.value || "tile").trim();   // group or tile
+// Save
+saveItemBtn.addEventListener("click", () => {
+  const type  = (fType.value || "tile").trim(); // group | tile
   const title = (fTitle.value || "").trim();
   const href  = (fHref.value || "").trim();
   const color = (fColor?.value || "").trim();
@@ -1442,15 +1526,10 @@ treeRootEl.innerHTML = `
   if (!title) return alert("Title is required.");
   if (!href)  return alert("Hyperlink is required.");
 
-  const slugify = (s) => s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-
-  // If editing, keep the existing id
+  // Keep id when editing; generate id when creating
   let id = editingId ? editingId : (slugify(title) || "item");
 
-  // If creating new and there's a collision, add -2, -3, ...
+  // If creating new and collision occurs, suffix -2, -3, ...
   if (!editingId) {
     const base = id;
     let n = 2;
@@ -1465,7 +1544,7 @@ treeRootEl.innerHTML = `
     title,
     href,
     parentId: existing?.parentId ?? draftParentId ?? null,
-order: existing?.order ?? draftOrder ?? 9999,
+    order: existing?.order ?? draftOrder ?? 9999,
   };
 
   if (type === "group") updated.color = color || "#6d5efc";
@@ -1475,44 +1554,52 @@ order: existing?.order ?? draftOrder ?? 9999,
   closeModal();
 });
 
-document.addEventListener("click", (e) => {
-  const menu = document.getElementById("moreMenu");
-  if (!menu) return;
-  if (!menu.contains(e.target)) menu.removeAttribute("open");
+// Delete
+deleteItemBtn.addEventListener("click", () => {
+  if (!editingId) return;
+  if (!confirm("Delete this item? (Groups delete their entire subtree)")) return;
+  removeNode(editingId);
+  closeModal();
+});
+
+// Export
+exportBtn.addEventListener("click", async () => {
+  const json = JSON.stringify(NODES, null, 2);
+  try {
+    await navigator.clipboard.writeText(json);
+    alert("Copied tree JSON to clipboard.");
+  } catch {
+    console.log(json);
+    alert("Could not copy automatically. Check console for JSON.");
+  }
+});
+
+// Reset (clear localStorage)
+resetBtn.addEventListener("click", () => {
+  if (!confirm("Clear saved edits on this device?")) return;
+  localStorage.removeItem(LS_NODES);
+  localStorage.removeItem(LS_COLLAPSED);
+  location.reload();
 });
 
 
-    deleteItemBtn.addEventListener("click", () => {
-      if (!editingId) return;
-      if (!confirm("Delete this item? (Groups delete their entire subtree)")) return;
-      removeNode(editingId);
-      closeModal();
-    });
+/* =========================================================
+  16) BOOT
+========================================================== */
+NODES = loadNodes();
+collapsedGroups = loadCollapsed();
+normalizeOrders();
+saveNodes();
+setTypeUI();
+render();
 
-    exportBtn.addEventListener("click", async () => {
-      const json = JSON.stringify(NODES, null, 2);
-      try {
-        await navigator.clipboard.writeText(json);
-        alert("Copied tree JSON to clipboard.");
-      } catch {
-        console.log(json);
-        alert("Could not copy automatically. Check console for JSON.");
-      }
-    });
+</script>
 
-    resetBtn.addEventListener("click", () => {
-      if (!confirm("Clear saved edits on this device?")) return;
-      localStorage.removeItem(LS_NODES);
-      localStorage.removeItem(LS_COLLAPSED);
-      location.reload();
-    });
-
-    // Boot
-    NODES = loadNodes();
-    collapsedGroups = loadCollapsed();
-    normalizeOrders();
-    saveNodes();
-    render();
-  </script>
+  <!-- ==================================================================================================================
+    =========================================================END OF SCRIPT=========================================================
+  =================================================================================================================== -->
 </body>
+ <!-- ==================================================================================================================
+    =========================================================END OF BODY=========================================================
+  =================================================================================================================== -->
 </html>
