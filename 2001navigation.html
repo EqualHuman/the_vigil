@@ -11,23 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    .tileDropLine {
-      height: 6px;
-      margin: 2px 0;
-      border-radius: 6px;
-      background: linear-gradient(
-        90deg,
-        rgba(109,94,252,.0),
-        rgba(109,94,252,.7),
-        rgba(255,79,216,.7),
-        rgba(109,94,252,.0)
-      );
-      opacity: 0;
-      transition: opacity .15s ease;
-    }
-
-    .tileDropLine.active { opacity: 1; }
-
     [hidden]{ display:none !important; }
 
     :root{
@@ -225,43 +208,6 @@
       opacity:.95;
     }
 
-    .heroLinks{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .heroNav{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .heroLinks a, .heroNav a{ color:inherit; text-decoration:none; }
-
-    .heroBtn{
-      display:inline-flex; align-items:center;
-      padding:10px 14px; border-radius:14px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      transition: transform .12s var(--ease), background .2s var(--ease);
-    }
-    .heroBtn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
-
-    .heroBtnPrimary{
-      background: rgba(255,255,255,.92);
-      color:#060613;
-      border-color: rgba(255,255,255,.18);
-    }
-    .heroBtnPrimary:hover{ background: rgba(255,255,255,.96); }
-
-    .heroPill{
-      display:inline-flex; align-items:center;
-      padding:7px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      font-size:12px; color: rgba(255,255,255,.82);
-    }
-    .heroPill:hover{ background: rgba(255,255,255,.09); }
-
-    .heroPillAccent{
-      border-color: rgba(255,79,216,.35);
-      background: color-mix(in oklab, var(--accentC), transparent 88%);
-      color: rgba(255,255,255,.90);
-    }
-    .heroPillAccent:hover{ background: color-mix(in oklab, var(--accentC), transparent 84%); }
-
     /* === Card / Toolbar === */
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
@@ -344,57 +290,11 @@
       border-radius:999px;
     }
 
-    #metaRight{ font-variant-numeric: tabular-nums; }
-
-    /* === Board / Groups / Tiles === */
-    .board{
+    /* === Tree === */
+    .tree{
       padding:12px;
       display:grid;
-      gap:14px;
-    }
-
-    .group{
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .groupHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 14px;
-      cursor:pointer;
-      user-select:none;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-
-    .groupTitle{
-      font-weight:700;
-      letter-spacing:-.01em;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .groupCount{
-      font-size:12px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.78);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .groupBody{
-      padding:12px;
-      display:grid;
-      gap:10px;
-      min-height: 12px;
+      gap:12px;
     }
 
     .dropHint{
@@ -406,6 +306,71 @@
       font-size:12.5px;
     }
 
+    /* A "node" can be a group or tile */
+    .node{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .nodeHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      user-select:none;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    .nodeHeaderLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .twisty{
+      width:28px; height:28px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .twisty:hover{ background: rgba(255,255,255,.10); }
+
+    .nodeTitle{
+      font-weight:750;
+      letter-spacing:-.01em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:62ch;
+    }
+
+    .countPill{
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.78);
+      font-variant-numeric: tabular-nums;
+      flex:0 0 auto;
+    }
+
+    .nodeBody{
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+
+    /* tiles (leaf links) */
     .tile{
       display:flex;
       gap:10px;
@@ -425,7 +390,6 @@
     .tile:active{ cursor:grabbing; }
 
     .tileMain{ flex:1 1 auto; min-width:0; }
-
     .tileTitleLine{
       display:flex;
       align-items:center;
@@ -433,7 +397,6 @@
       flex-wrap:wrap;
       margin-bottom:4px;
     }
-
     .tileTitle{ font-weight:650; letter-spacing:-.01em; }
 
     .chip{
@@ -460,7 +423,7 @@
       line-height:1.45;
     }
 
-    .tileActions{
+    .actions{
       display:flex;
       gap:8px;
       flex:0 0 auto;
@@ -482,6 +445,13 @@
     .iconBtn:active{ transform: translateY(1px); }
     .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
 
+    /* indents for nested groups */
+    .indent{
+      margin-left:14px;
+      border-left:1px solid rgba(255,255,255,.10);
+      padding-left:12px;
+    }
+
     /* === Modal === */
     .modalBackdrop{
       position:fixed;
@@ -494,7 +464,7 @@
     }
 
     .modal{
-      width:min(820px, 96vw);
+      width:min(860px, 96vw);
       border-radius:22px;
       border:1px solid rgba(255,255,255,.14);
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
@@ -532,6 +502,8 @@
 
     .modalActions{ display:flex; align-items:center; gap:10px; padding-top:6px; }
 
+    select.input{ appearance:none; }
+
     .sr-only{
       position:absolute; width:1px; height:1px;
       padding:0; margin:-1px; overflow:hidden;
@@ -540,7 +512,7 @@
 
     @media (prefers-reduced-motion: reduce){
       body::before, .heroBanner::before{ animation:none !important; }
-      .btn, .tile, .iconBtn{ transition:none !important; }
+      .btn, .tile, .iconBtn, .twisty{ transition:none !important; }
     }
   </style>
 </head>
@@ -558,37 +530,26 @@
           </div>
           <div class="heroBadges" aria-label="Status badges">
             <span class="badgePill">live index</span>
+            <span class="badgePill">tree nesting</span>
           </div>
         </div>
 
         <h1 class="heroTitle">Vigil — Navigation Hub</h1>
         <p class="heroSubtitle">
-          A living index of what we’re watching, learning, and doing—kept calm, clear, and current.
+          Unlimited nesting. Drag groups into groups. Keep it calm, clear, and current.
         </p>
-
-        <div class="heroLinks" role="navigation" aria-label="Primary actions">
-          <a href="#boardTop" class="heroBtn heroBtnPrimary">Explore topics</a>
-          <a href="#search" class="heroBtn">Search</a>
-        </div>
-
-        <nav class="heroNav" aria-label="Vigil sections">
-          <a class="heroPill" href="#boardTop">Links</a>
-          <a class="heroPill" href="#boardTop">Notes</a>
-          <a class="heroPill" href="#boardTop">Resources</a>
-          <a class="heroPill heroPillAccent" href="#boardTop">Take action</a>
-        </nav>
 
         <div class="heroDivider" aria-hidden="true"></div>
       </div>
     </header>
 
     <section class="card" aria-label="Navigation hub">
-      <div class="toolbar" id="boardTop">
+      <div class="toolbar" id="top">
         <div class="leftTools">
           <button class="btn" id="expandAll" type="button">▾ Expand all</button>
           <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
-          <button class="btn" id="addItem" type="button">＋ Add</button>
           <button class="btn" id="addGroup" type="button">＋ Add group</button>
+          <button class="btn" id="addTile" type="button">＋ Add tile</button>
           <button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
           <button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
         </div>
@@ -601,52 +562,26 @@
 
       <div class="meta">
         <div id="metaLeft">Loading…</div>
-        <div id="metaRight">Tip: Drag tiles to reorder or move between groups.</div>
+        <div id="metaRight">Tip: Drag tiles or groups anywhere • Groups can nest infinitely</div>
       </div>
 
-      <div class="board" id="board"></div>
+      <div class="tree" id="treeRoot"></div>
     </section>
   </div>
 
-  <!-- Embedded data (no fetch / no nav.json needed) -->
+  <!-- Embedded data (tree nodes) -->
   <script id="navData" type="application/json">
 [
-  {
-    "id": "home",
-    "title": "Home",
-    "href": "/index.html",
-    "kind": "page",
-    "notes": "Landing page",
-    "group": "Core",
-    "order": 1
-  },
-  {
-    "id": "animals",
-    "title": "Animals",
-    "href": "/animals/index.html",
-    "kind": "section",
-    "notes": "",
-    "group": "Topics",
-    "order": 1
-  },
-  {
-    "id": "endangered",
-    "title": "Endangered Animals",
-    "href": "/animals/endangered.html",
-    "kind": "page",
-    "notes": "",
-    "group": "Topics",
-    "order": 2
-  },
-  {
-    "id": "donate-wwf",
-    "title": "Donate: WWF",
-    "href": "https://www.worldwildlife.org/",
-    "kind": "donate",
-    "notes": "",
-    "group": "Take action",
-    "order": 1
-  }
+  { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1, "notes":"Root essentials" },
+  { "type":"tile",  "id":"home", "title":"Home", "href":"/index.html", "kind":"page", "notes":"Landing page", "parentId":"core", "order":1 },
+
+  { "type":"group", "id":"topics", "title":"Topics", "parentId":null, "order":2, "notes":"" },
+  { "type":"group", "id":"animals", "title":"Animals", "parentId":"topics", "order":1, "notes":"" },
+  { "type":"tile",  "id":"animals-index", "title":"Animals", "href":"/animals/index.html", "kind":"section", "notes":"", "parentId":"animals", "order":1 },
+  { "type":"tile",  "id":"endangered", "title":"Endangered Animals", "href":"/animals/endangered.html", "kind":"page", "notes":"", "parentId":"animals", "order":2 },
+
+  { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3, "notes":"Do something constructive" },
+  { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "kind":"donate", "notes":"", "parentId":"action", "order":1 }
 ]
   </script>
 
@@ -655,27 +590,45 @@
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modalHead">
         <div>
-          <div class="kicker" id="modalKicker">ADD ITEM</div>
-          <div id="modalTitle" class="modalTitle">Navigation Item</div>
+          <div class="kicker" id="modalKicker">ADD</div>
+          <div id="modalTitle" class="modalTitle">Item</div>
         </div>
         <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
       </div>
 
       <div class="modalBody">
-        <label class="field">
-          <span>Title</span>
-          <input class="input" id="fTitle" placeholder="Vigil Home" />
-        </label>
 
-        <label class="field">
-          <span>Href</span>
-          <input class="input" id="fHref" placeholder="https://…" />
-        </label>
+        <div class="grid2">
+          <label class="field">
+            <span>Type</span>
+            <select class="input" id="fType">
+              <option value="group">Group</option>
+              <option value="tile">Tile</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Parent</span>
+            <select class="input" id="fParent"></select>
+          </label>
+        </div>
 
         <div class="grid2">
           <label class="field">
             <span>ID (unique)</span>
-            <input class="input" id="fId" placeholder="home" />
+            <input class="input" id="fId" placeholder="unique-id" />
+          </label>
+
+          <label class="field">
+            <span>Title</span>
+            <input class="input" id="fTitle" placeholder="Title" />
+          </label>
+        </div>
+
+        <div class="grid2" id="tileFields">
+          <label class="field">
+            <span>Href</span>
+            <input class="input" id="fHref" placeholder="https://…" />
           </label>
 
           <label class="field">
@@ -684,17 +637,10 @@
           </label>
         </div>
 
-        <div class="grid2">
-          <label class="field">
-            <span>Group (collapsible section)</span>
-            <input class="input" id="fGroup" placeholder="Core" />
-          </label>
-
-          <label class="field">
-            <span>Notes</span>
-            <input class="input" id="fNotes" placeholder="Optional description" />
-          </label>
-        </div>
+        <label class="field">
+          <span>Notes</span>
+          <input class="input" id="fNotes" placeholder="Optional description" />
+        </label>
 
         <div class="modalActions">
           <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
@@ -705,32 +651,32 @@
     </div>
   </div>
 
-  <!-- Sortable MUST be loaded before the app script -->
+  <!-- Sortable must load BEFORE our app script -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
   <script>
     /* =========================================================
-      Vigil — Grouped draggable tiles (SortableJS)
-      - Groups are collapsible
-      - Drag tiles within/between groups
-      - Persists to localStorage
+      Vigil — Unlimited nesting tree
+      - Nodes are either {type:"group"} or {type:"tile"}
+      - parentId builds a tree (null = root)
+      - Drag groups into/out of groups (infinite nesting)
+      - Prevent dropping a group into its own descendant
+      - Persist nodes + collapsed group state to localStorage
     ========================================================== */
 
-    const LS_ITEMS  = "vigil_items_v1";
-const LS_GROUPS = "vigil_group_state_v1";
-const LS_GROUP_LIST = "vigil_group_list_v1";
+    const LS_NODES = "vigil_nodes_tree_v1";
+    const LS_COLLAPSED = "vigil_collapsed_groups_v1";
 
     const $ = (sel) => document.querySelector(sel);
 
-    const boardEl = $("#board");
+    const treeRootEl = $("#treeRoot");
     const searchEl = $("#search");
     const metaLeft = $("#metaLeft");
 
     const expandAllBtn = $("#expandAll");
     const collapseAllBtn = $("#collapseAll");
-    const addItemBtn = $("#addItem");
     const addGroupBtn = $("#addGroup");
-
+    const addTileBtn = $("#addTile");
     const exportBtn = $("#exportJson");
     const resetBtn = $("#resetEdits");
 
@@ -742,111 +688,174 @@ const LS_GROUP_LIST = "vigil_group_list_v1";
     const modalKicker = $("#modalKicker");
     const modalTitle = $("#modalTitle");
 
+    const fType = $("#fType");
+    const fParent = $("#fParent");
+    const fId = $("#fId");
     const fTitle = $("#fTitle");
-    const fHref  = $("#fHref");
-    const fId    = $("#fId");
-    const fKind  = $("#fKind");
-    const fGroup = $("#fGroup");
+    const fHref = $("#fHref");
+    const fKind = $("#fKind");
     const fNotes = $("#fNotes");
+    const tileFields = $("#tileFields");
 
     let filter = "";
     let editingId = null;
 
-    let ITEMS = [];
+    let NODES = [];
     let collapsedGroups = new Set();
+    let _sortables = [];
 
     const escapeHtml = (s) => (s ?? "").toString()
       .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
       .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+    const uid = () => "id-" + Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
 
     const loadEmbedded = () => {
       const el = document.getElementById("navData");
       return JSON.parse(el?.textContent || "[]");
     };
 
-    const loadItems = () => {
-      const raw = localStorage.getItem(LS_ITEMS);
+    const loadNodes = () => {
+      const raw = localStorage.getItem(LS_NODES);
       if (raw) { try { return JSON.parse(raw); } catch {} }
       return loadEmbedded();
     };
 
-    const saveItems = () => localStorage.setItem(LS_ITEMS, JSON.stringify(ITEMS, null, 2));
+    const saveNodes = () => localStorage.setItem(LS_NODES, JSON.stringify(NODES, null, 2));
 
-    const loadGroupState = () => {
-      const raw = localStorage.getItem(LS_GROUPS);
+    const loadCollapsed = () => {
+      const raw = localStorage.getItem(LS_COLLAPSED);
       if (!raw) return new Set();
       try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
     };
 
-    const saveGroupState = () => localStorage.setItem(LS_GROUPS, JSON.stringify([...collapsedGroups], null, 2));
+    const saveCollapsed = () => localStorage.setItem(LS_COLLAPSED, JSON.stringify([...collapsedGroups], null, 2));
 
-    const normalize = () => {
-      const byGroup = new Map();
-      for (const it of ITEMS) {
-        it.group = (it.group || "Ungrouped").trim() || "Ungrouped";
-        if (typeof it.order !== "number") it.order = 0;
-        if (!byGroup.has(it.group)) byGroup.set(it.group, []);
-        byGroup.get(it.group).push(it);
+    const nodeById = (id) => NODES.find(n => n.id === id);
+
+    const childrenOf = (parentId) =>
+      NODES.filter(n => (n.parentId ?? null) === (parentId ?? null))
+           .sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+
+    const buildDescendantsSet = (groupId) => {
+      const out = new Set();
+      const stack = [groupId];
+      while (stack.length) {
+        const cur = stack.pop();
+        for (const ch of childrenOf(cur)) {
+          out.add(ch.id);
+          if (ch.type === "group") stack.push(ch.id);
+        }
       }
-      for (const [, list] of byGroup.entries()) {
-        list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0) || (a.title||"").localeCompare(b.title||""));
-        list.forEach((it, idx) => it.order = idx + 1);
+      return out;
+    };
+
+    const normalizeOrders = () => {
+      // For every parentId bucket, reassign order sequentially
+      const parents = new Set(NODES.map(n => n.parentId ?? null));
+      for (const p of parents) {
+        const kids = childrenOf(p);
+        kids.forEach((n, idx) => n.order = idx + 1);
       }
     };
 
-    const matches = (item) => {
+    const matchNode = (n) => {
       if (!filter) return true;
-      const hay = `${item.title||""} ${item.href||""} ${item.notes||""} ${item.kind||""} ${item.group||""}`.toLowerCase();
+      const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""}`.toLowerCase();
       return hay.includes(filter);
     };
 
-  const groupMap = () => {
-  const map = new Map();
+    const visibleSetForFilter = () => {
+      if (!filter) return null; // null means all visible
+      const visible = new Set();
+      const byParent = new Map();
+      for (const n of NODES) {
+        const p = n.parentId ?? null;
+        if (!byParent.has(p)) byParent.set(p, []);
+        byParent.get(p).push(n);
+      }
 
-  // 1) seed map with explicit groups (so empty groups can exist)
-  for (const g of GROUPS) map.set(g, []);
+      const hasMatchInSubtree = (id) => {
+        const n = nodeById(id);
+        if (!n) return false;
+        if (matchNode(n)) return true;
+        if (n.type !== "group") return false;
+        const kids = byParent.get(id) || [];
+        return kids.some(k => hasMatchInSubtree(k.id));
+      };
 
-  // 2) add items (filtered)
-  for (const it of ITEMS) {
-    if (!matches(it)) continue;
-    const g = (it.group || "Ungrouped").trim() || "Ungrouped";
-    if (!map.has(g)) map.set(g, []);
-    map.get(g).push(it);
-  }
+      // compute for all roots, mark node + ancestors if subtree matches
+      const ensureAncestors = (id) => {
+        let cur = nodeById(id);
+        while (cur) {
+          visible.add(cur.id);
+          if (cur.parentId == null) break;
+          cur = nodeById(cur.parentId);
+        }
+      };
 
-  // 3) sort items inside each group
-  for (const [, list] of map.entries()) {
-    list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
-  }
-
-  // 4) sort groups alphabetically, but keep Core first if present
-  const entries = [...map.entries()].sort(([a],[b]) => a.localeCompare(b));
-  const coreIdx = entries.findIndex(([g]) => g.toLowerCase() === "core");
-  if (coreIdx > 0) {
-    const [core] = entries.splice(coreIdx, 1);
-    entries.unshift(core);
-  }
-
-  return entries;
-};
-
+      for (const n of NODES) {
+        if (hasMatchInSubtree(n.id)) ensureAncestors(n.id);
+      }
+      return visible;
+    };
 
     const showModal = () => modalBackdrop.removeAttribute("hidden");
     const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
-    const openModal = (item, isNew) => {
+    const setTypeUI = () => {
+      const isTile = fType.value === "tile";
+      tileFields.style.display = isTile ? "grid" : "none";
+    };
+
+    const fillParentOptions = (currentId) => {
+      // parent can be root (null) or any group except self/descendants
+      const opt = [];
+      opt.push({ value:"__root__", label:"(root)" });
+
+      const groups = NODES.filter(n => n.type === "group")
+        .sort((a,b)=> (a.title||"").localeCompare(b.title||""));
+
+      let banned = new Set();
+      if (currentId) {
+        banned.add(currentId);
+        const n = nodeById(currentId);
+        if (n?.type === "group") {
+          for (const d of buildDescendantsSet(currentId)) banned.add(d);
+        }
+      }
+
+      for (const g of groups) {
+        if (banned.has(g.id)) continue;
+        // label with path-ish breadcrumb
+        opt.push({ value:g.id, label:`${g.title} (${g.id})` });
+      }
+
+      fParent.innerHTML = opt.map(o =>
+        `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`
+      ).join("");
+    };
+
+    const openModal = (node, isNew, forceType=null) => {
       showModal();
-      editingId = isNew ? null : item.id;
+      editingId = isNew ? null : node.id;
 
-      modalKicker.textContent = isNew ? "ADD ITEM" : "EDIT ITEM";
-      modalTitle.textContent = isNew ? "New Tile" : (item.title || "Tile");
+      modalKicker.textContent = isNew ? "ADD" : "EDIT";
+      modalTitle.textContent = isNew ? "New item" : (node.title || node.id || "Item");
 
-      fTitle.value = item.title || "";
-      fHref.value  = item.href || "";
-      fId.value    = item.id || "";
-      fKind.value  = item.kind || "";
-      fGroup.value = item.group || "Ungrouped";
-      fNotes.value = item.notes || "";
+      fType.value = forceType ?? (node.type || "tile");
+      setTypeUI();
+
+      fillParentOptions(isNew ? null : node.id);
+
+      fId.value = node.id || "";
+      fTitle.value = node.title || "";
+      fHref.value = node.href || "";
+      fKind.value = node.kind || "";
+      fNotes.value = node.notes || "";
+
+      const parentVal = (node.parentId == null) ? "__root__" : node.parentId;
+      fParent.value = parentVal;
 
       deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
       fId.disabled = !isNew;
@@ -859,99 +868,213 @@ const LS_GROUP_LIST = "vigil_group_list_v1";
       editingId = null;
     };
 
-    const setAllGroupsCollapsed = (collapsed) => {
-      const groups = new Set(ITEMS.map(i => i.group || "Ungrouped"));
-      collapsedGroups = new Set(collapsed ? [...groups] : []);
-      saveGroupState();
+    const setAllCollapsed = (collapsed) => {
+      const allGroups = NODES.filter(n => n.type === "group").map(n => n.id);
+      collapsedGroups = new Set(collapsed ? allGroups : []);
+      saveCollapsed();
       render();
     };
-const loadGroupList = () => {
-  const raw = localStorage.getItem(LS_GROUP_LIST);
-  if (!raw) return [];
-  try {
-    const arr = JSON.parse(raw);
-    return Array.isArray(arr) ? arr : [];
-  } catch {
-    return [];
-  }
-};
-
-const saveGroupList = () => {
-  localStorage.setItem(LS_GROUP_LIST, JSON.stringify(GROUPS, null, 2));
-};
-
-let GROUPS = [];
 
     const copyToClipboard = async (text) => { try { await navigator.clipboard.writeText(text); } catch {} };
 
     const upsert = (updated) => {
-      const idx = ITEMS.findIndex(x => x.id === updated.id);
-      if (idx >= 0) ITEMS[idx] = { ...ITEMS[idx], ...updated };
-      else ITEMS.push(updated);
+      const idx = NODES.findIndex(x => x.id === updated.id);
+      if (idx >= 0) NODES[idx] = { ...NODES[idx], ...updated };
+      else NODES.push(updated);
 
-      normalize();
-      saveItems();
+      normalizeOrders();
+      saveNodes();
       render();
     };
 
-    const remove = (id) => {
-      ITEMS = ITEMS.filter(x => x.id !== id);
-      normalize();
-      saveItems();
+    const removeNode = (id) => {
+      // remove subtree if group
+      const n = nodeById(id);
+      if (!n) return;
+
+      const toDelete = new Set([id]);
+      if (n.type === "group") {
+        for (const d of buildDescendantsSet(id)) toDelete.add(d);
+      }
+
+      // also remove collapsed markers
+      for (const x of toDelete) collapsedGroups.delete(x);
+
+      NODES = NODES.filter(x => !toDelete.has(x.id));
+      normalizeOrders();
+      saveCollapsed();
+      saveNodes();
       render();
     };
 
-    // Public hooks for inline handlers
-    window.__toggleGroup = (group) => {
-      if (collapsedGroups.has(group)) collapsedGroups.delete(group);
-      else collapsedGroups.add(group);
-      saveGroupState();
-      render();
+    const renderTile = (n) => {
+      const chip = n.kind ? `<span class="chip">${escapeHtml(n.kind)}</span>` : "";
+      const notes = n.notes ? `<div class="notes">${escapeHtml(n.notes)}</div>` : "";
+      const href = n.href || "#";
+      const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+
+      return `
+        <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
+          <div class="tileMain">
+            <a href="${escapeHtml(href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
+              <div class="tileTitleLine">
+                <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
+                ${chip}
+              </div>
+              <div class="url">${escapeHtml(href)}</div>
+            </a>
+            ${notes}
+          </div>
+
+          <div class="actions">
+            <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
+            <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
+          </div>
+        </div>
+      `;
     };
 
-    window.__copy = (href) => copyToClipboard(href);
+    const renderGroup = (g, visibleSet, depth) => {
+      const kids = childrenOf(g.id)
+        .filter(n => !visibleSet || visibleSet.has(n.id));
 
-    window.__edit = (id) => {
-      const item = ITEMS.find(x => x.id === id);
-      if (!item) return;
-      openModal(item, false);
+      const collapsed = collapsedGroups.has(g.id) && !filter; // during search, show matched hierarchy
+      const childCount = childrenOf(g.id).length;
+
+      const body = collapsed ? "" : (kids.length
+        ? kids.map(n => n.type === "group"
+            ? renderGroup(n, visibleSet, depth + 1)
+            : renderTile(n)
+          ).join("")
+        : `<div class="dropHint">Drop items here…</div>`
+      );
+
+      const indentClass = depth > 0 ? "indent" : "";
+
+      return `
+        <div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group">
+          <div class="nodeHeader">
+            <div class="nodeHeaderLeft">
+              <button class="twisty" type="button" aria-label="Toggle group"
+                onclick="window.__toggle('${escapeHtml(g.id).replaceAll("'","&#039;")}')">
+                ${collapsed ? "▸" : "▾"}
+              </button>
+              <div style="min-width:0">
+                <div class="nodeTitle">${escapeHtml(g.title || "(group)")}</div>
+                ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
+              </div>
+              <span class="countPill">${childCount}</span>
+            </div>
+
+            <div class="actions">
+              <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
+              <button class="iconBtn" type="button" onclick="window.__addChildGroup('${escapeHtml(g.id).replaceAll("'","&#039;")}')">＋</button>
+            </div>
+          </div>
+
+          <div class="nodeBody"
+               ${collapsed ? "hidden" : ""}
+               data-container="children"
+               data-parent-id="${escapeHtml(g.id)}">
+            ${body}
+            ${(!collapsed && kids.length)
+              ? `<div class="dropHint">Tip: drop groups into groups • drop tiles anywhere</div>`
+              : ``}
+          </div>
+        </div>
+      `;
     };
 
-    // --- Sortable setup (re-init after every render) ---
-    let _sortables = [];
+    const renderRoot = () => {
+      const visibleSet = visibleSetForFilter();
+
+      const roots = childrenOf(null)
+        .filter(n => !visibleSet || visibleSet.has(n.id));
+
+      const shownCount = visibleSet ? visibleSet.size : NODES.length;
+      metaLeft.textContent = `${shownCount} visible • ${NODES.length} total`;
+
+      if (!roots.length) {
+        treeRootEl.innerHTML = `<div class="dropHint">No matches. Try a different search.</div>`;
+        return;
+      }
+
+      treeRootEl.innerHTML = `
+        <div data-container="children" data-parent-id="__root__">
+          ${roots.map(n => n.type === "group" ? renderGroup(n, visibleSet, 0) : renderTile(n)).join("")}
+        </div>
+      `;
+    };
+
+    const destroySortables = () => {
+      _sortables.forEach(s => { try { s.destroy(); } catch {} });
+      _sortables = [];
+    };
+
+    const rebuildFromDOM = () => {
+      // Read all containers and rebuild parentId/order from DOM position
+      document.querySelectorAll('[data-container="children"]').forEach((containerEl) => {
+        const p = containerEl.dataset.parentId;
+        const parentId = (p === "__root__") ? null : p;
+
+        const items = [...containerEl.children].filter(el => el.classList.contains("treeItem"));
+        items.forEach((el, idx) => {
+          const id = el.dataset.id;
+          const n = nodeById(id);
+          if (!n) return;
+          n.parentId = parentId;
+          n.order = idx + 1;
+        });
+      });
+
+      normalizeOrders();
+      saveNodes();
+    };
+
+    const isDescendant = (maybeChildId, maybeAncestorId) => {
+      const desc = buildDescendantsSet(maybeAncestorId);
+      return desc.has(maybeChildId);
+    };
 
     const initSortables = () => {
-      if (typeof Sortable === "undefined") return;
+      destroySortables();
 
-      _sortables.forEach(s => s.destroy());
-      _sortables = [];
-
-      document.querySelectorAll(".groupBody").forEach((bodyEl) => {
-        const s = new Sortable(bodyEl, {
-          group: "vigil-groups",
+      const containers = document.querySelectorAll('[data-container="children"]');
+      containers.forEach((containerEl) => {
+        const s = new Sortable(containerEl, {
+          group: "vigil-tree",
           animation: 150,
-          draggable: ".tile",
-          handle: ".tileMain",            // ✅ drag only from main area (not buttons/links)
-          filter: "a, button, .tileActions",
+          draggable: ".treeItem",
+          filter: "a, button, .actions", // avoid drag when clicking controls
           preventOnFilter: true,
           fallbackOnBody: true,
+
+          onMove: (evt) => {
+            // Disallow dropping a group into itself or into its own descendant
+            const draggedEl = evt.dragged;
+            const draggedId = draggedEl?.dataset?.id;
+            const draggedType = draggedEl?.dataset?.type;
+
+            const toContainer = evt.to;
+            const toParentRaw = toContainer?.dataset?.parentId;
+            const toParentId = (toParentRaw === "__root__") ? null : toParentRaw;
+
+            if (!draggedId) return true;
+
+            // Cannot drop into itself
+            if (toParentId === draggedId) return false;
+
+            if (draggedType === "group" && toParentId) {
+              // cannot drop group into its descendant
+              if (isDescendant(toParentId, draggedId)) return false;
+            }
+
+            return true;
+          },
+
           onEnd: () => {
-            // Rebuild order + group from the DOM
-            document.querySelectorAll(".groupBody").forEach((gEl) => {
-              const g = gEl.dataset.group;
-              const ids = [...gEl.querySelectorAll(".tile")].map(t => t.dataset.id);
-
-              ids.forEach((id, idx) => {
-                const it = ITEMS.find(x => x.id === id);
-                if (!it) return;
-                it.group = g;
-                it.order = idx + 1;
-              });
-            });
-
-            normalize();
-            saveItems();
-            render();
+            rebuildFromDOM();
+            render(); // re-render to refresh nested sortables
           }
         });
 
@@ -959,132 +1082,112 @@ let GROUPS = [];
       });
     };
 
-    const renderTile = (item) => {
-      const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
-      const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
-      const target = `target="_blank" rel="noreferrer noopener"`;
-
-      return `
-        <div class="tile" data-id="${escapeHtml(item.id)}" data-group="${escapeHtml(item.group || 'Ungrouped')}">
-          <div class="tileMain">
-            <a href="${escapeHtml(item.href)}" ${target}
-               style="text-decoration:none; color:inherit; display:block;">
-              <div class="tileTitleLine">
-                <span class="tileTitle">${escapeHtml(item.title)}</span>
-                ${chip}
-              </div>
-              <div class="url">${escapeHtml(item.href)}</div>
-            </a>
-            ${notes}
-          </div>
-
-          <div class="tileActions">
-            <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(item.id).replaceAll("'","&#039;")}')">✎</button>
-            <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
-          </div>
-        </div>
-      `;
+    const render = () => {
+      renderRoot();
+      initSortables();
     };
 
-    const render = () => {
-      const entries = groupMap();
-      const shownCount = entries.reduce((acc, [,items]) => acc + items.length, 0);
-      metaLeft.textContent = `${shownCount} shown • ${ITEMS.length} total`;
+    // Public hooks
+    window.__toggle = (groupId) => {
+      if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
+      else collapsedGroups.add(groupId);
+      saveCollapsed();
+      render();
+    };
 
-      if (!entries.length) {
-        boardEl.innerHTML = `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
-        return;
-      }
+    window.__copy = (href) => copyToClipboard(href);
 
-      boardEl.innerHTML = entries.map(([group, items]) => {
-        const collapsed = collapsedGroups.has(group);
-        const body = collapsed
-          ? ""
-          : (items.length ? items.map(renderTile).join("") : `<div class="dropHint">Drop tiles here…</div>`);
+    window.__edit = (id) => {
+      const n = nodeById(id);
+      if (!n) return;
+      openModal(n, false);
+    };
 
-        return `
-          <section class="group">
-            <header class="groupHeader" onclick="window.__toggleGroup('${escapeHtml(group).replaceAll("'","&#039;")}')">
-              <div class="groupTitle">
-                <span>${escapeHtml(group)}</span>
-                <span class="groupCount">${items.length}</span>
-              </div>
-              <div aria-hidden="true">${collapsed ? "▸" : "▾"}</div>
-            </header>
-
-            <div class="groupBody" ${collapsed ? "hidden" : ""} data-group="${escapeHtml(group)}">
-              ${body}
-              ${!collapsed && items.length ? `<div class="dropHint">Tip: drag tiles by the left area • buttons/links won’t start a drag</div>` : ""}
-            </div>
-          </section>
-        `;
-      }).join("");
-
-      initSortables(); // ✅ IMPORTANT: after DOM is updated
+    window.__addChildGroup = (parentId) => {
+      openModal({ type:"group", id:"", title:"", parentId, notes:"", order:9999 }, true, "group");
     };
 
     // Events
     searchEl.addEventListener("input", (e) => {
       filter = (e.target.value || "").trim().toLowerCase();
+
+      // When searching: auto-expand everything in view (temporary)
       render();
     });
 
-    expandAllBtn.addEventListener("click", () => setAllGroupsCollapsed(false));
-    collapseAllBtn.addEventListener("click", () => setAllGroupsCollapsed(true));
+    expandAllBtn.addEventListener("click", () => setAllCollapsed(false));
+    collapseAllBtn.addEventListener("click", () => setAllCollapsed(true));
 
-    addItemBtn.addEventListener("click", () => {
-      openModal({ id:"", title:"", href:"", kind:"page", group:"Ungrouped", notes:"", order: 9999 }, true);
+    addGroupBtn.addEventListener("click", () => {
+      openModal({ type:"group", id:"", title:"", parentId:null, notes:"", order:9999 }, true, "group");
+    });
+
+    addTileBtn.addEventListener("click", () => {
+      openModal({ type:"tile", id:"", title:"", href:"", kind:"page", parentId:null, notes:"", order:9999 }, true, "tile");
     });
 
     closeModalBtn.addEventListener("click", closeModal);
     modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal(); });
 
-    addGroupBtn.addEventListener("click", () => {
-  const name = prompt("Group name?");
-  if (!name) return;
-
-  const group = name.trim();
-  if (!group) return;
-
-  if (!GROUPS.includes(group)) GROUPS.push(group);
-
-  // keep it expanded by default
-  collapsedGroups.delete(group);
-
-  saveGroupList();
-  saveGroupState();
-  render();
-});
-
+    fType.addEventListener("change", () => setTypeUI());
 
     saveItemBtn.addEventListener("click", () => {
+      const type = (fType.value || "tile").trim();
       const id = (fId.value || "").trim();
       const title = (fTitle.value || "").trim();
-      const href = (fHref.value || "").trim();
+      const parentRaw = fParent.value;
+      const parentId = (parentRaw === "__root__") ? null : (parentRaw || null);
 
       if (!id) return alert("ID is required (unique).");
       if (!title) return alert("Title is required.");
-      if (!href) return alert("Href is required.");
 
-      const kind = (fKind.value || "").trim();
-      const group = ((fGroup.value || "Ungrouped").trim() || "Ungrouped");
-      const notes = (fNotes.value || "").trim();
-
-      const finalId = editingId ? editingId : id;
-
-      if (editingId && id !== editingId) {
-        alert("ID cannot be changed while editing. Create a new tile instead.");
-        return;
-      }
-
-      if (!editingId && ITEMS.some(x => x.id === finalId)) {
+      if (!editingId && NODES.some(x => x.id === id)) {
         alert("That ID already exists. Choose a unique ID.");
         return;
       }
 
-      const existing = ITEMS.find(x => x.id === finalId);
-      const updated = { id: finalId, title, href, kind, group, notes, order: existing?.order ?? 9999 };
+      // If editing and changing parent to invalid spot
+      if (editingId) {
+        const existing = nodeById(editingId);
+        if (existing?.type === "group" && parentId) {
+          if (parentId === editingId || isDescendant(parentId, editingId)) {
+            alert("A group cannot be moved into itself or its own descendant.");
+            return;
+          }
+        }
+      }
+
+      const href = (fHref.value || "").trim();
+      const kind = (fKind.value || "").trim();
+      const notes = (fNotes.value || "").trim();
+
+      if (type === "tile" && !href) return alert("Href is required for tiles.");
+
+      const finalId = editingId ? editingId : id;
+
+      if (editingId && id !== editingId) {
+        alert("ID cannot be changed while editing. Create a new item instead.");
+        return;
+      }
+
+      const existing = nodeById(finalId);
+      const updated = {
+        id: finalId,
+        type,
+        title,
+        parentId,
+        notes,
+        order: existing?.order ?? 9999,
+      };
+
+      if (type === "tile") {
+        updated.href = href;
+        updated.kind = kind;
+      } else {
+        delete updated.href;
+        delete updated.kind;
+      }
 
       upsert(updated);
       closeModal();
@@ -1092,16 +1195,16 @@ let GROUPS = [];
 
     deleteItemBtn.addEventListener("click", () => {
       if (!editingId) return;
-      if (!confirm("Delete this tile?")) return;
-      remove(editingId);
+      if (!confirm("Delete this item? (Groups delete their entire subtree)")) return;
+      removeNode(editingId);
       closeModal();
     });
 
     exportBtn.addEventListener("click", async () => {
-      const json = JSON.stringify(ITEMS, null, 2);
+      const json = JSON.stringify(NODES, null, 2);
       try {
         await navigator.clipboard.writeText(json);
-        alert("Copied tiles JSON to clipboard.");
+        alert("Copied tree JSON to clipboard.");
       } catch {
         console.log(json);
         alert("Could not copy automatically. Check console for JSON.");
@@ -1110,26 +1213,17 @@ let GROUPS = [];
 
     resetBtn.addEventListener("click", () => {
       if (!confirm("Clear saved edits on this device?")) return;
-      localStorage.removeItem(LS_ITEMS);
-      localStorage.removeItem(LS_GROUPS);
+      localStorage.removeItem(LS_NODES);
+      localStorage.removeItem(LS_COLLAPSED);
       location.reload();
     });
 
-  ITEMS = loadItems();
-GROUPS = loadGroupList();
-collapsedGroups = loadGroupState();
-
-// Ensure groups mentioned by items are in GROUPS (so they persist)
-for (const it of ITEMS) {
-  const g = (it.group || "Ungrouped").trim() || "Ungrouped";
-  if (!GROUPS.includes(g)) GROUPS.push(g);
-}
-
-normalize();
-saveItems();
-saveGroupList();
-render();
-
+    // Boot
+    NODES = loadNodes();
+    collapsedGroups = loadCollapsed();
+    normalizeOrders();
+    saveNodes();
+    render();
   </script>
 </body>
 </html>
