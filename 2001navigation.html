@@ -955,6 +955,12 @@
   display:grid;
   gap:12px;
 }
+  .iconBtn.active{
+  border-color: rgba(34,211,238,.35);
+  box-shadow: 0 0 0 3px rgba(34,211,238,.12);
+  background: rgba(34,211,238,.08);
+}
+
 
 </style>
 
@@ -1054,17 +1060,19 @@
 
   <!-- RIGHT: Task Notebook -->
   <aside class="card notebook" aria-label="Task notebook">
-    <div class="notebookHead">
-      <div>
-        <div class="kicker">TASK NOTEBOOK</div>
-        <div class="notebookTitle" id="nbTitle">Select a page to view tasks</div>
-      </div>
+<div class="notebookHead">
+  <div>
+    <div class="kicker">TASK NOTEBOOK</div>
+    <div class="notebookTitle" id="nbTitle">Selected task lists</div>
+  </div>
 
-      <div class="notebookTabs" role="tablist" aria-label="Notebook views">
-        <button class="btn" id="nbTabSelected" type="button" aria-selected="true">Selected</button>
-        <button class="btn" id="nbTabAll" type="button" aria-selected="false">All</button>
-      </div>
-    </div>
+  <div class="notebookTabs" role="tablist" aria-label="Notebook views">
+    <button class="btn" id="nbTabSelected" type="button" aria-selected="true">Selected</button>
+    <button class="btn" id="nbTabAll" type="button" aria-selected="false">All</button>
+    <button class="btn" id="nbResetSelected" type="button" title="Clear selected task lists">↺ Reset</button>
+  </div>
+</div>
+
 
     <div class="notebookBody" id="nbBody">
       <div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>
@@ -1207,6 +1215,8 @@
 ========================================================== */
 const LS_NODES = "vigil_nodes_tree_v1";
 const LS_COLLAPSED = "vigil_collapsed_groups_v1";
+const LS_TASK_SELECTED = "vigil_task_selected_v1";
+
 
 
 /* =========================================================
@@ -1255,14 +1265,17 @@ const nbTitle = $("#nbTitle");
 const nbBody = $("#nbBody");
 const nbTabSelected = $("#nbTabSelected");
 const nbTabAll = $("#nbTabAll");
+const nbResetSelected = $("#nbResetSelected");
+
 
 /* =========================================================
   3) APP STATE
 ========================================================== */
 let filter = "";
 let editingId = null;
-let notebookMode = "selected";      // "selected" | "all"
-let pinnedTaskNodeId = null;        // currently selected node for notebook
+let notebookMode = "selected";        // "selected" | "all"
+let selectedTaskIds = new Set();      // toggled-on task lists
+
 
 // Used to preserve default insert location when adding from “Add here”
 let draftParentId = null;
@@ -1314,10 +1327,14 @@ const textareaToTasks = (value) => {
   }).filter(t => t.text);
 };
 window.__openTasks = (id) => {
-  pinnedTaskNodeId = id;
-  notebookMode = "selected";
-  render(); // refresh tree + notebook so checkboxes/buttons stay in sync
+  if (selectedTaskIds.has(id)) selectedTaskIds.delete(id);
+  else selectedTaskIds.add(id);
+
+  saveSelectedTasks();
+  // do NOT switch your current view; just refresh
+  render();
 };
+
 
 
 
@@ -1353,18 +1370,59 @@ const renderTasks = (node) => {
 };
 
 const renderNotebookSelected = () => {
-  if (!pinnedTaskNodeId) {
-    nbTitle.textContent = "Select a page to view tasks";
-    nbBody.innerHTML = `<div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>`;
+  // only show task lists that are toggled on via 🧾
+  const ids = [...selectedTaskIds].filter(id => nodeById(id));
+
+  if (!ids.length) {
+    nbTitle.textContent = "Selected task lists";
+    nbBody.innerHTML = `<div class="taskEmpty">Toggle 🧾 on any page/link to show its tasks here.</div>`;
     return;
   }
-  const n = nodeById(pinnedTaskNodeId);
-  if (!n) return;
 
-  normalizeTasks(n);
-  nbTitle.textContent = n.title || "(untitled)";
-  nbBody.innerHTML = renderTasks(n);
+  nbTitle.textContent = `Selected task lists (${ids.length})`;
+
+  nbBody.innerHTML = ids.map((id) => {
+    const n = nodeById(id);
+    normalizeTasks(n);
+
+    return `
+      <div class="tasks" aria-label="Webpage tasks">
+        <div class="tasksHead">
+          <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="tasksAdd" type="button"
+              onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
+            <button class="tasksAdd" type="button"
+              onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✕ Hide</button>
+          </div>
+        </div>
+        ${
+          (() => {
+            const tasks = Array.isArray(n.tasks) ? n.tasks : [];
+            const rows = tasks.length
+              ? `<div class="taskList">${
+                  tasks.map((t, idx) => `
+                    <div class="taskRow">
+                      <input class="taskCheck" type="checkbox"
+                        ${t.done ? "checked" : ""}
+                        onclick="window.__taskToggle('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+                        aria-label="Mark task done" />
+                      <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
+                      <button class="taskDel" type="button"
+                        onclick="window.__taskDelete('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+                        aria-label="Delete task">✕</button>
+                    </div>
+                  `).join("")
+                }</div>`
+              : `<div class="taskEmpty">No tasks yet.</div>`;
+            return rows;
+          })()
+        }
+      </div>
+    `;
+  }).join("");
 };
+
 
 const renderNotebookAll = () => {
   const nodesWithTasks = NODES
@@ -1477,6 +1535,15 @@ const loadCollapsed = () => {
 const saveCollapsed = () =>
   localStorage.setItem(LS_COLLAPSED, JSON.stringify([...collapsedGroups], null, 2));
 
+const loadSelectedTasks = () => {
+  const raw = localStorage.getItem(LS_TASK_SELECTED);
+  if (!raw) return new Set();
+  try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
+};
+
+const saveSelectedTasks = () => {
+  localStorage.setItem(LS_TASK_SELECTED, JSON.stringify([...selectedTaskIds], null, 2));
+};
 
 /* =========================================================
   6) DATA ACCESSORS
@@ -1691,9 +1758,10 @@ const renderTile = (n) => {
       </div>
 
       <div class="actions">
-      <button class="iconBtn" type="button"
+     <button class="iconBtn ${selectedTaskIds.has(n.id) ? "active" : ""}" type="button"
   onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')"
-  aria-label="Open tasks">🧾</button>
+  aria-label="Toggle tasks">🧾</button>
+
 
         <button class="iconBtn" type="button"
           onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
@@ -1760,9 +1828,10 @@ const renderGroup = (g, visibleSet, depth) => {
         </div>
 
         <div class="actions">
-        <button class="iconBtn" type="button"
+<button class="iconBtn ${selectedTaskIds.has(g.id) ? "active" : ""}" type="button"
   onclick="window.__openTasks('${escapeHtml(g.id).replaceAll("'","&#039;")}')"
-  aria-label="Open tasks">🧾</button>
+  aria-label="Toggle tasks">🧾</button>
+
 
           <button class="iconBtn" type="button"
             onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
@@ -2069,11 +2138,14 @@ resetBtn.addEventListener("click", () => {
 ========================================================== */
 NODES = loadNodes();
 collapsedGroups = loadCollapsed();
-  NODES.forEach(normalizeTasks);
+selectedTaskIds = loadSelectedTasks();
+
+NODES.forEach(normalizeTasks);
 normalizeOrders();
 saveNodes();
 setTypeUI();
 render();
+
 
 </script>
 
