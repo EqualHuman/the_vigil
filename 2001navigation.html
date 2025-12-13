@@ -112,7 +112,36 @@
   box-shadow:
     0 34px 130px rgba(0,0,0,.72),
     inset 0 1px 0 rgba(255,255,255,.08);
+    box-shadow:
+    0 22px 90px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    inset 0 0 60px rgba(109,94,252,.08),
+    inset 0 0 120px rgba(34,211,238,.06);
+
 }
+    .heroBanner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 35%,
+      rgba(255,255,255,.08),
+      transparent 65%
+    );
+  opacity:.25;
+  mix-blend-mode: overlay;
+  animation: bannerShine 12s ease-in-out infinite;
+}
+
+@keyframes bannerShine{
+  0%, 60% { transform: translateX(-40%); opacity:.18; }
+  100%    { transform: translateX(40%);  opacity:.28; }
+}
+
 
 .heroBanner::before{
   /* elegant, complementary frame */
@@ -244,12 +273,43 @@
 
 /* New divider: “ornamental corners” instead of a plain line */
 .heroDivider{
-  margin:16px auto 0;
-  width:min(640px, 92vw);
-  height:14px;
-  position:relative;
-  opacity:.95;
+  position: relative;
+  margin-top:14px;
+  height:2px;
+  width:min(520px, 85vw);
+  border-radius:999px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.65) 45%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.65) 45%),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.60) 40%),
+    rgba(255,255,255,0)
+  );
+  opacity:.9;
+  overflow:hidden;
 }
+
+/* subtle shine sweep */
+.heroDivider::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255,255,255,.55),
+    transparent 60%
+  );
+  opacity:.25;
+  transform: translateX(-120%);
+  animation: dividerShine 6s ease-in-out infinite;
+}
+
+@keyframes dividerShine{
+  0%, 70% { transform: translateX(-120%); }
+  100%    { transform: translateX(120%); }
+}
+
 
 .heroDivider::before{
   content:"";
