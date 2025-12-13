@@ -703,6 +703,33 @@
       body::before, .heroBanner::before{ animation:none !important; }
       .btn, .tile, .iconBtn, .twisty{ transition:none !important; }
     }
+    /* Drag handle (the only place you can grab to move) */
+.dragHandle{
+  width:36px;
+  height:36px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  display:grid;
+  place-items:center;
+  cursor:grab;
+  user-select:none;
+  transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  font-family: var(--mono);
+  font-size:16px;
+  line-height:1;
+  opacity:.9;
+}
+.dragHandle:hover{
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 0 0 3px rgba(34,211,238,.12);
+}
+.dragHandle:active{ cursor:grabbing; transform: translateY(1px); }
+
+/* Since dragging is handle-only, tiles shouldn't look draggable everywhere */
+.tile{ cursor:default; }
+.tile:active{ cursor:default; }
+
   </style>
 </head>
 
@@ -1139,9 +1166,14 @@
           </div>
 
           <div class="actions">
-            <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
-            <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
-          </div>
+  <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
+  <button class="iconBtn" type="button" onclick="window.__addChildGroup('${escapeHtml(g.id).replaceAll("'","&#039;")}')">＋</button>
+
+  <div class="dragHandle" role="button" tabindex="0"
+       aria-label="Drag to move group"
+       title="Drag to move">⋮⋮</div>
+</div>
+
         </div>
       `;
     };
@@ -1179,9 +1211,15 @@
             </div>
 
             <div class="actions">
-              <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
-              <button class="iconBtn" type="button" onclick="window.__addChildGroup('${escapeHtml(g.id).replaceAll("'","&#039;")}')">＋</button>
-            </div>
+             <div class="actions">
+  <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
+  <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
+
+  <div class="dragHandle" role="button" tabindex="0"
+       aria-label="Drag to move"
+       title="Drag to move">⋮⋮</div>
+</div>
+ </div>
           </div>
 
           <div class="nodeBody"
@@ -1256,9 +1294,11 @@
         const s = new Sortable(containerEl, {
           group: "vigil-tree",
           animation: 150,
-          draggable: ".treeItem",
-          filter: "a, button, .actions", // avoid drag when clicking controls
-          preventOnFilter: true,
+         draggable: ".treeItem",
+handle: ".dragHandle",     // ✅ handle-only dragging
+filter: "a, button",       // keep links/buttons from starting drags
+preventOnFilter: true,
+
           fallbackOnBody: true,
 
           onMove: (evt) => {
