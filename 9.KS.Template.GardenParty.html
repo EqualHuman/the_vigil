@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{COUPLE_NAMES}} — Wedding</title>
+  <meta name="description" content="Wedding website for {{COUPLE_NAMES}}. Hosted by Knotte Studios." />
+
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="heroFrame">
+        <div class="topRow">
+          <div class="mark">
+            <div class="seal" aria-hidden="true"></div>
+            <div>
+              <h1 class="couple">{{COUPLE_NAMES}}</h1>
+              <div class="meta">{{WEDDING_DATE}} • {{WEDDING_LOCATION}}</div>
+              <div class="dateLine"><span class="dot" aria-hidden="true"></span> Formal celebration • Evening reception</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn" href="#rsvp" id="jumpRsvp">Open RSVP</a>
+            <a class="btn btnPrimary" href="{{RSVP_URL}}" target="_blank" rel="noopener">RSVP Link</a>
+          </div>
+        </div>
+
+        <div class="tabs" style="margin-top:16px;">
+          <div class="tablist" role="tablist" aria-label="Wedding site tabs">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="panel-welcome" id="tab-welcome" type="button">Welcome</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-schedule" id="tab-schedule" type="button">Schedule</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-travel" id="tab-travel" type="button">Travel</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-registry" id="tab-registry" type="button">Registry</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-rsvp" id="tab-rsvp" type="button">RSVP</button>
+          </div>
+
+          <div class="tabPanels">
+            <!-- WELCOME -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-welcome" aria-labelledby="tab-welcome" data-open="true">
+              <h2>Welcome</h2>
+              <p>{{WELCOME_MESSAGE}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Quick details</h3>
+                  <p class="small"><strong>Date:</strong> {{WEDDING_DATE}}</p>
+                  <p class="small"><strong>Location:</strong> {{WEDDING_LOCATION}}</p>
+                  <p class="small"><strong>Attire:</strong> {{ATTIRE}}</p>
+                </div>
+                <div class="card">
+                  <h3>Note</h3>
+                  <p class="small">{{WELCOME_NOTE}}</p>
+                </div>
+              </div>
+
+              <a class="pillLink" href="#rsvp">Go to RSVP</a>
+            </section>
+
+            <!-- SCHEDULE -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-schedule" aria-labelledby="tab-schedule" data-open="false">
+              <h2>Schedule</h2>
+              <p>{{SCHEDULE_INTRO}}</p>
+
+              <div class="divider"></div>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Ceremony</h3>
+                  <p class="small"><strong>Time:</strong> {{CEREMONY_TIME}}</p>
+                  <p class="small"><strong>Location:</strong> {{CEREMONY_LOCATION}}</p>
+                  <ul class="list">
+                    <li>{{CEREMONY_NOTE_1}}</li>
+                    <li>{{CEREMONY_NOTE_2}}</li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <h3>Reception</h3>
+                  <p class="small"><strong>Time:</strong> {{RECEPTION_TIME}}</p>
+                  <p class="small"><strong>Location:</strong> {{RECEPTION_LOCATION}}</p>
+                  <ul class="list">
+                    <li>{{RECEPTION_NOTE_1}}</li>
+                    <li>{{RECEPTION_NOTE_2}}</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- TRAVEL -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-travel" aria-labelledby="tab-travel" data-open="false">
+              <h2>Travel</h2>
+              <p>{{TRAVEL_INTRO}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Hotels</h3>
+                  <p class="small">{{HOTEL_TEXT}}</p>
+                  <ul class="list">
+                    <li>{{HOTEL_OPTION_1}}</li>
+                    <li>{{HOTEL_OPTION_2}}</li>
+                    <li>{{HOTEL_OPTION_3}}</li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <h3>Parking & transportation</h3>
+                  <p class="small">{{PARKING_TEXT}}</p>
+                  <ul class="list">
+                    <li>{{TRANSPORT_NOTE_1}}</li>
+                    <li>{{TRANSPORT_NOTE_2}}</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- REGISTRY -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-registry" aria-labelledby="tab-registry" data-open="false">
+              <h2>Registry</h2>
+              <p>{{REGISTRY_TEXT}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Registry link</h3>
+                  <p class="small">Open our registry here:</p>
+                  <a class="pillLink" href="{{REGISTRY_URL}}" target="_blank" rel="noopener">Open registry</a>
+                </div>
+                <div class="card">
+                  <h3>Shipping note</h3>
+                  <p class="small">{{REGISTRY_NOTE}}</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- RSVP -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-rsvp" aria-labelledby="tab-rsvp" data-open="false">
+              <h2 id="rsvp">RSVP</h2>
+              <p>{{RSVP_TEXT}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>RSVP link</h3>
+                  <p class="small">Use the RSVP button below. If you have trouble, text {{CONTACT_NAME}} at {{CONTACT_PHONE}}.</p>
+                  <a class="pillLink" href="{{RSVP_URL}}" target="_blank" rel="noopener">RSVP now</a>
+                </div>
+
+                <div class="card">
+                  <h3>Deadline</h3>
+                  <p class="small"><strong>RSVP by:</strong> {{RSVP_DEADLINE}}</p>
+                  <p class="small">{{RSVP_NOTE}}</p>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div>Hosted by Knotte Studios</div>
+      <div>{{FOOTER_NOTE}}</div>
+    </footer>
+  </div>
+
+  <script>
+    // Accessible tabs (click + arrow keys)
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+
+    function openTab(tabId){
+      tabs.forEach(t => {
+        const selected = t.id === tabId;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+      });
+
+      panels.forEach(p => {
+        const shouldOpen = ('tab-' + p.id.replace('panel-','')) === tabId;
+        p.dataset.open = shouldOpen ? 'true' : 'false';
+      });
+    }
+
+    function tabIndexOf(el){ return tabs.indexOf(el); }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => openTab(tab.id));
+
+      tab.addEventListener('keydown', (e) => {
+        const i = tabIndexOf(e.currentTarget);
+        if(i < 0) return;
+
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+          e.preventDefault();
+          const next = tabs[(i + 1) % tabs.length];
+          next.focus();
+          openTab(next.id);
+        }
+
+        if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+          e.preventDefault();
+          const prev = tabs[(i - 1 + tabs.length) % tabs.length];
+          prev.focus();
+          openTab(prev.id);
+        }
+
+        if(e.key === 'Home'){
+          e.preventDefault();
+          tabs[0].focus();
+          openTab(tabs[0].id);
+        }
+
+        if(e.key === 'End'){
+          e.preventDefault();
+          tabs[tabs.length - 1].focus();
+          openTab(tabs[tabs.length - 1].id);
+        }
+      });
+    });
+
+    // Convenience: "Open RSVP" button forces RSVP tab
+    const jump = document.getElementById('jumpRsvp');
+    if(jump){
+      jump.addEventListener('click', (e) => {
+        // keep hash behavior, but switch tab immediately
+        openTab('tab-rsvp');
+      });
+    }
+  </script>
+</body>
+</html>
