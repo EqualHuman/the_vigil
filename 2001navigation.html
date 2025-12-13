@@ -976,6 +976,117 @@ grid-template-columns: .85fr 1.45fr;
 .toolbarRight{
   gap:8px;
 }
+/* ===== Hero navigation dots ===== */
+.heroBadges{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+}
+
+.navDot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  position:relative;
+  display:inline-block;
+  cursor:pointer;
+
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,.9),
+      rgba(255,255,255,.2) 35%,
+      transparent 60%
+    ),
+    linear-gradient(135deg, var(--accentB), var(--accentA));
+
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.18),
+    0 0 18px rgba(34,211,238,.45),
+    0 0 36px rgba(109,94,252,.35);
+
+  transition:
+    transform .15s var(--ease),
+    box-shadow .2s var(--ease),
+    opacity .2s var(--ease);
+}
+
+.navDot:hover{
+  transform: scale(1.2);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.28),
+    0 0 26px rgba(34,211,238,.65),
+    0 0 52px rgba(109,94,252,.45);
+}
+
+.navDot:focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 3px rgba(34,211,238,.6),
+    0 0 26px rgba(34,211,238,.7);
+}
+
+/* Optional: active/current section dot */
+.navDot.active{
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,1),
+      rgba(255,255,255,.35) 40%,
+      transparent 65%
+    ),
+    linear-gradient(135deg, var(--accentC), var(--accentA));
+
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.35),
+    0 0 28px rgba(255,79,216,.55),
+    0 0 56px rgba(109,94,252,.45);
+}
+/* ===== Improve node header alignment ===== */
+.nodeHeader{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  align-items:center;
+  gap:12px;
+}
+
+.nodeHeaderLeft{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+/* Prevent title text from pushing buttons */
+.nodeTitle{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+
+/* Keep action buttons tight + consistent */
+.actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+/* ===== Softer styling for nested nodes ===== */
+.node.indent{
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.045),
+    rgba(255,255,255,.025)
+  );
+}
+
+.node.indent .nodeHeader{
+  padding:10px 14px;
+}
+
+.node.indent .nodeTitle{
+  font-weight:600;
+  opacity:.92;
+}
 
 </style>
 
@@ -1006,10 +1117,11 @@ grid-template-columns: .85fr 1.45fr;
         NAVIGATION
       </div>
 
-      <div class="heroBadges" aria-label="Status badges">
-        <span class="badgePill">1</span>
-        <span class="badgePill">2</span>
-      </div>
+     <div class="heroBadges" aria-label="Navigation dots">
+  <a href="#section-1" class="navDot" aria-label="Go to section 1"></a>
+  <a href="#section-2" class="navDot" aria-label="Go to section 2"></a>
+</div>
+
     </div>
 
     <!-- Center title -->
