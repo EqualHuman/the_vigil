@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
-```
 <!-- ==================================================================================================================
 =========================================================START OF STYLE=========================================================
 ```
@@ -802,6 +801,40 @@
     body::before{ animation:none !important; }
     .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
   }
+   /* ===== Stop pulsing / flicker animations ===== */
+
+/* Kill the drifting glow behind the page */
+body::before{
+  animation: none !important;
+}
+
+/* Kill the hero shimmer sweep */
+.heroBanner::after{
+  animation: none !important;
+  /* optional: make the shimmer layer less “flashy” even when static */
+  opacity: .25 !important;
+}
+
+/* Kill the divider shine */
+.heroDivider::after{
+  animation: none !important;
+  opacity: .18 !important;
+}
+
+/* Optional: if the moving gradients still feel “alive”, disable blend mode shimmer */
+.heroBanner::after,
+.heroDivider::after{
+  mix-blend-mode: normal !important;
+}
+
+/* Optional: reduce heavy blur/backdrop shimmer on some GPUs */
+.heroBanner,
+.card,
+.modal,
+.menuList{
+  backdrop-filter: blur(10px);
+}
+
 </style>
 
   <!-- ==================================================================================================================
@@ -886,7 +919,7 @@
   <!-- Tree mount point -->
   <div class="tree" id="treeRoot"></div>
 </section>
-```
+
 
   </div>
 
@@ -922,7 +955,8 @@
           <div id="modalTitle" class="modalTitle">Item</div>
         </div>
 
-```
+
+        
     <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
   </div>
 
