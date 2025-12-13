@@ -1,46 +1,1309 @@
-<header class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 px-10 py-9 text-white shadow-2xl">
-  <!-- subtle glow -->
-  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_35%,rgba(99,102,241,0.22),transparent_55%),radial-gradient(circle_at_70%_30%,rgba(34,211,238,0.14),transparent_55%)]"></div>
-  <!-- subtle noise -->
-  <div class="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22 opacity=%220.35%22/%3E%3C/svg%3E')]"></div>
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- =========================================================
+    Vigil — Navigation Hub (single file)
+    - Unlimited nesting via parentId
+    - Drag & drop (groups + tiles) with SortableJS
+    - Prevent dropping a group into itself/its descendants
+    - Search across title/url/notes/kind
+    - Persist nodes + collapsed state to localStorage
+  ========================================================== -->
 
-  <div class="relative flex flex-col gap-6">
-    <div class="flex items-start justify-between gap-6">
-      <div class="flex flex-col gap-3">
-        <div class="inline-flex items-center gap-2 self-start rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
-          <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.8)]"></span>
-          Vigilia • watchfulness
-          <span class="ml-2 rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-white/70">live index</span>
+  <!-- ========== Document meta ========== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Vigil — Navigation Hub</title>
+
+  <!-- ========== Fonts ========== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- ========== Styles ========== -->
+  <style>
+    /* ---------------------------------------------------------
+      0) Reset + tokens
+    --------------------------------------------------------- */
+    [hidden]{ display:none !important; }
+    *{ box-sizing:border-box; }
+
+    :root{
+      --bg0:#050510;
+      --bg1:#070a1c;
+
+      --panel: rgba(255,255,255,.07);
+      --panel-2: rgba(255,255,255,.045);
+      --border: rgba(255,255,255,.14);
+
+      --text: rgba(255,255,255,.93);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.55);
+
+      --accentA:#6d5efc;
+      --accentB:#22d3ee;
+      --accentC:#ff4fd8;
+
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
+      --ring: 0 0 0 3px rgba(34,211,238,.22);
+      --radius: 20px;
+
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(900px 520px at 15% 10%, color-mix(in oklab, var(--accentB), transparent 78%), transparent 65%),
+        radial-gradient(900px 520px at 90% 20%, color-mix(in oklab, var(--accentA), transparent 80%), transparent 60%),
+        radial-gradient(1100px 650px at 50% 110%, color-mix(in oklab, var(--accentC), transparent 82%), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-40px;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 25% 25%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(closest-side at 75% 35%, rgba(109,94,252,.16), transparent 62%),
+        radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
+      filter: blur(22px);
+      opacity:.9;
+      animation: drift 14s var(--ease) infinite alternate;
+      z-index:-1;
+    }
+
+    @keyframes drift{
+      from{ transform: translate3d(-10px,-10px,0) scale(1.02); }
+      to  { transform: translate3d(14px,10px,0)  scale(1.05); }
+    }
+
+    .wrap{
+      max-width:1080px;
+      margin:0 auto;
+      padding:28px 18px 60px;
+    }
+
+    /* ---------------------------------------------------------
+      1) Hero banner
+    --------------------------------------------------------- */
+    .heroBanner{
+      position:relative;
+      margin:10px 0 16px;
+      border-radius: calc(var(--radius) + 6px);
+      border:1px solid rgba(255,255,255,.14);
+      overflow:hidden;
+      box-shadow:0 22px 90px rgba(0,0,0,.55);
+      backdrop-filter: blur(14px);
+      isolation:isolate;
+    }
+
+    .heroInner{ position:relative; padding:18px; z-index:1; }
+
+    .heroBg{
+      position:absolute; inset:-2px; z-index:0;
+      background:
+        radial-gradient(900px 320px at 10% 20%, color-mix(in oklab, var(--accentB), transparent 70%), transparent 62%),
+        radial-gradient(900px 340px at 85% 25%, color-mix(in oklab, var(--accentA), transparent 72%), transparent 60%),
+        radial-gradient(1100px 420px at 50% 120%, color-mix(in oklab, var(--accentC), transparent 78%), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      filter:saturate(1.12);
+    }
+
+    .heroBanner::before{
+      content:"";
+      position:absolute; inset:-40%;
+      background: linear-gradient(110deg,
+        transparent 20%,
+        rgba(255,255,255,.10) 35%,
+        rgba(255,255,255,.04) 48%,
+        transparent 60%);
+      transform: translateX(-18%) rotate(8deg);
+      animation: heroSweep 9s var(--ease) infinite;
+      z-index:0;
+      mix-blend-mode: screen;
+      opacity:.65;
+      pointer-events:none;
+    }
+
+    @keyframes heroSweep{
+      0%{ transform: translateX(-22%) rotate(8deg); opacity:.55; }
+      55%{ opacity:.75; }
+      100%{ transform: translateX(22%) rotate(8deg); opacity:.55; }
+    }
+
+    .heroBanner::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 1px,
+          transparent 2px,
+          transparent 6px
+        );
+      opacity:.10;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .heroTop{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+
+    .kickerPill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      font-size:11px; letter-spacing:.22em;
+      text-transform:uppercase;
+      color: color-mix(in oklab, var(--muted), rgba(255,255,255,.12) 30%);
+    }
+
+    .kDot{
+      width:10px; height:10px; border-radius:999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 40%),
+        color-mix(in oklab, var(--accentB), transparent 35%);
+      box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.22);
+    }
+
+    .heroBadges{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+
+    .badgePill{
+      font-size:12px; padding:7px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      color: rgba(255,255,255,.78);
+    }
+
+    .heroTitle{
+      margin:10px 0 6px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height:1.02; letter-spacing:-.035em;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.96),
+        rgba(255,255,255,.78),
+        rgba(255,255,255,.92));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow: 0 12px 60px rgba(0,0,0,.35);
+    }
+
+    .heroSubtitle{
+      margin:0; max-width:78ch;
+      color: rgba(255,255,255,.72);
+      font-size:14.5px; line-height:1.55;
+    }
+
+    .heroDivider{
+      margin-top:14px; height:2px;
+      width:min(520px, 85vw);
+      border-radius:999px;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0),
+        color-mix(in oklab, var(--accentB), rgba(255,255,255,.55) 45%),
+        color-mix(in oklab, var(--accentA), rgba(255,255,255,.55) 45%),
+        color-mix(in oklab, var(--accentC), rgba(255,255,255,.50) 40%),
+        rgba(255,255,255,0));
+      opacity:.95;
+    }
+
+    /* ---------------------------------------------------------
+      2) Card + toolbar
+    --------------------------------------------------------- */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    .toolbar{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
+      padding:14px 14px 12px;
+      background:
+        linear-gradient(90deg,
+          color-mix(in oklab, var(--accentB), transparent 88%),
+          transparent 30%,
+          color-mix(in oklab, var(--accentA), transparent 88%) 60%,
+          color-mix(in oklab, var(--accentC), transparent 90%));
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+
+    .leftTools, .rightTools{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .btn:hover{ background: rgba(255,255,255,.09); transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.30); }
+    .btn:active{ transform: translateY(0) scale(.99); }
+    .btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    .input{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      font-size:13.5px;
+      min-width:260px;
+      max-width:520px;
+      flex: 1 1 260px;
+      transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
+    }
+    .input:focus{
+      outline:none;
+      border-color: color-mix(in oklab, var(--accentB), rgba(255,255,255,.16) 40%);
+      box-shadow: 0 0 0 3px rgba(34,211,238,.18);
+    }
+
+    .meta{
+      padding:10px 14px 12px;
+      color:var(--muted2);
+      font-size:12.5px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    #metaLeft{
+      font-variant-numeric: tabular-nums;
+      letter-spacing:.01em;
+      white-space:nowrap;
+      padding:6px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius:999px;
+    }
+
+    /* ---------------------------------------------------------
+      3) Tree + nodes
+    --------------------------------------------------------- */
+    .tree{
+      padding:12px;
+      display:grid;
+      gap:12px;
+    }
+
+    .dropHint{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.65);
+      font-size:12.5px;
+    }
+
+    /* A "node" can be a group or tile */
+    .node{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .nodeHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      user-select:none;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    .nodeHeaderLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .twisty{
+      width:28px; height:28px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .twisty:hover{ background: rgba(255,255,255,.10); }
+
+    .nodeTitle{
+      font-weight:750;
+      letter-spacing:-.01em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:62ch;
+    }
+
+    .countPill{
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.78);
+      font-variant-numeric: tabular-nums;
+      flex:0 0 auto;
+    }
+
+    .nodeBody{
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+
+    /* tiles (leaf links) */
+    .tile{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      cursor:grab;
+      transition: transform .14s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+    }
+    .tile:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
+    }
+    .tile:active{ cursor:grabbing; }
+
+    .tileMain{ flex:1 1 auto; min-width:0; }
+    .tileTitleLine{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:4px;
+    }
+    .tileTitle{ font-weight:650; letter-spacing:-.01em; }
+
+    .chip{
+      font-size:11.5px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      color:var(--muted);
+    }
+
+    .url{
+      font-family:var(--mono);
+      font-size:12.5px;
+      color:var(--muted);
+      word-break: break-all;
+      line-height:1.35;
+    }
+
+    .notes{
+      margin-top:6px;
+      font-size:12.5px;
+      color:var(--muted2);
+      line-height:1.45;
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      flex:0 0 auto;
+      margin-left:auto;
+    }
+
+    .iconBtn{
+      width:36px;
+      height:36px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition: transform .12s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .iconBtn:hover{ background: rgba(255,255,255,.10); box-shadow: 0 0 0 3px rgba(109,94,252,.12); }
+    .iconBtn:active{ transform: translateY(1px); }
+    .iconBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    /* indents for nested groups */
+    .indent{
+      margin-left:14px;
+      border-left:1px solid rgba(255,255,255,.10);
+      padding-left:12px;
+    }
+
+    /* ---------------------------------------------------------
+      4) Modal
+    --------------------------------------------------------- */
+    .modalBackdrop{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      display:grid;
+      place-items:center;
+      padding:18px;
+      z-index:50;
+    }
+
+    .modal{
+      width:min(860px, 96vw);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow:0 30px 120px rgba(0,0,0,.65);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    .kicker{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: color-mix(in oklab, var(--muted), transparent 12%);
+      opacity:.95;
+    }
+
+    .modalTitle{ font-weight:700; letter-spacing:-.02em; }
+
+    .modalBody{ padding:14px; display:grid; gap:12px; }
+
+    .field{ display:grid; gap:6px; }
+    .field > span{ font-size:12px; color:var(--muted2); }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    @media (max-width:720px){ .grid2{ grid-template-columns: 1fr; } }
+
+    .modalActions{ display:flex; align-items:center; gap:10px; padding-top:6px; }
+
+    select.input{ appearance:none; }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px; overflow:hidden;
+      clip:rect(0,0,0,0); border:0;
+    }
+
+    /* ---------------------------------------------------------
+      5) Reduced motion
+    --------------------------------------------------------- */
+    @media (prefers-reduced-motion: reduce){
+      body::before, .heroBanner::before{ animation:none !important; }
+      .btn, .tile, .iconBtn, .twisty{ transition:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- =======================================================
+      HERO
+    ======================================================= -->
+    <header class="heroBanner" aria-label="Vigil banner">
+      <div class="heroBg" aria-hidden="true"></div>
+      <div class="heroInner">
+        <div class="heroTop">
+          <div class="kickerPill">
+            <span class="kDot" aria-hidden="true"></span>
+            Vigilia • watchfulness
+          </div>
+          <div class="heroBadges" aria-label="Status badges">
+            <span class="badgePill">live index</span>
+            <span class="badgePill">tree nesting</span>
+          </div>
         </div>
 
-        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Vigil <span class="text-white/60">—</span> Navigation Hub
-        </h1>
-
-        <p class="max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-          A living index of what we’re watching, learning, and doing—kept calm, clear, and current.
+        <h1 class="heroTitle">Vigil — Navigation Hub</h1>
+        <p class="heroSubtitle">
+          Unlimited nesting. Drag groups into groups. Keep it calm, clear, and current.
         </p>
+
+        <div class="heroDivider" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <!-- =======================================================
+      APP CARD
+    ======================================================= -->
+    <section class="card" aria-label="Navigation hub">
+      <!-- Toolbar -->
+      <div class="toolbar" id="top">
+        <div class="leftTools">
+          <button class="btn" id="expandAll" type="button">▾ Expand all</button>
+          <button class="btn" id="collapseAll" type="button">▸ Collapse all</button>
+          <button class="btn" id="addGroup" type="button">＋ Add group</button>
+          <button class="btn" id="addTile" type="button">＋ Add tile</button>
+          <button class="btn" id="exportJson" type="button">⇪ Export JSON</button>
+          <button class="btn" id="resetEdits" type="button" title="Clears saved edits on this device">↺ Reset edits</button>
+        </div>
+
+        <div class="rightTools" style="flex:1">
+          <label class="sr-only" for="search">Search</label>
+          <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
+        </div>
       </div>
 
-      <div class="flex shrink-0 flex-col items-end gap-2">
-        <div class="flex gap-2">
-          <button class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 shadow hover:opacity-95">
-            Explore topics
-          </button>
-          <button class="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/85 backdrop-blur hover:bg-white/10">
-            Search
-          </button>
+      <!-- Meta line -->
+      <div class="meta">
+        <div id="metaLeft">Loading…</div>
+        <div id="metaRight">Tip: Drag tiles or groups anywhere • Groups can nest infinitely</div>
+      </div>
+
+      <!-- Tree mount -->
+      <div class="tree" id="treeRoot"></div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+    EMBEDDED DATA (initial tree)
+    - This is only used if localStorage has no saved edits.
+    - Edit safely: keep IDs unique.
+  ========================================================== -->
+  <script id="navData" type="application/json">
+[
+  { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1, "notes":"Root essentials" },
+  { "type":"tile",  "id":"home", "title":"Home", "href":"/index.html", "kind":"page", "notes":"Landing page", "parentId":"core", "order":1 },
+
+  { "type":"group", "id":"topics", "title":"Topics", "parentId":null, "order":2, "notes":"" },
+  { "type":"group", "id":"animals", "title":"Animals", "parentId":"topics", "order":1, "notes":"" },
+  { "type":"tile",  "id":"animals-index", "title":"Animals", "href":"/animals/index.html", "kind":"section", "notes":"", "parentId":"animals", "order":1 },
+  { "type":"tile",  "id":"endangered", "title":"Endangered Animals", "href":"/animals/endangered.html", "kind":"page", "notes":"", "parentId":"animals", "order":2 },
+
+  { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3, "notes":"Do something constructive" },
+  { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "kind":"donate", "notes":"", "parentId":"action", "order":1 }
+]
+  </script>
+
+  <!-- =========================================================
+    MODAL (Add/Edit)
+  ========================================================== -->
+  <div class="modalBackdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modalHead">
+        <div>
+          <div class="kicker" id="modalKicker">ADD</div>
+          <div id="modalTitle" class="modalTitle">Item</div>
+        </div>
+        <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modalBody">
+
+        <div class="grid2">
+          <label class="field">
+            <span>Type</span>
+            <select class="input" id="fType">
+              <option value="group">Group</option>
+              <option value="tile">Tile</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Parent</span>
+            <select class="input" id="fParent"></select>
+          </label>
         </div>
 
-        <nav class="flex flex-wrap justify-end gap-2">
-          <a class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#">Links</a>
-          <a class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#">Notes</a>
-          <a class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10" href="#">Resources</a>
-          <a class="rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-100 hover:bg-cyan-300/15" href="#">Take action</a>
-        </nav>
+        <div class="grid2">
+          <label class="field">
+            <span>ID (unique)</span>
+            <input class="input" id="fId" placeholder="unique-id" />
+          </label>
+
+          <label class="field">
+            <span>Title</span>
+            <input class="input" id="fTitle" placeholder="Title" />
+          </label>
+        </div>
+
+        <div class="grid2" id="tileFields">
+          <label class="field">
+            <span>Href</span>
+            <input class="input" id="fHref" placeholder="https://…" />
+          </label>
+
+          <label class="field">
+            <span>Kind</span>
+            <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Notes</span>
+          <input class="input" id="fNotes" placeholder="Optional description" />
+        </label>
+
+        <div class="modalActions">
+          <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
+          <div style="flex:1"></div>
+          <button class="btn" id="saveItem" type="button">💾 Save</button>
+        </div>
       </div>
     </div>
-
-    <div class="h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
   </div>
-</header>
+
+  <!-- =========================================================
+    Vendor: SortableJS (must load BEFORE app script)
+  ========================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+  <!-- =========================================================
+    APP SCRIPT
+  ========================================================== -->
+  <script>
+    /* =========================================================
+      Vigil — Unlimited nesting tree
+      DATA MODEL
+        Node =
+          { type:"group", id, title, parentId:null|string, order:number, notes? }
+          { type:"tile",  id, title, href, kind?, parentId:null|string, order:number, notes? }
+
+      STORAGE
+        - Nodes:     localStorage["vigil_nodes_tree_v1"]
+        - Collapsed: localStorage["vigil_collapsed_groups_v1"]
+
+      NOTES
+        - While searching, we temporarily ignore collapse state for matching branches.
+        - Dragging is DOM-driven: onEnd we rebuild parentId/order from the DOM.
+    ========================================================== */
+
+    // ---------------------------------------------------------
+    // 0) Constants + DOM helpers
+    // ---------------------------------------------------------
+    const LS_NODES = "vigil_nodes_tree_v1";
+    const LS_COLLAPSED = "vigil_collapsed_groups_v1";
+
+    const $ = (sel) => document.querySelector(sel);
+
+    const treeRootEl = $("#treeRoot");
+    const searchEl = $("#search");
+    const metaLeftEl = $("#metaLeft");
+
+    const expandAllBtn = $("#expandAll");
+    const collapseAllBtn = $("#collapseAll");
+    const addGroupBtn = $("#addGroup");
+    const addTileBtn = $("#addTile");
+    const exportBtn = $("#exportJson");
+    const resetBtn = $("#resetEdits");
+
+    const modalBackdropEl = $("#modalBackdrop");
+    const closeModalBtn = $("#closeModal");
+    const saveItemBtn = $("#saveItem");
+    const deleteItemBtn = $("#deleteItem");
+
+    const modalKickerEl = $("#modalKicker");
+    const modalTitleEl = $("#modalTitle");
+
+    const fType = $("#fType");
+    const fParent = $("#fParent");
+    const fId = $("#fId");
+    const fTitle = $("#fTitle");
+    const fHref = $("#fHref");
+    const fKind = $("#fKind");
+    const fNotes = $("#fNotes");
+    const tileFieldsEl = $("#tileFields");
+
+    // ---------------------------------------------------------
+    // 1) App state
+    // ---------------------------------------------------------
+    let filter = "";
+    let editingId = null;
+
+    let NODES = [];
+    let collapsedGroups = new Set();
+    let sortables = [];
+
+    // ---------------------------------------------------------
+    // 2) Small utilities
+    // ---------------------------------------------------------
+    const escapeHtml = (s) => (s ?? "").toString()
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+    const nodeById = (id) => NODES.find(n => n.id === id);
+
+    const childrenOf = (parentId) =>
+      NODES
+        .filter(n => (n.parentId ?? null) === (parentId ?? null))
+        .sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+
+    const normalizeOrders = () => {
+      // Reassign order sequentially per parent bucket
+      const parents = new Set(NODES.map(n => n.parentId ?? null));
+      for (const p of parents) {
+        childrenOf(p).forEach((n, idx) => (n.order = idx + 1));
+      }
+    };
+
+    const buildDescendantsSet = (groupId) => {
+      const out = new Set();
+      const stack = [groupId];
+      while (stack.length) {
+        const cur = stack.pop();
+        for (const ch of childrenOf(cur)) {
+          out.add(ch.id);
+          if (ch.type === "group") stack.push(ch.id);
+        }
+      }
+      return out;
+    };
+
+    const isDescendant = (maybeChildId, maybeAncestorId) =>
+      buildDescendantsSet(maybeAncestorId).has(maybeChildId);
+
+    const matchNode = (n) => {
+      if (!filter) return true;
+      const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""}`.toLowerCase();
+      return hay.includes(filter);
+    };
+
+    const copyToClipboard = async (text) => {
+      try { await navigator.clipboard.writeText(text); } catch {}
+    };
+
+    // ---------------------------------------------------------
+    // 3) Persistence (localStorage)
+    // ---------------------------------------------------------
+    const loadEmbedded = () => {
+      const el = document.getElementById("navData");
+      return JSON.parse(el?.textContent || "[]");
+    };
+
+    const loadNodes = () => {
+      const raw = localStorage.getItem(LS_NODES);
+      if (raw) { try { return JSON.parse(raw); } catch {} }
+      return loadEmbedded();
+    };
+
+    const saveNodes = () => localStorage.setItem(LS_NODES, JSON.stringify(NODES, null, 2));
+
+    const loadCollapsed = () => {
+      const raw = localStorage.getItem(LS_COLLAPSED);
+      if (!raw) return new Set();
+      try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
+    };
+
+    const saveCollapsed = () => localStorage.setItem(LS_COLLAPSED, JSON.stringify([...collapsedGroups], null, 2));
+
+    // ---------------------------------------------------------
+    // 4) Modal helpers
+    // ---------------------------------------------------------
+    const showModal = () => modalBackdropEl.removeAttribute("hidden");
+    const hideModal = () => modalBackdropEl.setAttribute("hidden", "");
+
+    const setTypeUI = () => {
+      const isTile = fType.value === "tile";
+      tileFieldsEl.style.display = isTile ? "grid" : "none";
+    };
+
+    const fillParentOptions = (currentId) => {
+      // Parent can be root (null) or any group EXCEPT self/descendants
+      const options = [{ value:"__root__", label:"(root)" }];
+
+      const groups = NODES
+        .filter(n => n.type === "group")
+        .sort((a,b)=> (a.title||"").localeCompare(b.title||""));
+
+      const banned = new Set();
+      if (currentId) {
+        banned.add(currentId);
+        const n = nodeById(currentId);
+        if (n?.type === "group") {
+          for (const d of buildDescendantsSet(currentId)) banned.add(d);
+        }
+      }
+
+      for (const g of groups) {
+        if (banned.has(g.id)) continue;
+        options.push({ value:g.id, label:`${g.title} (${g.id})` });
+      }
+
+      fParent.innerHTML = options.map(o =>
+        `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`
+      ).join("");
+    };
+
+    const openModal = (node, isNew, forceType=null) => {
+      showModal();
+      editingId = isNew ? null : node.id;
+
+      modalKickerEl.textContent = isNew ? "ADD" : "EDIT";
+      modalTitleEl.textContent = isNew ? "New item" : (node.title || node.id || "Item");
+
+      fType.value = forceType ?? (node.type || "tile");
+      setTypeUI();
+
+      fillParentOptions(isNew ? null : node.id);
+
+      fId.value = node.id || "";
+      fTitle.value = node.title || "";
+      fHref.value = node.href || "";
+      fKind.value = node.kind || "";
+      fNotes.value = node.notes || "";
+
+      fParent.value = (node.parentId == null) ? "__root__" : node.parentId;
+
+      deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
+      fId.disabled = !isNew;
+
+      setTimeout(() => fTitle.focus(), 0);
+    };
+
+    const closeModal = () => {
+      hideModal();
+      editingId = null;
+    };
+
+    // ---------------------------------------------------------
+    // 5) Mutations (add/update/delete)
+    // ---------------------------------------------------------
+    const upsert = (updated) => {
+      const idx = NODES.findIndex(x => x.id === updated.id);
+      if (idx >= 0) NODES[idx] = { ...NODES[idx], ...updated };
+      else NODES.push(updated);
+
+      normalizeOrders();
+      saveNodes();
+      render();
+    };
+
+    const removeNode = (id) => {
+      const n = nodeById(id);
+      if (!n) return;
+
+      const toDelete = new Set([id]);
+      if (n.type === "group") {
+        for (const d of buildDescendantsSet(id)) toDelete.add(d);
+      }
+
+      for (const x of toDelete) collapsedGroups.delete(x);
+
+      NODES = NODES.filter(x => !toDelete.has(x.id));
+      normalizeOrders();
+      saveCollapsed();
+      saveNodes();
+      render();
+    };
+
+    const setAllCollapsed = (collapsed) => {
+      const allGroups = NODES.filter(n => n.type === "group").map(n => n.id);
+      collapsedGroups = new Set(collapsed ? allGroups : []);
+      saveCollapsed();
+      render();
+    };
+
+    // ---------------------------------------------------------
+    // 6) Rendering (HTML strings)
+    // ---------------------------------------------------------
+    const visibleSetForFilter = () => {
+      if (!filter) return null; // null => everything visible
+
+      const visible = new Set();
+      const byParent = new Map();
+      for (const n of NODES) {
+        const p = n.parentId ?? null;
+        if (!byParent.has(p)) byParent.set(p, []);
+        byParent.get(p).push(n);
+      }
+
+      const hasMatchInSubtree = (id) => {
+        const n = nodeById(id);
+        if (!n) return false;
+        if (matchNode(n)) return true;
+        if (n.type !== "group") return false;
+        const kids = byParent.get(id) || [];
+        return kids.some(k => hasMatchInSubtree(k.id));
+      };
+
+      const ensureAncestors = (id) => {
+        let cur = nodeById(id);
+        while (cur) {
+          visible.add(cur.id);
+          if (cur.parentId == null) break;
+          cur = nodeById(cur.parentId);
+        }
+      };
+
+      for (const n of NODES) {
+        if (hasMatchInSubtree(n.id)) ensureAncestors(n.id);
+      }
+
+      return visible;
+    };
+
+    const renderTile = (n) => {
+      const chip = n.kind ? `<span class="chip">${escapeHtml(n.kind)}</span>` : "";
+      const notes = n.notes ? `<div class="notes">${escapeHtml(n.notes)}</div>` : "";
+
+      const href = n.href || "#";
+      const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+
+      // Note: data-id/type are used by Sortable and rebuildFromDOM()
+      return `
+        <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
+          <div class="tileMain">
+            <a href="${escapeHtml(href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
+              <div class="tileTitleLine">
+                <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
+                ${chip}
+              </div>
+              <div class="url">${escapeHtml(href)}</div>
+            </a>
+            ${notes}
+          </div>
+
+          <div class="actions">
+            <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
+            <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
+          </div>
+        </div>
+      `;
+    };
+
+    const renderGroup = (g, visibleSet, depth) => {
+      const kids = childrenOf(g.id).filter(n => !visibleSet || visibleSet.has(n.id));
+
+      // During search: always show matching hierarchy regardless of collapsed state
+      const collapsed = collapsedGroups.has(g.id) && !filter;
+      const childCount = childrenOf(g.id).length;
+
+      const body = collapsed
+        ? ""
+        : (kids.length
+          ? kids.map(n => n.type === "group"
+              ? renderGroup(n, visibleSet, depth + 1)
+              : renderTile(n)
+            ).join("")
+          : `<div class="dropHint">Drop items here…</div>`
+        );
+
+      const indentClass = depth > 0 ? "indent" : "";
+
+      return `
+        <div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group">
+          <div class="nodeHeader">
+            <div class="nodeHeaderLeft">
+              <button class="twisty" type="button" aria-label="Toggle group"
+                onclick="window.__toggle('${escapeHtml(g.id).replaceAll("'","&#039;")}')">
+                ${collapsed ? "▸" : "▾"}
+              </button>
+              <div style="min-width:0">
+                <div class="nodeTitle">${escapeHtml(g.title || "(group)")}</div>
+                ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
+              </div>
+              <span class="countPill">${childCount}</span>
+            </div>
+
+            <div class="actions">
+              <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
+              <button class="iconBtn" type="button" onclick="window.__addChildGroup('${escapeHtml(g.id).replaceAll("'","&#039;")}')">＋</button>
+            </div>
+          </div>
+
+          <div class="nodeBody"
+               ${collapsed ? "hidden" : ""}
+               data-container="children"
+               data-parent-id="${escapeHtml(g.id)}">
+            ${body}
+            ${(!collapsed && kids.length)
+              ? `<div class="dropHint">Tip: drop groups into groups • drop tiles anywhere</div>`
+              : ``}
+          </div>
+        </div>
+      `;
+    };
+
+    const renderRoot = () => {
+      const visibleSet = visibleSetForFilter();
+
+      const roots = childrenOf(null).filter(n => !visibleSet || visibleSet.has(n.id));
+
+      const shownCount = visibleSet ? visibleSet.size : NODES.length;
+      metaLeftEl.textContent = `${shownCount} visible • ${NODES.length} total`;
+
+      if (!roots.length) {
+        treeRootEl.innerHTML = `<div class="dropHint">No matches. Try a different search.</div>`;
+        return;
+      }
+
+      treeRootEl.innerHTML = `
+        <div data-container="children" data-parent-id="__root__">
+          ${roots.map(n => n.type === "group" ? renderGroup(n, visibleSet, 0) : renderTile(n)).join("")}
+        </div>
+      `;
+    };
+
+    // ---------------------------------------------------------
+    // 7) Drag & drop (Sortable)
+    // ---------------------------------------------------------
+    const destroySortables = () => {
+      sortables.forEach(s => { try { s.destroy(); } catch {} });
+      sortables = [];
+    };
+
+    const rebuildFromDOM = () => {
+      // Read all containers and rebuild parentId/order from DOM
+      document.querySelectorAll('[data-container="children"]').forEach((containerEl) => {
+        const p = containerEl.dataset.parentId;
+        const parentId = (p === "__root__") ? null : p;
+
+        const items = [...containerEl.children].filter(el => el.classList.contains("treeItem"));
+        items.forEach((el, idx) => {
+          const id = el.dataset.id;
+          const n = nodeById(id);
+          if (!n) return;
+          n.parentId = parentId;
+          n.order = idx + 1;
+        });
+      });
+
+      normalizeOrders();
+      saveNodes();
+    };
+
+    const initSortables = () => {
+      destroySortables();
+
+      document.querySelectorAll('[data-container="children"]').forEach((containerEl) => {
+        const s = new Sortable(containerEl, {
+          group: "vigil-tree",
+          animation: 150,
+          draggable: ".treeItem",
+          filter: "a, button, .actions", // avoid dragging when clicking controls
+          preventOnFilter: true,
+          fallbackOnBody: true,
+
+          onMove: (evt) => {
+            // Disallow dropping a group into itself or its descendant
+            const draggedEl = evt.dragged;
+            const draggedId = draggedEl?.dataset?.id;
+            const draggedType = draggedEl?.dataset?.type;
+
+            const toContainer = evt.to;
+            const toParentRaw = toContainer?.dataset?.parentId;
+            const toParentId = (toParentRaw === "__root__") ? null : toParentRaw;
+
+            if (!draggedId) return true;
+
+            // Cannot drop into itself
+            if (toParentId === draggedId) return false;
+
+            if (draggedType === "group" && toParentId) {
+              // cannot drop group into its descendant
+              if (isDescendant(toParentId, draggedId)) return false;
+            }
+
+            return true;
+          },
+
+          onEnd: () => {
+            rebuildFromDOM();
+            render(); // refresh nested sortables
+          }
+        });
+
+        sortables.push(s);
+      });
+    };
+
+    const render = () => {
+      renderRoot();
+      initSortables();
+    };
+
+    // ---------------------------------------------------------
+    // 8) Global hooks used by inline onclick
+    // ---------------------------------------------------------
+    window.__toggle = (groupId) => {
+      if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
+      else collapsedGroups.add(groupId);
+      saveCollapsed();
+      render();
+    };
+
+    window.__copy = (href) => copyToClipboard(href);
+
+    window.__edit = (id) => {
+      const n = nodeById(id);
+      if (!n) return;
+      openModal(n, false);
+    };
+
+    window.__addChildGroup = (parentId) => {
+      openModal({ type:"group", id:"", title:"", parentId, notes:"", order:9999 }, true, "group");
+    };
+
+    // ---------------------------------------------------------
+    // 9) Events
+    // ---------------------------------------------------------
+    searchEl.addEventListener("input", (e) => {
+      filter = (e.target.value || "").trim().toLowerCase();
+      render();
+    });
+
+    expandAllBtn.addEventListener("click", () => setAllCollapsed(false));
+    collapseAllBtn.addEventListener("click", () => setAllCollapsed(true));
+
+    addGroupBtn.addEventListener("click", () => {
+      openModal({ type:"group", id:"", title:"", parentId:null, notes:"", order:9999 }, true, "group");
+    });
+
+    addTileBtn.addEventListener("click", () => {
+      openModal({ type:"tile", id:"", title:"", href:"", kind:"page", parentId:null, notes:"", order:9999 }, true, "tile");
+    });
+
+    closeModalBtn.addEventListener("click", closeModal);
+    modalBackdropEl.addEventListener("click", (e) => { if (e.target === modalBackdropEl) closeModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modalBackdropEl.hasAttribute("hidden")) closeModal();
+    });
+
+    fType.addEventListener("change", setTypeUI);
+
+    saveItemBtn.addEventListener("click", () => {
+      const type = (fType.value || "tile").trim();
+      const id = (fId.value || "").trim();
+      const title = (fTitle.value || "").trim();
+      const parentRaw = fParent.value;
+      const parentId = (parentRaw === "__root__") ? null : (parentRaw || null);
+
+      if (!id) return alert("ID is required (unique).");
+      if (!title) return alert("Title is required.");
+
+      if (!editingId && NODES.some(x => x.id === id)) {
+        alert("That ID already exists. Choose a unique ID.");
+        return;
+      }
+
+      // If editing and changing parent to invalid spot
+      if (editingId) {
+        const existing = nodeById(editingId);
+        if (existing?.type === "group" && parentId) {
+          if (parentId === editingId || isDescendant(parentId, editingId)) {
+            alert("A group cannot be moved into itself or its own descendant.");
+            return;
+          }
+        }
+      }
+
+      const href = (fHref.value || "").trim();
+      const kind = (fKind.value || "").trim();
+      const notes = (fNotes.value || "").trim();
+
+      if (type === "tile" && !href) return alert("Href is required for tiles.");
+
+      const finalId = editingId ? editingId : id;
+
+      if (editingId && id !== editingId) {
+        alert("ID cannot be changed while editing. Create a new item instead.");
+        return;
+      }
+
+      const existing = nodeById(finalId);
+      const updated = {
+        id: finalId,
+        type,
+        title,
+        parentId,
+        notes,
+        order: existing?.order ?? 9999,
+      };
+
+      if (type === "tile") {
+        updated.href = href;
+        updated.kind = kind;
+      } else {
+        delete updated.href;
+        delete updated.kind;
+      }
+
+      upsert(updated);
+      closeModal();
+    });
+
+    deleteItemBtn.addEventListener("click", () => {
+      if (!editingId) return;
+      if (!confirm("Delete this item? (Groups delete their entire subtree)")) return;
+      removeNode(editingId);
+      closeModal();
+    });
+
+    exportBtn.addEventListener("click", async () => {
+      const json = JSON.stringify(NODES, null, 2);
+      try {
+        await navigator.clipboard.writeText(json);
+        alert("Copied tree JSON to clipboard.");
+      } catch {
+        console.log(json);
+        alert("Could not copy automatically. Check console for JSON.");
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      if (!confirm("Clear saved edits on this device?")) return;
+      localStorage.removeItem(LS_NODES);
+      localStorage.removeItem(LS_COLLAPSED);
+      location.reload();
+    });
+
+    // ---------------------------------------------------------
+    // 10) Boot
+    // ---------------------------------------------------------
+    NODES = loadNodes();
+    collapsedGroups = loadCollapsed();
+    normalizeOrders();
+    saveNodes();
+    render();
+  </script>
+</body>
+</html>
+
