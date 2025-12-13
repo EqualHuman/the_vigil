@@ -623,6 +623,51 @@
       body::before, .node, .heroBanner::before{ animation:none !important; }
       .btn, .row, .toggle, .iconBtn{ transition:none !important; }
     }
+    .heroLinks { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+.heroNav   { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+
+.heroLinks a,
+.heroNav a{
+  color: inherit;
+  text-decoration: none;
+}
+
+.heroBtn{
+  display:inline-flex;
+  align-items:center;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  transition: transform .12s var(--ease), background .2s var(--ease);
+}
+.heroBtn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
+.heroBtnPrimary{
+  background: rgba(255,255,255,.92);
+  color: #060613;
+  border-color: rgba(255,255,255,.18);
+}
+.heroBtnPrimary:hover{ background: rgba(255,255,255,.96); }
+
+.heroPill{
+  display:inline-flex;
+  align-items:center;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  font-size:12px;
+  color: rgba(255,255,255,.82);
+}
+.heroPill:hover{ background: rgba(255,255,255,.09); }
+
+.heroPillAccent{
+  border-color: rgba(255,79,216,.35);
+  background: color-mix(in oklab, var(--accentC), transparent 88%);
+  color: rgba(255,255,255,.90);
+}
+ 
   </style>
 </head>
 
@@ -680,7 +725,6 @@
       </div>
 
       <div class="flex flex-col items-start gap-3 lg:items-end">
-        <div class="flex flex-wrap gap-2">
           <a
             href="#topics"
             class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 shadow hover:opacity-95"
