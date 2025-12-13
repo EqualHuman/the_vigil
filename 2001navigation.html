@@ -279,6 +279,10 @@
   .sigil::before{ animation:none !important; }
 }
 
+/* --- Simplified Tile Modal --- */
+.tile-only-hide{
+  display:none !important;
+}
 
     .heroBg{
       position:absolute; inset:-2px; z-index:0;
@@ -815,6 +819,7 @@
           <label class="field">
             <span>Parent</span>
             <select class="input" id="fParent"></select>
+            <label class="field tile-only-hide">
           </label>
         </div>
 
@@ -822,6 +827,7 @@
           <label class="field">
             <span>ID (unique)</span>
             <input class="input" id="fId" placeholder="unique-id" />
+            <label class="field tile-only-hide">
           </label>
 
           <label class="field">
@@ -839,12 +845,14 @@
           <label class="field">
             <span>Kind</span>
             <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+            <label class="field tile-only-hide">
           </label>
         </div>
 
         <label class="field">
           <span>Notes</span>
           <input class="input" id="fNotes" placeholder="Optional description" />
+          <label class="field tile-only-hide">
         </label>
 
         <div class="modalActions">
@@ -1339,12 +1347,19 @@
 
     saveItemBtn.addEventListener("click", () => {
       const type = (fType.value || "tile").trim();
-      const id = (fId.value || "").trim();
+let id = (fId.value || "").trim();
       const title = (fTitle.value || "").trim();
       const parentRaw = fParent.value;
-      const parentId = (parentRaw === "__root__") ? null : (parentRaw || null);
+const parentId = existing?.parentId ?? null;
 
-      if (!id) return alert("ID is required (unique).");
+
+   if (!id) {
+  id = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
       if (!title) return alert("Title is required.");
 
       if (!editingId && NODES.some(x => x.id === id)) {
