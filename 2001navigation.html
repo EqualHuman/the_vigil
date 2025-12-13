@@ -776,6 +776,8 @@
   { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3, "notes":"Do something constructive" },
   { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "kind":"donate", "notes":"", "parentId":"action", "order":1 }
 ]
+    { "type":"group", "id":"animals", "title":"Animals", "parentId":"topics", "order":1, "notes":"", "color":"#22d3ee" }
+
   </script>
 
   <!-- Modal -->
@@ -809,6 +811,12 @@
     <span>Hyperlink</span>
     <input class="input" id="fHref" placeholder="https://… or /path" />
   </label>
+
+        <label class="field" id="groupColorField">
+  <span>Group color</span>
+  <input class="input" id="fColor" type="color" value="#6d5efc" style="height:44px; padding:6px 10px;" />
+</label>
+
 
   <div class="modalActions">
     <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
@@ -860,6 +868,11 @@
     const fType = $("#fType");
     const fTitle = $("#fTitle");
     const fHref = $("#fHref");
+    const fColor = $("#fColor");
+const groupColorField = $("#groupColorField");
+    const accent = g.color ? `style="border-left: 6px solid ${escapeHtml(g.color)};"` : "";
+
+
     let filter = "";
     let editingId = null;
 
@@ -962,9 +975,16 @@
     const showModal = () => modalBackdrop.removeAttribute("hidden");
     const hideModal = () => modalBackdrop.setAttribute("hidden", "");
 
-  const setTypeUI = () => {
-  // Groups can have href/kind too
+const setTypeUI = () => {
+  const isGroup = fType.value === "group";
+  const isTile  = fType.value === "tile";
+
+  // Keep your href/kind fields visible if you want them for both.
+  // If you ONLY want hyperlink for both, keep tileFields visible.
   tileFields.style.display = "grid";
+
+  // Color only for groups
+  groupColorField.style.display = isGroup ? "grid" : "none";
 };
 
 
@@ -1004,6 +1024,8 @@
   fType.value  = forceType ?? (node.type || "tile");
   fTitle.value = node.title || "";
   fHref.value  = node.href  || "";
+     fColor.value = node.color || "#6d5efc";
+
 
   deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
 
@@ -1109,7 +1131,7 @@ const chip = `<span class="chip">Link</span>`;
       const indentClass = depth > 0 ? "indent" : "";
 
       return `
-        <div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group">
+<div class="node treeItem ${indentClass}" ${accent} ...
           <div class="nodeHeader">
             <div class="nodeHeaderLeft">
               <button class="twisty" type="button" aria-label="Toggle group"
@@ -1311,9 +1333,16 @@ const chip = `<span class="chip">Link</span>`;
   const type  = (fType.value || "tile").trim();   // group or tile
   const title = (fTitle.value || "").trim();
   const href  = (fHref.value || "").trim();
+      const color = (fColor?.value || "").trim();
+
 
   if (!title) return alert("Title is required.");
   if (!href)  return alert("Hyperlink is required.");
+      if (type === "group") {
+  if (color) updated.color = color;
+  else delete updated.color;
+}
+
 
   const slugify = (s) => s
     .toLowerCase()
