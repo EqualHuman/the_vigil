@@ -815,6 +815,102 @@
     .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
     .heroBanner::after, .heroDivider::after{ animation:none !important; }
   }
+
+/* =========================================================
+  WEBPAGE TASKS (per tile & group)
+========================================================== */
+.tasks{
+  margin-top:10px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.14);
+  padding:10px 10px 8px;
+}
+
+.tasksHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.tasksLabel{
+  font-size:10.5px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color: rgba(255,255,255,.62);
+  user-select:none;
+}
+
+.tasksAdd{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.78);
+  padding:6px 10px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:12px;
+}
+.tasksAdd:hover{ background: rgba(255,255,255,.09); }
+
+.taskList{
+  display:grid;
+  gap:6px;
+}
+
+.taskRow{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+}
+
+.taskRow:hover{ background: rgba(255,255,255,.055); }
+
+.taskCheck{
+  width:18px;
+  height:18px;
+  margin-top:1px;
+  accent-color: var(--accentB);
+  cursor:pointer;
+  flex:0 0 auto;
+}
+
+.taskText{
+  flex:1 1 auto;
+  font-size:12.5px;
+  color: rgba(255,255,255,.78);
+  line-height:1.35;
+  word-break: break-word;
+}
+.taskText.done{
+  opacity:.55;
+  text-decoration: line-through;
+}
+
+.taskDel{
+  width:30px;height:30px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+}
+.taskDel:hover{ background: rgba(255,255,255,.09); }
+
+.taskEmpty{
+  font-size:12.5px;
+  color: rgba(255,255,255,.55);
+  padding:6px 2px 2px;
+}
+
+  
 </style>
 
 
@@ -971,6 +1067,15 @@
       <span>Hyperlink</span>
       <input class="input" id="fHref" placeholder="https://… or /path" />
     </label>
+<label class="field">
+  <span>WEBPAGE TASKS (one per line)</span>
+  <textarea
+    class="input"
+    id="fTasks"
+    placeholder="- Draft copy&#10;- Add donate buttons&#10;- Proofread"
+    style="min-height:120px; resize:vertical; padding-top:10px;"
+  ></textarea>
+</label>
 
     <label class="field" id="groupColorField">
       <span>Group color</span>
@@ -1056,6 +1161,7 @@ const modalTitle = $("#modalTitle");
 
 const fType = $("#fType");
 const fTitle = $("#fTitle");
+  const fTasks = $("#fTasks");
 const fHref = $("#fHref");
 const fColor = $("#fColor");
 const groupColorField = $("#groupColorField");
@@ -1092,6 +1198,93 @@ const slugify = (s) => (s || "")
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/(^-|-$)/g, "");
 
+/* =========================================================
+  TASKS HELPERS
+========================================================== */
+const normalizeTasks = (node) => {
+  // Support older saved nodes that don't have tasks yet
+  if (!Array.isArray(node.tasks)) node.tasks = [];
+  // Support legacy string tasks if you ever stored that
+  if (typeof node.tasks === "string") node.tasks = [{ text: node.tasks, done:false }];
+};
+
+const tasksToTextarea = (tasks) => {
+  if (!Array.isArray(tasks) || !tasks.length) return "";
+  // Allow users to see completion in the editor
+  return tasks.map(t => `${t?.done ? "[x] " : ""}${t?.text ?? ""}`.trimEnd()).join("\n");
+};
+
+const textareaToTasks = (value) => {
+  const raw = (value || "").split("\n").map(s => s.trim()).filter(Boolean);
+  return raw.map(line => {
+    const done = /^\[x\]\s*/i.test(line) || /^-?\s*\[x\]\s*/i.test(line);
+    const text = line.replace(/^-?\s*\[x\]\s*/i, "").replace(/^\[x\]\s*/i, "").trim();
+    return { text, done };
+  }).filter(t => t.text);
+};
+
+const renderTasks = (node) => {
+  const tasks = Array.isArray(node.tasks) ? node.tasks : [];
+  const rows = tasks.length
+    ? `<div class="taskList">${
+        tasks.map((t, idx) => `
+          <div class="taskRow">
+            <input class="taskCheck" type="checkbox"
+              ${t.done ? "checked" : ""}
+              onclick="window.__taskToggle('${escapeHtml(node.id).replaceAll("'","&#039;")}', ${idx})"
+              aria-label="Mark task done" />
+            <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
+            <button class="taskDel" type="button"
+              onclick="window.__taskDelete('${escapeHtml(node.id).replaceAll("'","&#039;")}', ${idx})"
+              aria-label="Delete task">✕</button>
+          </div>
+        `).join("")
+      }</div>`
+    : `<div class="taskEmpty">No tasks yet.</div>`;
+
+  return `
+    <div class="tasks" aria-label="Webpage tasks">
+      <div class="tasksHead">
+        <div class="tasksLabel">WEBPAGE TASKS</div>
+        <button class="tasksAdd" type="button"
+          onclick="window.__taskAdd('${escapeHtml(node.id).replaceAll("'","&#039;")}')">＋ Add task</button>
+      </div>
+      ${rows}
+    </div>
+  `;
+};
+
+// Inline hooks
+window.__taskAdd = (id) => {
+  const n = nodeById(id);
+  if (!n) return;
+  normalizeTasks(n);
+  const text = prompt("New task:");
+  if (!text || !text.trim()) return;
+  n.tasks.push({ text: text.trim(), done:false });
+  saveNodes();
+  render();
+};
+
+window.__taskToggle = (id, idx) => {
+  const n = nodeById(id);
+  if (!n) return;
+  normalizeTasks(n);
+  const t = n.tasks[idx];
+  if (!t) return;
+  t.done = !t.done;
+  saveNodes();
+  render();
+};
+
+window.__taskDelete = (id, idx) => {
+  const n = nodeById(id);
+  if (!n) return;
+  normalizeTasks(n);
+  n.tasks.splice(idx, 1);
+  saveNodes();
+  render();
+};
 
 /* =========================================================
   5) LOAD / SAVE
@@ -1157,9 +1350,12 @@ const normalizeOrders = () => {
 ========================================================== */
 const matchNode = (n) => {
   if (!filter) return true;
-  const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""}`.toLowerCase();
+  normalizeTasks(n);
+  const taskText = (n.tasks || []).map(t => t.text).join(" ");
+  const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""} ${taskText}`.toLowerCase();
   return hay.includes(filter);
 };
+
 
 const visibleSetForFilter = () => {
   if (!filter) return null;
@@ -1228,6 +1424,10 @@ const openModal = (node, isNew, forceType = null) => {
   fTitle.value = node.title || "";
   fHref.value  = node.href  || "";
   fColor.value = node.color || "#6d5efc";
+  
+  normalizeTasks(node);
+fTasks.value = tasksToTextarea(node.tasks);
+
 
   deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
 
@@ -1314,6 +1514,7 @@ const renderTile = (n) => {
           <div class="url">${escapeHtml(href)}</div>
         </a>
         ${notes}
+        ${renderTasks(n)}
       </div>
 
       <div class="actions">
@@ -1378,6 +1579,7 @@ const renderGroup = (g, visibleSet, depth) => {
             })()}
 
             ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
+            ${renderTasks(g)}
           </div>
         </div>
 
@@ -1632,6 +1834,7 @@ saveItemBtn.addEventListener("click", () => {
     href,
     parentId: existing?.parentId ?? draftParentId ?? null,
     order: existing?.order ?? draftOrder ?? 9999,
+     tasks: textareaToTasks(fTasks.value),
   };
 
   if (type === "group") updated.color = color || "#6d5efc";
@@ -1675,6 +1878,7 @@ resetBtn.addEventListener("click", () => {
 ========================================================== */
 NODES = loadNodes();
 collapsedGroups = loadCollapsed();
+  NODES.forEach(normalizeTasks);
 normalizeOrders();
 saveNodes();
 setTypeUI();
