@@ -904,37 +904,41 @@ body::before{
   <!-- Toolbar -->
 <div class="toolbar" id="top">
 
-  <!-- Section title -->
+  <!-- Left: section title -->
   <div class="toolbarTitle">
     Webpage Navigation
   </div>
 
-  <!-- Actions bar -->
-  <div class="leftTools">
+  <!-- Center: search -->
+  <div class="toolbarCenter">
+    <label class="sr-only" for="search">Search</label>
+    <input
+      class="input"
+      id="search"
+      type="search"
+      placeholder="Search titles, URLs, notes…"
+    />
+  </div>
+
+  <!-- Right: Add + Actions -->
+  <div class="toolbarRight">
+    <button class="btn" id="addItem" type="button">＋ Add</button>
 
     <details class="menu" id="actionsMenu">
       <summary class="btn" aria-label="Actions">☰ Actions</summary>
 
       <div class="menuList" role="menu" aria-label="Toolbar actions">
-        <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
-        <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
-        <div class="menuSep" aria-hidden="true"></div>
-        <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
-        <button class="btn menuItem" id="resetEdits" type="button" role="menuitem" title="Clears saved edits on this device">
-          ↺ Reset edits
-        </button>
+        <button class="btn menuItem" id="expandAll">▾ Expand all</button>
+        <button class="btn menuItem" id="collapseAll">▸ Collapse all</button>
+        <div class="menuSep"></div>
+        <button class="btn menuItem" id="exportJson">⇪ Export JSON</button>
+        <button class="btn menuItem" id="resetEdits">↺ Reset edits</button>
       </div>
     </details>
   </div>
 
-  <!-- Right controls (stay OUTSIDE Actions) -->
-  <div class="rightTools">
-    <label class="sr-only" for="search">Search</label>
-    <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
-    <button class="btn" id="addItem" type="button">＋ Add</button>
-  </div>
-
 </div>
+
 
 
   <!-- Tree mount point -->
