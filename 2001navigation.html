@@ -807,53 +807,52 @@
 
       <div class="modalBody">
 
-        <div class="grid2">
-          <label class="field">
-            <span>Type</span>
-            <select class="input" id="fType">
-              <option value="group">Group</option>
-              <option value="tile">Tile</option>
-            </select>
-          </label>
+   <div class="grid2">
+  <label class="field">
+    <span>Type</span>
+    <select class="input" id="fType">
+      <option value="group">Group</option>
+      <option value="tile">Tile</option>
+    </select>
+  </label>
 
-          <label class="field">
-            <span>Parent</span>
-            <select class="input" id="fParent"></select>
-            <label class="field tile-only-hide">
-          </label>
-        </div>
+  <label class="field">
+    <span>Parent</span>
+    <select class="input" id="fParent"></select>
+  </label>
+</div>
 
-        <div class="grid2">
-          <label class="field">
-            <span>ID (unique)</span>
-            <input class="input" id="fId" placeholder="unique-id" />
-            <label class="field tile-only-hide">
-          </label>
 
-          <label class="field">
-            <span>Title</span>
-            <input class="input" id="fTitle" placeholder="Title" />
-          </label>
-        </div>
+       <div class="grid2">
+  <label class="field">
+    <span>ID (unique)</span>
+    <input class="input" id="fId" placeholder="unique-id" />
+  </label>
 
-        <div class="grid2" id="tileFields">
-          <label class="field">
-            <span>Href</span>
-            <input class="input" id="fHref" placeholder="https://…" />
-          </label>
+  <label class="field">
+    <span>Title</span>
+    <input class="input" id="fTitle" placeholder="Title" />
+  </label>
+</div>
 
-          <label class="field">
-            <span>Kind</span>
-            <input class="input" id="fKind" placeholder="page / section / donate / resource" />
-            <label class="field tile-only-hide">
-          </label>
-        </div>
 
-        <label class="field">
-          <span>Notes</span>
-          <input class="input" id="fNotes" placeholder="Optional description" />
-          <label class="field tile-only-hide">
-        </label>
+     <div class="grid2" id="tileFields">
+  <label class="field">
+    <span>Href</span>
+    <input class="input" id="fHref" placeholder="https://…" />
+  </label>
+
+  <label class="field">
+    <span>Kind</span>
+    <input class="input" id="fKind" placeholder="page / section / donate / resource" />
+  </label>
+</div>
+
+<label class="field">
+  <span>Notes</span>
+  <input class="input" id="fNotes" placeholder="Optional description" />
+</label>
+
 
         <div class="modalActions">
           <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
@@ -1350,7 +1349,8 @@
 let id = (fId.value || "").trim();
       const title = (fTitle.value || "").trim();
       const parentRaw = fParent.value;
-const parentId = existing?.parentId ?? null;
+const parentId = (parentRaw === "__root__") ? null : parentRaw;
+
 
 
    if (!id) {
