@@ -1040,6 +1040,19 @@
           <div id="modalTitle" class="modalTitle">Item</div>
         </div>
 
+<div class="modalBackdrop" id="tasksBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modalHead">
+      <div>
+        <div class="kicker">WEBPAGE TASKS</div>
+        <div id="tasksTitle" class="modalTitle"></div>
+      </div>
+      <button class="iconBtn" id="closeTasks" type="button">✕</button>
+    </div>
+
+    <div class="modalBody" id="tasksBody"></div>
+  </div>
+</div>
 
         
     <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
@@ -1148,6 +1161,10 @@ const resetBtn = $("#resetEdits");
   if (actionsMenu && actionsMenu.open) actionsMenu.open = false;
 };
 
+const tasksBackdrop = $("#tasksBackdrop");
+const tasksTitle = $("#tasksTitle");
+const tasksBody = $("#tasksBody");
+const closeTasksBtn = $("#closeTasks");
 
 
 // Modal elements
@@ -1221,6 +1238,17 @@ const textareaToTasks = (value) => {
     const text = line.replace(/^-?\s*\[x\]\s*/i, "").replace(/^\[x\]\s*/i, "").trim();
     return { text, done };
   }).filter(t => t.text);
+};
+window.__openTasks = (id) => {
+  const n = nodeById(id);
+  if (!n) return;
+
+  normalizeTasks(n);
+
+  tasksTitle.textContent = n.title || "(untitled)";
+  tasksBody.innerHTML = renderTasks(n);
+
+  tasksBackdrop.removeAttribute("hidden");
 };
 
 const renderTasks = (node) => {
@@ -1438,6 +1466,14 @@ const closeModal = () => {
   hideModal();
   editingId = null;
 };
+closeTasksBtn.addEventListener("click", () => {
+  tasksBackdrop.setAttribute("hidden","");
+});
+
+tasksBackdrop.addEventListener("click", (e) => {
+  if (e.target === tasksBackdrop)
+    tasksBackdrop.setAttribute("hidden","");
+});
 
 
 /* =========================================================
@@ -1514,10 +1550,13 @@ const renderTile = (n) => {
           <div class="url">${escapeHtml(href)}</div>
         </a>
         ${notes}
-        ${renderTasks(n)}
       </div>
 
       <div class="actions">
+      <button class="iconBtn" type="button"
+  onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')"
+  aria-label="Open tasks">🧾</button>
+
         <button class="iconBtn" type="button"
           onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
 
@@ -1584,6 +1623,10 @@ const renderGroup = (g, visibleSet, depth) => {
         </div>
 
         <div class="actions">
+        <button class="iconBtn" type="button"
+  onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')"
+  aria-label="Open tasks">🧾</button>
+
           <button class="iconBtn" type="button"
             onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
 
