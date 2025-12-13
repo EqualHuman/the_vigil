@@ -1766,14 +1766,14 @@ const renderTile = (n) => {
   return `
     <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
       <div class="tileMain">
-        <a href="${escapeHtml(href)}" ${target}
-           style="text-decoration:none; color:inherit; display:block;">
-          <div class="tileTitleLine">
-            <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
-            ${chip}
-          </div>
-          <div class="url">${escapeHtml(href)}</div>
-        </a>
+       <a href="${escapeHtml(href)}" ${target}
+   style="text-decoration:none; color:inherit;">
+  <div class="tileTitleLine">
+    <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
+    ${chip}
+  </div>
+</a>
+
         ${notes}
       </div>
 
@@ -1786,8 +1786,12 @@ const renderTile = (n) => {
         <button class="iconBtn" type="button"
           onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
 
-        <button class="iconBtn" type="button"
-          onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}')">⧉</button>
+      <button class="iconBtn" type="button"
+  onclick="window.__copy(
+    '${escapeHtml(href).replaceAll("'","&#039;")}',
+    '${escapeHtml(n.title || "").replaceAll("'","&#039;")}'
+  )">⧉</button>
+
 
         <div class="dragHandle" role="button" tabindex="0"
              aria-label="Drag to move tile"
@@ -1831,16 +1835,16 @@ const renderGroup = (g, visibleSet, depth) => {
               const title = escapeHtml(g.title || "(group)");
               const href = g.href;
 
-              if (!href) return `<div class="nodeTitle">${title}</div>`;
+            if (!href) return `<div class="nodeTitle">${title}</div>`;
 
-              const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
-              return `
-                <a class="nodeTitle" href="${escapeHtml(href)}" ${target}
-                   style="text-decoration:none; color:inherit;">
-                  ${title}
-                </a>
-                <div class="url" style="margin-top:4px">${escapeHtml(href)}</div>
-              `;
+const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+return `
+  <a class="nodeTitle" href="${escapeHtml(href)}" ${target}
+     style="text-decoration:none; color:inherit;">
+    ${title}
+  </a>
+`;
+
             })()}
 
             ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
@@ -1856,8 +1860,12 @@ const renderGroup = (g, visibleSet, depth) => {
           <button class="iconBtn" type="button"
             onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
 
-          <button class="iconBtn" type="button"
-            onclick="window.__copy('${escapeHtml(g.href || "").replaceAll("'","&#039;")}')">⧉</button>
+         <button class="iconBtn" type="button"
+  onclick="window.__copy(
+    '${escapeHtml(g.href || "").replaceAll("'","&#039;")}',
+    '${escapeHtml(g.title || "").replaceAll("'","&#039;")}'
+  )">⧉</button>
+
 
           <div class="dragHandle" role="button" tabindex="0"
                aria-label="Drag to move group"
@@ -1997,7 +2005,11 @@ window.__toggle = (groupId) => {
   render();
 };
 
-window.__copy = (href) => copyToClipboard(href);
+window.__copy = (href, title) => {
+  if (!href) return;
+  const html = `<a href="${href}" target="_blank" rel="noopener noreferrer">${title || href}</a>`;
+  copyToClipboard(html);
+};
 
 window.__edit = (id) => {
   const n = nodeById(id);
