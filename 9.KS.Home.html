@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Knotte Studios | Wedding Websites & Pages</title>
+  <meta name="description" content="Knotte Studios builds elegant, modern wedding websites and RSVP pages that feel like you." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Knotte Studios home">
+        <span class="brandMark">K</span>
+        <span class="brandText">Knotte Studios</span>
+      </a>
+
+      <nav class="links" aria-label="Primary">
+        <a href="#packages">Packages</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btnSmall" href="#contact">Book</a>
+      </nav>
+
+      <button class="menuBtn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        ☰
+      </button>
+    </div>
+
+    <div class="mobileMenu" id="mobileMenu" aria-hidden="true">
+      <a href="#packages">Packages</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#contact">Book</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container heroGrid">
+        <div>
+          <p class="pill">Wedding websites • RSVP pages • Digital details</p>
+          <h1>Elegant wedding sites that look expensive — without the stress.</h1>
+          <p class="subhead">
+            Knotte Studios designs modern, mobile-friendly wedding websites that feel cohesive with your vibe.
+            Clear info, smooth RSVP, and a link you’ll be proud to text to everyone.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn" href="#packages">View Packages</a>
+            <a class="btn btnGhost" href="#work">See Examples</a>
+          </div>
+
+          <div class="trustRow">
+            <div class="trustCard">
+              <strong>Fast turnaround</strong>
+              <span>Most builds in 3–7 days</span>
+            </div>
+            <div class="trustCard">
+              <strong>Mobile-first</strong>
+              <span>Designed for thumbs + links</span>
+            </div>
+            <div class="trustCard">
+              <strong>Easy edits</strong>
+              <span>Simple update options</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mockWrap" aria-label="Website mock preview">
+          <div class="mock">
+            <div class="mockTop">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="mockBody">
+              <div class="mockHero"></div>
+              <div class="mockLine"></div>
+              <div class="mockLine short"></div>
+              <div class="mockGrid">
+                <div class="mockCard"></div>
+                <div class="mockCard"></div>
+              </div>
+              <div class="mockLine"></div>
+              <div class="mockLine short"></div>
+            </div>
+          </div>
+          <p class="mockNote">Your real site will match your colors, fonts, and wedding style.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section id="packages" class="section">
+      <div class="container">
+        <div class="sectionHead">
+          <h2>Packages</h2>
+          <p>Pick the vibe. I’ll handle the build.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <h3>Signature Page</h3>
+            <p class="price">$249</p>
+            <p class="muted">A beautiful one-page site with all the essentials.</p>
+            <ul>
+              <li>Welcome + story</li>
+              <li>Date/time/location</li>
+              <li>Schedule / timeline</li>
+              <li>Registry links</li>
+              <li>Dress code & FAQ</li>
+            </ul>
+            <a class="btn btnFull" href="#contact" data-package="Signature Page">Book Signature</a>
+          </article>
+
+          <article class="card featured">
+            <div class="badge">Most Popular</div>
+            <h3>RSVP + Guest Flow</h3>
+            <p class="price">$399</p>
+            <p class="muted">Everything in Signature, plus RSVP + guest info flow.</p>
+            <ul>
+              <li>Custom RSVP form (Google Form or similar)</li>
+              <li>Meal choices / allergies</li>
+              <li>Plus-one handling</li>
+              <li>Confirmation message</li>
+              <li>Exportable guest list</li>
+            </ul>
+            <a class="btn btnFull" href="#contact" data-package="RSVP + Guest Flow">Book RSVP</a>
+          </article>
+
+          <article class="card">
+            <h3>Full Wedding Site</h3>
+            <p class="price">$649</p>
+            <p class="muted">Multi-page experience for travel, events, and details.</p>
+            <ul>
+              <li>Home + separate pages (3–6)</li>
+              <li>Travel / hotel block</li>
+              <li>Wedding party page</li>
+              <li>Events (welcome, rehearsal, brunch)</li>
+              <li>Custom domain support</li>
+            </ul>
+            <a class="btn btnFull" href="#contact" data-package="Full Wedding Site">Book Full Site</a>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Add-ons:</strong> custom domain setup, photo gallery, password-protected page, extra events, rush delivery.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" class="section alt">
+      <div class="container">
+        <div class="sectionHead">
+          <h2>Example Styles</h2>
+          <p>Swap these for real client screenshots as you build them.</p>
+        </div>
+
+        <div class="gallery">
+          <div class="shot">
+            <div class="shotImg s1"></div>
+            <div class="shotMeta">
+              <strong>Modern Minimal</strong>
+              <span>Clean, airy, timeless</span>
+            </div>
+          </div>
+          <div class="shot">
+            <div class="shotImg s2"></div>
+            <div class="shotMeta">
+              <strong>Romantic Editorial</strong>
+              <span>Soft, elevated, couture</span>
+            </div>
+          </div>
+          <div class="shot">
+            <div class="shotImg s3"></div>
+            <div class="shotMeta">
+              <strong>Bold & Playful</strong>
+              <span>Color-forward, fun details</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="section">
+      <div class="container">
+        <div class="sectionHead">
+          <h2>How it works</h2>
+          <p>Simple, organized, and no chaos in your inbox.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="stepNum">1</span>
+            <div>
+              <strong>Send your details</strong>
+              <p class="muted">You fill out a short form with your info, links, and style inspo.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="stepNum">2</span>
+            <div>
+              <strong>I design + build</strong>
+              <p class="muted">You get a first draft fast. We do one tidy revision round.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="stepNum">3</span>
+            <div>
+              <strong>Launch + share</strong>
+              <p class="muted">You get a link to share, plus help with domain setup if needed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section alt">
+      <div class="container">
+        <div class="sectionHead">
+          <h2>FAQ</h2>
+          <p>Quick answers before you book.</p>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>Do you host the website?</summary>
+            <p class="muted">Yes — I can host it on GitHub Pages (free) or help connect a custom domain. You can also host elsewhere if you prefer.</p>
+          </details>
+          <details>
+            <summary>Can guests RSVP on the site?</summary>
+            <p class="muted">Absolutely. I typically connect a clean RSVP form (like Google Forms) so you can easily view responses and export a list.</p>
+          </details>
+          <details>
+            <summary>What do you need from me?</summary>
+            <p class="muted">Names, date, venue details, schedule, registry links, and any photos. I’ll send a simple checklist after booking.</p>
+          </details>
+          <details>
+            <summary>Can I update it later?</summary>
+            <p class="muted">Yes. You can book a small update add-on, or I can set it up so you can edit certain text easily.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container contactGrid">
+        <div>
+          <h2>Book Knotte Studios</h2>
+          <p class="muted">
+            Ready? Tell me your date + what package you want. I’ll reply with next steps and a quick intake form.
+          </p>
+
+          <div class="contactCards">
+            <div class="contactCard">
+              <strong>Email</strong>
+              <a id="emailLink" href="mailto:hello@knottestudios.com?subject=Wedding%20Website%20Inquiry%20-%20Knotte%20Studios&body=Hi%20Knotte%20Studios!%0A%0AWedding%20date:%20%0APackage:%20%0AVenue%20city/state:%20%0AColors/vibe:%20%0AAny%20links%20(inspo/registry):%20%0A%0AThanks!">hello@knottestudios.com</a>
+              <span class="muted">Replace with your real email.</span>
+            </div>
+
+            <div class="contactCard">
+              <strong>Turnaround</strong>
+              <span>3–7 days typical</span>
+              <span class="muted">Rush options available</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="form" id="contactForm">
+          <label>
+            Your name
+            <input required name="name" placeholder="Jane Doe" />
+          </label>
+          <label>
+            Email
+            <input required type="email" name="email" placeholder="jane@email.com" />
+          </label>
+          <label>
+            Wedding date
+            <input name="date" placeholder="MM/DD/YYYY" />
+          </label>
+          <label>
+            Package
+            <select name="package" id="packageSelect">
+              <option>Signature Page</option>
+              <option>RSVP + Guest Flow</option>
+              <option>Full Wedding Site</option>
+            </select>
+          </label>
+          <label>
+            Details
+            <textarea name="details" rows="5" placeholder="Venue city/state, vibe, colors, links (registry/inspo), anything important…"></textarea>
+          </label>
+
+          <button class="btn btnFull" type="submit">Send Inquiry</button>
+          <p class="tiny muted">
+            This sends an email draft from your device (no form backend needed).
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container foot">
+      <span>© <span id="year"></span> Knotte Studios</span>
+      <span class="muted">Wedding websites • RSVP pages • Digital details</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
