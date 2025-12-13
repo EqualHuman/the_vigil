@@ -1589,6 +1589,10 @@ select{
             <span>Hyperlink</span>
             <input class="input" id="fHref" placeholder="https://… or /path" />
           </label>
+<label class="field">
+  <span>Intended Link (optional)</span>
+  <input class="input" id="fIntendedLink" placeholder="https://… or /path (can be blank)" />
+</label>
 
           <label class="field">
             <span>WEBPAGE TASKS (one per line)</span>
@@ -1658,6 +1662,7 @@ const fTitle = $("#fTitle");
 const fHref = $("#fHref");
 const fTasks = $("#fTasks");
 const fColor = $("#fColor");
+  const fIntendedLink = $("#fIntendedLink");
 const groupColorField = $("#groupColorField");
 
 const nbTitle = $("#nbTitle");
@@ -1810,7 +1815,7 @@ const matchNode = (n) => {
   if (!filter) return true;
   normalizeTasks(n);
   const taskText = (n.tasks || []).map(t => t.text).join(" ");
-  const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${taskText}`.toLowerCase();
+const hay = `${n.title||""} ${n.href||""} ${n.intendedLink||""} ${n.notes||""} ${taskText}`.toLowerCase();
   return hay.includes(filter);
 };
 
@@ -1877,6 +1882,7 @@ const openModal = (node, isNew, forceType = null) => {
 
   fTitle.value = node.title || "";
   fHref.value  = node.href  || "";
+  fIntendedLink.value = node.intendedLink || "";
   fColor.value = node.color || "#6d5efc";
 
   normalizeTasks(node);
@@ -2372,6 +2378,8 @@ saveItemBtn.addEventListener("click", () => {
   const type  = (fType.value || "tile").trim();
   const title = (fTitle.value || "").trim();
   const href  = (fHref.value || "").trim();
+  const intendedLink = (fIntendedLink?.value || "").trim();
+
   const color = (fColor?.value || "").trim();
 
   if (!title) return alert("Title is required.");
@@ -2396,6 +2404,8 @@ saveItemBtn.addEventListener("click", () => {
     order: existing?.order ?? draftOrder ?? 9999,
     tasks: textareaToTasks(fTasks.value),
   };
+if (intendedLink) updated.intendedLink = intendedLink;
+else delete updated.intendedLink;
 
   if (type === "group") updated.color = color || "#6d5efc";
   else delete updated.color;
