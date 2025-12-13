@@ -115,9 +115,13 @@
 }
 
 .heroStars{
-  opacity:.22;
+  opacity:.18;
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  z-index:0;
   background:
-    radial-gradient(1px 1px at 8% 22%, rgba(255,255,255,.55) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 8% 22%,  rgba(255,255,255,.55) 0 60%, transparent 65%),
     radial-gradient(1px 1px at 26% 14%, rgba(255,255,255,.35) 0 60%, transparent 65%),
     radial-gradient(1px 1px at 44% 34%, rgba(255,255,255,.40) 0 60%, transparent 65%),
     radial-gradient(1px 1px at 62% 18%, rgba(255,255,255,.55) 0 60%, transparent 65%),
@@ -131,20 +135,64 @@
   transform: translateZ(0);
 }
 
+/* two extra “sparkle layers” */
+.heroStars::before,
+.heroStars::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.55) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 22% 52%, rgba(255,255,255,.35) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 41% 12%, rgba(255,255,255,.45) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 56% 46%, rgba(255,255,255,.38) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 71% 22%, rgba(255,255,255,.50) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 86% 58%, rgba(255,255,255,.32) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 64% 86%, rgba(255,255,255,.44) 0 60%, transparent 65%),
+    radial-gradient(1px 1px at 18% 86%, rgba(255,255,255,.30) 0 60%, transparent 65%);
+  filter: blur(.15px);
+  opacity:.0;
+}
+
+.heroStars::before{ animation: twinkleA 6s var(--ease) infinite; }
+.heroStars::after { animation: twinkleB 8s var(--ease) infinite; }
+
+@keyframes twinkleA{
+  0%, 100% { opacity: .05; transform: translate3d(0,0,0); }
+  35%      { opacity: .18; }
+  60%      { opacity: .08; transform: translate3d(1px,-1px,0); }
+}
+
+@keyframes twinkleB{
+  0%, 100% { opacity: .03; transform: translate3d(0,0,0); }
+  25%      { opacity: .14; }
+  55%      { opacity: .06; transform: translate3d(-1px,1px,0); }
+}
+
 .heroAurora{
-  opacity:.9;
+  opacity:.45;                 /* was .9 */
   mix-blend-mode: screen;
   background:
-    radial-gradient(700px 280px at 20% 30%, rgba(34,211,238,.25), transparent 60%),
-    radial-gradient(780px 320px at 80% 26%, rgba(109,94,252,.22), transparent 62%),
-    radial-gradient(820px 340px at 52% 105%, rgba(255,79,216,.18), transparent 62%);
-  filter: blur(16px) saturate(1.15);
-  animation: auroraFloat 10s var(--ease) infinite alternate;
+    radial-gradient(700px 280px at 20% 30%, rgba(34,211,238,.12), transparent 62%),
+    radial-gradient(780px 320px at 80% 26%, rgba(109,94,252,.10), transparent 64%),
+    radial-gradient(820px 340px at 52% 105%, rgba(255,79,216,.08), transparent 66%);
+  filter: blur(18px) saturate(.9); /* was saturate(1.15) */
+  animation: auroraFloat 14s var(--ease) infinite alternate; /* slower */
+}
+
+.heroBanner::before{
+  opacity:.28;                 /* was .65 */
+  animation: heroSweep 14s var(--ease) infinite; /* slower */
 }
 
 @keyframes auroraFloat{
   from{ transform: translate3d(-10px,-8px,0) scale(1.02); }
   to  { transform: translate3d(14px,10px,0) scale(1.06); }
+}
+
+    @media (prefers-reduced-motion: reduce){
+  .heroStars::before,
+  .heroStars::after{ animation:none !important; opacity:.08; }
 }
 
 .heroNoise{
