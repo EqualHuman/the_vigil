@@ -382,10 +382,21 @@
   }
 
   /* Force Actions dropdown to sit inline with Add button */
-  .toolbarRight details{
-    display:inline-flex;
-    align-items:center;
-  }
+/* Keep Add + Actions side by side */
+.toolbarRight{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.toolbarRight > *{
+  flex:0 0 auto;
+}
+
+.toolbarRight details{
+  display:flex;
+  align-items:center;
+}
 
   /* =========================================================
     5) BUTTONS + INPUTS
@@ -961,6 +972,9 @@
   background: rgba(34,211,238,.08);
 }
 
+.toolbarRight{
+  gap:8px;
+}
 
 </style>
 
@@ -2135,6 +2149,13 @@ resetBtn.addEventListener("click", () => {
   localStorage.removeItem(LS_NODES);
   localStorage.removeItem(LS_COLLAPSED);
   location.reload();
+});
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "nbResetSelected") {
+    selectedTaskIds.clear();
+    saveSelectedTasks();
+    render();
+  }
 });
 
 
