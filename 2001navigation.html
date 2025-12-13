@@ -934,6 +934,75 @@ select.input{ appearance:none; }
   .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
   .heroBanner::after{ animation:none !important; }
 }
+
+/* =========================================================
+  TOOLBAR: buttons above search (clean header)
+========================================================== */
+
+/* Make toolbar a 2-row grid */
+.toolbar{
+  display:grid !important;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "title actions"
+    "search search";
+  gap:10px 12px !important;
+  align-items:center;
+}
+
+/* Place items */
+.toolbarTitle{ grid-area:title; border-right:none !important; padding-right:0 !important; }
+
+.toolbarRight{
+  grid-area:actions;
+  margin-left:0 !important;
+  justify-content:flex-end;
+}
+
+.toolbarCenter{
+  grid-area:search;
+  justify-content:flex-start !important;
+}
+
+/* Make search span nicely */
+.toolbarCenter .input{
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Optional: on small screens keep title + buttons neat */
+@media (max-width: 560px){
+  .toolbar{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "actions"
+      "search";
+  }
+  .toolbarRight{ justify-content:flex-start; }
+}
+
+
+/* =========================================================
+  HERO: shiny bars flush to banner edge
+========================================================== */
+.heroLaser{
+  left:0 !important;
+  right:0 !important;
+  border-radius: 999px;
+}
+
+.heroLaserTop{ top:0 !important; }
+.heroLaserBottom{ bottom:0 !important; }
+
+/* Give inner content a hair more breathing room now that lasers are on the edge */
+.heroInner{
+  padding-top: 22px !important;
+  padding-bottom: 22px !important;
+}
+
+  
 </style>
 
   
