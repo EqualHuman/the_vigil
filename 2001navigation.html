@@ -1116,6 +1116,170 @@ select.input{ appearance:none; }
 .dragHandle{
   border-radius: 14px;
 }
+/* =========================================================
+  TYPOGRAPHY THEME + PRIMARY BUTTON HALO
+  (paste at bottom of <style>)
+========================================================== */
+
+/* ---- Type tokens (one source of truth) ---- */
+:root{
+  /* Families */
+  --font-display: var(--serif); /* Cormorant Garamond */
+  --font-ui: var(--sans);       /* Space Grotesk */
+  --font-mono: var(--mono);     /* JetBrains Mono */
+
+  /* Sizing */
+  --fs-0: 12px;   /* micro */
+  --fs-1: 13px;   /* default small */
+  --fs-2: 15px;   /* body */
+  --fs-3: 18px;   /* section titles */
+  --fs-4: 22px;   /* card titles */
+
+  /* Tracking */
+  --trk-tight: -0.01em;
+  --trk-ui: 0.04em;
+  --trk-kicker: 0.28em;
+
+  /* Line heights */
+  --lh-tight: 1.05;
+  --lh-body: 1.5;
+}
+
+/* ---- Global base ---- */
+html, body{
+  font-family: var(--font-ui);
+  font-size: var(--fs-2);
+  line-height: var(--lh-body);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection{
+  background: rgba(34,211,238,.22);
+}
+
+/* ---- Brand / Hero ---- */
+.heroTitle{
+  font-family: var(--font-display) !important;
+  letter-spacing: .10em !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  line-height: .95;
+}
+
+.heroSubtitle{
+  font-family: var(--font-ui) !important;
+  font-size: var(--fs-0) !important;
+  letter-spacing: var(--trk-kicker) !important;
+  text-transform: uppercase;
+  opacity: .85;
+}
+
+/* ---- Section headers / labels ---- */
+.toolbarTitle,
+.kicker,
+.tasksLabel{
+  font-family: var(--font-ui) !important;
+  letter-spacing: var(--trk-kicker) !important;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.nodeTitle,
+.tileTitle,
+.notebookTitle,
+.modalTitle{
+  font-family: var(--font-ui) !important;
+  letter-spacing: var(--trk-tight);
+}
+
+/* ---- Body text ---- */
+.notes,
+.taskText,
+.taskEmpty,
+.meta{
+  font-family: var(--font-ui) !important;
+  font-size: var(--fs-1);
+  line-height: 1.45;
+}
+
+/* ---- URLs / code-ish text ---- */
+.url,
+input[type="search"],
+input[type="text"],
+textarea,
+select{
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* ---- Buttons (unified feel) ---- */
+.btn{
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: none; /* keep buttons readable */
+}
+
+/* =========================================================
+  GLOWING HALO ON THE FIRST TOP BUTTON (＋ Add)
+========================================================== */
+
+/* If you want it specifically on the Add button */
+#addItem{
+  position: relative;
+  border-color: rgba(34,211,238,.42) !important;
+  background: linear-gradient(180deg, rgba(34,211,238,.22), rgba(109,94,252,.12)) !important;
+  box-shadow:
+    0 18px 65px rgba(0,0,0,.45),
+    0 0 0 3px rgba(34,211,238,.18),
+    0 0 22px rgba(34,211,238,.25) !important;
+}
+
+/* The halo itself */
+#addItem::before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:999px;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 35% 35%,
+      rgba(255,255,255,.28),
+      rgba(34,211,238,.22) 35%,
+      rgba(109,94,252,.18) 60%,
+      transparent 75%
+    );
+  filter: blur(10px);
+  opacity: .9;
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+
+#addItem:hover::before{
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+#addItem:active::before{
+  opacity: .75;
+  transform: scale(.99);
+}
+
+#addItem:focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 3px rgba(34,211,238,.28),
+    0 0 28px rgba(34,211,238,.30),
+    0 18px 65px rgba(0,0,0,.45) !important;
+}
+
+/* Optional: ensure the halo doesn't get clipped by header overflow
+   (keep if your halo looks “cut off”) */
+.toolbar{
+  overflow: visible !important;
+}
 
   
 </style>
