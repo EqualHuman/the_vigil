@@ -457,6 +457,19 @@
       color: rgba(255,255,255,.65);
       font-size:12.5px;
     }
+    .dropHint{
+  cursor:pointer;
+  text-align:left;
+}
+.dropHint:hover{
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.30);
+}
+.dropHint:focus-visible{
+  outline:none;
+  box-shadow: var(--ring);
+}
+
 
     .node{
       border-radius:18px;
@@ -1079,6 +1092,26 @@ draftOrder = isNew ? (node.order ?? 9999) : 9999;
       - group actions referenced n.id/href (undefined) before
       - removed duplicated nested .actions wrappers
     ========================= */
+// One universal "Add" button (user can switch Type inside modal)
+const renderAddButton = (parentId) => {
+  const pid = parentId ?? null;
+  return `
+    <button class="dropHint" type="button"
+      onclick="window.__addAt('${escapeHtml(pid ?? "__root__").replaceAll("'","&#039;")}')">
+      ＋ Add here
+    </button>
+  `;
+};
+
+// Hook used by the button above
+window.__addAt = (parentRaw) => {
+  const parentId = (parentRaw === "__root__") ? null : parentRaw;
+  openModal(
+    { type:"tile", id:"", title:"", href:"", parentId, notes:"", order:9999 },
+    true,
+    null // let user pick group/tile in the modal
+  );
+};
 
     const renderTile = (n) => {
 const chip = `<span class="chip">Link</span>`;
@@ -1119,12 +1152,13 @@ const chip = `<span class="chip">Link</span>`;
       const childCount = childrenOf(g.id).length;
 
       const body = collapsed ? "" : (kids.length
-        ? kids.map(n => n.type === "group"
-            ? renderGroup(n, visibleSet, depth + 1)
-            : renderTile(n)
-          ).join("")
-        : `<div class="dropHint">Drop items here…</div>`
-      );
+  ? kids.map(n => n.type === "group"
+      ? renderGroup(n, visibleSet, depth + 1)
+      : renderTile(n)
+    ).join("")
+  : `${renderAddButton(g.id)}`
+);
+
 
 const indentClass = depth > 0 ? "indent" : "";
 
@@ -1181,9 +1215,11 @@ const accentStyle = g.color
                data-container="children"
                data-parent-id="${escapeHtml(g.id)}">
             ${body}
-            ${(!collapsed && kids.length)
-              ? `<div class="dropHint">Tip: drop groups into groups • drop tiles anywhere</div>`
-              : ``}
+           ${(!collapsed && kids.length)
+  ? `${renderAddButton(g.id)}`
+  : ``}
+
+
           </div>
         </div>
       `;
@@ -1199,7 +1235,10 @@ const accentStyle = g.color
       metaLeft.textContent = `${shownCount} visible • ${NODES.length} total`;
 
       if (!roots.length) {
-        treeRootEl.innerHTML = `<div class="dropHint">No matches. Try a different search.</div>`;
+treeRootEl.innerHTML = `
+  <div class="dropHint">No matches. Try a different search.</div>
+  ${renderAddButton(null)}
+`;
         return;
       }
 
