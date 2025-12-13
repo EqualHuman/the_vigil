@@ -1123,12 +1123,14 @@ grid-template-columns: .85fr 1.45fr;
 }
 
 .navDot:hover{
-  transform: scale(1.25);
+  transform: scale(1.35);
   box-shadow:
-    0 0 0 2px rgba(255,255,255,.35),
-    0 0 30px rgba(34,211,238,.75),
-    0 0 60px rgba(109,94,252,.55);
+    0 0 8px rgba(255,255,255,1),
+    0 0 22px rgba(255,79,216,1),
+    0 0 40px rgba(109,94,252,1),
+    0 0 70px rgba(34,211,238,.85);
 }
+
 
 .navDot:focus-visible{
   outline:none;
@@ -1152,7 +1154,67 @@ grid-template-columns: .85fr 1.45fr;
     0 0 32px rgba(255,79,216,.65),
     0 0 70px rgba(109,94,252,.55);
 }
+/* ===== Neon star navigation dots ===== */
+.navDot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-block;
+  cursor:pointer;
+  position:relative;
 
+  background:
+    radial-gradient(circle at 35% 35%,
+      rgba(255,255,255,1),
+      rgba(255,255,255,.6) 18%,
+      rgba(255,79,216,.8) 35%,
+      rgba(109,94,252,.9) 55%,
+      rgba(34,211,238,.9) 70%,
+      transparent 100%
+    );
+
+  box-shadow:
+    0 0 6px rgba(255,255,255,.9),
+    0 0 16px rgba(255,79,216,.85),
+    0 0 28px rgba(109,94,252,.85),
+    0 0 48px rgba(34,211,238,.65);
+
+  transition:
+    transform .18s var(--ease),
+    box-shadow .25s var(--ease),
+    opacity .25s var(--ease);
+}
+.navDot::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(255,255,255,.9),
+      transparent 65%
+    );
+  opacity:.35;
+  filter: blur(6px);
+  pointer-events:none;
+}
+
+.navDot.active{
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,1),
+      rgba(255,79,216,1) 30%,
+      rgba(109,94,252,1) 55%,
+      rgba(34,211,238,1) 75%,
+      transparent 100%
+    );
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,1),
+    0 0 30px rgba(255,79,216,1),
+    0 0 60px rgba(109,94,252,1),
+    0 0 90px rgba(34,211,238,1);
+}
 
 </style>
 
