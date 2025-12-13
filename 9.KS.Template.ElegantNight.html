@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{COUPLE_NAMES}} — Wedding</title>
+  <meta name="description" content="Wedding website for {{COUPLE_NAMES}}. Hosted by Knotte Studios." />
+
+  <style>
+    :root{
+      --bg:#07070a;
+      --panel: rgba(255,255,255,.05);
+      --panel2: rgba(255,255,255,.07);
+      --line: rgba(255,255,255,.10);
+
+      --text:#f4f0ea;
+      --muted: rgba(244,240,234,.70);
+
+      --champ:#d9c08f;
+      --blush:#d7a3a7;
+      --sage:#a7c4b2;
+
+      --radius: 18px;
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+
+      --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Garamond, Georgia, serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 18% -10%, rgba(215,163,167,.14), transparent 62%),
+        radial-gradient(900px 520px at 82% -4%, rgba(217,192,143,.12), transparent 62%),
+        radial-gradient(1100px 700px at 50% 118%, rgba(167,196,178,.10), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width: 980px; margin:0 auto; padding: 26px 18px 80px; position:relative}
+
+    /* Ambient film + subtle bokeh */
+    body:after{
+      content:"";
+      position:fixed;
+      inset:-10%;
+      pointer-events:none;
+      opacity:.60;
+      background:
+        radial-gradient(520px 320px at 20% 12%, rgba(215,163,167,.10), transparent 60%),
+        radial-gradient(560px 340px at 84% 10%, rgba(217,192,143,.10), transparent 62%),
+        radial-gradient(600px 420px at 50% 110%, rgba(167,196,178,.08), transparent 60%),
+        radial-gradient(18px 18px at 22% 28%, rgba(255,255,255,.16), transparent 72%),
+        radial-gradient(22px 22px at 72% 22%, rgba(255,255,255,.12), transparent 74%),
+        linear-gradient(120deg,
+          rgba(255,255,255,.00) 0%,
+          rgba(255,255,255,.05) 35%,
+          rgba(255,255,255,.00) 70%,
+          rgba(255,255,255,.00) 100%
+        );
+      animation: shimmer 12s ease-in-out infinite;
+      z-index:0;
+    }
+
+    @keyframes shimmer{
+      0%{ transform: translate3d(-1.0%, -0.4%, 0); opacity:.55;}
+      50%{ transform: translate3d( 1.0%,  0.6%, 0); opacity:.70;}
+      100%{transform: translate3d(-1.0%, -0.4%, 0); opacity:.55;}
+    }
+
+    .wrap > *{position:relative; z-index:1;}
+
+    /* Top header card */
+    .hero{
+      border:1px solid var(--line);
+      border-radius: 24px;
+      background:
+        radial-gradient(900px 420px at 82% 0%, rgba(217,192,143,.10), transparent 62%),
+        radial-gradient(900px 420px at 20% 10%, rgba(215,163,167,.10), transparent 62%),
+        rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      padding: 22px;
+    }
+
+    .heroFrame{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.10);
+    }
+
+    .topRow{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .mark{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .seal{
+      width:42px; height:42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(215,163,167,.85), rgba(217,192,143,.75));
+      box-shadow: 0 18px 50px rgba(0,0,0,.40);
+    }
+
+    .couple{
+      font-family: var(--serif);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.02;
+      margin: 0;
+    }
+
+    .meta{
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    .dateLine{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: rgba(244,240,234,.78);
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    .dot{
+      width:10px; height:10px;
+      border-radius: 50%;
+      background: var(--champ);
+      box-shadow: 0 0 0 4px rgba(217,192,143,.14);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 850;
+      cursor:pointer;
+      transition: .18s ease;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      min-width: 140px;
+    }
+
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+
+    .btnPrimary{
+      border: none;
+      background: linear-gradient(135deg, rgba(215,163,167,.95), rgba(217,192,143,.90));
+      color: rgba(20,14,12,.92);
+      box-shadow: 0 18px 50px rgba(0,0,0,.40);
+    }
+
+    .btnPrimary:hover{ filter: saturate(1.04) brightness(1.02); }
+
+    /* Tabs */
+    .tabs{
+      margin-top: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 18px;
+      overflow:hidden;
+    }
+
+    .tablist{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+    }
+
+    .tab{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(244,240,234,.82);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 850;
+      cursor:pointer;
+      transition: .18s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+
+    .tab:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+    .tab[aria-selected="true"]{
+      border: none;
+      color: rgba(20,14,12,.92);
+      background: linear-gradient(135deg, rgba(215,163,167,.92), rgba(217,192,143,.88));
+      box-shadow: 0 18px 44px rgba(0,0,0,.35);
+    }
+    .tab:focus{ outline: 2px solid rgba(217,192,143,.55); outline-offset: 2px; }
+
+    .tabPanels{
+      padding: 16px;
+    }
+
+    .panel{
+      display:none;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .panel[data-open="true"]{ display:block; }
+
+    .panel h2{
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      letter-spacing: -0.02em;
+      font-weight: 780;
+      font-size: 1.35rem;
+    }
+
+    .panel p{
+      margin: 0;
+      color: rgba(244,240,234,.72);
+      line-height: 1.65;
+      font-size: 1.02rem;
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .card{
+      grid-column: span 6;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      letter-spacing: -0.01em;
+      font-size: 1.05rem;
+    }
+
+    .card .small{
+      color: rgba(244,240,234,.70);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .list{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: rgba(244,240,234,.70);
+      line-height: 1.65;
+    }
+
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 12px 0;
+    }
+
+    .pillLink{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(244,240,234,.85);
+      font-weight: 850;
+      margin-top: 12px;
+      transition: .18s ease;
+    }
+    .pillLink:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+
+    footer{
+      margin-top: 18px;
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      color: rgba(244,240,234,.58);
+      font-size: .95rem;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 820px){
+      .actions{ justify-content:flex-start; }
+      .card{ grid-column: span 12; }
+      .btn{ min-width: 0; flex: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      body:after{ animation:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="heroFrame">
+        <div class="topRow">
+          <div class="mark">
+            <div class="seal" aria-hidden="true"></div>
+            <div>
+              <h1 class="couple">{{COUPLE_NAMES}}</h1>
+              <div class="meta">{{WEDDING_DATE}} • {{WEDDING_LOCATION}}</div>
+              <div class="dateLine"><span class="dot" aria-hidden="true"></span> Formal celebration • Evening reception</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn" href="#rsvp" id="jumpRsvp">Open RSVP</a>
+            <a class="btn btnPrimary" href="{{RSVP_URL}}" target="_blank" rel="noopener">RSVP Link</a>
+          </div>
+        </div>
+
+        <div class="tabs" style="margin-top:16px;">
+          <div class="tablist" role="tablist" aria-label="Wedding site tabs">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="panel-welcome" id="tab-welcome" type="button">Welcome</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-schedule" id="tab-schedule" type="button">Schedule</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-travel" id="tab-travel" type="button">Travel</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-registry" id="tab-registry" type="button">Registry</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-rsvp" id="tab-rsvp" type="button">RSVP</button>
+          </div>
+
+          <div class="tabPanels">
+            <!-- WELCOME -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-welcome" aria-labelledby="tab-welcome" data-open="true">
+              <h2>Welcome</h2>
+              <p>{{WELCOME_MESSAGE}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Quick details</h3>
+                  <p class="small"><strong>Date:</strong> {{WEDDING_DATE}}</p>
+                  <p class="small"><strong>Location:</strong> {{WEDDING_LOCATION}}</p>
+                  <p class="small"><strong>Attire:</strong> {{ATTIRE}}</p>
+                </div>
+                <div class="card">
+                  <h3>Note</h3>
+                  <p class="small">{{WELCOME_NOTE}}</p>
+                </div>
+              </div>
+
+              <a class="pillLink" href="#rsvp">Go to RSVP</a>
+            </section>
+
+            <!-- SCHEDULE -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-schedule" aria-labelledby="tab-schedule" data-open="false">
+              <h2>Schedule</h2>
+              <p>{{SCHEDULE_INTRO}}</p>
+
+              <div class="divider"></div>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Ceremony</h3>
+                  <p class="small"><strong>Time:</strong> {{CEREMONY_TIME}}</p>
+                  <p class="small"><strong>Location:</strong> {{CEREMONY_LOCATION}}</p>
+                  <ul class="list">
+                    <li>{{CEREMONY_NOTE_1}}</li>
+                    <li>{{CEREMONY_NOTE_2}}</li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <h3>Reception</h3>
+                  <p class="small"><strong>Time:</strong> {{RECEPTION_TIME}}</p>
+                  <p class="small"><strong>Location:</strong> {{RECEPTION_LOCATION}}</p>
+                  <ul class="list">
+                    <li>{{RECEPTION_NOTE_1}}</li>
+                    <li>{{RECEPTION_NOTE_2}}</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- TRAVEL -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-travel" aria-labelledby="tab-travel" data-open="false">
+              <h2>Travel</h2>
+              <p>{{TRAVEL_INTRO}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Hotels</h3>
+                  <p class="small">{{HOTEL_TEXT}}</p>
+                  <ul class="list">
+                    <li>{{HOTEL_OPTION_1}}</li>
+                    <li>{{HOTEL_OPTION_2}}</li>
+                    <li>{{HOTEL_OPTION_3}}</li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <h3>Parking & transportation</h3>
+                  <p class="small">{{PARKING_TEXT}}</p>
+                  <ul class="list">
+                    <li>{{TRANSPORT_NOTE_1}}</li>
+                    <li>{{TRANSPORT_NOTE_2}}</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- REGISTRY -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-registry" aria-labelledby="tab-registry" data-open="false">
+              <h2>Registry</h2>
+              <p>{{REGISTRY_TEXT}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>Registry link</h3>
+                  <p class="small">Open our registry here:</p>
+                  <a class="pillLink" href="{{REGISTRY_URL}}" target="_blank" rel="noopener">Open registry</a>
+                </div>
+                <div class="card">
+                  <h3>Shipping note</h3>
+                  <p class="small">{{REGISTRY_NOTE}}</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- RSVP -->
+            <section class="panel" role="tabpanel" tabindex="0" id="panel-rsvp" aria-labelledby="tab-rsvp" data-open="false">
+              <h2 id="rsvp">RSVP</h2>
+              <p>{{RSVP_TEXT}}</p>
+
+              <div class="twoCol">
+                <div class="card">
+                  <h3>RSVP link</h3>
+                  <p class="small">Use the RSVP button below. If you have trouble, text {{CONTACT_NAME}} at {{CONTACT_PHONE}}.</p>
+                  <a class="pillLink" href="{{RSVP_URL}}" target="_blank" rel="noopener">RSVP now</a>
+                </div>
+
+                <div class="card">
+                  <h3>Deadline</h3>
+                  <p class="small"><strong>RSVP by:</strong> {{RSVP_DEADLINE}}</p>
+                  <p class="small">{{RSVP_NOTE}}</p>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div>Hosted by Knotte Studios</div>
+      <div>{{FOOTER_NOTE}}</div>
+    </footer>
+  </div>
+
+  <script>
+    // Accessible tabs (click + arrow keys)
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+
+    function openTab(tabId){
+      tabs.forEach(t => {
+        const selected = t.id === tabId;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+      });
+
+      panels.forEach(p => {
+        const shouldOpen = ('tab-' + p.id.replace('panel-','')) === tabId;
+        p.dataset.open = shouldOpen ? 'true' : 'false';
+      });
+    }
+
+    function tabIndexOf(el){ return tabs.indexOf(el); }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => openTab(tab.id));
+
+      tab.addEventListener('keydown', (e) => {
+        const i = tabIndexOf(e.currentTarget);
+        if(i < 0) return;
+
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+          e.preventDefault();
+          const next = tabs[(i + 1) % tabs.length];
+          next.focus();
+          openTab(next.id);
+        }
+
+        if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+          e.preventDefault();
+          const prev = tabs[(i - 1 + tabs.length) % tabs.length];
+          prev.focus();
+          openTab(prev.id);
+        }
+
+        if(e.key === 'Home'){
+          e.preventDefault();
+          tabs[0].focus();
+          openTab(tabs[0].id);
+        }
+
+        if(e.key === 'End'){
+          e.preventDefault();
+          tabs[tabs.length - 1].focus();
+          openTab(tabs[tabs.length - 1].id);
+        }
+      });
+    });
+
+    // Convenience: "Open RSVP" button forces RSVP tab
+    const jump = document.getElementById('jumpRsvp');
+    if(jump){
+      jump.addEventListener('click', (e) => {
+        // keep hash behavior, but switch tab immediately
+        openTab('tab-rsvp');
+      });
+    }
+  </script>
+</body>
+</html>
