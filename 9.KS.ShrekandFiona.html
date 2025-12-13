@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Wedding of Shrek & Fiona</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ---------- Global Reset ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Typography ---------- */
+body {
+    font-family: "Georgia", serif;
+    background-color: #0f1a14;
+    color: #f2efe9;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: "Playfair Display", serif;
+    letter-spacing: 0.05em;
+}
+
+p {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+/* ---------- Layout ---------- */
+section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ---------- Hero Section ---------- */
+.hero {
+    background:
+        linear-gradient(rgba(15,26,20,0.7), rgba(15,26,20,0.9)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee") center/cover no-repeat;
+    padding: 160px 20px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero span {
+    display: block;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    margin-top: 20px;
+    color: #c6b98b;
+}
+
+/* ---------- Divider ---------- */
+.divider {
+    width: 120px;
+    height: 1px;
+    background-color: #c6b98b;
+    margin: 40px auto;
+}
+
+/* ---------- Story Section ---------- */
+.story {
+    background-color: #14261d;
+}
+
+.story h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
+/* ---------- Event Details ---------- */
+.details {
+    background-color: #0f1a14;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.detail-card {
+    padding: 40px 30px;
+    border: 1px solid rgba(198,185,139,0.3);
+    background-color: rgba(20,38,29,0.6);
+}
+
+.detail-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    color: #c6b98b;
+}
+
+/* ---------- Dress Code ---------- */
+.dress-code {
+    background:
+        linear-gradient(rgba(15,26,20,0.85), rgba(15,26,20,0.95)),
+        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed") center/cover no-repeat;
+}
+
+.dress-code h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
+/* ---------- RSVP ---------- */
+.rsvp {
+    background-color: #14261d;
+}
+
+.rsvp a {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 14px 36px;
+    border: 1px solid #c6b98b;
+    color: #c6b98b;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    transition: all 0.3s ease;
+}
+
+.rsvp a:hover {
+    background-color: #c6b98b;
+    color: #0f1a14;
+}
+
+/* ---------- Footer ---------- */
+footer {
+    padding: 40px 20px;
+    font-size: 0.85rem;
+    color: rgba(242,239,233,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <h1>Shrek & Fiona</h1>
+        <div class="divider"></div>
+        <span>INVITE YOU TO CELEBRATE THEIR UNION</span>
+    </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+    <div class="container">
+        <h2>Our Story</h2>
+        <div class="divider"></div>
+        <p>
+            Once upon a time, in a land both far away and deeply rooted in truth,
+            two souls found one another beyond appearances, expectations, and fate.
+            What began as an unlikely meeting grew into a bond defined by loyalty,
+            courage, and unconditional love.
+        </p>
+        <br>
+        <p>
+            Today, Shrek and Fiona invite you to witness the continuation of that story —
+            a promise made not in perfection, but in authenticity, devotion,
+            and a shared life built together.
+        </p>
+    </div>
+</section>
+
+<!-- DETAILS -->
+<section class="details">
+    <div class="container">
+        <h2>Event Details</h2>
+        <div class="divider"></div>
+
+        <div class="details-grid">
+            <div class="detail-card">
+                <h3>Ceremony</h3>
+                <p>
+                    Twilight<br>
+                    Beneath the Old Willow Trees<br>
+                    Far Far Away
+                </p>
+            </div>
+
+            <div class="detail-card">
+                <h3>Reception</h3>
+                <p>
+                    Immediately Following<br>
+                    Candlelit Feast & Dancing<br>
+                    The Swamp Estate
+                </p>
+            </div>
+
+            <div class="detail-card">
+                <h3>Date</h3>
+                <p>
+                    The First Evening of Spring<br>
+                    When the Stars Begin to Rise
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DRESS CODE -->
+<section class="dress-code">
+    <div class="container">
+        <h2>Dress Code</h2>
+        <div class="divider"></div>
+        <p>
+            Black Tie — Enchanted Formal<br>
+            Rich textures, deep tones, and timeless elegance encouraged.
+        </p>
+    </div>
+</section>
+
+<!-- RSVP -->
+<section class="rsvp">
+    <div class="container">
+        <h2>Kindly Respond</h2>
+        <div class="divider"></div>
+        <p>
+            We would be honored by your presence as we begin this next chapter together.
+        </p>
+        <a href="#">RSVP</a>
+    </div>
+</section>
+
+<footer>
+    <p>
+        With love and gratitude,<br>
+        Shrek & Fiona
+    </p>
+</footer>
+
+</body>
+</html>
