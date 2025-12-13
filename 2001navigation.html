@@ -509,15 +509,13 @@
     }
 
     .countPill{
-      font-size:12px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.78);
-      font-variant-numeric: tabular-nums;
-      flex:0 0 auto;
-    }
+  font-size:11.5px;
+  padding:4px 10px;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  opacity:.92;
+}
+
 
     .nodeBody{
       padding:12px;
@@ -751,40 +749,35 @@
 </header>
 
 
-    <section class="card" aria-label="Navigation hub">
-     <div class="toolbar" id="top">
-<div class="leftTools">
-  <details class="menu" id="moreMenu">
-    <summary class="btn" aria-label="More tools">⋯ More</summary>
+  <section class="card" aria-label="Navigation hub">
+  <div class="toolbar" id="top">
+    <div class="leftTools">
+      <details class="menu" id="moreMenu">
+        <summary class="btn" aria-label="More tools">⋯ More</summary>
 
-    <div class="menuList" role="menu" aria-label="Tools menu">
-      <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
-      <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
+        <div class="menuList" role="menu" aria-label="Tools menu">
+          <button class="btn menuItem" id="expandAll" type="button" role="menuitem">▾ Expand all</button>
+          <button class="btn menuItem" id="collapseAll" type="button" role="menuitem">▸ Collapse all</button>
 
-      <div class="menuSep" aria-hidden="true"></div>
+          <div class="menuSep" aria-hidden="true"></div>
 
-      <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
-      <button class="btn menuItem" id="resetEdits" type="button" role="menuitem"
-              title="Clears saved edits on this device">↺ Reset edits</button>
+          <button class="btn menuItem" id="exportJson" type="button" role="menuitem">⇪ Export JSON</button>
+          <button class="btn menuItem" id="resetEdits" type="button" role="menuitem"
+                  title="Clears saved edits on this device">↺ Reset edits</button>
+        </div>
+      </details>
     </div>
-  </details>
-</div>
 
-<div class="rightTools">
-  <label class="sr-only" for="search">Search</label>
-  <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
-  <button class="btn btnPrimary" id="addItem" type="button">＋ Add</button>
-</div>
+    <div class="rightTools">
+      <label class="sr-only" for="search">Search</label>
+      <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes…" />
+      <button class="btn btnPrimary" id="addItem" type="button">＋ Add</button>
+    </div>
+  </div>
 
+  <div class="tree" id="treeRoot"></div>
+</section>
 
-
-      <div class="meta">
-        <div id="metaLeft">Loading…</div>
-        <div id="metaRight">Tip: Drag tiles or groups anywhere • Groups can nest infinitely</div>
-      </div>
-
-      <div class="tree" id="treeRoot"></div>
-    </section>
   </div>
 
   <!-- Embedded data (tree nodes) -->
@@ -870,9 +863,9 @@
 
     const $ = (sel) => document.querySelector(sel);
 
-    const treeRootEl = $("#treeRoot");
-    const searchEl = $("#search");
-    const metaLeft = $("#metaLeft");
+const treeRootEl = $("#treeRoot");
+const searchEl = $("#search");
+
 
     const expandAllBtn = $("#expandAll");
     const collapseAllBtn = $("#collapseAll");
@@ -1165,7 +1158,7 @@ const chip = `<span class="chip">Link</span>`;
         .filter(n => !visibleSet || visibleSet.has(n.id));
 
       const collapsed = collapsedGroups.has(g.id) && !filter;
-      const childCount = childrenOf(g.id).length;
+<span class="countPill">${countLabel}</span>
 
       const body = collapsed ? "" : (kids.length
   ? kids.map(n => n.type === "group"
@@ -1212,7 +1205,7 @@ const accentStyle = g.color
 
                 ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
               </div>
-              <span class="countPill">${childCount}</span>
+<span class="countPill">${countLabel}</span>
             </div>
 
            <div class="actions">
@@ -1246,9 +1239,6 @@ const accentStyle = g.color
 
       const roots = childrenOf(null)
         .filter(n => !visibleSet || visibleSet.has(n.id));
-
-      const shownCount = visibleSet ? visibleSet.size : NODES.length;
-      metaLeft.textContent = `${shownCount} visible • ${NODES.length} total`;
 
       if (!roots.length) {
 treeRootEl.innerHTML = `
