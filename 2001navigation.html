@@ -1280,6 +1280,178 @@ select{
 .toolbar{
   overflow: visible !important;
 }
+/* =========================================================
+  HERO STAR #1 HALO + UNIFIED SECTION HEADER FORMAT
+  (paste at bottom of <style>)
+========================================================== */
+
+/* ------------------------------
+   1) HERO: halo on FIRST star
+------------------------------ */
+.heroDots .navDot:first-child{
+  position: relative;
+  transform: scale(1.22);
+  z-index: 2;
+}
+
+/* soft halo ring */
+.heroDots .navDot:first-child::before{
+  content:"";
+  position:absolute;
+  inset:-14px;
+  border-radius:50%;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle,
+      rgba(255,255,255,.55) 0%,
+      rgba(34,211,238,.32) 28%,
+      rgba(109,94,252,.22) 52%,
+      rgba(255,79,216,.16) 68%,
+      transparent 78%
+    );
+
+  filter: blur(10px);
+  opacity: .95;
+}
+
+/* add a crisp outer ring so it reads clearly */
+.heroDots .navDot:first-child{
+  box-shadow:
+    0 0 0 2px rgba(34,211,238,.35),
+    0 0 14px rgba(255,255,255,.95),
+    0 0 26px rgba(34,211,238,.55),
+    0 0 44px rgba(109,94,252,.50),
+    0 0 68px rgba(255,79,216,.35) !important;
+}
+
+/* optional: hover still feels nicer */
+.heroDots .navDot:first-child:hover{
+  transform: scale(1.35);
+}
+
+/* ------------------------------
+   2) ONE “SECTION HEADER” LOOK
+   (toolbar + notebook head)
+------------------------------ */
+
+/* shared geometry */
+.toolbar,
+.notebookHead{
+  position: relative;
+  border-bottom: none !important;
+  border-radius: 18px 18px 0 0;         /* same rounded top */
+  padding: 16px 16px !important;        /* same padding */
+  gap: 12px !important;
+  align-items: center;
+
+  background:
+    radial-gradient(900px 240px at 15% 0%, rgba(34,211,238,.10), transparent 60%),
+    radial-gradient(900px 240px at 85% 0%, rgba(109,94,252,.10), transparent 60%),
+    radial-gradient(700px 220px at 50% 0%, rgba(255,79,216,.10), transparent 62%),
+    rgba(255,255,255,.03) !important;
+}
+
+/* lasers flush to edges (top + bottom) */
+.toolbar::before,
+.toolbar::after,
+.notebookHead::before,
+.notebookHead::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  border-radius:999px;
+  opacity:.95;
+  pointer-events:none;
+
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.72) 45%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.72) 45%),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.65) 40%),
+    rgba(255,255,255,0)
+  );
+
+  box-shadow:
+    0 0 12px rgba(255,79,216,.16),
+    0 0 18px rgba(109,94,252,.12),
+    0 0 22px rgba(34,211,238,.10);
+}
+.toolbar::before,
+.notebookHead::before{ top:0; }
+.toolbar::after,
+.notebookHead::after{ bottom:0; }
+
+/* consistent left label block */
+.toolbarTitle,
+.notebookHead .kicker{
+  font-family: var(--sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .30em !important;
+  text-transform: uppercase;
+  opacity: .85 !important;
+  color: color-mix(in oklab, var(--accentC), rgba(255,255,255,.92) 82%) !important;
+  white-space: nowrap;
+}
+
+/* “real title” line beneath kicker (match format) */
+.notebookTitle{
+  margin-top: 6px !important;
+  font-family: var(--sans) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  color: rgba(255,255,255,.92) !important;
+}
+
+/* make the navigation toolbar behave like notebook head */
+.toolbar{
+  display:grid !important;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "label actions"
+    "search actions";
+}
+
+/* place items into the grid */
+.toolbarTitle{ grid-area: label; padding-left: 2px; border-right:none !important; }
+.toolbarCenter{ grid-area: search; }
+.toolbarRight{ grid-area: actions; margin-left: 0 !important; justify-content:flex-end; }
+
+/* tighten search row so it aligns like notebook body spacing */
+.toolbarCenter .input{
+  width: min(720px, 100%);
+  max-width: 720px;
+  min-width: 260px;
+}
+
+/* make notebook head match the same two-row rhythm */
+.notebookHead{
+  display:grid !important;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "label tabs"
+    "title tabs";
+}
+.notebookHead > div:first-child{ grid-area: label; }
+.notebookTabs{ grid-area: tabs; justify-content:flex-end; }
+.notebookTitle{ grid-area: title; }
+
+/* remove any weird “double rounding” seams at top corners */
+.card{
+  overflow: hidden; /* keeps header corners crisp */
+}
+.card .toolbar,
+.card .notebookHead{
+  border-radius: 18px 18px 0 0;
+}
+
+/* keep action menu from clipping in the header */
+.toolbar{ overflow: visible !important; }
 
   
 </style>
