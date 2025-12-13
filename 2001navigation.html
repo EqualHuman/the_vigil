@@ -350,7 +350,7 @@
 
   .toolbar{
     display:flex;
-    gap:10px;
+    gap:14px;
     align-items:center;
     justify-content:space-between;
     flex-wrap:wrap;
@@ -834,6 +834,23 @@ body::before{
 .menuList{
   backdrop-filter: blur(10px);
 }
+/* Toolbar section title */
+.toolbarTitle{
+  font-size: 11px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+  white-space: nowrap;
+  opacity: .6;
+  color: rgba(255,255,255,.75);
+  font-weight: 500;
+  padding-left: 6px;
+}
+   .toolbarTitle{
+  padding-right: 14px;
+  border-right: 1px solid rgba(255,255,255,.12);
+}
+
 
 </style>
 
@@ -887,8 +904,14 @@ body::before{
   <!-- Toolbar -->
 <div class="toolbar" id="top">
 
-  <!-- Actions bar (left) -->
+  <!-- Section title -->
+  <div class="toolbarTitle">
+    Webpage Navigation
+  </div>
+
+  <!-- Actions bar -->
   <div class="leftTools">
+
     <details class="menu" id="actionsMenu">
       <summary class="btn" aria-label="Actions">☰ Actions</summary>
 
