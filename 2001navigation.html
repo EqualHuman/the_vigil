@@ -12,23 +12,21 @@
 
   <style>
     .tileDropLine {
-  height: 6px;
-  margin: 2px 0;
-  border-radius: 6px;
-  background: linear-gradient(
-    90deg,
-    rgba(109,94,252,.0),
-    rgba(109,94,252,.7),
-    rgba(255,79,216,.7),
-    rgba(109,94,252,.0)
-  );
-  opacity: 0;
-  transition: opacity .15s ease;
-}
+      height: 6px;
+      margin: 2px 0;
+      border-radius: 6px;
+      background: linear-gradient(
+        90deg,
+        rgba(109,94,252,.0),
+        rgba(109,94,252,.7),
+        rgba(255,79,216,.7),
+        rgba(109,94,252,.0)
+      );
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
 
-.tileDropLine.active {
-  opacity: 1;
-}
+    .tileDropLine.active { opacity: 1; }
 
     [hidden]{ display:none !important; }
 
@@ -705,18 +703,19 @@
       </div>
     </div>
   </div>
+
+  <!-- Sortable MUST be loaded before the app script -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
   <script>
     /* =========================================================
-      Vigil — Grouped draggable tiles
-      - No parent/root tree
+      Vigil — Grouped draggable tiles (SortableJS)
       - Groups are collapsible
       - Drag tiles within/between groups
       - Persists to localStorage
     ========================================================== */
 
-    const LS_ITEMS = "vigil_items_v1";
+    const LS_ITEMS  = "vigil_items_v1";
     const LS_GROUPS = "vigil_group_state_v1";
 
     const $ = (sel) => document.querySelector(sel);
@@ -785,7 +784,7 @@
         if (!byGroup.has(it.group)) byGroup.set(it.group, []);
         byGroup.get(it.group).push(it);
       }
-      for (const [g, list] of byGroup.entries()) {
+      for (const [, list] of byGroup.entries()) {
         list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0) || (a.title||"").localeCompare(b.title||""));
         list.forEach((it, idx) => it.order = idx + 1);
       }
@@ -805,7 +804,7 @@
         if (!map.has(g)) map.set(g, []);
         map.get(g).push(it);
       }
-      for (const [g, list] of map.entries()) list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+      for (const [, list] of map.entries()) list.sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
 
       const entries = [...map.entries()].sort(([a],[b]) => a.localeCompare(b));
       const coreIdx = entries.findIndex(([g]) => g.toLowerCase() === "core");
@@ -851,130 +850,6 @@
       render();
     };
 
-    // --- Drag state ---
-    let dragId = null;
-
-    const onDragStart = (e) => {
-      dragId = e.currentTarget?.dataset?.id || null;
-      e.dataTransfer.effectAllowed = "move";
-      try { e.dataTransfer.setData("text/plain", dragId); } catch {}
-    };
-
-    const onDragOverGroup = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; };
-    const onDragOverTile  = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; };
-
-    const onDropGroup = (e) => {
-      e.preventDefault();
-      const targetGroup = e.currentTarget.dataset.group;
-      const id = (dragId || "").toString();
-      if (!id) return;
-
-      const item = ITEMS.find(x => x.id === id);
-      if (!item) return;
-
-      item.group = targetGroup;
-      normalize();
-      saveItems();
-      render();
-    };
-
-const onDropTile = (e) => {
-  e.preventDefault();
-  const targetId = e.currentTarget.dataset.id;
-  const draggedId = dragId;
-  if (!draggedId || draggedId === targetId) return;
-
-  const dragged = ITEMS.find(x => x.id === draggedId);
-  const target = ITEMS.find(x => x.id === targetId);
-  if (!dragged || !target) return;
-
-  // Move dragged into target's group
-  dragged.group = target.group;
-
-  const groupItems = ITEMS
-    .filter(x => x.group === dragged.group && x.id !== dragged.id)
-    .sort((a,b) => a.order - b.order);
-
-  const idx = groupItems.findIndex(x => x.id === target.id);
-  groupItems.splice(idx, 0, dragged);
-
-  groupItems.forEach((it, i) => it.order = i + 1);
-
-  saveItems();
-  render();
-};
-
-
-const renderTile = (item) => {
-  const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
-  const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
-  const target = `target="_blank" rel="noreferrer noopener"`;
-
-  return `
-    <div class="tile"
-      data-id="${escapeHtml(item.id)}"
-      data-group="${escapeHtml(item.group || 'Ungrouped')}">
-
-      <div class="tileMain">
-        <a href="${escapeHtml(item.href)}" ${target}
-           style="text-decoration:none; color:inherit; display:block;">
-          <div class="tileTitleLine">
-            <span class="tileTitle">${escapeHtml(item.title)}</span>
-            ${chip}
-          </div>
-          <div class="url">${escapeHtml(item.href)}</div>
-        </a>
-        ${notes}
-      </div>
-
-      <div class="tileActions">
-        <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(item.id).replaceAll("'","&#039;")}')">✎</button>
-        <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
-      </div>
-    </div>
-  `;
-};
-
-
-
-    const render = () => {
-      const entries = groupMap();
-      const shownCount = entries.reduce((acc, [,items]) => acc + items.length, 0);
-      metaLeft.textContent = `${shownCount} shown • ${ITEMS.length} total`;
-
-      if (!entries.length) {
-        boardEl.innerHTML = `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
-        return;
-      }
-
-      boardEl.innerHTML = entries.map(([group, items]) => {
-        const collapsed = collapsedGroups.has(group);
-        const body = collapsed ? "" : (items.length ? items.map(renderTile).join("") : `<div class="dropHint">Drop tiles here…</div>`);
-
-        return `
-          <section class="group">
-            <header class="groupHeader" onclick="window.__toggleGroup('${escapeHtml(group).replaceAll("'","&#039;")}')">
-              <div class="groupTitle">
-                <span>${escapeHtml(group)}</span>
-                <span class="groupCount">${items.length}</span>
-              </div>
-              <div aria-hidden="true">${collapsed ? "▸" : "▾"}</div>
-            </header>
-
-            <div class="groupBody"
-                 ${collapsed ? "hidden" : ""}
-                 data-group="${escapeHtml(group)}"
-                 ondragover="window.__dragOverGroup(event)"
-                 ondrop="window.__dropGroup(event)">
-              ${body}
-              ${!collapsed && items.length ? `<div class="dropHint">Tip: drop on a tile to place it precisely • drop in empty space to move into this group</div>` : ""}
-            </div>
-          </section>
-        `;
-      }).join("");
-    };
- initSortables(); // ✅ add this line
-};
     const copyToClipboard = async (text) => { try { await navigator.clipboard.writeText(text); } catch {} };
 
     const upsert = (updated) => {
@@ -995,12 +870,6 @@ const renderTile = (item) => {
     };
 
     // Public hooks for inline handlers
-    window.__dragStart = onDragStart;
-    window.__dragOverGroup = onDragOverGroup;
-    window.__dropGroup = onDropGroup;
-    window.__dragOverTile = onDragOverTile;
-    window.__dropTile = onDropTile;
-
     window.__toggleGroup = (group) => {
       if (collapsedGroups.has(group)) collapsedGroups.delete(group);
       else collapsedGroups.add(group);
@@ -1014,6 +883,112 @@ const renderTile = (item) => {
       const item = ITEMS.find(x => x.id === id);
       if (!item) return;
       openModal(item, false);
+    };
+
+    // --- Sortable setup (re-init after every render) ---
+    let _sortables = [];
+
+    const initSortables = () => {
+      if (typeof Sortable === "undefined") return;
+
+      _sortables.forEach(s => s.destroy());
+      _sortables = [];
+
+      document.querySelectorAll(".groupBody").forEach((bodyEl) => {
+        const s = new Sortable(bodyEl, {
+          group: "vigil-groups",
+          animation: 150,
+          draggable: ".tile",
+          handle: ".tileMain",            // ✅ drag only from main area (not buttons/links)
+          filter: "a, button, .tileActions",
+          preventOnFilter: true,
+          fallbackOnBody: true,
+          onEnd: () => {
+            // Rebuild order + group from the DOM
+            document.querySelectorAll(".groupBody").forEach((gEl) => {
+              const g = gEl.dataset.group;
+              const ids = [...gEl.querySelectorAll(".tile")].map(t => t.dataset.id);
+
+              ids.forEach((id, idx) => {
+                const it = ITEMS.find(x => x.id === id);
+                if (!it) return;
+                it.group = g;
+                it.order = idx + 1;
+              });
+            });
+
+            normalize();
+            saveItems();
+            render();
+          }
+        });
+
+        _sortables.push(s);
+      });
+    };
+
+    const renderTile = (item) => {
+      const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
+      const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
+      const target = `target="_blank" rel="noreferrer noopener"`;
+
+      return `
+        <div class="tile" data-id="${escapeHtml(item.id)}" data-group="${escapeHtml(item.group || 'Ungrouped')}">
+          <div class="tileMain">
+            <a href="${escapeHtml(item.href)}" ${target}
+               style="text-decoration:none; color:inherit; display:block;">
+              <div class="tileTitleLine">
+                <span class="tileTitle">${escapeHtml(item.title)}</span>
+                ${chip}
+              </div>
+              <div class="url">${escapeHtml(item.href)}</div>
+            </a>
+            ${notes}
+          </div>
+
+          <div class="tileActions">
+            <button class="iconBtn" type="button" onclick="window.__edit('${escapeHtml(item.id).replaceAll("'","&#039;")}')">✎</button>
+            <button class="iconBtn" type="button" onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
+          </div>
+        </div>
+      `;
+    };
+
+    const render = () => {
+      const entries = groupMap();
+      const shownCount = entries.reduce((acc, [,items]) => acc + items.length, 0);
+      metaLeft.textContent = `${shownCount} shown • ${ITEMS.length} total`;
+
+      if (!entries.length) {
+        boardEl.innerHTML = `<div style="color:var(--muted); padding:14px;">No matches.</div>`;
+        return;
+      }
+
+      boardEl.innerHTML = entries.map(([group, items]) => {
+        const collapsed = collapsedGroups.has(group);
+        const body = collapsed
+          ? ""
+          : (items.length ? items.map(renderTile).join("") : `<div class="dropHint">Drop tiles here…</div>`);
+
+        return `
+          <section class="group">
+            <header class="groupHeader" onclick="window.__toggleGroup('${escapeHtml(group).replaceAll("'","&#039;")}')">
+              <div class="groupTitle">
+                <span>${escapeHtml(group)}</span>
+                <span class="groupCount">${items.length}</span>
+              </div>
+              <div aria-hidden="true">${collapsed ? "▸" : "▾"}</div>
+            </header>
+
+            <div class="groupBody" ${collapsed ? "hidden" : ""} data-group="${escapeHtml(group)}">
+              ${body}
+              ${!collapsed && items.length ? `<div class="dropHint">Tip: drag tiles by the left area • buttons/links won’t start a drag</div>` : ""}
+            </div>
+          </section>
+        `;
+      }).join("");
+
+      initSortables(); // ✅ IMPORTANT: after DOM is updated
     };
 
     // Events
@@ -1096,48 +1071,6 @@ const renderTile = (item) => {
     normalize();
     saveItems();
     render();
-    let _sortables = [];
-
-const initSortables = () => {
-  // destroy old instances
-  _sortables.forEach(s => s.destroy());
-  _sortables = [];
-
-  document.querySelectorAll(".groupBody").forEach((bodyEl) => {
-    const groupName = bodyEl.dataset.group;
-
-    const s = new Sortable(bodyEl, {
-      group: "vigil-groups",
-      animation: 150,
-      draggable: ".tile",
-      filter: ".tileActions, a, button", // clicking links/buttons won't start drag
-      preventOnFilter: true,
-      fallbackOnBody: true, // helps on mobile
-      onEnd: () => {
-        // Rebuild order + group from the DOM
-        document.querySelectorAll(".groupBody").forEach((gEl) => {
-          const g = gEl.dataset.group;
-          const ids = [...gEl.querySelectorAll(".tile")].map(t => t.dataset.id);
-
-          ids.forEach((id, idx) => {
-            const it = ITEMS.find(x => x.id === id);
-            if (!it) return;
-            it.group = g;
-            it.order = idx + 1;
-          });
-        });
-
-        normalize();
-        saveItems();
-        render();
-      }
-    });
-
-    _sortables.push(s);
-  });
-};
-
-
   </script>
 </body>
 </html>
