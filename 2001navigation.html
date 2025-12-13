@@ -11,6 +11,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
+    .tileDropLine {
+  height: 6px;
+  margin: 2px 0;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(109,94,252,.0),
+    rgba(109,94,252,.7),
+    rgba(255,79,216,.7),
+    rgba(109,94,252,.0)
+  );
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+.tileDropLine.active {
+  opacity: 1;
+}
+
     [hidden]{ display:none !important; }
 
     :root{
@@ -858,66 +877,68 @@
       render();
     };
 
-    const onDropTile = (e) => {
-      e.preventDefault();
-      const targetId = e.currentTarget.dataset.id;
-      const id = (dragId || "").toString();
-      if (!id || id === targetId) return;
+const onDropTile = (e) => {
+  e.preventDefault();
+  const targetId = e.currentTarget.dataset.id;
+  const draggedId = dragId;
+  if (!draggedId || draggedId === targetId) return;
 
-      const a = ITEMS.find(x => x.id === id);
-      const b = ITEMS.find(x => x.id === targetId);
-      if (!a || !b) return;
+  const dragged = ITEMS.find(x => x.id === draggedId);
+  const target = ITEMS.find(x => x.id === targetId);
+  if (!dragged || !target) return;
 
-      a.group = b.group;
+  // Move dragged into target's group
+  dragged.group = target.group;
 
-      const g = a.group || "Ungrouped";
-      const groupItems = ITEMS
-        .filter(x => (x.group || "Ungrouped") === g)
-        .sort((x,y)=> (x.order ?? 0) - (y.order ?? 0));
+  const groupItems = ITEMS
+    .filter(x => x.group === dragged.group && x.id !== dragged.id)
+    .sort((a,b) => a.order - b.order);
 
-      const withoutA = groupItems.filter(x => x.id !== a.id);
-      const idxB = withoutA.findIndex(x => x.id === b.id);
-      withoutA.splice(Math.max(0, idxB), 0, a);
+  const idx = groupItems.findIndex(x => x.id === target.id);
+  groupItems.splice(idx, 0, dragged);
 
-      withoutA.forEach((it, idx) => it.order = idx + 1);
+  groupItems.forEach((it, i) => it.order = i + 1);
 
-      normalize();
-      saveItems();
-      render();
-    };
+  saveItems();
+  render();
+};
 
-    const renderTile = (item) => {
-      const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
-      const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
-      const target = `target="_blank" rel="noreferrer noopener"`;
 
-      return `
-        <div class="tile"
-             draggable="true"
-             data-id="${escapeHtml(item.id)}"
-             ondragstart="window.__dragStart(event)"
-             ondragover="window.__dragOverTile(event)"
-             ondrop="window.__dropTile(event)">
-          <div class="tileMain">
-            <a href="${escapeHtml(item.href)}" ${target} style="text-decoration:none; color:inherit; display:block;">
-              <div class="tileTitleLine">
-                <span class="tileTitle">${escapeHtml(item.title)}</span>
-                ${chip}
-              </div>
-              <div class="url">${escapeHtml(item.href)}</div>
-            </a>
-            ${notes}
+   const renderTile = (item) => {
+  const chip = item.kind ? `<span class="chip">${escapeHtml(item.kind)}</span>` : "";
+  const notes = item.notes ? `<div class="notes">${escapeHtml(item.notes)}</div>` : "";
+  const target = `target="_blank" rel="noreferrer noopener"`;
+
+  return `
+    <div class="tileDropLine" data-before="${escapeHtml(item.id)}"></div>
+
+    <div class="tile"
+      draggable="true"
+      data-id="${escapeHtml(item.id)}"
+      ondragstart="window.__dragStart(event)"
+      ondragover="window.__dragOverTile(event)"
+      ondrop="window.__dropTile(event)">
+
+      <div class="tileMain">
+        <a href="${escapeHtml(item.href)}" ${target}
+           style="text-decoration:none; color:inherit; display:block;">
+          <div class="tileTitleLine">
+            <span class="tileTitle">${escapeHtml(item.title)}</span>
+            ${chip}
           </div>
+          <div class="url">${escapeHtml(item.href)}</div>
+        </a>
+        ${notes}
+      </div>
 
-          <div class="tileActions">
-            <button class="iconBtn" type="button" title="Edit" aria-label="Edit"
-              onclick="window.__edit('${escapeHtml(item.id).replaceAll("'","&#039;")}')">✎</button>
-            <button class="iconBtn" type="button" title="Copy link" aria-label="Copy link"
-              onclick="window.__copy('${escapeHtml(item.href).replaceAll("'","&#039;")}')">⧉</button>
-          </div>
-        </div>
-      `;
-    };
+      <div class="tileActions">
+        <button class="iconBtn" onclick="window.__edit('${item.id}')">✎</button>
+        <button class="iconBtn" onclick="window.__copy('${item.href}')">⧉</button>
+      </div>
+    </div>
+  `;
+};
+
 
     const render = () => {
       const entries = groupMap();
