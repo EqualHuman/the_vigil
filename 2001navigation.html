@@ -667,6 +667,62 @@
       body::before, .node, .heroBanner::before{ animation:none !important; }
       .btn, .row, .toggle, .iconBtn{ transition:none !important; }
     }
+
+    {
+  id: "tile-1",
+  title: "Vigil Home",
+  href: "https://vigilproject.org/",
+  notes: "Landing page",
+  kind: "page",
+  group: "core",     // ← grouping key
+  order: 3           // ← position inside group
+}
+.board{
+  display:grid;
+  gap:18px;
+}
+
+.group{
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.groupHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.groupTitle{
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+
+.groupBody{
+  padding:12px;
+  display:grid;
+  gap:10px;
+}
+
+.groupBody[hidden]{ display:none; }
+
+.tile{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  cursor:grab;
+}
+
+.tile:active{ cursor:grabbing; }
+
+    
   </style>
 </head>
 
@@ -742,7 +798,8 @@
       <div id="resources" style="height: 1px;"></div>
       <div id="action" style="height: 1px;"></div>
 
-      <div class="tree" id="tree"></div>
+      <div class="board" id="board"></div>
+
     </section>
   </div>
 
@@ -1222,6 +1279,49 @@
           if (!ok) return;
         }
       }
+const boardEl = document.getElementById("board");
+let collapsedGroups = new Set();
+
+const renderBoard = () => {
+  const groups = {};
+
+  for (const item of NAV_ITEMS) {
+    const g = item.group || "ungrouped";
+    groups[g] ??= [];
+    groups[g].push(item);
+  }
+
+  boardEl.innerHTML = Object.entries(groups).map(([group, items]) => {
+    const collapsed = collapsedGroups.has(group);
+
+    return `
+      <section class="group">
+        <header class="groupHeader" onclick="toggleGroup('${group}')">
+          <span class="groupTitle">${group}</span>
+          <span>${collapsed ? "▸" : "▾"}</span>
+        </header>
+
+        <div class="groupBody" ${collapsed ? "hidden" : ""}>
+          ${items.map(renderTile).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+};
+
+const renderTile = (item) => `
+  <div class="tile" draggable="true">
+    <strong>${item.title}</strong><br/>
+    <small>${item.href}</small>
+    ${item.notes ? `<div class="notes">${item.notes}</div>` : ""}
+  </div>
+`;
+
+window.toggleGroup = (group) => {
+  if (collapsedGroups.has(group)) collapsedGroups.delete(group);
+  else collapsedGroups.add(group);
+  renderBoard();
+};
 
       const updated = {
         id,
@@ -1237,7 +1337,8 @@
       // Make sure the item is visible after saving
       if (updated.parent) expanded.add(updated.parent);
 
-      render();
+      renderBoard();
+
       closeModal();
     });
 
