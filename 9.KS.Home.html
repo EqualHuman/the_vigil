@@ -1,323 +1,636 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Knotte Studios | Wedding Websites & Pages</title>
-  <meta name="description" content="Knotte Studios builds elegant, modern wedding websites and RSVP pages that feel like you." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Knotte Studios — Wedding Websites Made Easy</title>
+  <meta name="description" content="Choose a wedding website template, personalize it in minutes, and publish to your own hosted page." />
+
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#12141b;
+      --text:#f4f6ff;
+      --muted:#b7bdd6;
+      --line:rgba(255,255,255,.10);
+      --accent:#7c5cff;
+      --accent2:#20d3ff;
+      --good:#2be4a7;
+      --danger:#ff4d6d;
+
+      --radius:18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.45);
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 700px at 18% -10%, rgba(124,92,255,.35), transparent 55%),
+                  radial-gradient(900px 500px at 92% 8%, rgba(32,211,255,.25), transparent 55%),
+                  radial-gradient(900px 600px at 50% 110%, rgba(43,228,167,.16), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 80px}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 30px rgba(124,92,255,.28);
+    }
+    .nav{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:650;
+      color:var(--muted);
+      transition:.18s ease;
+    }
+    .pill:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18); color:var(--text)}
+    .cta{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border:none;
+      color:#071018;
+      font-weight:900;
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow: 0 14px 34px rgba(124,92,255,.24);
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .cta:hover{transform:translateY(-1px); filter:saturate(1.05)}
+    .hero{
+      margin-top:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:26px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(520px 220px at 20% 18%, rgba(124,92,255,.35), transparent 60%),
+                  radial-gradient(520px 220px at 80% 10%, rgba(32,211,255,.25), transparent 60%);
+      pointer-events:none;
+      opacity:.8;
+    }
+    .hero > *{position:relative}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      border-radius:999px;
+      padding:8px 12px;
+      font-weight:750;
+      color:var(--muted);
+      margin-bottom:14px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(43,228,167,.12);
+    }
+    h1{
+      margin:10px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    .sub{
+      margin:0 0 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+    .heroActions{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+      margin-top:14px;
+    }
+    .ghost{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      font-weight:850;
+      padding:11px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .ghost:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18)}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .card{
+      grid-column: span 4;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .card h3{margin:10px 0 6px; font-size:1.12rem}
+    .card p{margin:0; color:var(--muted); line-height:1.5}
+    .thumb{
+      border-radius: 14px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      background: rgba(0,0,0,.18);
+      height: 170px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    .thumb .label{
+      position:absolute;
+      top:10px; left:10px;
+      font-family:var(--mono);
+      font-size:.8rem;
+      color:rgba(255,255,255,.85);
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid var(--line);
+    }
+    .thumb .mini{
+      width: 92%;
+      height: 78%;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02)),
+        radial-gradient(280px 140px at 25% 20%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(280px 140px at 75% 30%, rgba(32,211,255,.18), transparent 55%),
+        rgba(0,0,0,.12);
+      position:relative;
+      overflow:hidden;
+    }
+    .mini:before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(transparent 0 18px, rgba(255,255,255,.10) 18px 19px, transparent 19px 38px, rgba(255,255,255,.07) 38px 39px, transparent 39px),
+        linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,.10) 18px 19px, transparent 19px 38px, rgba(255,255,255,.07) 38px 39px, transparent 39px);
+      opacity:.35;
+      transform:skewY(-6deg) scale(1.05);
+      transform-origin:center;
+    }
+    .cardActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:850;
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition:.18s ease;
+      flex:1;
+      min-width: 140px;
+      text-align:center;
+    }
+    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18)}
+    .btnPrimary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border:none;
+      color:#071018;
+      box-shadow: 0 14px 34px rgba(124,92,255,.22);
+    }
+    .btnPrimary:hover{filter:saturate(1.05)}
+    .sectionTitle{
+      margin-top: 28px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 16px;
+      flex-wrap:wrap;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size: 1.55rem;
+      letter-spacing:-0.01em;
+    }
+    .sectionTitle .hint{
+      margin:0;
+      color:var(--muted);
+      max-width: 70ch;
+      line-height:1.5;
+    }
+    .steps{
+      margin-top: 18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--radius);
+      padding: 18px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .step{
+      grid-column: span 4;
+      border:1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(0,0,0,.18);
+    }
+    .step strong{display:block; margin-bottom:6px}
+    .step span{color:var(--muted); line-height:1.45}
+    footer{
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top:1px solid var(--line);
+      color: var(--muted);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+
+    /* Modal */
+    .modalBack{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.72);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .modal{
+      width:min(980px, 100%);
+      border:1px solid var(--line);
+      background: rgba(18,20,27,.96);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .modalTop .title{
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .modalTop button{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:900;
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+    }
+    .modalBody{
+      padding: 0;
+      height: min(70vh, 620px);
+    }
+    iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      background: #0b0c10;
+    }
+
+    @media (max-width: 920px){
+      .card{grid-column: span 6;}
+      .step{grid-column: span 6;}
+    }
+    @media (max-width: 620px){
+      .card{grid-column: span 12;}
+      .step{grid-column: span 12;}
+      .btn{min-width: 100%;}
+    }
+  </style>
 </head>
-
 <body>
-  <header class="header">
-    <div class="container nav">
-      <a class="brand" href="#top" aria-label="Knotte Studios home">
-        <span class="brandMark">K</span>
-        <span class="brandText">Knotte Studios</span>
-      </a>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-size:1.05rem; line-height:1.1;">Knotte Studios</div>
+          <div style="font-size:.85rem; color:var(--muted); font-weight:650;">Wedding sites • Hosting • Updates</div>
+        </div>
+      </div>
 
-      <nav class="links" aria-label="Primary">
-        <a href="#packages">Packages</a>
-        <a href="#work">Work</a>
-        <a href="#process">Process</a>
-        <a href="#faq">FAQ</a>
-        <a class="btn btnSmall" href="#contact">Book</a>
-      </nav>
-
-      <button class="menuBtn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-        ☰
-      </button>
+      <div class="nav">
+        <a class="pill" href="#templates">Templates</a>
+        <a class="pill" href="#how">How it works</a>
+        <a class="pill" href="9.KS.SignUp.html">Sign in</a>
+        <button class="cta" id="startBtn" type="button">Choose a template</button>
+      </div>
     </div>
 
-    <div class="mobileMenu" id="mobileMenu" aria-hidden="true">
-      <a href="#packages">Packages</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#faq">FAQ</a>
-      <a class="btn" href="#contact">Book</a>
-    </div>
-  </header>
-
-  <main id="top">
-    <!-- HERO -->
     <section class="hero">
-      <div class="container heroGrid">
-        <div>
-          <p class="pill">Wedding websites • RSVP pages • Digital details</p>
-          <h1>Elegant wedding sites that look expensive — without the stress.</h1>
-          <p class="subhead">
-            Knotte Studios designs modern, mobile-friendly wedding websites that feel cohesive with your vibe.
-            Clear info, smooth RSVP, and a link you’ll be proud to text to everyone.
-          </p>
-
-          <div class="ctaRow">
-            <a class="btn" href="#packages">View Packages</a>
-            <a class="btn btnGhost" href="#work">See Examples</a>
-          </div>
-
-          <div class="trustRow">
-            <div class="trustCard">
-              <strong>Fast turnaround</strong>
-              <span>Most builds in 3–7 days</span>
-            </div>
-            <div class="trustCard">
-              <strong>Mobile-first</strong>
-              <span>Designed for thumbs + links</span>
-            </div>
-            <div class="trustCard">
-              <strong>Easy edits</strong>
-              <span>Simple update options</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="mockWrap" aria-label="Website mock preview">
-          <div class="mock">
-            <div class="mockTop">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-            <div class="mockBody">
-              <div class="mockHero"></div>
-              <div class="mockLine"></div>
-              <div class="mockLine short"></div>
-              <div class="mockGrid">
-                <div class="mockCard"></div>
-                <div class="mockCard"></div>
-              </div>
-              <div class="mockLine"></div>
-              <div class="mockLine short"></div>
-            </div>
-          </div>
-          <p class="mockNote">Your real site will match your colors, fonts, and wedding style.</p>
-        </div>
+      <div class="kicker"><span class="dot"></span> Hosted on our domain • editable anytime</div>
+      <h1>Pick a template. Customize it in minutes. Publish your wedding site instantly.</h1>
+      <p class="sub">
+        Knotte Studios gives couples a clean editing page so most of the process is automated.
+        You choose a design, fill in your details, and we host your site under your own unique page on our domain.
+      </p>
+      <div class="heroActions">
+        <button class="cta" type="button" id="heroPick">Pick a template</button>
+        <button class="ghost" type="button" id="heroPreview">Preview templates</button>
       </div>
     </section>
 
-    <!-- PACKAGES -->
-    <section id="packages" class="section">
-      <div class="container">
-        <div class="sectionHead">
-          <h2>Packages</h2>
-          <p>Pick the vibe. I’ll handle the build.</p>
-        </div>
-
-        <div class="cards">
-          <article class="card">
-            <h3>Signature Page</h3>
-            <p class="price">$249</p>
-            <p class="muted">A beautiful one-page site with all the essentials.</p>
-            <ul>
-              <li>Welcome + story</li>
-              <li>Date/time/location</li>
-              <li>Schedule / timeline</li>
-              <li>Registry links</li>
-              <li>Dress code & FAQ</li>
-            </ul>
-            <a class="btn btnFull" href="#contact" data-package="Signature Page">Book Signature</a>
-          </article>
-
-          <article class="card featured">
-            <div class="badge">Most Popular</div>
-            <h3>RSVP + Guest Flow</h3>
-            <p class="price">$399</p>
-            <p class="muted">Everything in Signature, plus RSVP + guest info flow.</p>
-            <ul>
-              <li>Custom RSVP form (Google Form or similar)</li>
-              <li>Meal choices / allergies</li>
-              <li>Plus-one handling</li>
-              <li>Confirmation message</li>
-              <li>Exportable guest list</li>
-            </ul>
-            <a class="btn btnFull" href="#contact" data-package="RSVP + Guest Flow">Book RSVP</a>
-          </article>
-
-          <article class="card">
-            <h3>Full Wedding Site</h3>
-            <p class="price">$649</p>
-            <p class="muted">Multi-page experience for travel, events, and details.</p>
-            <ul>
-              <li>Home + separate pages (3–6)</li>
-              <li>Travel / hotel block</li>
-              <li>Wedding party page</li>
-              <li>Events (welcome, rehearsal, brunch)</li>
-              <li>Custom domain support</li>
-            </ul>
-            <a class="btn btnFull" href="#contact" data-package="Full Wedding Site">Book Full Site</a>
-          </article>
-        </div>
-
-        <div class="note">
-          <strong>Add-ons:</strong> custom domain setup, photo gallery, password-protected page, extra events, rush delivery.
-        </div>
-      </div>
-    </section>
-
-    <!-- WORK -->
-    <section id="work" class="section alt">
-      <div class="container">
-        <div class="sectionHead">
-          <h2>Example Styles</h2>
-          <p>Swap these for real client screenshots as you build them.</p>
-        </div>
-
-        <div class="gallery">
-          <div class="shot">
-            <div class="shotImg s1"></div>
-            <div class="shotMeta">
-              <strong>Modern Minimal</strong>
-              <span>Clean, airy, timeless</span>
-            </div>
-          </div>
-          <div class="shot">
-            <div class="shotImg s2"></div>
-            <div class="shotMeta">
-              <strong>Romantic Editorial</strong>
-              <span>Soft, elevated, couture</span>
-            </div>
-          </div>
-          <div class="shot">
-            <div class="shotImg s3"></div>
-            <div class="shotMeta">
-              <strong>Bold & Playful</strong>
-              <span>Color-forward, fun details</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section id="process" class="section">
-      <div class="container">
-        <div class="sectionHead">
-          <h2>How it works</h2>
-          <p>Simple, organized, and no chaos in your inbox.</p>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <span class="stepNum">1</span>
-            <div>
-              <strong>Send your details</strong>
-              <p class="muted">You fill out a short form with your info, links, and style inspo.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="stepNum">2</span>
-            <div>
-              <strong>I design + build</strong>
-              <p class="muted">You get a first draft fast. We do one tidy revision round.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="stepNum">3</span>
-            <div>
-              <strong>Launch + share</strong>
-              <p class="muted">You get a link to share, plus help with domain setup if needed.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section alt">
-      <div class="container">
-        <div class="sectionHead">
-          <h2>FAQ</h2>
-          <p>Quick answers before you book.</p>
-        </div>
-
-        <div class="faq">
-          <details>
-            <summary>Do you host the website?</summary>
-            <p class="muted">Yes — I can host it on GitHub Pages (free) or help connect a custom domain. You can also host elsewhere if you prefer.</p>
-          </details>
-          <details>
-            <summary>Can guests RSVP on the site?</summary>
-            <p class="muted">Absolutely. I typically connect a clean RSVP form (like Google Forms) so you can easily view responses and export a list.</p>
-          </details>
-          <details>
-            <summary>What do you need from me?</summary>
-            <p class="muted">Names, date, venue details, schedule, registry links, and any photos. I’ll send a simple checklist after booking.</p>
-          </details>
-          <details>
-            <summary>Can I update it later?</summary>
-            <p class="muted">Yes. You can book a small update add-on, or I can set it up so you can edit certain text easily.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="container contactGrid">
-        <div>
-          <h2>Book Knotte Studios</h2>
-          <p class="muted">
-            Ready? Tell me your date + what package you want. I’ll reply with next steps and a quick intake form.
-          </p>
-
-          <div class="contactCards">
-            <div class="contactCard">
-              <strong>Email</strong>
-              <a id="emailLink" href="mailto:hello@knottestudios.com?subject=Wedding%20Website%20Inquiry%20-%20Knotte%20Studios&body=Hi%20Knotte%20Studios!%0A%0AWedding%20date:%20%0APackage:%20%0AVenue%20city/state:%20%0AColors/vibe:%20%0AAny%20links%20(inspo/registry):%20%0A%0AThanks!">hello@knottestudios.com</a>
-              <span class="muted">Replace with your real email.</span>
-            </div>
-
-            <div class="contactCard">
-              <strong>Turnaround</strong>
-              <span>3–7 days typical</span>
-              <span class="muted">Rush options available</span>
-            </div>
-          </div>
-        </div>
-
-        <form class="form" id="contactForm">
-          <label>
-            Your name
-            <input required name="name" placeholder="Jane Doe" />
-          </label>
-          <label>
-            Email
-            <input required type="email" name="email" placeholder="jane@email.com" />
-          </label>
-          <label>
-            Wedding date
-            <input name="date" placeholder="MM/DD/YYYY" />
-          </label>
-          <label>
-            Package
-            <select name="package" id="packageSelect">
-              <option>Signature Page</option>
-              <option>RSVP + Guest Flow</option>
-              <option>Full Wedding Site</option>
-            </select>
-          </label>
-          <label>
-            Details
-            <textarea name="details" rows="5" placeholder="Venue city/state, vibe, colors, links (registry/inspo), anything important…"></textarea>
-          </label>
-
-          <button class="btn btnFull" type="submit">Send Inquiry</button>
-          <p class="tiny muted">
-            This sends an email draft from your device (no form backend needed).
-          </p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container foot">
-      <span>© <span id="year"></span> Knotte Studios</span>
-      <span class="muted">Wedding websites • RSVP pages • Digital details</span>
+    <div class="sectionTitle" id="templates">
+      <h2>Template gallery</h2>
+      <p class="hint">Preview a design, then choose it. Your selection follows you into the account + editor.</p>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
+    <div class="grid" id="templateGrid"></div>
+
+    <div class="sectionTitle" id="how">
+      <h2>How it works</h2>
+      <p class="hint">This MVP is set up so you can automate the workflow now, then plug in real publishing later.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <strong>1) Choose a template</strong>
+        <span>Pick a style. Your choice is saved automatically.</span>
+      </div>
+      <div class="step">
+        <strong>2) Edit your content</strong>
+        <span>Use the editing page to set names, date, venue, RSVP link, and more.</span>
+      </div>
+      <div class="step">
+        <strong>3) Publish / Export</strong>
+        <span>Export an HTML file immediately. Later, connect “Publish” to your hosting backend.</span>
+      </div>
+    </div>
+
+    <footer>
+      <div>© <span id="year"></span> Knotte Studios</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="pill" href="9.KS.SignUp.html">Account</a>
+        <a class="pill" href="9.KS.Dashboard.html">Dashboard</a>
+        <a class="pill" href="9.KS.Editor.html">Editor</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="modalBack" id="modalBack" role="dialog" aria-modal="true" aria-label="Template preview">
+    <div class="modal">
+      <div class="modalTop">
+        <div class="title" id="modalTitle">Template Preview</div>
+        <button type="button" id="closeModal">Close</button>
+      </div>
+      <div class="modalBody">
+        <iframe id="previewFrame" title="Template preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TEMPLATES = [
+      {
+        id: "t1-elegant-night",
+        name: "Elegant Night",
+        desc: "Modern dark theme with crisp sections and RSVP focus.",
+        badge: "Popular",
+        previewHTML: getTemplateHTML("elegant")
+      },
+      {
+        id: "t2-garden-day",
+        name: "Garden Day",
+        desc: "Bright, airy layout with timeline + details.",
+        badge: "Fresh",
+        previewHTML: getTemplateHTML("garden")
+      },
+      {
+        id: "t3-minimal-classic",
+        name: "Minimal Classic",
+        desc: "Super clean, typography-forward, fast to read.",
+        badge: "Simple",
+        previewHTML: getTemplateHTML("minimal")
+      }
+    ];
+
+    function setSelectedTemplate(id){
+      localStorage.setItem("KS_SELECTED_TEMPLATE", id);
+    }
+    function getSelectedTemplate(){
+      return localStorage.getItem("KS_SELECTED_TEMPLATE") || "";
+    }
+
+    function $(id){ return document.getElementById(id); }
+
+    function openModal(title, html){
+      $("modalTitle").textContent = title;
+      const blob = new Blob([html], {type:"text/html"});
+      const url = URL.createObjectURL(blob);
+      $("previewFrame").src = url;
+      $("modalBack").style.display = "flex";
+      $("modalBack").dataset.blobUrl = url;
+    }
+
+    function closeModal(){
+      const back = $("modalBack");
+      back.style.display = "none";
+      const url = back.dataset.blobUrl;
+      if(url) URL.revokeObjectURL(url);
+      back.dataset.blobUrl = "";
+      $("previewFrame").src = "about:blank";
+    }
+
+    function renderTemplates(){
+      const grid = $("templateGrid");
+      grid.innerHTML = "";
+      const selected = getSelectedTemplate();
+
+      TEMPLATES.forEach(t => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="thumb" aria-hidden="true">
+            <div class="label">${t.badge}</div>
+            <div class="mini"></div>
+          </div>
+          <h3>${escapeHTML(t.name)}</h3>
+          <p>${escapeHTML(t.desc)}</p>
+          <div class="cardActions">
+            <button class="btn" type="button" data-action="preview" data-id="${t.id}">Preview</button>
+            <button class="btn btnPrimary" type="button" data-action="choose" data-id="${t.id}">
+              ${t.id === selected ? "Selected ✓" : "Choose template"}
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHTML(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function getTemplateHTML(flavor){
+      // This preview uses placeholder tokens like {{COUPLE_NAMES}}; the editor will replace them.
+      const base = `
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{COUPLE_NAMES}} — Wedding</title>
+  <style>
+    :root{
+      --bg:#0b0c10; --card:#12141b; --text:#f4f6ff; --muted:#b7bdd6;
+      --line:rgba(255,255,255,.10); --accent:#7c5cff; --accent2:#20d3ff;
+      --radius:18px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    body{margin:0; font-family:var(--sans); background:var(--bg); color:var(--text);}
+    .wrap{max-width:980px; margin:0 auto; padding:28px 18px 70px;}
+    header{border:1px solid var(--line); border-radius:var(--radius); padding:22px; background:rgba(255,255,255,.03);}
+    h1{margin:0 0 6px; font-size:34px; letter-spacing:-.02em;}
+    .sub{margin:0; color:var(--muted); line-height:1.55;}
+    .grid{display:grid; grid-template-columns: repeat(12,1fr); gap:14px; margin-top:16px;}
+    .card{grid-column:span 6; border:1px solid var(--line); border-radius:var(--radius); padding:16px; background:rgba(255,255,255,.03);}
+    .card h2{margin:0 0 8px; font-size:18px}
+    .card p{margin:0; color:var(--muted); line-height:1.5;}
+    .btn{
+      display:inline-block; margin-top:12px;
+      padding:10px 12px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#061018; font-weight:900; text-decoration:none;
+    }
+    footer{margin-top:22px; color:var(--muted); font-size:14px}
+    @media (max-width:720px){ .card{grid-column:span 12;} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>{{COUPLE_NAMES}}</h1>
+      <p class="sub">{{WEDDING_DATE}} • {{WEDDING_LOCATION}}</p>
+      <p class="sub" style="margin-top:10px;">{{WELCOME_MESSAGE}}</p>
+      <a class="btn" href="{{RSVP_URL}}">RSVP</a>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Schedule</h2>
+        <p>{{SCHEDULE_TEXT}}</p>
+      </div>
+      <div class="card">
+        <h2>Details</h2>
+        <p>{{DETAILS_TEXT}}</p>
+      </div>
+      <div class="card">
+        <h2>Registry</h2>
+        <p>{{REGISTRY_TEXT}}</p>
+      </div>
+      <div class="card">
+        <h2>Our Story</h2>
+        <p>{{STORY_TEXT}}</p>
+      </div>
+    </div>
+
+    <footer>Hosted by Knotte Studios</footer>
+  </div>
+</body>
+</html>`;
+
+      if(flavor === "garden"){
+        return base.replaceAll("#0b0c10","#07130f")
+                   .replaceAll("#12141b","#0c1c16")
+                   .replaceAll("#7c5cff","#7cffb0")
+                   .replaceAll("#20d3ff","#88e8ff");
+      }
+      if(flavor === "minimal"){
+        return base.replaceAll("background:var(--bg);","background:#0b0c10;")
+                   .replaceAll("--bg:#0b0c10; --card:#12141b;","--bg:#0b0c10; --card:#0e1016;")
+                   .replaceAll("linear-gradient(135deg,var(--accent),var(--accent2))","linear-gradient(135deg,#ffffff,#b7bdd6)")
+                   .replaceAll("color:#061018;","color:#0b0c10;");
+      }
+      return base; // elegant default
+    }
+
+    // Events
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if(!btn) return;
+
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      if(!action || !id) return;
+
+      const t = TEMPLATES.find(x => x.id === id);
+      if(!t) return;
+
+      if(action === "preview"){
+        openModal(`Preview: ${t.name}`, t.previewHTML);
+      }
+      if(action === "choose"){
+        setSelectedTemplate(id);
+        renderTemplates();
+        // Move them into account creation / login flow
+        window.location.href = "9.KS.SignUp.html";
+      }
+    });
+
+    $("closeModal").addEventListener("click", closeModal);
+    $("modalBack").addEventListener("click", (e) => {
+      if(e.target === $("modalBack")) closeModal();
+    });
+
+    $("startBtn").addEventListener("click", () => {
+      document.getElementById("templates").scrollIntoView({behavior:"smooth"});
+    });
+    $("heroPick").addEventListener("click", () => {
+      document.getElementById("templates").scrollIntoView({behavior:"smooth"});
+    });
+    $("heroPreview").addEventListener("click", () => {
+      document.getElementById("templates").scrollIntoView({behavior:"smooth"});
+    });
+
+    $("year").textContent = new Date().getFullYear();
+    renderTemplates();
+  </script>
 </body>
 </html>
