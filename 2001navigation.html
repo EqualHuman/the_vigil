@@ -855,6 +855,18 @@ body::before{
   display: inline-flex;
   align-items: center;
 }
+/* Don't let the search input stretch across the toolbar */
+.toolbar .input{
+  flex: 0 0 auto;   /* was flex: 1 1 260px; */
+}
+/* Right cluster hugs together and sits on the far right */
+.rightTools, .toolbarRight{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  justify-content: flex-end;
+}
 
 
 </style>
