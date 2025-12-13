@@ -16,6 +16,7 @@
 =========================================================START OF STYLE=========================================================
 =================================================================================================================== -->
 
+
 <style>
 /* =========================================================
   0) RESET / ACCESSIBILITY
@@ -32,37 +33,30 @@
   1) THEME TOKENS (CSS VARIABLES)
 ========================================================== */
 :root{
-  /* Base */
   --bg0:#050510;
   --bg1:#070a1c;
 
-  /* Surfaces */
   --panel: rgba(255,255,255,.07);
   --panel-2: rgba(255,255,255,.045);
   --border: rgba(255,255,255,.14);
 
-  /* Text */
   --text: rgba(255,255,255,.93);
   --muted: rgba(255,255,255,.68);
   --muted2: rgba(255,255,255,.55);
 
-  /* Accents */
   --accentA:#6d5efc;
   --accentB:#22d3ee;
   --accentC:#ff4fd8;
 
-  /* UI */
   --shadow: 0 18px 70px rgba(0,0,0,.55);
   --ring: 0 0 0 3px rgba(34,211,238,.22);
   --radius: 20px;
   --ease: cubic-bezier(.2,.8,.2,1);
 
-  /* Fonts */
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
   --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   --serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
 
-  /* Hero glass inks */
   --ornA: rgba(34,211,238,.55);
   --ornB: rgba(109,94,252,.55);
   --ink:  rgba(6,7,20,.88);
@@ -99,13 +93,11 @@ body::before{
     radial-gradient(closest-side at 55% 75%, rgba(255,79,216,.14), transparent 60%);
   filter: blur(22px);
   opacity:.9;
-
-  /* (kept) your final preference: NO pulsing/drift */
   animation:none !important;
 }
 
 .wrap{
-  max-width:1080px;
+  max-width: 980px;
   margin:0 auto;
   padding:28px 18px 60px;
 }
@@ -115,11 +107,12 @@ body::before{
 ========================================================== */
 .heroBanner{
   position:relative;
-  margin:14px 0 18px;
+  margin:14px auto 18px;
   border-radius: calc(var(--radius) + 14px);
   overflow:hidden;
   isolation:isolate;
   min-height:132px;
+  max-width: 980px;
 
   background:
     radial-gradient(900px 260px at 50% 0%, rgba(255,255,255,.09), transparent 62%),
@@ -171,65 +164,37 @@ body::before{
     linear-gradient(90deg, rgba(0,0,0,.28), transparent 26%, transparent 74%, rgba(0,0,0,.28));
   background-size: 240% 100%, 100% 100%, 100% 100%;
   background-position: -40% 0, 0 0, 0 0;
-
-  /* (kept) final preference: stop shimmer */
   animation:none !important;
   opacity:.25 !important;
   mix-blend-mode: normal !important;
 }
 
-/* Disable old hero layers if leftover markup exists */
-.heroStars, .heroAurora, .heroNoise, .heroBg{ display:none; }
-.heroBrandRow{ display:none; }
-
 .heroInner{
   position:relative;
   z-index:1;
-  padding:20px 22px 18px;
+  display:grid;
+  grid-template-rows:auto 1fr;
+  align-content:center;
+  padding:18px 22px;
   text-align:center;
 }
 
 .heroTop{
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   gap:10px;
   flex-wrap:wrap;
-  margin-bottom:14px;
+  margin-bottom:10px;
 }
 
-.kickerPill{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.22);
-  font-size:11px;
-  letter-spacing:.26em;
-  text-transform:uppercase;
-  color: rgba(255,255,255,.70);
+.heroCenter{
+  display:grid;
+  justify-items:center;
+  align-content:center;
+  max-width:760px;
+  margin:0 auto;
 }
-
-.kDot{
-  width:10px;height:10px;border-radius:999px;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 45%),
-    color-mix(in oklab, var(--accentB), transparent 20%);
-  box-shadow: 0 0 0 2px rgba(34,211,238,.14), 0 0 18px rgba(34,211,238,.18);
-}
-
-.badgePill{
-  font-size:12px;
-  padding:7px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-  color: rgba(255,255,255,.75);
-}
-
-.heroCenter{ max-width:820px; margin:0 auto; }
 
 .heroTitle{
   margin:0 0 6px;
@@ -252,56 +217,31 @@ body::before{
   opacity:.9;
 }
 
-.heroDivider{
-  position:relative;
-  margin:14px auto 0;
+/* Laser line used for hero + section headers */
+.heroLaser{
+  position:absolute;
+  left:18px;
+  right:18px;
   height:2px;
-  width:min(520px, 85vw);
   border-radius:999px;
-  overflow:hidden;
-  opacity:.9;
+  opacity:.95;
+  pointer-events:none;
+
   background: linear-gradient(90deg,
     rgba(255,255,255,0),
-    color-mix(in oklab, var(--accentB), rgba(255,255,255,.65) 45%),
-    color-mix(in oklab, var(--accentA), rgba(255,255,255,.65) 45%),
-    color-mix(in oklab, var(--accentC), rgba(255,255,255,.60) 40%),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.70) 40%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.70) 40%),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.70) 35%),
     rgba(255,255,255,0)
   );
-}
 
-.heroDivider::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  height:1px;
-  top:50%;
-  transform: translateY(-50%);
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(34,211,238,.35),
-    rgba(109,94,252,.30),
-    rgba(255,79,216,.18),
-    transparent
-  );
+  box-shadow:
+    0 0 10px rgba(255,79,216,.18),
+    0 0 18px rgba(109,94,252,.14),
+    0 0 22px rgba(34,211,238,.10);
 }
-
-.heroDivider::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(110deg, transparent 20%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(30px 14px at 50% 50%, rgba(34,211,238,.14), transparent 70%),
-    radial-gradient(30px 14px at 50% 50%, rgba(109,94,252,.12), transparent 70%),
-    radial-gradient(10px 10px at 50% 50%, rgba(255,255,255,.20), transparent 70%);
-  background-size: 220% 100%, 100% 100%, 100% 100%, 100% 100%;
-  background-position: -120% 0, 0 0, 0 0, 0 0;
-
-  /* (kept) final preference: stop shimmer */
-  animation:none !important;
-  opacity:.18 !important;
-  mix-blend-mode: normal !important;
-}
+.heroLaserTop{ top:14px; }
+.heroLaserBottom{ bottom:14px; }
 
 /* =========================================================
   4) CARD + TOOLBAR
@@ -315,29 +255,75 @@ body::before{
   backdrop-filter: blur(10px);
 }
 
+.toolbar,
+.notebookHead{
+  position:relative;
+  border-bottom:none !important;
+  background:
+    radial-gradient(900px 240px at 15% 0%, rgba(34,211,238,.10), transparent 60%),
+    radial-gradient(900px 240px at 85% 0%, rgba(109,94,252,.10), transparent 60%),
+    radial-gradient(700px 220px at 50% 0%, rgba(255,79,216,.10), transparent 62%),
+    rgba(255,255,255,.03) !important;
+}
+
 .toolbar{
   display:flex;
   gap:14px;
   align-items:center;
   justify-content:space-between;
   flex-wrap:wrap;
-  padding:8px 12px;
-  background:
-    radial-gradient(900px 220px at 15% 0%, rgba(34,211,238,.12), transparent 60%),
-    radial-gradient(900px 220px at 85% 0%, rgba(109,94,252,.12), transparent 60%),
-    rgba(255,255,255,.03);
-  border-bottom:1px solid rgba(255,255,255,.10);
+  padding:14px 12px;
 }
 
-.leftTools{
-  background: rgba(0,0,0,.16);
-  border:1px solid rgba(255,255,255,.10);
-  padding:6px;
+/* edge lasers flush to the box edges */
+.toolbar::before,
+.toolbar::after,
+.notebookHead::before,
+.notebookHead::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
   border-radius:999px;
+  opacity:.95;
+  pointer-events:none;
+
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    color-mix(in oklab, var(--accentC), rgba(255,255,255,.70) 45%),
+    color-mix(in oklab, var(--accentA), rgba(255,255,255,.70) 45%),
+    color-mix(in oklab, var(--accentB), rgba(255,255,255,.62) 40%),
+    rgba(255,255,255,0)
+  );
+
+  box-shadow:
+    0 0 12px rgba(255,79,216,.16),
+    0 0 18px rgba(109,94,252,.12),
+    0 0 22px rgba(34,211,238,.10);
+}
+.toolbar::before,.notebookHead::before{ top:0; }
+.toolbar::after,.notebookHead::after{ bottom:0; }
+
+.toolbarTitle{
+  font-size:11px;
+  letter-spacing:.30em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  font-weight:500;
+  padding-left:6px;
+  padding-right:14px;
+  border-right: 1px solid rgba(255,255,255,.12);
+  opacity:.78;
+  color: color-mix(in oklab, var(--accentC), rgba(255,255,255,.90) 82%);
+}
+
+.toolbarCenter{
   display:flex;
-  gap:8px;
   align-items:center;
-  flex-wrap:wrap;
+  gap:10px;
+  flex: 1 1 360px;
+  justify-content:center;
 }
 
 .toolbarRight{
@@ -347,22 +333,7 @@ body::before{
   margin-left:auto;
   justify-content:flex-end;
   flex-wrap:wrap;
-  flex:1;
-}
-.toolbarRight > *{ flex:0 0 auto; }
-.toolbarRight details{ display:flex; align-items:center; }
-
-.toolbarTitle{
-  font-size:11px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color: rgba(255,255,255,.75);
-  white-space: nowrap;
-  opacity:.6;
-  font-weight:500;
-  padding-left:6px;
-  padding-right:14px;
-  border-right: 1px solid rgba(255,255,255,.12);
+  flex:0 0 auto;
 }
 
 /* =========================================================
@@ -403,16 +374,6 @@ body::before{
 }
 .btn:active{ transform: translateY(0) scale(.99); }
 
-.btnPrimary{
-  border-color: rgba(34,211,238,.28);
-  background: linear-gradient(180deg, rgba(34,211,238,.18), rgba(109,94,252,.10));
-  box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
-}
-.btnPrimary:hover{
-  border-color: rgba(34,211,238,.40);
-  box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 0 0 3px rgba(34,211,238,.14);
-}
-
 .input{
   border:1px solid rgba(255,255,255,.14);
   background: rgba(0,0,0,.20);
@@ -422,7 +383,7 @@ body::before{
   font-size:13px;
   min-width:260px;
   max-width:520px;
-  flex: 0 0 auto;
+  width: min(520px, 100%);
   transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
 }
 
@@ -457,12 +418,10 @@ select.input{ appearance:none; }
   background: rgba(255,255,255,.05);
   border-color: rgba(255,255,255,.30);
 }
-.dropHint:focus-visible{
-  outline:none;
-  box-shadow: var(--ring);
-}
+.dropHint:focus-visible{ outline:none; box-shadow: var(--ring); }
 
 .node{
+  position:relative;
   border-radius:18px;
   border:1px solid rgba(255,255,255,.14);
   background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
@@ -470,7 +429,21 @@ select.input{ appearance:none; }
   overflow:hidden;
 }
 
-/* Header alignment (final version) */
+/* accent strips on both edges */
+.node[data-accent="1"]::before,
+.node[data-accent="1"]::after{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;
+  width:6px;
+  background: var(--accentStrip, rgba(255,255,255,.35));
+  opacity:.95;
+  pointer-events:none;
+  filter: saturate(1.1);
+}
+.node[data-accent="1"]::before{ left:0; }
+.node[data-accent="1"]::after{ right:0; }
+
 .nodeHeader{
   display:grid;
   grid-template-columns: 1fr auto;
@@ -480,6 +453,11 @@ select.input{ appearance:none; }
   user-select:none;
   border-bottom:1px solid rgba(255,255,255,.10);
 }
+.node[data-accent="1"] .nodeHeader,
+.node[data-accent="1"] .nodeBody{
+  padding-left:18px;
+  padding-right:18px;
+}
 
 .nodeHeaderLeft{
   display:flex;
@@ -487,9 +465,6 @@ select.input{ appearance:none; }
   gap:12px;
   min-width:0;
 }
-
-/* nested nodes spacing */
-.nodeBody > .node{ margin-top:6px; }
 
 .twisty{
   width:28px;height:28px;
@@ -517,6 +492,7 @@ select.input{ appearance:none; }
   display:grid;
   gap:14px;
 }
+.nodeBody > .node{ margin-top:6px; }
 
 .tile{
   display:flex;
@@ -547,7 +523,6 @@ select.input{ appearance:none; }
   flex-wrap:wrap;
   margin-bottom:4px;
 }
-
 .tileTitle{ font-weight:650; letter-spacing:-.01em; }
 
 .chip{
@@ -557,14 +532,6 @@ select.input{ appearance:none; }
   border:1px solid rgba(255,255,255,.14);
   background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
   color:var(--muted);
-}
-
-.url{
-  font-family:var(--mono);
-  font-size:12.5px;
-  color:var(--muted);
-  word-break: break-all;
-  line-height:1.35;
 }
 
 .notes{
@@ -612,22 +579,18 @@ select.input{ appearance:none; }
   border-left:1px solid rgba(255,255,255,.10);
   padding-left:12px;
 }
-
-/* Softer styling for nested nodes */
 .node.indent{
   background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
 }
 .node.indent .nodeHeader{ padding:10px 14px; }
 .node.indent .nodeTitle{ font-weight:600; opacity:.92; }
 
-/* spacing between sibling groups (root + nested) */
 [data-container="children"]{
   display:grid;
   gap:14px;
 }
 .tree > [data-container="children"]{ gap:18px; }
 
-/* Drag handle (handle-only dragging) */
 .dragHandle{
   width:36px;height:36px;
   border-radius:14px;
@@ -733,11 +696,6 @@ select.input{ appearance:none; }
 
 .menuItem{ width:100%; justify-content:flex-start; }
 
-.menu[open] > summary{
-  border-color: rgba(34,211,238,.26);
-  box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 0 3px rgba(34,211,238,.10);
-}
-
 .menuSep{
   height:1px;
   background: rgba(255,255,255,.10);
@@ -746,37 +704,32 @@ select.input{ appearance:none; }
 }
 
 /* =========================================================
-  9) OPTIONAL META STRIP
-========================================================== */
-.meta{
-  padding:10px 14px 12px;
-  color:var(--muted2);
-  font-size:12.5px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-#metaLeft{
-  font-variant-numeric: tabular-nums;
-  letter-spacing:.01em;
-  white-space:nowrap;
-  padding:6px 10px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-  border-radius:999px;
-}
-
-/* =========================================================
-  10) WEBPAGE TASKS (per tile & group)
+  10) TASKS (Notebook cards)
 ========================================================== */
 .tasks{
+  position:relative;
   margin-top:10px;
   border-radius:14px;
   border:1px solid rgba(255,255,255,.10);
   background: rgba(0,0,0,.14);
   padding:10px 10px 8px;
+}
+.tasks[data-accent="1"]::before,
+.tasks[data-accent="1"]::after{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;
+  width:6px;
+  background: var(--accentStrip, rgba(255,255,255,.35));
+  opacity:.95;
+  pointer-events:none;
+}
+.tasks[data-accent="1"]::before{ left:0; }
+.tasks[data-accent="1"]::after{ right:0; }
+
+.tasks[data-accent="1"]{
+  padding-left:16px;
+  padding-right:16px;
 }
 
 .tasksHead{
@@ -793,6 +746,9 @@ select.input{ appearance:none; }
   text-transform:uppercase;
   color: rgba(255,255,255,.62);
   user-select:none;
+}
+.tasks[data-accent="1"] .tasksLabel{
+  color: color-mix(in oklab, var(--accentStrip), rgba(255,255,255,.80) 78%);
 }
 
 .tasksAdd{
@@ -863,8 +819,8 @@ select.input{ appearance:none; }
 ========================================================== */
 .layout2{
   display:grid;
-  grid-template-columns: .85fr 1.45fr;
-  gap:16px;
+  grid-template-columns: minmax(360px, 470px) minmax(420px, 1fr);
+  gap:14px;
   align-items:start;
 }
 @media (max-width: 980px){
@@ -881,15 +837,14 @@ select.input{ appearance:none; }
   align-items:flex-start;
   justify-content:space-between;
   gap:12px;
-  padding:12px 14px;
-  border-bottom:1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
+  padding:14px;
 }
 
 .notebookTitle{
   font-weight:700;
   letter-spacing:-.02em;
   margin-top:2px;
+  color: rgba(255,255,255,.90);
 }
 
 .notebookTabs{
@@ -905,7 +860,7 @@ select.input{ appearance:none; }
 }
 
 /* =========================================================
-  12) HERO NAVIGATION DOTS (final: neon star version)
+  12) HERO NAV DOTS
 ========================================================== */
 .heroDots{
   display:flex;
@@ -971,195 +926,14 @@ select.input{ appearance:none; }
     0 0 30px rgba(34,211,238,.8);
 }
 
-.navDot.active{
-  background:
-    radial-gradient(circle at 30% 30%,
-      rgba(255,255,255,1),
-      rgba(255,79,216,1) 30%,
-      rgba(109,94,252,1) 55%,
-      rgba(34,211,238,1) 75%,
-      transparent 100%
-    );
-
-  box-shadow:
-    0 0 10px rgba(255,255,255,1),
-    0 0 30px rgba(255,79,216,1),
-    0 0 60px rgba(109,94,252,1),
-    0 0 90px rgba(34,211,238,1);
-}
-
 /* =========================================================
-  13) MOTION / PERFORMANCE (final)
+  13) MOTION / PERFORMANCE
 ========================================================== */
 @media (prefers-reduced-motion: reduce){
   body::before{ animation:none !important; }
   .btn, .tile, .iconBtn, .twisty, .dragHandle{ transition:none !important; }
-  .heroBanner::after, .heroDivider::after{ animation:none !important; }
+  .heroBanner::after{ animation:none !important; }
 }
-
-/* =========================================================
-  99) LAYOUT TIGHTENING + COHESIVE SECTION HEADERS + LASERS
-  (Paste at very bottom of <style>)
-========================================================== */
-
-/* Narrow the whole canvas a bit (less “stretched across screen”) */
-.wrap{
-  max-width: 980px !important;
-}
-
-/* Keep the hero from feeling oversized on ultrawide screens */
-.heroBanner{
-  max-width: 980px;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Make sure the hero title area is truly centered and balanced */
-.heroInner{
-  display: grid;
-  grid-template-rows: auto 1fr;
-  align-content: center;
-  padding: 18px 22px 18px !important;
-  text-align: center;
-}
-
-.heroTop{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px !important;
-}
-
-.heroCenter{
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-/* Laser line used for hero + section headers */
-.heroLaser{
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  height: 2px;
-  border-radius: 999px;
-  opacity: .95;
-  pointer-events: none;
-
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0),
-    color-mix(in oklab, var(--accentB), rgba(255,255,255,.70) 40%),
-    color-mix(in oklab, var(--accentA), rgba(255,255,255,.70) 40%),
-    color-mix(in oklab, var(--accentC), rgba(255,255,255,.70) 35%),
-    rgba(255,255,255,0)
-  );
-
-  box-shadow:
-    0 0 10px rgba(255,79,216,.18),
-    0 0 18px rgba(109,94,252,.14),
-    0 0 22px rgba(34,211,238,.10);
-}
-
-.heroLaserTop{ top: 14px; }
-.heroLaserBottom{ bottom: 14px; }
-
-/* Remove the old “divider under title” vibe if it still exists in your CSS */
-.heroDivider{ display:none !important; }
-
-/* ------------------------------------------------------------------
-   Cohesive section header styling (Toolbar + Notebook Head)
-   - subtle pinks
-   - framed with lasers (top + bottom)
------------------------------------------------------------------- */
-
-/* Shared visual language */
-.toolbar,
-.notebookHead{
-  position: relative;
-  border-bottom: none !important;
-  background:
-    radial-gradient(900px 240px at 15% 0%, rgba(34,211,238,.10), transparent 60%),
-    radial-gradient(900px 240px at 85% 0%, rgba(109,94,252,.10), transparent 60%),
-    radial-gradient(700px 220px at 50% 0%, rgba(255,79,216,.10), transparent 62%),
-    rgba(255,255,255,.03) !important;
-}
-
-/* Laser frames: top + bottom for section headers */
-.toolbar::before,
-.toolbar::after,
-.notebookHead::before,
-.notebookHead::after{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  height: 2px;
-  border-radius: 999px;
-  opacity: .9;
-  pointer-events:none;
-
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0),
-    color-mix(in oklab, var(--accentC), rgba(255,255,255,.60) 45%),
-    color-mix(in oklab, var(--accentA), rgba(255,255,255,.60) 45%),
-    color-mix(in oklab, var(--accentB), rgba(255,255,255,.55) 40%),
-    rgba(255,255,255,0)
-  );
-}
-
-.toolbar::before,
-.notebookHead::before{ top: 10px; }
-
-.toolbar::after,
-.notebookHead::after{ bottom: 10px; }
-
-/* Pull the actual content away from the laser lines */
-.toolbar{
-  padding-top: 16px !important;
-  padding-bottom: 16px !important;
-}
-
-.notebookHead{
-  padding-top: 16px !important;
-  padding-bottom: 16px !important;
-}
-
-/* Section label text: unify tone + add subtle pink */
-.toolbarTitle{
-  opacity: .78 !important;
-  color: color-mix(in oklab, var(--accentC), rgba(255,255,255,.90) 82%) !important;
-  letter-spacing: .30em !important;
-}
-
-/* Notebook kicker: match the same “section label” vibe */
-.notebookHead .kicker{
-  color: color-mix(in oklab, var(--accentC), rgba(255,255,255,.80) 78%) !important;
-  opacity: .85 !important;
-  letter-spacing: .26em !important;
-}
-
-/* Optional: make the notebook title feel more cohesive with nav header */
-.notebookTitle{
-  color: rgba(255,255,255,.90);
-}
-
-/* ------------------------------------------------------------------
-   Layout balance: keep columns feeling less “wide”
------------------------------------------------------------------- */
-.layout2{
-  grid-template-columns: minmax(360px, 470px) minmax(420px, 1fr) !important;
-  gap: 14px !important;
-}
-
-@media (max-width: 980px){
-  .layout2{
-    grid-template-columns: 1fr !important;
-  }
-}
-
-  
 </style>
 
   
@@ -1172,114 +946,84 @@ select.input{ appearance:none; }
     =========================================================START OF BODY=========================================================
   =================================================================================================================== -->
 <body>
-  <!-- =========================================================
-    PAGE WRAP
-  ========================================================== -->
   <div class="wrap">
-<!-- =========================================================
-  HERO / HEADER
-========================================================== -->
-<header class="heroBanner" aria-label="Navigation Hub banner">
-  <div class="heroLaser heroLaserTop" aria-hidden="true"></div>
 
-  <div class="heroInner">
-    <div class="heroTop">
-      <div class="heroDots" aria-label="Hero navigation">
-        <a href="#section-home" class="navDot" aria-label="Home"></a>
-        <a href="#section-1" class="navDot" aria-label="Section 1"></a>
-        <a href="#section-2" class="navDot" aria-label="Section 2"></a>
-      </div>
-    </div>
+    <header class="heroBanner" aria-label="Navigation Hub banner">
+      <div class="heroLaser heroLaserTop" aria-hidden="true"></div>
 
-    <div class="heroCenter">
-      <h1 class="heroTitle">Vigil</h1>
-      <p class="heroSubtitle">Webpage Hub</p>
-    </div>
-  </div>
-
-  <div class="heroLaser heroLaserBottom" aria-hidden="true"></div>
-</header>
-
-<!-- =========================================================
-  MAIN CARD: TOOLBAR + TREE
-========================================================== -->
-<div class="layout2">
-
-  <!-- LEFT: Navigation card (toolbar + tree live INSIDE this card) -->
-  <section class="card" aria-label="Navigation hub">
-
-    <!-- Toolbar -->
-    <div class="toolbar" id="top">
-
-      <!-- Left: section title -->
-      <div class="toolbarTitle">
-        Webpage Navigation
-      </div>
-
-      <!-- Center: search -->
-      <div class="toolbarCenter">
-        <label class="sr-only" for="search">Search</label>
-        <input
-          class="input"
-          id="search"
-          type="search"
-          placeholder="Search titles, URLs, notes…"
-        />
-      </div>
-
-      <!-- Right: Add + Actions -->
-      <div class="toolbarRight">
-        <button class="btn" id="addItem" type="button">＋ Add</button>
-
-        <details class="menu" id="actionsMenu">
-          <summary class="btn" aria-label="Actions">☰ Actions</summary>
-
-          <div class="menuList" role="menu" aria-label="Toolbar actions">
-            <button class="btn menuItem" id="expandAll">▾ Expand all</button>
-            <button class="btn menuItem" id="collapseAll">▸ Collapse all</button>
-            <div class="menuSep"></div>
-            <button class="btn menuItem" id="exportJson">⇪ Export JSON</button>
-            <button class="btn menuItem" id="resetEdits">↺ Reset edits</button>
+      <div class="heroInner">
+        <div class="heroTop">
+          <div class="heroDots" aria-label="Hero navigation">
+            <a href="#top" class="navDot" aria-label="Top"></a>
+            <a href="#treeRoot" class="navDot" aria-label="Navigation tree"></a>
+            <a href="#notebook" class="navDot" aria-label="Task notebook"></a>
           </div>
-        </details>
+        </div>
+
+        <div class="heroCenter">
+          <h1 class="heroTitle">Vigil</h1>
+          <p class="heroSubtitle">Webpage Hub</p>
+        </div>
       </div>
 
+      <div class="heroLaser heroLaserBottom" aria-hidden="true"></div>
+    </header>
+
+    <div class="layout2">
+
+      <!-- LEFT: Navigation -->
+      <section class="card" aria-label="Navigation hub">
+        <div class="toolbar" id="top">
+          <div class="toolbarTitle">Webpage Navigation</div>
+
+          <div class="toolbarCenter">
+            <label class="sr-only" for="search">Search</label>
+            <input class="input" id="search" type="search" placeholder="Search titles, URLs, notes, tasks…" />
+          </div>
+
+          <div class="toolbarRight">
+            <button class="btn" id="addItem" type="button">＋ Add</button>
+
+            <details class="menu" id="actionsMenu">
+              <summary class="btn" aria-label="Actions">☰ Actions</summary>
+              <div class="menuList" role="menu" aria-label="Toolbar actions">
+                <button class="btn menuItem" id="expandAll" type="button">▾ Expand all</button>
+                <button class="btn menuItem" id="collapseAll" type="button">▸ Collapse all</button>
+                <div class="menuSep"></div>
+                <button class="btn menuItem" id="exportJson" type="button">⇪ Export JSON</button>
+                <button class="btn menuItem" id="resetEdits" type="button">↺ Reset edits</button>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="tree" id="treeRoot"></div>
+      </section>
+
+      <!-- RIGHT: Notebook -->
+      <aside class="card notebook" id="notebook" aria-label="Task notebook">
+        <div class="notebookHead">
+          <div>
+            <div class="kicker">TASK NOTEBOOK</div>
+            <div class="notebookTitle" id="nbTitle">Selected task lists</div>
+          </div>
+
+          <div class="notebookTabs" role="tablist" aria-label="Notebook views">
+            <button class="btn" id="nbTabSelected" type="button" aria-selected="true">Selected</button>
+            <button class="btn" id="nbTabAll" type="button" aria-selected="false">All</button>
+            <button class="btn" id="nbResetSelected" type="button" title="Clear selected task lists">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="notebookBody" id="nbBody">
+          <div class="taskEmpty">Click 🧾 on any page/link to pin its tasks here.</div>
+        </div>
+      </aside>
+
     </div>
 
-    <!-- Tree mount point -->
-    <div class="tree" id="treeRoot"></div>
-
-  </section>
-
-  <!-- RIGHT: Task Notebook -->
-  <aside class="card notebook" aria-label="Task notebook">
-<div class="notebookHead">
-  <div>
-    <div class="kicker">TASK NOTEBOOK</div>
-    <div class="notebookTitle" id="nbTitle">Selected task lists</div>
-  </div>
-
-  <div class="notebookTabs" role="tablist" aria-label="Notebook views">
-    <button class="btn" id="nbTabSelected" type="button" aria-selected="true">Selected</button>
-    <button class="btn" id="nbTabAll" type="button" aria-selected="false">All</button>
-    <button class="btn" id="nbResetSelected" type="button" title="Clear selected task lists">↺ Reset</button>
-  </div>
-</div>
-
-
-    <div class="notebookBody" id="nbBody">
-      <div class="taskEmpty">Click 🧾 on any item to pin its tasks here.</div>
-    </div>
-  </aside>
-
-</div>
-
-
-  <!-- =========================================================
-    EMBEDDED DATA (INITIAL TREE NODES)
-  ========================================================== -->
-
-  <script id="navData" type="application/json">
+    <!-- Embedded Data -->
+    <script id="navData" type="application/json">
 [
   { "type":"group", "id":"core", "title":"Core", "parentId":null, "order":1 },
   { "type":"tile",  "id":"home", "title":"Home", "href":"/index.html", "parentId":"core", "order":1 },
@@ -1292,116 +1036,71 @@ select.input{ appearance:none; }
   { "type":"group", "id":"action", "title":"Take action", "parentId":null, "order":3 },
   { "type":"tile",  "id":"donate-wwf", "title":"Donate: WWF", "href":"https://www.worldwildlife.org/", "parentId":"action", "order":1 }
 ]
-  </script>
+    </script>
 
-  <!-- =========================================================
-    MODAL (ADD / EDIT)
-  ========================================================== -->
+    <!-- Add/Edit Modal -->
+    <div class="modalBackdrop" id="modalBackdrop" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modalHead">
+          <div>
+            <div class="kicker" id="modalKicker">ADD</div>
+            <div id="modalTitle" class="modalTitle">Item</div>
+          </div>
+          <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
+        </div>
 
- <!-- ADD/EDIT MODAL -->
-<div class="modalBackdrop" id="modalBackdrop" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modalBody">
+          <div class="grid2">
+            <label class="field">
+              <span>Type</span>
+              <select class="input" id="fType">
+                <option value="group">Page (group)</option>
+                <option value="tile">Link (tile)</option>
+              </select>
+            </label>
 
-    <!-- Modal header -->
-    <div class="modalHead">
-      <div>
-        <div class="kicker" id="modalKicker">ADD</div>
-        <div id="modalTitle" class="modalTitle">Item</div>
+            <label class="field">
+              <span>Title</span>
+              <input class="input" id="fTitle" placeholder="Title" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Hyperlink</span>
+            <input class="input" id="fHref" placeholder="https://… or /path" />
+          </label>
+
+          <label class="field">
+            <span>WEBPAGE TASKS (one per line)</span>
+            <textarea class="input" id="fTasks"
+              placeholder="- Draft copy&#10;- Add donate buttons&#10;- Proofread"
+              style="min-height:120px; resize:vertical; padding-top:10px;"></textarea>
+          </label>
+
+          <label class="field" id="groupColorField">
+            <span>Group color</span>
+            <input class="input" id="fColor" type="color" value="#6d5efc"
+              style="height:44px; padding:6px 10px;" />
+          </label>
+
+          <div class="modalActions">
+            <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
+            <div style="flex:1"></div>
+            <button class="btn" id="saveItem" type="button">💾 Save</button>
+          </div>
+        </div>
       </div>
-
-      <button class="iconBtn" id="closeModal" type="button" aria-label="Close">✕</button>
     </div>
 
-    <!-- Modal body -->
-    <div class="modalBody">
+    <!-- Vendor -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
-      <div class="grid2">
-        <label class="field">
-          <span>Type</span>
-          <select class="input" id="fType">
-            <option value="group">Page (group)</option>
-            <option value="tile">Link (tile)</option>
-          </select>
-        </label>
-
-        <label class="field">
-          <span>Title</span>
-          <input class="input" id="fTitle" placeholder="Title" />
-        </label>
-      </div>
-
-      <label class="field">
-        <span>Hyperlink</span>
-        <input class="input" id="fHref" placeholder="https://… or /path" />
-      </label>
-
-      <label class="field">
-        <span>WEBPAGE TASKS (one per line)</span>
-        <textarea
-          class="input"
-          id="fTasks"
-          placeholder="- Draft copy&#10;- Add donate buttons&#10;- Proofread"
-          style="min-height:120px; resize:vertical; padding-top:10px;"
-        ></textarea>
-      </label>
-
-      <label class="field" id="groupColorField">
-        <span>Group color</span>
-        <input
-          class="input"
-          id="fColor"
-          type="color"
-          value="#6d5efc"
-          style="height:44px; padding:6px 10px;"
-        />
-      </label>
-
-      <div class="modalActions">
-        <button class="btn" id="deleteItem" type="button">🗑 Delete</button>
-        <div style="flex:1"></div>
-        <button class="btn" id="saveItem" type="button">💾 Save</button>
-      </div>
-
-    </div>
   </div>
-</div>
-
-
-<!-- ✅ TASKS MODAL (PASTE IT HERE: OUTSIDE the Add/Edit modal) -->
-<div class="modalBackdrop" id="tasksBackdrop" hidden>
-  <div class="modal" role="dialog" aria-modal="true">
-    <div class="modalHead">
-      <div>
-        <div class="kicker">WEBPAGE TASKS</div>
-        <div id="tasksTitle" class="modalTitle"></div>
-      </div>
-      <button class="iconBtn" id="closeTasks" type="button">✕</button>
-    </div>
-
-    <div class="modalBody" id="tasksBody"></div>
-  </div>
-</div>
-
-  <!-- =========================================================
-    VENDOR SCRIPTS (LOAD BEFORE APP SCRIPT)
-  ========================================================== -->
-
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-
-<!-- ==================================================================================================================
-    =========================================================START OF SCRIPT=========================================================
-  =================================================================================================================== -->
-
+</body>
 <script>
 /* =========================================================
-  Vigil — Unlimited nesting tree
-  - Nodes are either {type:"group"} or {type:"tile"}
-  - parentId builds a tree (null = root)
-  - Drag groups into/out of groups (infinite nesting)
-  - Prevent dropping a group into its own descendant
-  - Persist nodes + collapsed group state to localStorage
+  Vigil — Unlimited nesting tree (clean build)
 ========================================================== */
-
 
 /* =========================================================
   1) STORAGE KEYS
@@ -1410,35 +1109,22 @@ const LS_NODES = "vigil_nodes_tree_v1";
 const LS_COLLAPSED = "vigil_collapsed_groups_v1";
 const LS_TASK_SELECTED = "vigil_task_selected_v1";
 
-
-
 /* =========================================================
-  2) DOM HELPERS + DOM REFERENCES
+  2) DOM HELPERS + REFERENCES
 ========================================================== */
 const $ = (sel) => document.querySelector(sel);
 
-// Mount points
 const treeRootEl = $("#treeRoot");
 const searchEl = $("#search");
 
-// Toolbar buttons
 const expandAllBtn = $("#expandAll");
 const collapseAllBtn = $("#collapseAll");
 const addItemBtn = $("#addItem");
 const exportBtn = $("#exportJson");
 const resetBtn = $("#resetEdits");
-  const actionsMenu = $("#actionsMenu");
-  const closeActionsMenu = () => {
-  if (actionsMenu && actionsMenu.open) actionsMenu.open = false;
-};
 
-const tasksBackdrop = $("#tasksBackdrop");
-const tasksTitle = $("#tasksTitle");
-const tasksBody = $("#tasksBody");
-const closeTasksBtn = $("#closeTasks");
+const actionsMenu = $("#actionsMenu");
 
-
-// Modal elements
 const modalBackdrop = $("#modalBackdrop");
 const closeModalBtn = $("#closeModal");
 const saveItemBtn = $("#saveItem");
@@ -1449,8 +1135,8 @@ const modalTitle = $("#modalTitle");
 
 const fType = $("#fType");
 const fTitle = $("#fTitle");
-  const fTasks = $("#fTasks");
 const fHref = $("#fHref");
+const fTasks = $("#fTasks");
 const fColor = $("#fColor");
 const groupColorField = $("#groupColorField");
 
@@ -1460,17 +1146,15 @@ const nbTabSelected = $("#nbTabSelected");
 const nbTabAll = $("#nbTabAll");
 const nbResetSelected = $("#nbResetSelected");
 
-
 /* =========================================================
   3) APP STATE
 ========================================================== */
 let filter = "";
 let editingId = null;
-let notebookMode = "selected";        // "selected" | "all"
-let selectedTaskIds = new Set();      // toggled-on task lists
 
+let notebookMode = "selected"; // "selected" | "all"
+let selectedTaskIds = new Set();
 
-// Used to preserve default insert location when adding from “Add here”
 let draftParentId = null;
 let draftOrder = 9999;
 
@@ -1478,36 +1162,36 @@ let NODES = [];
 let collapsedGroups = new Set();
 let _sortables = [];
 
-
 /* =========================================================
-  4) SMALL UTILITIES
+  4) UTILITIES
 ========================================================== */
 const escapeHtml = (s) => (s ?? "").toString()
   .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
   .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-
-const copyToClipboard = async (text) => {
-  try { await navigator.clipboard.writeText(text); } catch {}
-};
 
 const slugify = (s) => (s || "")
   .toLowerCase()
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/(^-|-$)/g, "");
 
+const closeActionsMenu = () => {
+  if (actionsMenu && actionsMenu.open) actionsMenu.open = false;
+};
+
+const copyToClipboard = async (text) => {
+  try { await navigator.clipboard.writeText(text); } catch {}
+};
+
 /* =========================================================
   TASKS HELPERS
 ========================================================== */
 const normalizeTasks = (node) => {
-  // Support older saved nodes that don't have tasks yet
-  if (!Array.isArray(node.tasks)) node.tasks = [];
-  // Support legacy string tasks if you ever stored that
   if (typeof node.tasks === "string") node.tasks = [{ text: node.tasks, done:false }];
+  if (!Array.isArray(node.tasks)) node.tasks = [];
 };
 
 const tasksToTextarea = (tasks) => {
   if (!Array.isArray(tasks) || !tasks.length) return "";
-  // Allow users to see completion in the editor
   return tasks.map(t => `${t?.done ? "[x] " : ""}${t?.text ?? ""}`.trimEnd()).join("\n");
 };
 
@@ -1515,197 +1199,13 @@ const textareaToTasks = (value) => {
   const raw = (value || "").split("\n").map(s => s.trim()).filter(Boolean);
   return raw.map(line => {
     const done = /^\[x\]\s*/i.test(line) || /^-?\s*\[x\]\s*/i.test(line);
-    const text = line.replace(/^-?\s*\[x\]\s*/i, "").replace(/^\[x\]\s*/i, "").trim();
+    const text = line
+      .replace(/^-?\s*\[x\]\s*/i, "")
+      .replace(/^\[x\]\s*/i, "")
+      .replace(/^-+\s*/i, "")
+      .trim();
     return { text, done };
   }).filter(t => t.text);
-};
-window.__openTasks = (id) => {
-  if (selectedTaskIds.has(id)) selectedTaskIds.delete(id);
-  else selectedTaskIds.add(id);
-
-  saveSelectedTasks();
-  // do NOT switch your current view; just refresh
-  render();
-};
-
-
-
-
-const renderTasks = (node) => {
-  const tasks = Array.isArray(node.tasks) ? node.tasks : [];
-  const rows = tasks.length
-    ? `<div class="taskList">${
-        tasks.map((t, idx) => `
-          <div class="taskRow">
-            <input class="taskCheck" type="checkbox"
-              ${t.done ? "checked" : ""}
-              onclick="window.__taskToggle('${escapeHtml(node.id).replaceAll("'","&#039;")}', ${idx})"
-              aria-label="Mark task done" />
-            <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
-            <button class="taskDel" type="button"
-              onclick="window.__taskDelete('${escapeHtml(node.id).replaceAll("'","&#039;")}', ${idx})"
-              aria-label="Delete task">✕</button>
-          </div>
-        `).join("")
-      }</div>`
-    : `<div class="taskEmpty">No tasks yet.</div>`;
-
-  return `
-    <div class="tasks" aria-label="Webpage tasks">
-      <div class="tasksHead">
-        <div class="tasksLabel">WEBPAGE TASKS</div>
-        <button class="tasksAdd" type="button"
-          onclick="window.__taskAdd('${escapeHtml(node.id).replaceAll("'","&#039;")}')">＋ Add task</button>
-      </div>
-      ${rows}
-    </div>
-  `;
-};
-
-const renderNotebookSelected = () => {
-  // only show task lists that are toggled on via 🧾
-  const ids = [...selectedTaskIds].filter(id => nodeById(id));
-
-  if (!ids.length) {
-    nbTitle.textContent = "Selected task lists";
-    nbBody.innerHTML = `<div class="taskEmpty">Toggle 🧾 on any page/link to show its tasks here.</div>`;
-    return;
-  }
-
-  nbTitle.textContent = `Selected task lists (${ids.length})`;
-
-  nbBody.innerHTML = ids.map((id) => {
-    const n = nodeById(id);
-    normalizeTasks(n);
-
-    return `
-      <div class="tasks" aria-label="Webpage tasks">
-        <div class="tasksHead">
-          <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="tasksAdd" type="button"
-              onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
-            <button class="tasksAdd" type="button"
-              onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✕ Hide</button>
-          </div>
-        </div>
-        ${
-          (() => {
-            const tasks = Array.isArray(n.tasks) ? n.tasks : [];
-            const rows = tasks.length
-              ? `<div class="taskList">${
-                  tasks.map((t, idx) => `
-                    <div class="taskRow">
-                      <input class="taskCheck" type="checkbox"
-                        ${t.done ? "checked" : ""}
-                        onclick="window.__taskToggle('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
-                        aria-label="Mark task done" />
-                      <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
-                      <button class="taskDel" type="button"
-                        onclick="window.__taskDelete('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
-                        aria-label="Delete task">✕</button>
-                    </div>
-                  `).join("")
-                }</div>`
-              : `<div class="taskEmpty">No tasks yet.</div>`;
-            return rows;
-          })()
-        }
-      </div>
-    `;
-  }).join("");
-};
-
-
-const renderNotebookAll = () => {
-  const nodesWithTasks = NODES
-    .map(n => (normalizeTasks(n), n))
-    .filter(n => Array.isArray(n.tasks) && n.tasks.length);
-
-  nbTitle.textContent = "All tasks (across site)";
-
-  if (!nodesWithTasks.length) {
-    nbBody.innerHTML = `<div class="taskEmpty">No tasks found yet.</div>`;
-    return;
-  }
-
-  nbBody.innerHTML = nodesWithTasks.map(n => `
-    <div class="tasks" aria-label="Webpage tasks">
-      <div class="tasksHead">
-        <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
-        <button class="tasksAdd" type="button"
-          onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
-      </div>
-      ${
-        (() => {
-          const tasks = Array.isArray(n.tasks) ? n.tasks : [];
-          const rows = tasks.length
-            ? `<div class="taskList">${
-                tasks.map((t, idx) => `
-                  <div class="taskRow">
-                    <input class="taskCheck" type="checkbox"
-                      ${t.done ? "checked" : ""}
-                      onclick="window.__taskToggle('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
-                      aria-label="Mark task done" />
-                    <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
-                    <button class="taskDel" type="button"
-                      onclick="window.__taskDelete('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
-                      aria-label="Delete task">✕</button>
-                  </div>
-                `).join("")
-              }</div>`
-            : `<div class="taskEmpty">No tasks yet.</div>`;
-          return rows;
-        })()
-      }
-    </div>
-  `).join("");
-};
-
-const renderNotebook = () => {
-  nbTabSelected.setAttribute("aria-selected", notebookMode === "selected");
-  nbTabAll.setAttribute("aria-selected", notebookMode === "all");
-
-  // IMPORTANT: Selected mode renders ALL selectedTaskIds — never just the last one
-  if (notebookMode === "selected") {
-    renderNotebookSelected();
-  } else {
-    renderNotebookAll();
-  }
-};
-
-
-
-// Inline hooks
-window.__taskAdd = (id) => {
-  const n = nodeById(id);
-  if (!n) return;
-  normalizeTasks(n);
-  const text = prompt("New task:");
-  if (!text || !text.trim()) return;
-  n.tasks.push({ text: text.trim(), done:false });
-  saveNodes();
-  render();
-};
-
-window.__taskToggle = (id, idx) => {
-  const n = nodeById(id);
-  if (!n) return;
-  normalizeTasks(n);
-  const t = n.tasks[idx];
-  if (!t) return;
-  t.done = !t.done;
-  saveNodes();
-  render();
-};
-
-window.__taskDelete = (id, idx) => {
-  const n = nodeById(id);
-  if (!n) return;
-  normalizeTasks(n);
-  n.tasks.splice(idx, 1);
-  saveNodes();
-  render();
 };
 
 /* =========================================================
@@ -1739,9 +1239,8 @@ const loadSelectedTasks = () => {
   try { return new Set(JSON.parse(raw)); } catch { return new Set(); }
 };
 
-const saveSelectedTasks = () => {
+const saveSelectedTasks = () =>
   localStorage.setItem(LS_TASK_SELECTED, JSON.stringify([...selectedTaskIds], null, 2));
-};
 
 /* =========================================================
   6) DATA ACCESSORS
@@ -1756,7 +1255,6 @@ const childrenOf = (parentId) =>
 const buildDescendantsSet = (groupId) => {
   const out = new Set();
   const stack = [groupId];
-
   while (stack.length) {
     const cur = stack.pop();
     for (const ch of childrenOf(cur)) {
@@ -1775,6 +1273,15 @@ const normalizeOrders = () => {
   }
 };
 
+const accentForNode = (id) => {
+  let cur = nodeById(id);
+  while (cur) {
+    if (cur.color) return cur.color;
+    if (cur.parentId == null) break;
+    cur = nodeById(cur.parentId);
+  }
+  return "";
+};
 
 /* =========================================================
   7) SEARCH / FILTER VISIBILITY
@@ -1783,10 +1290,9 @@ const matchNode = (n) => {
   if (!filter) return true;
   normalizeTasks(n);
   const taskText = (n.tasks || []).map(t => t.text).join(" ");
-  const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${n.kind||""} ${taskText}`.toLowerCase();
+  const hay = `${n.title||""} ${n.href||""} ${n.notes||""} ${taskText}`.toLowerCase();
   return hay.includes(filter);
 };
-
 
 const visibleSetForFilter = () => {
   if (!filter) return null;
@@ -1825,9 +1331,8 @@ const visibleSetForFilter = () => {
   return visible;
 };
 
-
 /* =========================================================
-  8) MODAL: OPEN / CLOSE / UI
+  8) MODAL: OPEN / CLOSE
 ========================================================== */
 const showModal = () => modalBackdrop.removeAttribute("hidden");
 const hideModal = () => modalBackdrop.setAttribute("hidden", "");
@@ -1841,8 +1346,6 @@ const openModal = (node, isNew, forceType = null) => {
   showModal();
 
   editingId = isNew ? null : node.id;
-
-  // Preserve where the Add button was clicked
   draftParentId = isNew ? (node.parentId ?? null) : null;
   draftOrder = isNew ? (node.order ?? 9999) : 9999;
 
@@ -1855,13 +1358,11 @@ const openModal = (node, isNew, forceType = null) => {
   fTitle.value = node.title || "";
   fHref.value  = node.href  || "";
   fColor.value = node.color || "#6d5efc";
-  
-  normalizeTasks(node);
-fTasks.value = tasksToTextarea(node.tasks);
 
+  normalizeTasks(node);
+  fTasks.value = tasksToTextarea(node.tasks);
 
   deleteItemBtn.style.display = isNew ? "none" : "inline-flex";
-
   setTimeout(() => fTitle.focus(), 0);
 };
 
@@ -1869,18 +1370,9 @@ const closeModal = () => {
   hideModal();
   editingId = null;
 };
-closeTasksBtn.addEventListener("click", () => {
-  tasksBackdrop.setAttribute("hidden","");
-});
-
-tasksBackdrop.addEventListener("click", (e) => {
-  if (e.target === tasksBackdrop)
-    tasksBackdrop.setAttribute("hidden","");
-});
-
 
 /* =========================================================
-  9) CRUD (UPSERT / DELETE)
+  9) CRUD
 ========================================================== */
 const upsert = (updated) => {
   const idx = NODES.findIndex(x => x.id === updated.id);
@@ -1902,19 +1394,19 @@ const removeNode = (id) => {
   }
 
   for (const x of toDelete) collapsedGroups.delete(x);
+  selectedTaskIds.delete(id);
 
   NODES = NODES.filter(x => !toDelete.has(x.id));
   normalizeOrders();
   saveCollapsed();
+  saveSelectedTasks();
   saveNodes();
   render();
 };
 
-
 /* =========================================================
-  10) RENDER TEMPLATES
+  10) RENDER
 ========================================================== */
-// Universal “Add here” button (user picks type in modal)
 const renderAddButton = (parentId) => {
   const pid = parentId ?? null;
   return `
@@ -1925,14 +1417,47 @@ const renderAddButton = (parentId) => {
   `;
 };
 
-// Called by “Add here”
 window.__addAt = (parentRaw) => {
   const parentId = (parentRaw === "__root__") ? null : parentRaw;
-  openModal(
-    { type:"tile", id:"", title:"", href:"", parentId, notes:"", order:9999 },
-    true,
-    null // let user choose group/tile
-  );
+  openModal({ type:"tile", id:"", title:"", href:"", parentId, notes:"", order:9999, tasks:[] }, true, null);
+};
+
+window.__openTasks = (id) => {
+  if (selectedTaskIds.has(id)) selectedTaskIds.delete(id);
+  else selectedTaskIds.add(id);
+  saveSelectedTasks();
+  render();
+};
+
+window.__taskAdd = (id) => {
+  const n = nodeById(id);
+  if (!n) return;
+  normalizeTasks(n);
+  const text = prompt("New task:");
+  if (!text || !text.trim()) return;
+  n.tasks.push({ text: text.trim(), done:false });
+  saveNodes();
+  render();
+};
+
+window.__taskToggle = (id, idx) => {
+  const n = nodeById(id);
+  if (!n) return;
+  normalizeTasks(n);
+  const t = n.tasks[idx];
+  if (!t) return;
+  t.done = !t.done;
+  saveNodes();
+  render();
+};
+
+window.__taskDelete = (id, idx) => {
+  const n = nodeById(id);
+  if (!n) return;
+  normalizeTasks(n);
+  n.tasks.splice(idx, 1);
+  saveNodes();
+  render();
 };
 
 const renderTile = (n) => {
@@ -1944,46 +1469,40 @@ const renderTile = (n) => {
   return `
     <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
       <div class="tileMain">
-       <a href="${escapeHtml(href)}" ${target}
-   style="text-decoration:none; color:inherit;">
-  <div class="tileTitleLine">
-    <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
-    ${chip}
-  </div>
-</a>
-
+        <a href="${escapeHtml(href)}" ${target} style="text-decoration:none; color:inherit;">
+          <div class="tileTitleLine">
+            <span class="tileTitle">${escapeHtml(n.title || "(untitled)")}</span>
+            ${chip}
+          </div>
+        </a>
         ${notes}
       </div>
 
       <div class="actions">
-     <button class="iconBtn ${selectedTaskIds.has(n.id) ? "active" : ""}" type="button"
-  onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')"
-  aria-label="Toggle tasks">🧾</button>
-
+        <button class="iconBtn ${selectedTaskIds.has(n.id) ? "active" : ""}" type="button"
+          onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')"
+          aria-label="Toggle tasks">🧾</button>
 
         <button class="iconBtn" type="button"
           onclick="window.__edit('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✎</button>
 
-      <button class="iconBtn" type="button"
-  onclick="window.__copy(
-    '${escapeHtml(href).replaceAll("'","&#039;")}',
-    '${escapeHtml(n.title || "").replaceAll("'","&#039;")}'
-  )">⧉</button>
+        <button class="iconBtn" type="button"
+          onclick="window.__copy('${escapeHtml(href).replaceAll("'","&#039;")}', '${escapeHtml(n.title||"").replaceAll("'","&#039;")}')">⧉</button>
 
-
-        <div class="dragHandle" role="button" tabindex="0"
-             aria-label="Drag to move tile"
-             title="Drag to move">⋮⋮</div>
+        <div class="dragHandle" role="button" tabindex="0" aria-label="Drag to move tile" title="Drag to move">⋮⋮</div>
       </div>
     </div>
   `;
 };
 
 const renderGroup = (g, visibleSet, depth) => {
-  const kids = childrenOf(g.id)
-    .filter(n => !visibleSet || visibleSet.has(n.id));
-
+  const kids = childrenOf(g.id).filter(n => !visibleSet || visibleSet.has(n.id));
   const collapsed = collapsedGroups.has(g.id) && !filter;
+  const indentClass = depth > 0 ? "indent" : "";
+
+  const accentAttr = g.color
+    ? `data-accent="1" style="--accentStrip:${escapeHtml(g.color)};"`
+    : "";
 
   const body = collapsed ? "" : (
     kids.length
@@ -1994,13 +1513,16 @@ const renderGroup = (g, visibleSet, depth) => {
       : `${renderAddButton(g.id)}`
   );
 
-  const indentClass = depth > 0 ? "indent" : "";
-  const accentStyle = g.color
-    ? `style="border-left:6px solid ${escapeHtml(g.color)};"`
-    : "";
+  const headerTitle = (() => {
+    const title = escapeHtml(g.title || "(group)");
+    const href = g.href;
+    if (!href) return `<div class="nodeTitle">${title}</div>`;
+    const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+    return `<a class="nodeTitle" href="${escapeHtml(href)}" ${target} style="text-decoration:none; color:inherit;">${title}</a>`;
+  })();
 
   return `
-    <div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group" ${accentStyle}>
+    <div class="node treeItem ${indentClass}" data-id="${escapeHtml(g.id)}" data-type="group" ${accentAttr}>
       <div class="nodeHeader">
         <div class="nodeHeaderLeft">
           <button class="twisty" type="button" aria-label="Toggle group"
@@ -2009,52 +1531,27 @@ const renderGroup = (g, visibleSet, depth) => {
           </button>
 
           <div style="min-width:0">
-            ${(() => {
-              const title = escapeHtml(g.title || "(group)");
-              const href = g.href;
-
-            if (!href) return `<div class="nodeTitle">${title}</div>`;
-
-const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
-return `
-  <a class="nodeTitle" href="${escapeHtml(href)}" ${target}
-     style="text-decoration:none; color:inherit;">
-    ${title}
-  </a>
-`;
-
-            })()}
-
+            ${headerTitle}
             ${g.notes ? `<div class="notes" style="margin-top:2px">${escapeHtml(g.notes)}</div>` : ``}
           </div>
         </div>
 
         <div class="actions">
-<button class="iconBtn ${selectedTaskIds.has(g.id) ? "active" : ""}" type="button"
-  onclick="window.__openTasks('${escapeHtml(g.id).replaceAll("'","&#039;")}')"
-  aria-label="Toggle tasks">🧾</button>
-
+          <button class="iconBtn ${selectedTaskIds.has(g.id) ? "active" : ""}" type="button"
+            onclick="window.__openTasks('${escapeHtml(g.id).replaceAll("'","&#039;")}')"
+            aria-label="Toggle tasks">🧾</button>
 
           <button class="iconBtn" type="button"
             onclick="window.__edit('${escapeHtml(g.id).replaceAll("'","&#039;")}')">✎</button>
 
-         <button class="iconBtn" type="button"
-  onclick="window.__copy(
-    '${escapeHtml(g.href || "").replaceAll("'","&#039;")}',
-    '${escapeHtml(g.title || "").replaceAll("'","&#039;")}'
-  )">⧉</button>
+          <button class="iconBtn" type="button"
+            onclick="window.__copy('${escapeHtml(g.href||"").replaceAll("'","&#039;")}', '${escapeHtml(g.title||"").replaceAll("'","&#039;")}')">⧉</button>
 
-
-          <div class="dragHandle" role="button" tabindex="0"
-               aria-label="Drag to move group"
-               title="Drag to move">⋮⋮</div>
+          <div class="dragHandle" role="button" tabindex="0" aria-label="Drag to move group" title="Drag to move">⋮⋮</div>
         </div>
       </div>
 
-      <div class="nodeBody"
-           ${collapsed ? "hidden" : ""}
-           data-container="children"
-           data-parent-id="${escapeHtml(g.id)}">
+      <div class="nodeBody" ${collapsed ? "hidden" : ""} data-container="children" data-parent-id="${escapeHtml(g.id)}">
         ${body}
         ${(!collapsed && kids.length) ? `${renderAddButton(g.id)}` : ``}
       </div>
@@ -2064,9 +1561,7 @@ return `
 
 const renderRoot = () => {
   const visibleSet = visibleSetForFilter();
-
-  const roots = childrenOf(null)
-    .filter(n => !visibleSet || visibleSet.has(n.id));
+  const roots = childrenOf(null).filter(n => !visibleSet || visibleSet.has(n.id));
 
   if (!roots.length) {
     treeRootEl.innerHTML = `
@@ -2083,9 +1578,108 @@ const renderRoot = () => {
   `;
 };
 
+/* =========================================================
+  NOTEBOOK RENDER
+========================================================== */
+const renderNotebookSelected = () => {
+  const ids = [...selectedTaskIds].filter(id => nodeById(id));
+
+  if (!ids.length) {
+    nbTitle.textContent = "Selected task lists";
+    nbBody.innerHTML = `<div class="taskEmpty">Toggle 🧾 on any page/link to show its tasks here.</div>`;
+    return;
+  }
+
+  nbTitle.textContent = `Selected task lists (${ids.length})`;
+
+  nbBody.innerHTML = ids.map((id) => {
+    const n = nodeById(id);
+    normalizeTasks(n);
+
+    const accent = accentForNode(n.id);
+    const accentAttr = accent ? `data-accent="1" style="--accentStrip:${escapeHtml(accent)};"` : "";
+
+    const tasks = n.tasks || [];
+    const rows = tasks.length
+      ? `<div class="taskList">${
+          tasks.map((t, idx) => `
+            <div class="taskRow">
+              <input class="taskCheck" type="checkbox"
+                ${t.done ? "checked" : ""}
+                onclick="window.__taskToggle('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+                aria-label="Mark task done" />
+              <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
+              <button class="taskDel" type="button"
+                onclick="window.__taskDelete('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+                aria-label="Delete task">✕</button>
+            </div>
+          `).join("")
+        }</div>`
+      : `<div class="taskEmpty">No tasks yet.</div>`;
+
+    return `
+      <div class="tasks" ${accentAttr} aria-label="Webpage tasks">
+        <div class="tasksHead">
+          <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="tasksAdd" type="button"
+              onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
+            <button class="tasksAdd" type="button"
+              onclick="window.__openTasks('${escapeHtml(n.id).replaceAll("'","&#039;")}')">✕ Hide</button>
+          </div>
+        </div>
+        ${rows}
+      </div>
+    `;
+  }).join("");
+};
+
+const renderNotebookAll = () => {
+  const nodesWithTasks = NODES
+    .map(n => (normalizeTasks(n), n))
+    .filter(n => Array.isArray(n.tasks) && n.tasks.length);
+
+  nbTitle.textContent = "All tasks (across site)";
+
+  if (!nodesWithTasks.length) {
+    nbBody.innerHTML = `<div class="taskEmpty">No tasks found yet.</div>`;
+    return;
+  }
+
+  nbBody.innerHTML = nodesWithTasks.map(n => `
+    <div class="tasks" aria-label="Webpage tasks">
+      <div class="tasksHead">
+        <div class="tasksLabel">${escapeHtml(n.title || n.id)}</div>
+        <button class="tasksAdd" type="button"
+          onclick="window.__taskAdd('${escapeHtml(n.id).replaceAll("'","&#039;")}')">＋ Add task</button>
+      </div>
+      <div class="taskList">
+        ${n.tasks.map((t, idx) => `
+          <div class="taskRow">
+            <input class="taskCheck" type="checkbox"
+              ${t.done ? "checked" : ""}
+              onclick="window.__taskToggle('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+              aria-label="Mark task done" />
+            <div class="taskText ${t.done ? "done" : ""}">${escapeHtml(t.text)}</div>
+            <button class="taskDel" type="button"
+              onclick="window.__taskDelete('${escapeHtml(n.id).replaceAll("'","&#039;")}', ${idx})"
+              aria-label="Delete task">✕</button>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+};
+
+const renderNotebook = () => {
+  nbTabSelected.setAttribute("aria-selected", notebookMode === "selected");
+  nbTabAll.setAttribute("aria-selected", notebookMode === "all");
+  if (notebookMode === "selected") renderNotebookSelected();
+  else renderNotebookAll();
+};
 
 /* =========================================================
-  11) SORTABLE (DRAG/DROP)
+  SORTABLE
 ========================================================== */
 const destroySortables = () => {
   _sortables.forEach(s => { try { s.destroy(); } catch {} });
@@ -2111,17 +1705,13 @@ const rebuildFromDOM = () => {
   saveNodes();
 };
 
-const isDescendant = (maybeChildId, maybeAncestorId) => {
-  const desc = buildDescendantsSet(maybeAncestorId);
-  return desc.has(maybeChildId);
-};
+const isDescendant = (maybeChildId, maybeAncestorId) =>
+  buildDescendantsSet(maybeAncestorId).has(maybeChildId);
 
 const initSortables = () => {
   destroySortables();
 
-  const containers = document.querySelectorAll('[data-container="children"]');
-
-  containers.forEach((containerEl) => {
+  document.querySelectorAll('[data-container="children"]').forEach((containerEl) => {
     const s = new Sortable(containerEl, {
       group: "vigil-tree",
       animation: 150,
@@ -2132,24 +1722,18 @@ const initSortables = () => {
       fallbackOnBody: true,
 
       onMove: (evt) => {
-        const draggedEl = evt.dragged;
-        const draggedId = draggedEl?.dataset?.id;
-        const draggedType = draggedEl?.dataset?.type;
+        const draggedId = evt.dragged?.dataset?.id;
+        const draggedType = evt.dragged?.dataset?.type;
 
-        const toContainer = evt.to;
-        const toParentRaw = toContainer?.dataset?.parentId;
+        const toParentRaw = evt.to?.dataset?.parentId;
         const toParentId = (toParentRaw === "__root__") ? null : toParentRaw;
 
         if (!draggedId) return true;
+        if (toParentId === draggedId) return false; // into itself
 
-        // Block dropping into itself
-        if (toParentId === draggedId) return false;
-
-        // Block dropping a group into its own descendant
         if (draggedType === "group" && toParentId) {
-          if (isDescendant(toParentId, draggedId)) return false;
+          if (isDescendant(toParentId, draggedId)) return false; // into own descendant
         }
-
         return true;
       },
 
@@ -2163,9 +1747,8 @@ const initSortables = () => {
   });
 };
 
-
 /* =========================================================
-  12) RENDER PIPELINE
+  RENDER PIPELINE
 ========================================================== */
 const render = () => {
   renderRoot();
@@ -2174,7 +1757,7 @@ const render = () => {
 };
 
 /* =========================================================
-  13) PUBLIC HOOKS (USED BY INLINE onclick)
+  PUBLIC HOOKS
 ========================================================== */
 window.__toggle = (groupId) => {
   if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
@@ -2195,9 +1778,8 @@ window.__edit = (id) => {
   openModal(n, false);
 };
 
-
 /* =========================================================
-  14) UI ACTIONS
+  UI ACTIONS
 ========================================================== */
 const setAllCollapsed = (collapsed) => {
   const allGroups = NODES.filter(n => n.type === "group").map(n => n.id);
@@ -2206,28 +1788,23 @@ const setAllCollapsed = (collapsed) => {
   render();
 };
 
-
 /* =========================================================
-  15) EVENTS
+  EVENTS
 ========================================================== */
-nbTabSelected.addEventListener("click", () => {
-  notebookMode = "selected";
+nbTabSelected.addEventListener("click", () => { notebookMode = "selected"; render(); });
+nbTabAll.addEventListener("click", () => { notebookMode = "all"; render(); });
+
+nbResetSelected.addEventListener("click", () => {
+  selectedTaskIds.clear();
+  saveSelectedTasks();
   render();
 });
 
-nbTabAll.addEventListener("click", () => {
-  notebookMode = "all";
-  render();
-});
-
-
-// Search
 searchEl.addEventListener("input", (e) => {
   filter = (e.target.value || "").trim().toLowerCase();
   render();
 });
 
-// Expand/collapse
 expandAllBtn.addEventListener("click", () => { closeActionsMenu(); setAllCollapsed(false); });
 collapseAllBtn.addEventListener("click", () => { closeActionsMenu(); setAllCollapsed(true); });
 
@@ -2248,21 +1825,17 @@ resetBtn.addEventListener("click", () => {
   if (!confirm("Clear saved edits on this device?")) return;
   localStorage.removeItem(LS_NODES);
   localStorage.removeItem(LS_COLLAPSED);
+  localStorage.removeItem(LS_TASK_SELECTED);
   location.reload();
 });
-  document.addEventListener("click", (e) => {
-  if (!actionsMenu) return;
-  if (actionsMenu.open && !actionsMenu.contains(e.target)) actionsMenu.open = false;
+
+document.addEventListener("click", (e) => {
+  if (actionsMenu?.open && !actionsMenu.contains(e.target)) actionsMenu.open = false;
 });
 
-
-// Global add button (top-right)
+// Global add
 addItemBtn.addEventListener("click", () => {
-  openModal(
-    { type:"tile", id:"", title:"", href:"", parentId:null, notes:"", order:9999 },
-    true,
-    null
-  );
+  openModal({ type:"tile", id:"", title:"", href:"", parentId:null, notes:"", order:9999, tasks:[] }, true, null);
 });
 
 // Modal close
@@ -2272,12 +1845,11 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !modalBackdrop.hasAttribute("hidden")) closeModal();
 });
 
-// Modal type UI toggle
 fType.addEventListener("change", setTypeUI);
 
-// Save
+// Save modal
 saveItemBtn.addEventListener("click", () => {
-  const type  = (fType.value || "tile").trim(); // group | tile
+  const type  = (fType.value || "tile").trim();
   const title = (fTitle.value || "").trim();
   const href  = (fHref.value || "").trim();
   const color = (fColor?.value || "").trim();
@@ -2285,10 +1857,8 @@ saveItemBtn.addEventListener("click", () => {
   if (!title) return alert("Title is required.");
   if (!href)  return alert("Hyperlink is required.");
 
-  // Keep id when editing; generate id when creating
   let id = editingId ? editingId : (slugify(title) || "item");
 
-  // If creating new and collision occurs, suffix -2, -3, ...
   if (!editingId) {
     const base = id;
     let n = 2;
@@ -2304,7 +1874,7 @@ saveItemBtn.addEventListener("click", () => {
     href,
     parentId: existing?.parentId ?? draftParentId ?? null,
     order: existing?.order ?? draftOrder ?? 9999,
-     tasks: textareaToTasks(fTasks.value),
+    tasks: textareaToTasks(fTasks.value),
   };
 
   if (type === "group") updated.color = color || "#6d5efc";
@@ -2314,7 +1884,7 @@ saveItemBtn.addEventListener("click", () => {
   closeModal();
 });
 
-// Delete
+// Delete modal
 deleteItemBtn.addEventListener("click", () => {
   if (!editingId) return;
   if (!confirm("Delete this item? (Groups delete their entire subtree)")) return;
@@ -2322,36 +1892,8 @@ deleteItemBtn.addEventListener("click", () => {
   closeModal();
 });
 
-// Export
-exportBtn.addEventListener("click", async () => {
-  const json = JSON.stringify(NODES, null, 2);
-  try {
-    await navigator.clipboard.writeText(json);
-    alert("Copied tree JSON to clipboard.");
-  } catch {
-    console.log(json);
-    alert("Could not copy automatically. Check console for JSON.");
-  }
-});
-
-// Reset (clear localStorage)
-resetBtn.addEventListener("click", () => {
-  if (!confirm("Clear saved edits on this device?")) return;
-  localStorage.removeItem(LS_NODES);
-  localStorage.removeItem(LS_COLLAPSED);
-  location.reload();
-});
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.id === "nbResetSelected") {
-    selectedTaskIds.clear();
-    saveSelectedTasks();
-    render();
-  }
-});
-
-
 /* =========================================================
-  16) BOOT
+  BOOT
 ========================================================== */
 NODES = loadNodes();
 collapsedGroups = loadCollapsed();
@@ -2362,13 +1904,7 @@ normalizeOrders();
 saveNodes();
 setTypeUI();
 render();
-
-
 </script>
-
-  <!-- ==================================================================================================================
-    =========================================================END OF SCRIPT=========================================================
-  =================================================================================================================== -->
 
 </body>
  <!-- ==================================================================================================================
