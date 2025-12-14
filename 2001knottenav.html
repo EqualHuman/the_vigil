@@ -1469,6 +1469,21 @@ select.input{ appearance:none; }
 @media (prefers-reduced-motion: reduce){
   .navDot::before{ animation:none !important; }
 }
+/* =========================================================
+   HERO TITLE – CHANGE CASING (SOFTER / GIRLIER)
+========================================================== */
+
+/* Title: remove all-caps, soften spacing */
+.heroTitle{
+  text-transform: none !important;   /* <-- this is the key */
+  letter-spacing: .06em !important;  /* less rigid */
+  line-height: 1 !important;
+}
+
+/* Optional: make subtitle slightly less shouty */
+.heroSubtitle{
+  letter-spacing: .38em !important;
+}
 
   
 </style>
