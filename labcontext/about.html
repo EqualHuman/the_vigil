@@ -1,1 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — LabContext</title>
+  <meta name="description" content="What LabContext is, what it isn't, and the principles behind the site." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
+  <header class="topbar">
+    <div class="container">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="index.html">
+          <div class="brand-badge" aria-hidden="true"></div>
+          <div class="brand-text">
+            <strong>LabContext</strong>
+            <span>clarification for laboratory medicine</span>
+          </div>
+        </a>
+
+        <div class="navlinks">
+          <a href="education.html">Education</a>
+          <a href="interactive.html">Interactive</a>
+          <a href="blog.html">Blog</a>
+          <a href="educators.html">Educators</a>
+          <a aria-current="page" href="about.html">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="content">
+    <div class="container">
+      <div class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span class="dot" aria-hidden="true"></span>
+        <span>About</span>
+      </div>
+
+      <h1 class="page-title">About LabContext</h1>
+      <p class="subtle">A calm, open-access clarification resource for laboratory medicine.</p>
+
+      <div class="two-col">
+        <section class="prose">
+          <h2>What this is</h2>
+          <p>
+            LabContext helps learners understand what laboratory work <em>means</em>.
+            It focuses on patterns, relationships, and the “why” behind results — especially at the common conceptual choke points.
+          </p>
+
+          <h3>Guiding principles</h3>
+          <ul>
+            <li>Understanding comes before memorization.</li>
+            <li>Patterns matter more than isolated values.</li>
+            <li>Confusion is expected and normal.</li>
+            <li>Repetition without pressure builds clarity.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Design philosophy:</strong> no logins, no scoring, no required interaction — learning should be available without pressure.
+          </div>
+        </section>
+
+        <section class="prose">
+          <h2>What this is not</h2>
+          <ul>
+            <li>Not a step-by-step procedural training platform.</li>
+            <li>Not an LMS. Not grade-driven. Not “gamified.”</li>
+            <li>Not medical advice, clinical directives, or institutional policy.</li>
+            <li>Not affiliated with ASCP (or any certifying body).</li>
+          </ul>
+
+          <h3>Monetization (ethical)</h3>
+          <p>
+            If LabContext ever uses affiliate links or ads, they are intended to be minimal, clearly disclosed, and never required to access learning content.
+          </p>
+
+          <div class="notice">
+            <strong>Reminder:</strong> This website is educational only. Use institutional resources and local policies for clinical decisions.
+          </div>
+        </section>
+      </div>
+
+      <div class="hr"></div>
+
+      <section class="prose" id="newsletter">
+        <h2>Monthly newsletter</h2>
+        <p>
+          One email per month: site updates + one concept highlight + one optional resource. No spam.
+        </p>
+
+        <form class="form" action="#" method="post" aria-label="Newsletter signup (placeholder)">
+          <label>
+            <span class="small">Email address</span>
+            <input class="input" type="email" name="email" placeholder="you@example.com" autocomplete="email" />
+          </label>
+          <button class="btn btn-primary" type="submit">Join the monthly newsletter</button>
+          <p class="small" style="margin:0;">
+            This form is a placeholder (no backend yet). When you’re ready, I can wire it to your email provider.
+          </p>
+        </form>
+      </section>
+
+      <div class="hr"></div>
+
+      <section class="prose">
+        <h2>Contact</h2>
+        <p>
+          Email: <a href="mailto:info@labcontext.org">info@labcontext.org</a>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="tag">labcontext.org</div>
+          <p style="margin:10px 0 0;">
+            Educational only • No medical advice • No ASCP affiliation claims
+          </p>
+        </div>
+        <div>
+          <p style="margin:0 0 8px;"><strong>Pages</strong></p>
+          <p style="margin:0; display:grid; gap:6px;">
+            <a href="education.html">Education</a>
+            <a href="interactive.html">Interactive</a>
+            <a href="blog.html">Blog</a>
+            <a href="educators.html">Educators</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+      <p style="margin:0;" class="small">© <span id="year"></span> LabContext.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
