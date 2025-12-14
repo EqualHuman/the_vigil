@@ -1525,7 +1525,42 @@ select.input{ appearance:none; }
   opacity: .9 !important;
 }
 
-  
+  /* =========================================================
+   CARAMEL — CORRECT, GIRLY, FUN STYLING
+========================================================== */
+
+.heroTitle{
+  font-family: "Caramel", cursive !important;
+  font-weight: 400 !important;
+
+  /* THIS is critical for Caramel */
+  font-style: italic !important;
+  text-transform: none !important;
+
+  /* soften + un-stiffen */
+  letter-spacing: .015em !important;
+  line-height: 1.05 !important;
+
+  /* warm blush-pearl ink (matches specimen) */
+  background: linear-gradient(180deg,
+    #ffffff 0%,
+    #ffe6f1 35%,
+    #f6c7dd 65%,
+    #ffffff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+
+  /* airy, magical depth (NOT heavy glow) */
+  text-shadow:
+    0 6px 18px rgba(0,0,0,.45),
+    0 0 14px rgba(255,190,225,.25);
+}
+.heroTitle{
+  transform: translateY(2px);
+}
+
 </style>
 
   
