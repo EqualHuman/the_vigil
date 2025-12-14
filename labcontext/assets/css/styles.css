@@ -230,3 +230,126 @@ body::before{
   background: linear-gradient(180deg, rgba(63,81,181,.70), rgba(43,176,166,.55));
   box-shadow: 0 8px 18px rgba(63,81,181,.16);
 }
+/* === Commentary Index Layout Enhancement === */
+
+/* Overall page rhythm */
+.reading{
+  position: relative;
+}
+
+/* Section dividers (Featured / Latest) */
+.reading h2{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: var(--s-8);
+  margin-bottom: var(--s-4);
+}
+
+.reading h2::before{
+  content:"";
+  width: 6px;
+  height: 22px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, rgba(63,81,181,.7), rgba(43,176,166,.55));
+  box-shadow: 0 8px 18px rgba(63,81,181,.18);
+}
+
+/* Featured block container */
+.reading h2 + p + p,
+.reading h2 + p{
+  max-width: none;
+}
+
+/* Article card styling */
+.reading h3{
+  font-family: var(--font-ui);
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.reading h3 + p{
+  color: rgba(28,28,30,.78);
+  max-width: 65ch;
+}
+
+/* Wrap each article visually */
+.reading h3{
+  padding-top: var(--s-5);
+}
+
+.reading h3::before{
+  content:"";
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(28,28,30,.18),
+    rgba(28,28,30,.04)
+  );
+  margin-bottom: var(--s-5);
+}
+
+/* Card effect using negative space */
+.reading h3,
+.reading h3 + p,
+.reading h3 + p + a{
+  padding-left: var(--s-5);
+  padding-right: var(--s-5);
+}
+
+.reading h3 + p + a{
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+}
+
+/* Soft panel feel */
+.reading h3{
+  background: rgba(255,255,255,.65);
+  border-top-left-radius: var(--r-lg);
+  border-top-right-radius: var(--r-lg);
+}
+
+.reading h3 + p{
+  background: rgba(255,255,255,.65);
+}
+
+.reading h3 + p + a{
+  background: rgba(255,255,255,.65);
+  padding-bottom: var(--s-5);
+  border-bottom-left-radius: var(--r-lg);
+  border-bottom-right-radius: var(--r-lg);
+  margin-bottom: var(--s-6);
+}
+
+/* Hover lift for the whole “card” */
+.reading h3:hover,
+.reading h3:hover + p,
+.reading h3:hover + p + a{
+  background: rgba(255,255,255,.85);
+}
+
+@media (prefers-reduced-motion: no-preference){
+  .reading h3,
+  .reading h3 + p,
+  .reading h3 + p + a{
+    transition: background .18s ease, transform .18s ease;
+  }
+
+  .reading h3:hover{
+    transform: translateY(-2px);
+  }
+}
+
+/* Posting rhythm callout emphasis */
+.reading strong{
+  font-family: var(--font-ui);
+}
+
+.reading hr{
+  margin: var(--s-8) 0;
+}
+
