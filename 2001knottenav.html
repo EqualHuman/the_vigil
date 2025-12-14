@@ -12,10 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Playfair+Display+SC:wght@600;700&family=Cormorant:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 
 <!-- ==================================================================================================================
 =========================================================START OF STYLE=========================================================
@@ -61,7 +60,7 @@
   --serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
 
   /* Optional “royal display” font if you load it in <head> */
-  --font-royal: "Cinzel", ui-serif, Georgia, "Times New Roman", serif;
+  --font-royal: ui-serif, Georgia, "Times New Roman", serif;
   --font-soft-royal: var(--serif);
 
   /* Radius system (single source of truth) */
@@ -1017,7 +1016,7 @@ select.input{ appearance:none; }
 }
 
   :root{
-  --font-royal: "Cinzel Decorative", ui-serif, Georgia, "Times New Roman", serif;
+  --font-royal: ui-serif, Georgia, "Times New Roman", serif;
   --font-soft-royal: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
 }
 
@@ -1131,6 +1130,134 @@ select.input{ appearance:none; }
 /* Respect motion settings */
 @media (prefers-reduced-motion: reduce){
   .navDot::before{ animation: none !important; }
+}
+/* =========================================================
+   PRINCESS TYPOGRAPHY + MAGICAL PEARLS (FINAL)
+========================================================== */
+
+:root{
+  --font-princess: "Playfair Display SC", "Playfair Display", ui-serif, Georgia, serif;
+  --font-soft: "Cormorant", ui-serif, Georgia, serif;
+}
+
+/* ---------- HERO TITLE (PRINCESS ENERGY) ---------- */
+.heroTitle{
+  font-family: var(--font-princess) !important;
+  font-weight: 700 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  line-height: .95;
+
+  /* pearly silver with warmth */
+  background: linear-gradient(180deg,
+    rgba(255,255,255,.98) 0%,
+    rgba(255,255,255,.78) 45%,
+    rgba(245,240,255,.92) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+
+  /* elegant depth — no glow */
+  text-shadow:
+    0 10px 40px rgba(0,0,0,.55),
+    0 1px 0 rgba(255,255,255,.10);
+}
+
+/* ---------- HERO SUBTITLE (ROMANTIC, SOFT) ---------- */
+.heroSubtitle{
+  font-family: var(--font-soft) !important;
+  font-weight: 500 !important;
+  letter-spacing: .42em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.70) !important;
+  opacity: .9;
+}
+
+/* =========================================================
+   PEARLS: SOFT MAGIC (NOT NEON, NOT BASIC)
+========================================================== */
+
+.navDot{
+  position: relative;
+  overflow: visible;
+}
+
+/* pearl body refinement */
+.navDot{
+  background:
+    radial-gradient(circle at 30% 28%,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,.85) 22%,
+      rgba(235,235,245,.55) 42%,
+      rgba(200,205,220,.25) 70%,
+      transparent 100%
+    ) !important;
+
+  border: 1px solid rgba(255,255,255,.28) !important;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.45),
+    inset 0 -1px 2px rgba(0,0,0,.35),
+    0 10px 22px rgba(0,0,0,.45),
+    0 0 0 2px rgba(255,255,255,.06) !important;
+}
+
+/* subtle magical aura */
+.navDot::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  pointer-events:none;
+
+  background: radial-gradient(circle,
+    rgba(255,255,255,.45),
+    rgba(210,225,255,.18) 40%,
+    transparent 70%
+  );
+
+  filter: blur(10px);
+  opacity:.35;
+}
+
+/* shimmer breath (VERY soft) */
+.navDot::before{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:50%;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 28% 24%,
+      rgba(255,255,255,.95),
+      rgba(255,255,255,0) 60%
+    );
+
+  opacity:.85;
+  animation: pearlGlow 3.8s ease-in-out infinite;
+}
+
+@keyframes pearlGlow{
+  0%,100%{ opacity:.75; }
+  50%{ opacity:.95; }
+}
+
+/* active pearl = chosen jewel */
+.heroDots .navDot:first-child{
+  transform: scale(1.18);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.55),
+    inset 0 -1px 2px rgba(0,0,0,.45),
+    0 14px 34px rgba(0,0,0,.55),
+    0 0 0 3px rgba(255,255,255,.12),
+    0 0 18px rgba(220,230,255,.18) !important;
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .navDot::before{ animation:none !important; }
 }
 
   
