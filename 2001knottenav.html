@@ -1480,15 +1480,9 @@ select.input{ appearance:none; }
    - swaps title font to something more “princessy”
 ================================ */
 
-/* --- FONT CHOICE (pick ONE) --- */
-/* Option A: super princess script */
-/* .heroTitle{ font-family:"Mrs Saint Delafield", cursive !important; } */
-
-/* Option B: playful, young, girly */
 .heroTitle{ font-family:"Annie Use Your Telescope", cursive !important; }
 
-/* Option C: caramel (if you ever go back) */
-/* .heroTitle{ font-family:"Caramel", cursive !important; font-style: italic !important; } */
+
 
 /* Subtitle stays pinstripe */
 .heroSubtitle{
@@ -1543,6 +1537,76 @@ select.input{ appearance:none; }
 .heroTitle::after,
 .heroSubtitle::after{
   content: none !important;
+}
+/* =========================================================
+   HERO TITLE — SOFT SHIMMER + FAIRY GLOW (ANNIE)
+========================================================== */
+
+.heroTitle{
+  font-family: "Annie Use Your Telescope", cursive !important;
+
+  /* keep it light + youthful */
+  font-weight: 400 !important;
+  letter-spacing: .02em !important;
+  line-height: .88 !important;
+
+  /* pearly pink-lilac ink */
+  background: linear-gradient(180deg,
+    rgba(255,255,255,1) 0%,
+    rgba(255,235,245,.95) 30%,
+    rgba(240,200,230,.92) 60%,
+    rgba(255,255,255,.98) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+
+  /* ✨ soft glow layers */
+  text-shadow:
+    0 0 6px rgba(255,255,255,.55),
+    0 0 14px rgba(255,190,225,.45),
+    0 0 28px rgba(200,210,255,.25),
+    0 10px 22px rgba(0,0,0,.45);
+}
+
+/* gentle shimmer animation (very subtle) */
+.heroTitle{
+  position: relative;
+}
+
+.heroTitle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
+  background: linear-gradient(120deg,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,.55) 45%,
+    rgba(255,220,240,.45) 50%,
+    rgba(255,255,255,0) 70%
+  );
+
+  background-size: 220% 100%;
+  background-position: -120% 0;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: titleShimmer 5.5s ease-in-out infinite;
+  opacity: .55;
+}
+
+@keyframes titleShimmer{
+  0%{ background-position: -120% 0; }
+  55%{ background-position: 140% 0; }
+  100%{ background-position: 140% 0; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .heroTitle::after{ animation:none !important; }
 }
 
 
