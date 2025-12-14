@@ -1604,6 +1604,72 @@ select.input{ appearance:none; }
 @media (prefers-reduced-motion: reduce){
   .heroTitle{ animation:none !important; }
 }
+/* =========================================================
+   HERO TITLE — MATCH NEON PINK ACCENT (DRAMATIC SHINE)
+========================================================== */
+
+.heroTitle{
+  font-family: "Annie Use Your Telescope", cursive !important;
+  font-weight: 400 !important;
+  letter-spacing: .02em !important;
+  line-height: .88 !important;
+
+  /* 🔥 NEON PINK MATCH (accentC-driven) */
+  background-image:
+    /* moving neon highlight */
+    linear-gradient(120deg,
+      rgba(255,79,216,0) 0%,
+      rgba(255,79,216,.95) 22%,
+      rgba(255,160,225,1) 30%,
+      rgba(200,230,255,.95) 38%,
+      rgba(255,79,216,0) 55%
+    ),
+    /* base neon-pink ink */
+    linear-gradient(180deg,
+      #ff7de6 0%,
+      #ff4fd8 35%,
+      #ff2fc8 60%,
+      #ffd6f3 100%
+    );
+
+  background-size: 260% 100%, 100% 100%;
+  background-position: -140% 0, 0 0;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+
+  /* ✨ BIG shiny glow (matches banner intensity) */
+  text-shadow:
+    0 0 10px rgba(255,79,216,.95),
+    0 0 24px rgba(255,79,216,.85),
+    0 0 46px rgba(255,140,220,.65),
+    0 0 80px rgba(255,79,216,.45),
+    0 14px 30px rgba(0,0,0,.55);
+
+  /* extra neon bloom */
+  filter:
+    drop-shadow(0 0 14px rgba(255,79,216,.75))
+    drop-shadow(0 0 28px rgba(255,140,220,.45));
+
+  animation: titleNeonSweep 2.2s linear infinite;
+}
+
+/* subtle outline so glow reads cleanly */
+.heroTitle{
+  -webkit-text-stroke: 0.4px rgba(255,200,235,.35);
+}
+
+/* 🔁 obvious shimmer sweep */
+@keyframes titleNeonSweep{
+  0%   { background-position: -140% 0, 0 0; }
+  100% { background-position:  140% 0, 0 0; }
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce){
+  .heroTitle{ animation:none !important; }
+}
 
 
 </style>
