@@ -1693,15 +1693,15 @@ select.input{ appearance:none; }
         <div class="heroTop">
           <div class="heroDots" aria-label="Hero navigation">
   <a
-    href="https://vigilproject.org/2001navigation.html"
-    class="navDot"
-    aria-label="Navigation Hub"
-  ></a>
-
-  <a
     href="https://vigilproject.org/2001knottenav.html"
     class="navDot"
     aria-label="Knotte Navigation"
+  ></a>
+
+  <a
+    href="#notebook"
+    class="navDot"
+    aria-label="Task notebook"
   ></a>
 
   <a
@@ -1941,7 +1941,6 @@ const copyToClipboard = async (text) => {
   try { await navigator.clipboard.writeText(text); } catch {}
 };
   // ===== URL NORMALIZER =====
-const BASE_URL = "https://vigilproject.org"; // change if you ever move domains
 
 const normalizeHref = (raw) => {
   const v = (raw || "").trim();
