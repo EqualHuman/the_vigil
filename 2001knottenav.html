@@ -1503,7 +1503,117 @@ select{
 .heroDots .navDot:nth-child(2):hover{
   transform: scale(1.35);
 }
-  
+
+.heroTop{
+  margin-bottom: 10px !important;
+}
+
+.heroDots{
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:12px !important;
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  /* soft “jewel tray” instead of floating stars */
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.10);
+  backdrop-filter: blur(10px);
+}
+
+/* Base dot: pearl jewel, no wild neon */
+.navDot{
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50%;
+  position: relative;
+
+  /* Pearl core + faint blush */
+  background:
+    radial-gradient(circle at 35% 35%,
+      rgba(255,255,255,.95) 0%,
+      rgba(255,255,255,.75) 22%,
+      rgba(255,79,216,.20) 52%,
+      rgba(109,94,252,.18) 72%,
+      rgba(34,211,238,.10) 92%,
+      transparent 100%
+    ) !important;
+
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.06),
+    0 10px 26px rgba(0,0,0,.45),
+    0 0 12px rgba(255,255,255,.10) !important;
+
+  transition:
+    transform .18s var(--ease),
+    box-shadow .22s var(--ease),
+    border-color .22s var(--ease),
+    opacity .22s var(--ease);
+}
+
+/* Remove the big hazy bloom ring from earlier styling */
+.navDot::after{
+  opacity: .12 !important;
+  filter: blur(10px) !important;
+}
+
+/* Add a tiny “set stone” highlight */
+.navDot::before{
+  content:"";
+  position:absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%,
+    rgba(255,255,255,.85),
+    rgba(255,255,255,0) 60%
+  );
+  opacity: .8;
+  pointer-events:none;
+}
+
+/* Hover: princess sparkle, not club neon */
+.navDot:hover{
+  transform: translateY(-1px) scale(1.22) !important;
+  border-color: rgba(255,255,255,.26) !important;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.08),
+    0 16px 40px rgba(0,0,0,.48),
+    0 0 16px rgba(255,79,216,.16),
+    0 0 16px rgba(109,94,252,.14) !important;
+}
+
+/* Keyboard focus: clean and royal */
+.navDot:focus-visible{
+  outline: none !important;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.16),
+    0 0 0 6px rgba(255,79,216,.12),
+    0 16px 44px rgba(0,0,0,.48) !important;
+}
+
+/* Make the "active/current" dot feel like a crown jewel
+   If you want a different one highlighted, move the :first-child selector */
+.heroDots .navDot:first-child{
+  transform: scale(1.18);
+  border-color: rgba(255,255,255,.30);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.10),
+    0 0 18px rgba(255,255,255,.14),
+    0 0 18px rgba(255,79,216,.18),
+    0 0 18px rgba(109,94,252,.16),
+    0 16px 46px rgba(0,0,0,.52) !important;
+}
+
+/* Optional: add tiny separators so it reads “elegant controls” */
+.heroDots .navDot + .navDot{
+  margin-left: 2px;
+}
+
 </style>
 
   
