@@ -1454,6 +1454,144 @@ select{
 .toolbar{ overflow: visible !important; }
 
   
+.heroDots,
+.navDot{
+  display: none !important;
+}
+
+/* If heroTop becomes empty after deleting dots, remove the extra gap */
+.heroTop{
+  margin-bottom: 0 !important;
+  min-height: 0 !important;
+}
+
+/* 2) Make the banner feel more "pearl-glass" and elegant */
+.heroBanner{
+  border-radius: 34px !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+
+  background:
+    radial-gradient(1100px 420px at 50% 0%,
+      rgba(255,255,255,.14),
+      rgba(255,255,255,.06) 35%,
+      transparent 70%
+    ),
+    radial-gradient(900px 420px at 18% 40%,
+      rgba(255,79,216,.14),
+      transparent 62%
+    ),
+    radial-gradient(900px 420px at 82% 40%,
+      rgba(109,94,252,.14),
+      transparent 62%
+    ),
+    linear-gradient(180deg, rgba(6,7,20,.88), rgba(10,12,28,.72)) !important;
+
+  box-shadow:
+    0 28px 120px rgba(0,0,0,.62),
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    inset 0 0 80px rgba(255,255,255,.06),
+    inset 0 0 140px rgba(255,79,216,.08),
+    inset 0 0 140px rgba(109,94,252,.08) !important;
+
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Soften the “shine” layer to feel less sci-fi, more satin */
+.heroBanner::after{
+  opacity: .16 !important;
+  mix-blend-mode: soft-light !important;
+}
+
+/* 3) Regal typography for the title */
+.heroTitle{
+  font-family: var(--serif) !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+
+  /* subtle pearly gradient without looking neon */
+  background: linear-gradient(180deg,
+    rgba(255,255,255,.96),
+    rgba(255,255,255,.78)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+
+  text-shadow:
+    0 18px 70px rgba(0,0,0,.55),
+    0 0 22px rgba(255,255,255,.10) !important;
+
+  font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
+}
+
+/* 4) Jeweled divider + tiny “crown” ornament (replaces stars) */
+.heroCenter{
+  position: relative;
+  padding-top: 8px !important;
+}
+
+.heroCenter::before{
+  content:"";
+  width: min(460px, 78%);
+  height: 2px;
+  border-radius: 999px;
+  margin: 0 auto 14px;
+  display: block;
+
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    rgba(255,255,255,.28),
+    rgba(34,211,238,.22),
+    rgba(109,94,252,.22),
+    rgba(255,79,216,.22),
+    rgba(255,255,255,.28),
+    rgba(255,255,255,0)
+  );
+
+  box-shadow:
+    0 0 16px rgba(255,255,255,.10),
+    0 0 22px rgba(255,79,216,.10),
+    0 0 22px rgba(109,94,252,.10);
+}
+
+.heroCenter::after{
+  content:"✦";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  line-height: 1;
+  opacity: .75;
+
+  color: rgba(255,255,255,.75);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.28),
+    0 0 18px rgba(255,79,216,.18),
+    0 0 18px rgba(109,94,252,.18);
+}
+
+/* 5) Subtitle: softer + more “royal plaque” feel */
+.heroSubtitle{
+  font-family: var(--sans) !important;
+  letter-spacing: .34em !important;
+  opacity: .82 !important;
+  color: rgba(255,255,255,.70) !important;
+}
+
+/* 6) Make the hero lasers feel like delicate trim, not “laser” */
+.heroLaser{
+  height: 1px !important;
+  opacity: .75 !important;
+  box-shadow:
+    0 0 10px rgba(255,255,255,.08),
+    0 0 18px rgba(255,79,216,.10),
+    0 0 18px rgba(109,94,252,.10),
+    0 0 18px rgba(34,211,238,.08) !important;
+}
+
+  
 </style>
 
   
