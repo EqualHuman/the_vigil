@@ -1474,6 +1474,76 @@ select.input{ appearance:none; }
   transform: translateY(-2px);
 }
 
+/* ================================
+   HEADER OVERRIDES (PASTE LAST)
+   - makes banner MUCH shorter
+   - swaps title font to something more “princessy”
+================================ */
+
+/* --- FONT CHOICE (pick ONE) --- */
+/* Option A: super princess script */
+.heroTitle{ font-family:"Mrs Saint Delafield", cursive !important; }
+
+/* Option B: playful, young, girly */
+/* .heroTitle{ font-family:"Annie Use Your Telescope", cursive !important; } */
+
+/* Option C: caramel (if you ever go back) */
+/* .heroTitle{ font-family:"Caramel", cursive !important; font-style: italic !important; } */
+
+/* Subtitle stays pinstripe */
+.heroSubtitle{
+  font-family:"Alumni Sans Pinstripe", sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: .55em !important;
+  font-size: 12px !important;
+  margin: 0 !important;
+}
+
+/* --- MAKE THE BANNER NOT TALL --- */
+.heroBanner{
+  min-height: 110px !important;     /* big cut */
+  padding: 0 !important;
+}
+
+.heroInner{
+  padding: 12px 18px 14px !important; /* tighter */
+  grid-template-rows: auto auto !important;
+}
+
+.heroTop{
+  margin: 0 0 6px !important;       /* less space above title */
+}
+
+.heroCenter{
+  margin: 0 auto !important;
+  transform: none !important;
+}
+
+/* tighten title metrics (prevents “fake tall” look) */
+.heroTitle{
+  margin: 0 !important;
+  line-height: .85 !important;
+  letter-spacing: .02em !important;
+  text-transform: none !important;
+
+  /* keep your pearly ink */
+  background: linear-gradient(180deg,#fff 0%,#ffe6f1 35%,#f6c7dd 65%,#fff 100%) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  color: transparent !important;
+}
+
+/* shrink the pearl tray slightly so it doesn’t force height */
+.heroDots{
+  padding: 5px 10px !important;
+  gap: 10px !important;
+}
+
+/* if you added any decorative “after” spacing earlier, kill it */
+.heroTitle::after,
+.heroSubtitle::after{
+  content: none !important;
+}
 
 
 </style>
