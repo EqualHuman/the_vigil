@@ -353,4 +353,4 @@ body::before{
   margin: var(--s-8) 0;
 }
 
-body{ outline: 6px solid hotpink !important; }
+body { outline: 6px solid red !important; }
