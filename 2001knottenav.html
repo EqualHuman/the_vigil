@@ -1416,6 +1416,63 @@ select.input{ appearance:none; }
 .heroBanner{ min-height: 180px !important; }
 .heroInner{ padding-top: 26px !important; padding-bottom: 28px !important; }
 
+/* Make Caramel feel fuller + more “cute glam” */
+.heroTitle{
+  font-size: clamp(52px, 6.2vw, 84px) !important;
+  letter-spacing: .01em !important;
+  text-shadow:
+    0 10px 28px rgba(0,0,0,.48),
+    0 0 18px rgba(255,190,225,.22),
+    0 0 34px rgba(210,215,255,.10) !important;
+}
+
+/* If you want the subtitle to read clearer */
+.heroSubtitle{
+  font-size: 14px !important;
+  letter-spacing: .58em !important;
+  opacity: .95 !important;
+}
+.navDot::before{
+  animation: pearlBreath 3.6s ease-in-out infinite, pearlSweep 5.2s linear infinite !important;
+}
+
+@keyframes pearlBreath{
+  0%,100%{ opacity:.72; transform: scale(1); }
+  50%{ opacity:1; transform: scale(1.06); }
+}
+
+@keyframes pearlSweep{
+  0%{ background-position: 0 0, -120% 0; }
+  100%{ background-position: 0 0, 140% 0; }
+}
+/* =========================================================
+   HERO BANNER — SHORTER, TIGHTER, STILL SAFE FOR CARAMEL
+========================================================== */
+
+/* Reduce overall banner height */
+.heroBanner{
+  min-height: 135px !important;   /* down from ~180 */
+}
+
+/* Tighten inner padding */
+.heroInner{
+  padding-top: 18px !important;
+  padding-bottom: 20px !important;
+}
+
+/* Pull title + subtitle closer together */
+.heroTitle{
+  margin-bottom: 4px !important;
+}
+
+.heroSubtitle{
+  margin-top: 2px !important;
+}
+
+/* Optional: nudge content slightly upward for balance */
+.heroCenter{
+  transform: translateY(-2px);
+}
 
 
 
