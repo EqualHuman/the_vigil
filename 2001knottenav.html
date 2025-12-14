@@ -2056,7 +2056,7 @@ const renderTile = (n) => {
   const chip = `<span class="chip">Link</span>`;
   const notes = n.notes ? `<div class="notes">${escapeHtml(n.notes)}</div>` : "";
   const href = n.href || "#";
-  const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+const target = `target="_blank" rel="noreferrer noopener"`;
 
   return `
     <div class="tile treeItem" data-id="${escapeHtml(n.id)}" data-type="tile">
@@ -2109,7 +2109,7 @@ const renderGroup = (g, visibleSet, depth) => {
     const title = escapeHtml(g.title || "(group)");
     const href = g.href;
     if (!href) return `<div class="nodeTitle">${title}</div>`;
-    const target = href.startsWith("/") ? "" : `target="_blank" rel="noreferrer noopener"`;
+const target = `target="_blank" rel="noreferrer noopener"`;
     return `<a class="nodeTitle" href="${escapeHtml(href)}" ${target} style="text-decoration:none; color:inherit;">${title}</a>`;
   })();
 
