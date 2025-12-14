@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Playfair+Display+SC:wght@600;700&family=Cormorant:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=DM+Serif+Display:ital@0;1&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
 
 <!-- ==================================================================================================================
 =========================================================START OF STYLE=========================================================
@@ -1256,6 +1257,215 @@ select.input{ appearance:none; }
 }
 
 /* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .navDot::before{ animation:none !important; }
+}
+
+
+:root{
+  --font-princess-title: "DM Serif Display", "Yeseva One", ui-serif, Georgia, serif;
+  --font-princess-sub: "Fraunces", ui-serif, Georgia, serif;
+  --font-princess-script: "Petit Formal Script", ui-serif, Georgia, serif;
+}
+
+/* ---------- HERO TITLE: girly + glam, not stiff ---------- */
+.heroTitle{
+  font-family: var(--font-princess-title) !important;
+  font-weight: 400 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  line-height: .92 !important;
+
+  /* pearly pink-silver */
+  background: linear-gradient(180deg,
+    rgba(255,255,255,.98) 0%,
+    rgba(255,255,255,.78) 34%,
+    rgba(255,225,245,.92) 70%,
+    rgba(255,255,255,.96) 100%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent !important;
+
+  /* soft glam depth */
+  text-shadow:
+    0 12px 40px rgba(0,0,0,.55),
+    0 0 22px rgba(255,190,230,.12);
+}
+
+/* optional cute flourish on the title (toggle on/off) */
+.heroTitle::after{
+  content:"";
+  display:block;
+  height:10px;
+}
+
+/* ---------- SUBTITLE: bubbly but still clean ---------- */
+.heroSubtitle{
+  font-family: var(--font-princess-sub) !important;
+  font-weight: 400 !important;
+  letter-spacing: .52em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.74) !important;
+  opacity: .92 !important;
+}
+
+/* Add a tiny "princess ribbon" line under subtitle */
+.heroSubtitle{
+  position: relative;
+}
+.heroSubtitle::after{
+  content:"";
+  display:block;
+  width: 110px;
+  height: 1px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0),
+    rgba(255,255,255,.30),
+    rgba(255,190,230,.25),
+    rgba(255,255,255,.30),
+    rgba(255,255,255,0)
+  );
+  opacity:.9;
+}
+
+/* =========================================================
+   PEARLS: MORE "MAGIC" (shimmer + glow) but still classy
+========================================================== */
+
+/* tray looks like jewelry */
+.heroDots{
+  padding: 7px 14px !important;
+  gap: 12px !important;
+  background:
+    radial-gradient(120% 200% at 50% 0%,
+      rgba(255,255,255,.14),
+      rgba(255,255,255,.04) 55%,
+      rgba(0,0,0,.12) 100%
+    ),
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  box-shadow:
+    0 18px 70px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.35) !important;
+}
+
+/* pearl base (cabochon) */
+.navDot{
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50%;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(255,255,255,.30) !important;
+
+  background:
+    radial-gradient(circle at 30% 26%,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,.84) 24%,
+      rgba(245,245,255,.62) 44%,
+      rgba(215,220,235,.25) 72%,
+      rgba(0,0,0,0) 100%
+    ),
+    conic-gradient(from 210deg at 50% 60%,
+      rgba(255,255,255,0) 0deg,
+      rgba(255,190,230,.14) 70deg,
+      rgba(210,215,255,.12) 150deg,
+      rgba(190,240,255,.10) 230deg,
+      rgba(255,255,255,0) 330deg,
+      rgba(255,255,255,0) 360deg
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.55),
+    inset 0 -1px 2px rgba(0,0,0,.46),
+    0 10px 22px rgba(0,0,0,.48),
+    0 0 0 2px rgba(255,255,255,.06) !important;
+
+  transition: transform .20s var(--ease), filter .20s var(--ease), box-shadow .20s var(--ease);
+}
+
+/* sparkle aura */
+.navDot::after{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:50%;
+  pointer-events:none;
+  background: radial-gradient(circle,
+    rgba(255,255,255,.55),
+    rgba(255,190,230,.22) 38%,
+    rgba(210,215,255,.14) 56%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity:.35;
+}
+
+/* moving shimmer (magic sweep) */
+.navDot::before{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:50%;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 28% 22%,
+      rgba(255,255,255,.95),
+      rgba(255,255,255,0) 58%
+    ),
+    linear-gradient(120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.55) 35%,
+      rgba(255,190,230,.22) 50%,
+      rgba(255,255,255,0) 70%
+    );
+
+  background-size: 100% 100%, 180% 100%;
+  background-position: 0 0, -120% 0;
+  mix-blend-mode: screen;
+
+  animation: pearlBreath 3.6s ease-in-out infinite, pearlSweep 4.6s linear infinite;
+  opacity:.9;
+}
+
+@keyframes pearlBreath{
+  0%,100%{ opacity:.70; transform: scale(1); }
+  50%{ opacity:1; transform: scale(1.05); }
+}
+
+@keyframes pearlSweep{
+  0%{ background-position: 0 0, -120% 0; }
+  100%{ background-position: 0 0, 140% 0; }
+}
+
+/* hover = cute sparkle pop */
+.navDot:hover{
+  transform: translateY(-1px) scale(1.22) !important;
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.62),
+    inset 0 -1px 2px rgba(0,0,0,.52),
+    0 14px 30px rgba(0,0,0,.55),
+    0 0 0 3px rgba(255,255,255,.10) !important;
+}
+
+/* current page dot = main jewel */
+.heroDots .navDot:first-child{
+  transform: scale(1.18);
+  border-color: rgba(255,255,255,.42) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.68),
+    inset 0 -1px 2px rgba(0,0,0,.55),
+    0 16px 36px rgba(0,0,0,.58),
+    0 0 0 3px rgba(255,255,255,.12),
+    0 0 18px rgba(255,190,230,.16) !important;
+}
+
+/* accessibility: respect reduced motion */
 @media (prefers-reduced-motion: reduce){
   .navDot::before{ animation:none !important; }
 }
