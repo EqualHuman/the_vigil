@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Module — EUA Rollout Scenario | LabContext</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="bg-wash" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="brand" href="index.html">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div>
+            <div class="brand-title">LabContext</div>
+            <div class="brand-sub">Interactive</div>
+          </div>
+        </a>
+
+        <button class="nav-toggle" data-nav-toggle aria-expanded="false">Menu</button>
+        <nav class="nav" data-nav>
+          <a href="blog.html">Blog</a>
+          <a href="education.html">Education</a>
+          <a href="interactive.html" aria-current="page">Interactive</a>
+          <a href="educators.html">For Educators</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="module">
+    <section class="module-header">
+      <div class="kicker">Regulation & validation scenarios</div>
+      <h1>EUA rollout: speed, reliability, oversight</h1>
+      <p>
+        A guided decision walk (not a simulator). Designed for discussion: what changes during emergencies, and what never changes?
+      </p>
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="badge">Estimated time: 6–10 minutes</span>
+        <span class="badge">Good for: MLS/MLT • nursing • pre-health</span>
+      </div>
+    </section>
+
+    <section class="scenario" id="scenario">
+      <div class="scenario-inner">
+        <div class="prompt" id="prompt"></div>
+        <div id="choices"></div>
+
+        <div class="feedback" id="feedback">
+          <div style="font-family: var(--font-ui); font-weight: 800; margin-bottom: 8px;" id="fbTitle"></div>
+          <div id="fbText"></div>
+
+          <div class="module-actions">
+            <button class="btn btn-primary" id="nextBtn">Next</button>
+            <button class="btn" id="restartBtn">Restart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Lightweight scenario engine (duplicate module.html per scenario and edit this object)
+    const nodes = [
+      {
+        prompt:
+          "A new molecular assay is developed rapidly during a public health emergency. Demand is high and testing capacity is limited. What is the most accurate statement about what must happen before reporting patient results?",
+        choices: [
+          {
+            text: "Full validation identical to routine (non-emergency) rollouts is always required before any reporting.",
+            title: "Not quite.",
+            feedback:
+              "Emergency conditions can change what’s authorized and the timelines — but they don’t eliminate the need for evidence that a method performs adequately in the setting where it’s used."
+          },
+          {
+            text: "Emergency authorization can permit limited validation while data continues to accumulate and oversight continues.",
+            title: "Closest to reality.",
+            feedback:
+              "In emergencies, authorization pathways may allow accelerated deployment while performance data continues to be gathered. The key idea: speed may change, but accountability does not disappear."
+          },
+          {
+            text: "No validation is needed during a declared emergency because the public health benefit outweighs performance concerns.",
+            title: "No.",
+            feedback:
+              "Even in emergencies, a test still has to demonstrate acceptable performance. Poor performance can cause harm at scale."
+          }
+        ]
+      },
+      {
+        prompt:
+          "In a typical U.S. setting, which statement best captures how oversight layers interact (conceptually)?",
+        choices: [
+          {
+            text: "FDA authorization, CLIA compliance, and CAP accreditation are interchangeable and mean the same thing.",
+            title: "They’re related, not interchangeable.",
+            feedback:
+              "Authorization/approval, regulatory compliance, and accreditation overlap but are distinct. A lab can be compliant and still fail an accreditation standard, and vice versa."
+          },
+          {
+            text: "FDA/EUA concerns what can be marketed/authorized, CLIA sets baseline lab standards, and CAP may add additional accreditation requirements.",
+            title: "Yes — good mental model.",
+            feedback:
+              "High-level framing: authorization/approval (what a test is allowed to be) + regulatory standards (how labs operate) + accreditation (additional requirements and inspections)."
+          },
+          {
+            text: "Only CAP has authority over whether a lab can run a test in the U.S.",
+            title: "Not correct.",
+            feedback:
+              "CAP is an accreditor (and very important), but it’s not the sole authority. CLIA is central to lab regulation, and FDA governs approvals/authorizations for many tests."
+          }
+        ]
+      },
+      {
+        prompt:
+          "A lab adopts a newly authorized assay quickly. What remains a constant responsibility at the lab level?",
+        choices: [
+          {
+            text: "Confirming the method performs acceptably in the lab’s environment and workflow (even if authorization exists).",
+            title: "Yes.",
+            feedback:
+              "Regardless of timelines, labs remain responsible for ensuring performance is acceptable where they run it: people, instruments, environment, and processes can shift outcomes."
+          },
+          {
+            text: "Assuming performance is identical everywhere because authorization already happened.",
+            title: "Risky assumption.",
+            feedback:
+              "Authorization can be necessary, but it doesn’t guarantee perfect performance across every setting. Local verification expectations exist for a reason."
+          },
+          {
+            text: "Delaying all testing until a full year of post-market data exists.",
+            title: "Usually unrealistic.",
+            feedback:
+              "In emergencies, waiting for long-term data may not be feasible. The practical balance is evidence-based deployment with continued monitoring and quality systems."
+          }
+        ]
+      }
+    ];
+
+    let idx = 0;
+
+    const promptEl = document.getElementById("prompt");
+    const choicesEl = document.getElementById("choices");
+    const feedbackEl = document.getElementById("feedback");
+    const fbTitle = document.getElementById("fbTitle");
+    const fbText = document.getElementById("fbText");
+    const nextBtn = document.getElementById("nextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    function render() {
+      feedbackEl.classList.remove("is-visible");
+      promptEl.textContent = nodes[idx].prompt;
+      choicesEl.innerHTML = "";
+
+      nodes[idx].choices.forEach((c) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.type = "button";
+        btn.textContent = c.text;
+        btn.addEventListener("click", () => {
+          fbTitle.textContent = c.title;
+          fbText.textContent = c.feedback;
+          feedbackEl.classList.add("is-visible");
+          nextBtn.textContent = (idx < nodes.length - 1) ? "Next" : "Finish";
+        });
+        choicesEl.appendChild(btn);
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (idx < nodes.length - 1) idx++;
+      else idx = 0;
+      render();
+    });
+
+    restartBtn.addEventListener("click", () => {
+      idx = 0;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
