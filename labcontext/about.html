@@ -13,7 +13,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="assets/js/main.js" defer></script>
 </head>
+
 <body>
   <div class="bg-wash" aria-hidden="true"></div>
 
@@ -29,6 +31,7 @@
         </a>
 
         <button class="nav-toggle" data-nav-toggle aria-expanded="false">Menu</button>
+
         <nav class="nav" data-nav>
           <a href="blog.html">Blog</a>
           <a href="education.html">Education</a>
@@ -40,58 +43,58 @@
     </div>
   </header>
 
-<main>
-  <div class="container">
-    <div class="reading">
-      <header>
-        <h1 class="page-title">About LabContext</h1>
-        <div class="meta">Modern lab education • labcontext.org</div>
-      </header>
+  <main>
+    <div class="container">
+      <div class="reading">
+        <header>
+          <h1 class="page-title">About LabContext</h1>
+          <div class="meta">Modern lab education • labcontext.org</div>
+        </header>
 
-      <article class="prose">
-        <p>
-          LabContext exists to make laboratory medicine easier to understand — without making it feel clinical.
-          The goal is clarity: how tests relate to physiology, how oversight works, and how to think in patterns instead of lists.
-        </p>
+        <article class="prose">
+          <p>
+            LabContext exists to make laboratory medicine easier to understand — without making it feel clinical.
+            The goal is clarity: how tests relate to physiology, how oversight works, and how to think in patterns instead of lists.
+          </p>
 
-        <h2>What LabContext is</h2>
-        <ul>
-          <li><strong>Education:</strong> structured explanations that don’t assume prior context.</li>
-          <li><strong>Interactive:</strong> short modules students can finish and teachers can assign.</li>
-          <li><strong>Blog:</strong> commentary and synthesis — clearly labeled as such.</li>
-        </ul>
+          <h2>What LabContext is</h2>
+          <ul>
+            <li><strong>Education:</strong> structured explanations that don’t assume prior context.</li>
+            <li><strong>Interactive:</strong> short modules students can finish and teachers can assign.</li>
+            <li><strong>Blog:</strong> commentary and synthesis — clearly labeled as such.</li>
+          </ul>
 
-        <h2>What LabContext isn’t</h2>
-        <ul>
-          <li>Not a clinical simulator</li>
-          <li>Not medical advice</li>
-          <li>Not a substitute for training or policy</li>
-        </ul>
+          <h2>What LabContext isn’t</h2>
+          <ul>
+            <li>Not a clinical simulator</li>
+            <li>Not medical advice</li>
+            <li>Not a substitute for training or policy</li>
+          </ul>
 
-        <div class="callout">
-          <strong>Design principle:</strong> the site should feel modern and engaging — not like another clinical handout.
-        </div>
+          <div class="callout">
+            <strong>Design principle:</strong> the site should feel modern and engaging — not like another clinical handout.
+          </div>
 
-        <h2>Contact</h2>
-        <p>
-          Use <strong>hello@labcontext.org</strong> once you set email up. (Replace this line later.)
-        </p>
+          <h2>Contact</h2>
+          <p>
+            Use <strong>hello@labcontext.org</strong> once you set email up. (Replace this line later.)
+          </p>
 
-        <hr />
-        <p style="font-family: var(--font-ui); color: var(--muted); font-size: 13px;">
-          Disclaimer: LabContext is educational and does not provide medical, legal, or professional advice.
-        </p>
-      </article>
+          <hr />
+
+          <p class="fineprint">
+            Disclaimer: LabContext is educational and does not provide medical, legal, or professional advice.
+          </p>
+        </article>
+      </div>
     </div>
-  </div>
-</main>
-
+  </main>
 
   <footer class="site-footer">
     <div class="container">
       <div class="footer-inner">
         <div>© <span id="year"></span> LabContext • labcontext.org</div>
-        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <div class="footer-links">
           <a href="education.html">Education</a>
           <a href="interactive.html">Interactive</a>
           <a href="blog.html">Blog</a>
@@ -101,7 +104,8 @@
     </div>
   </footer>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-  <script src="assets/js/main.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
