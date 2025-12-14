@@ -1940,6 +1940,30 @@ const closeActionsMenu = () => {
 const copyToClipboard = async (text) => {
   try { await navigator.clipboard.writeText(text); } catch {}
 };
+  // ===== URL NORMALIZER =====
+const BASE_URL = "https://vigilproject.org"; // change if you ever move domains
+
+const normalizeHref = (raw) => {
+  const v = (raw || "").trim();
+  if (!v) return "";
+
+  // allow anchors as-is
+  if (v.startsWith("#")) return v;
+
+  // already absolute http(s)
+  if (/^https?:\/\//i.test(v)) return v;
+
+  // protocol-relative (//example.com)
+  if (v.startsWith("//")) return "https:" + v;
+
+  // root-relative (/path)
+  if (v.startsWith("/")) return BASE_URL.replace(/\/$/, "") + v;
+
+  // other relative paths (path/page.html)
+  // if you want these to also become full URLs:
+  return BASE_URL.replace(/\/$/, "") + "/" + v.replace(/^\.?\//, "");
+};
+
 
 /* =========================================================
   TASKS HELPERS
@@ -2611,8 +2635,8 @@ fType.addEventListener("change", setTypeUI);
 saveItemBtn.addEventListener("click", () => {
   const type  = (fType.value || "tile").trim();
   const title = (fTitle.value || "").trim();
-  const href  = (fHref.value || "").trim();
-  const intendedLink = (fIntendedLink?.value || "").trim();
+  const href = normalizeHref(fHref.value);
+const intendedLink = normalizeHref(fIntendedLink?.value);
 
   const color = (fColor?.value || "").trim();
 
@@ -2660,6 +2684,20 @@ deleteItemBtn.addEventListener("click", () => {
   BOOT
 ========================================================== */
 NODES = loadNodes();
+  // One-time normalization pass (keeps your data consistent)
+let changed = false;
+for (const n of NODES) {
+  if (n.href) {
+    const nh = normalizeHref(n.href);
+    if (nh !== n.href) { n.href = nh; changed = true; }
+  }
+  if (n.intendedLink) {
+    const ni = normalizeHref(n.intendedLink);
+    if (ni !== n.intendedLink) { n.intendedLink = ni; changed = true; }
+  }
+}
+if (changed) saveNodes();
+
 collapsedGroups = loadCollapsed();
 selectedTaskIds = loadSelectedTasks();
 
