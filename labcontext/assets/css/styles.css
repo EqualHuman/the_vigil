@@ -353,4 +353,17 @@ body::before{
   margin: var(--s-8) 0;
 }
 
-body { outline: 6px solid red !important; }
+/* === Cleanup helpers (paste at bottom of styles.css) === */
+
+.fineprint{
+  font-family: var(--font-ui);
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.footer-links{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
