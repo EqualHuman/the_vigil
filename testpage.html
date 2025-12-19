@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Household Management — Chores Section (Binder Pages)</title>
+  <style>
+    :root{
+      --ink:#1f2430;
+      --muted:#5b6472;
+      --line:#d7dbe3;
+      --wash:#f6f7fb;
+      --card:#ffffff;
+
+      --accent:#2f3a5a;   /* calm indigo */
+      --accent2:#a9b3c7;  /* soft steel */
+      --radius:16px;
+    }
+
+    @page { size: Letter; margin: 0.55in; }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink);
+      background:#eee;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page{
+      width: 8.5in;
+      min-height: 11in;
+      margin: 18px auto;
+      padding: 0.55in;
+      background: var(--wash);
+      border: 1px solid #e6e8ef;
+      border-radius: 20px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.08);
+      position: relative;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    /* Header */
+    .header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 14px;
+    }
+    .title-wrap{ display:flex; flex-direction:column; gap:8px; }
+    .kicker{
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 750;
+    }
+    h1{
+      margin:0;
+      font-size: 26px;
+      line-height:1.1;
+      font-weight: 780;
+      letter-spacing: 0.2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 12.5px;
+      line-height: 1.4;
+      max-width: 5.4in;
+    }
+
+    .meta{
+      display:grid;
+      gap:10px;
+      justify-items:end;
+      min-width: 2.4in;
+    }
+    .pill{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.75);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .pill b{ color: var(--accent); }
+
+    /* Layout blocks */
+    .grid{ display:grid; gap:12px; }
+    .grid.two{ grid-template-columns: 1fr 1fr; }
+    .grid.three{ grid-template-columns: 1fr 1fr 1fr; }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      break-inside: avoid;
+    }
+    .card h2{
+      margin:0 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .muted{ color: var(--muted); font-size: 12px; margin:0; line-height: 1.35; }
+
+    /* Lists / checkboxes */
+    ul.clean{ list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px; }
+    li.task{
+      display:grid;
+      grid-template-columns: 18px 1fr;
+      gap:10px;
+      align-items:start;
+      font-size: 12.5px;
+      line-height: 1.3;
+    }
+    .box{
+      width: 14px;
+      height: 14px;
+      border: 1.4px solid var(--accent2);
+      border-radius: 4px;
+      margin-top: 2px;
+      background: rgba(47,58,90,0.03);
+    }
+    .small{ font-size: 11px; color: var(--muted); }
+
+    /* Tables */
+    table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    th, td{
+      border-bottom: 1px solid var(--line);
+      padding: 10px 10px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    th{
+      background: rgba(47,58,90,0.05);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    tr:last-child td{ border-bottom:none; }
+    td .line{
+      display:block;
+      border-bottom: 1px solid var(--line);
+      height: 16px;
+      margin-top: 6px;
+    }
+
+    /* Footer */
+    .footer{
+      position:absolute;
+      left: 0.55in;
+      right: 0.55in;
+      bottom: 0.38in;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color: var(--muted);
+      font-size: 11.5px;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+
+    /* Print */
+    @media print{
+      body{ background:white; }
+      .page{
+        margin:0;
+        border:none;
+        border-radius: 0;
+        box-shadow:none;
+        width:auto;
+        min-height:auto;
+        padding: 0;
+        background: var(--wash);
+      }
+      .footer{
+        left:0; right:0; bottom:0;
+        position: static;
+        margin-top: 14px;
+      }
+    }
+
+    @media (max-width: 900px){
+      .page{ width:auto; border-radius:0; margin:0; }
+      .grid.two, .grid.three{ grid-template-columns: 1fr; }
+      .meta{ justify-items:start; min-width:auto; }
+      .header{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PAGE 1: CHORES DASHBOARD -->
+  <section class="page">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="kicker">Household Management</div>
+        <h1>Chores Dashboard</h1>
+        <p class="subtitle">
+          A calm “what matters most” view. Use this page when you’re low-energy: choose the minimum set, then stop.
+        </p>
+      </div>
+      <div class="meta">
+        <div class="pill"><b>Week of:</b> ____________</div>
+        <div class="pill"><b>Mode:</b> ☐ Minimum ☐ Normal ☐ Reset</div>
+      </div>
+    </header>
+
+    <div class="grid two">
+      <div class="card">
+        <h2>Daily Minimum (10–20 min)</h2>
+        <p class="muted">If you only do these, the house stays livable.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Dishes: load/unload OR wash a “sink batch”</span></li>
+          <li class="task"><span class="box"></span><span>Trash: quick scan (kitchen + bathroom)</span></li>
+          <li class="task"><span class="box"></span><span>Counter reset: clear + wipe one surface</span></li>
+          <li class="task"><span class="box"></span><span>Floor rescue: 2-minute pickup (main pathway)</span></li>
+          <li class="task"><span class="box"></span><span>Laundry: one step (start / switch / fold 10 mins)</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Today’s Top 3</h2>
+        <p class="muted">Pick three. That’s the plan.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>1) __________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>2) __________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>3) __________________________________________</span></li>
+        </ul>
+        <p class="small" style="margin-top:10px;">Optional: reward/comfort plan __________________________________________</p>
+      </div>
+    </div>
+
+    <div class="grid three" style="margin-top:12px;">
+      <div class="card">
+        <h2>Quick Wins (5 min)</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Run a wipe over bathroom sink</span></li>
+          <li class="task"><span class="box"></span><span>Collect cups/plates to kitchen</span></li>
+          <li class="task"><span class="box"></span><span>Take out one bag of trash</span></li>
+          <li class="task"><span class="box"></span><span>Vacuum one “visible” area</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Weekly Anchors</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Bathrooms reset</span></li>
+          <li class="task"><span class="box"></span><span>Floors (vacuum + spot mop)</span></li>
+          <li class="task"><span class="box"></span><span>Bedding refresh</span></li>
+          <li class="task"><span class="box"></span><span>Fridge check (trash + leftovers)</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Notes / What’s Changed</h2>
+        <div class="small">This week (schedule, health, travel, etc.)</div>
+        <div style="margin-top:10px; border:1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,0.7); padding:12px; min-height: 140px;"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Chores Section • Dashboard</div>
+      <div>Home Management Binder</div>
+    </div>
+  </section>
+
+  <!-- PAGE 2: DAILY RHYTHM + ROUTINES -->
+  <section class="page">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="kicker">Household Management</div>
+        <h1>Daily Rhythm</h1>
+        <p class="subtitle">
+          A gentle routine you can keep even on “meh” days. Circle what you actually do, not what you wish you did.
+        </p>
+      </div>
+      <div class="meta">
+        <div class="pill"><b>Household:</b> ____________</div>
+        <div class="pill"><b>Pets:</b> ☐ Yes ☐ No</div>
+      </div>
+    </header>
+
+    <div class="grid two">
+      <div class="card">
+        <h2>Morning Reset (5–15 min)</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Unload dishwasher / clear drying rack</span></li>
+          <li class="task"><span class="box"></span><span>Trash scan (kitchen + bathroom)</span></li>
+          <li class="task"><span class="box"></span><span>Wipe counters (kitchen “stripe”)</span></li>
+          <li class="task"><span class="box"></span><span>Start one laundry load (if needed)</span></li>
+          <li class="task"><span class="box"></span><span>Make bed OR tidy bedroom pathway</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Evening Close (10–20 min)</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Kitchen close: dishes + counters + sink</span></li>
+          <li class="task"><span class="box"></span><span>Put away “floater items” (5-minute sweep)</span></li>
+          <li class="task"><span class="box"></span><span>Set tomorrow’s top 3 chores</span></li>
+          <li class="task"><span class="box"></span><span>Quick bathroom wipe if needed</span></li>
+          <li class="task"><span class="box"></span><span>Start dishwasher / take out trash if full</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card">
+        <h2>Kitchen Standards</h2>
+        <p class="muted">Pick your “clean enough” definition.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Sink empty at end of day</span></li>
+          <li class="task"><span class="box"></span><span>Counters cleared in one main zone</span></li>
+          <li class="task"><span class="box"></span><span>Trash not overflowing</span></li>
+          <li class="task"><span class="box"></span><span>Fridge: obvious spoilage removed</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Laundry Flow</h2>
+        <p class="muted">Use steps so laundry doesn’t become a mountain.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Sort basket(s): Lights / Darks / Towels</span></li>
+          <li class="task"><span class="box"></span><span>One load per day OR two loads twice/week</span></li>
+          <li class="task"><span class="box"></span><span>Fold for 10 minutes (timer) — then stop</span></li>
+          <li class="task"><span class="box"></span><span>Put away “hot items” first (socks/underwear)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Chores Section • Daily Rhythm</div>
+      <div>Home Management Binder</div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: WEEKLY CHORE MAP -->
+  <section class="page">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="kicker">Household Management</div>
+        <h1>Weekly Chore Map</h1>
+        <p class="subtitle">
+          Assign themes to days so you’re not deciding from scratch every time.
+        </p>
+      </div>
+      <div class="meta">
+        <div class="pill"><b>Week of:</b> ____________</div>
+        <div class="pill"><b>Reset Day:</b> ☐ Sat ☐ Sun ☐ Other</div>
+      </div>
+    </header>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:14%;">Day</th>
+          <th style="width:26%;">Theme</th>
+          <th>Tasks</th>
+          <th style="width:18%;">Done</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Mon</b></td>
+          <td>Floors</td>
+          <td>
+            Vacuum main areas; spot mop; shake rugs.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+        <tr>
+          <td><b>Tue</b></td>
+          <td>Bathrooms</td>
+          <td>
+            Toilet + sink; mirrors; swap towels; empty trash.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+        <tr>
+          <td><b>Wed</b></td>
+          <td>Kitchen Reset</td>
+          <td>
+            Wipe fronts; microwave; trash; fridge check.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+        <tr>
+          <td><b>Thu</b></td>
+          <td>Bedroom + Laundry</td>
+          <td>
+            Bedding refresh; fold + put away; clear nightstands.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+        <tr>
+          <td><b>Fri</b></td>
+          <td>Living Areas</td>
+          <td>
+            Dust surfaces; tidy clutter; wipe remotes/handles.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+        <tr>
+          <td><b>Sat</b></td>
+          <td>Errands + Restock</td>
+          <td>
+            Groceries; household supplies; plan meals; take out recycling.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+        <tr>
+          <td><b>Sun</b></td>
+          <td>Reset + Prep</td>
+          <td>
+            15-min pickup; trash out; set week’s top priorities.
+            <span class="line"></span>
+          </td>
+          <td>☐ ☐ ☐</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card">
+        <h2>Non-Negotiables</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Trash day: __________________________</span></li>
+          <li class="task"><span class="box"></span><span>Recycling: __________________________</span></li>
+          <li class="task"><span class="box"></span><span>Litter/Pet cleanup: __________________</span></li>
+          <li class="task"><span class="box"></span><span>Yard quick scan: _____________________</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Catch-Up List</h2>
+        <p class="muted">If you miss a day, park it here instead of spiraling.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Chores Section • Weekly Map</div>
+      <div>Home Management Binder</div>
+    </div>
+  </section>
+
+  <!-- PAGE 4: MONTHLY + SEASONAL -->
+  <section class="page">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="kicker">Household Management</div>
+        <h1>Monthly + Seasonal Chores</h1>
+        <p class="subtitle">
+          The “keep the house from slowly falling apart” tasks. Check off as you go.
+        </p>
+      </div>
+      <div class="meta">
+        <div class="pill"><b>Month:</b> ____________</div>
+        <div class="pill"><b>Season:</b> ☐ Spring ☐ Summer ☐ Fall ☐ Winter</div>
+      </div>
+    </header>
+
+    <div class="grid two">
+      <div class="card">
+        <h2>Monthly (pick 4–6)</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Fridge: purge + wipe shelves</span></li>
+          <li class="task"><span class="box"></span><span>Microwave + oven quick clean</span></li>
+          <li class="task"><span class="box"></span><span>Baseboards in main area</span></li>
+          <li class="task"><span class="box"></span><span>Wipe door handles + light switches</span></li>
+          <li class="task"><span class="box"></span><span>Vacuum couch/chairs + under cushions</span></li>
+          <li class="task"><span class="box"></span><span>Bathroom: descale showerhead / deeper scrub</span></li>
+          <li class="task"><span class="box"></span><span>Rotate/clean bedding pillows</span></li>
+          <li class="task"><span class="box"></span><span>Declutter: one drawer or one shelf</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Seasonal (pick 2–4)</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Windows: interior wipe</span></li>
+          <li class="task"><span class="box"></span><span>Ceiling fans / vents dusting</span></li>
+          <li class="task"><span class="box"></span><span>Deep clean fridge/freezer (as needed)</span></li>
+          <li class="task"><span class="box"></span><span>Closet swap / donation bag</span></li>
+          <li class="task"><span class="box"></span><span>Car: vacuum + wipe interior</span></li>
+          <li class="task"><span class="box"></span><span>Outdoor: porch sweep / cobwebs</span></li>
+          <li class="task"><span class="box"></span><span>Gutters check (if applicable)</span></li>
+          <li class="task"><span class="box"></span><span>Matress rotate / bed frame wipe</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card">
+        <h2>Replacement Schedule</h2>
+        <p class="muted">Household (not maintenance-heavy — just the common ones).</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>HVAC filter: every ____ months</span></li>
+          <li class="task"><span class="box"></span><span>Water filter (fridge/pitcher): every ____</span></li>
+          <li class="task"><span class="box"></span><span>Vacuum filter/brush clean: monthly</span></li>
+          <li class="task"><span class="box"></span><span>Sponges/brushes: replace every ____</span></li>
+          <li class="task"><span class="box"></span><span>Toothbrushes: every ____ months</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>“When I Notice It” List</h2>
+        <p class="muted">No schedule — just a place to park tasks.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+          <li class="task"><span class="box"></span><span>__________________________________________</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Chores Section • Monthly & Seasonal</div>
+      <div>Home Management Binder</div>
+    </div>
+  </section>
+
+  <!-- PAGE 5: ZONE CLEANING ROTATION -->
+  <section class="page">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="kicker">Household Management</div>
+        <h1>Zone Cleaning Rotation</h1>
+        <p class="subtitle">
+          Instead of “clean the whole house,” rotate focus areas. Do one zone per week (or per month).
+        </p>
+      </div>
+      <div class="meta">
+        <div class="pill"><b>Rotation:</b> ☐ Weekly ☐ Biweekly ☐ Monthly</div>
+        <div class="pill"><b>Current Zone:</b> ____________</div>
+      </div>
+    </header>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%;">Zone</th>
+          <th>Deep Tasks (choose 2–5)</th>
+          <th style="width:18%;">Date Done</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Kitchen</b></td>
+          <td>Wipe cabinets; clean fridge shelves; scrub sink; mop corners; clean microwave; wipe appliances.</td>
+          <td>__________</td>
+        </tr>
+        <tr>
+          <td><b>Bathrooms</b></td>
+          <td>Descale; grout/crevices; shower curtain; cabinet purge; mirrors; replace liners.</td>
+          <td>__________</td>
+        </tr>
+        <tr>
+          <td><b>Bedroom</b></td>
+          <td>Under-bed sweep; closet purge; dust blinds; wipe baseboards; rotate mattress; wash pillows.</td>
+          <td>__________</td>
+        </tr>
+        <tr>
+          <td><b>Living</b></td>
+          <td>Vacuum couch; dust lamps; wipe remotes; clean windows; cords tidy; rug deep vacuum.</td>
+          <td>__________</td>
+        </tr>
+        <tr>
+          <td><b>Entry/Laundry</b></td>
+          <td>Shoe area reset; wipe washer/dryer; clean lint trap area; mop; hang hooks tidy.</td>
+          <td>__________</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card">
+        <h2>This Zone — Checklist</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Pick 2–5 deep tasks (circle on table)</span></li>
+          <li class="task"><span class="box"></span><span>Set timer: 20 / 40 / 60 minutes</span></li>
+          <li class="task"><span class="box"></span><span>Stop at timer — “good enough” counts</span></li>
+          <li class="task"><span class="box"></span><span>Quick tidy at end (put away supplies)</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Supplies for This Zone</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>All-purpose cleaner</span></li>
+          <li class="task"><span class="box"></span><span>Microfiber cloths</span></li>
+          <li class="task"><span class="box"></span><span>Scrub brush / sponge</span></li>
+          <li class="task"><span class="box"></span><span>Trash bag / donation bag</span></li>
+          <li class="task"><span class="box"></span><span>Gloves (optional)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Chores Section • Zone Rotation</div>
+      <div>Home Management Binder</div>
+    </div>
+  </section>
+
+  <!-- PAGE 6: REPAIR/CHORE LOG + DELEGATION -->
+  <section class="page">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="kicker">Household Management</div>
+        <h1>Chore Log + Delegation</h1>
+        <p class="subtitle">
+          Track what actually happened (helpful for patterns). Use delegation for shared households.
+        </p>
+      </div>
+      <div class="meta">
+        <div class="pill"><b>Month:</b> ____________</div>
+        <div class="pill"><b>Household:</b> ____________</div>
+      </div>
+    </header>
+
+    <div class="grid two">
+      <div class="card">
+        <h2>Who Does What</h2>
+        <p class="muted">Write names/initials. Adjust seasonally.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th style="width:30%;">Owner</th>
+              <th style="width:30%;">Backup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Dishes</td><td>__________</td><td>__________</td></tr>
+            <tr><td>Laundry</td><td>__________</td><td>__________</td></tr>
+            <tr><td>Bathrooms</td><td>__________</td><td>__________</td></tr>
+            <tr><td>Floors</td><td>__________</td><td>__________</td></tr>
+            <tr><td>Trash/Recycling</td><td>__________</td><td>__________</td></tr>
+            <tr><td>Pet Care</td><td>__________</td><td>__________</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>Chore Log (Quick)</h2>
+        <p class="muted">Date • Task • Notes. Keep it short.</p>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:20%;">Date</th>
+              <th>Task</th>
+              <th style="width:30%;">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>____/____</td><td>____________________________</td><td>______________</td></tr>
+            <tr><td>____/____</td><td>____________________________</td><td>______________</td></tr>
+            <tr><td>____/____</td><td>____________________________</td><td>______________</td></tr>
+            <tr><td>____/____</td><td>____________________________</td><td>______________</td></tr>
+            <tr><td>____/____</td><td>____________________________</td><td>______________</td></tr>
+            <tr><td>____/____</td><td>____________________________</td><td>______________</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card">
+        <h2>Task Bank (Grab-and-Go)</h2>
+        <p class="muted">When you have energy but can’t decide.</p>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Declutter one surface (table/counter)</span></li>
+          <li class="task"><span class="box"></span><span>Clean mirrors (bath + entry)</span></li>
+          <li class="task"><span class="box"></span><span>Wipe fridge handles + shelves front row</span></li>
+          <li class="task"><span class="box"></span><span>Dust one room (top-to-bottom quick)</span></li>
+          <li class="task"><span class="box"></span><span>Wash bedding OR towels</span></li>
+          <li class="task"><span class="box"></span><span>Vacuum one “zone” (living / bedroom)</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Household Supplies to Restock</h2>
+        <ul class="clean">
+          <li class="task"><span class="box"></span><span>Trash bags</span></li>
+          <li class="task"><span class="box"></span><span>Dish soap / dishwasher pods</span></li>
+          <li class="task"><span class="box"></span><span>Laundry detergent</span></li>
+          <li class="task"><span class="box"></span><span>All-purpose cleaner</span></li>
+          <li class="task"><span class="box"></span><span>Toilet paper / paper towels</span></li>
+          <li class="task"><span class="box"></span><span>Sponges / cloths</span></li>
+        </ul>
+        <p class="small" style="margin-top:10px;">Notes: ________________________________________________</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Chores Section • Log & Delegation</div>
+      <div>Home Management Binder</div>
+    </div>
+  </section>
+
+</body>
+</html>
